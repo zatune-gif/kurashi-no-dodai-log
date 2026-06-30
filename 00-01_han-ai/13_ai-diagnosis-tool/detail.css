@@ -1,0 +1,344 @@
+/* ── 情報入力フォーム ── */
+.info-form { margin-bottom: 24px; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.form-group input {
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--text);
+  background: #F8FAFC;
+  transition: border-color 0.15s;
+  font-family: inherit;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: #fff;
+}
+
+.form-group input.input-error { border-color: #EF4444; }
+
+.required {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.form-error-msg {
+  font-size: 13px;
+  color: #EF4444;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.form-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── 複数選択ボタン ── */
+.options-wrap { display: flex; flex-direction: column; gap: 10px; }
+
+.multi-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.multi-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 2px solid var(--border);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.multi-btn.selected .multi-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* ── テキスト入力 ── */
+.text-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--text);
+  background: #F8FAFC;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: #fff;
+}
+
+.text-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* ── プロンプトライブラリ ── */
+.library-card { border-left: 4px solid var(--primary); }
+
+.library-header { color: var(--primary); }
+
+.library-intro {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.prompt-item {
+  background: #F8FAFC;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.prompt-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.prompt-tag {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--primary);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.prompt-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.prompt-body {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+  margin-bottom: 10px;
+}
+
+.btn-copy {
+  padding: 7px 16px;
+  background: transparent;
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-copy:hover { background: var(--primary); color: #fff; }
+
+/* ── サービス提案 ── */
+.recommend-card { border-left: 4px solid #F59E0B !important; }
+
+.recommend-header { color: #D97706 !important; }
+
+.recommend-intro {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.recommend-item {
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.recommend-item.rank-1 {
+  background: #FFFBEB;
+  border: 1.5px solid #F59E0B;
+}
+
+.recommend-item.rank-2 {
+  background: #F8FAFC;
+  border: 1.5px solid var(--border);
+}
+
+.recommend-rank {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 99px;
+  margin-bottom: 8px;
+}
+
+.rank-1 .recommend-rank {
+  background: #F59E0B;
+  color: #fff;
+}
+
+.rank-2 .recommend-rank {
+  background: #E5E7EB;
+  color: #6B7280;
+}
+
+.recommend-service {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.recommend-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 0 0 8px;
+}
+
+.recommend-reason {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.btn-cta {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  text-decoration: none;
+}
+
+/* ── 結果アクション ── */
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* ── 見積プラン ── */
+.estimate-plan-card { border-left: 4px solid #6366F1 !important; }
+
+.estimate-plan-header { color: #4F46E5 !important; }
+
+.estimate-plan-body { padding: 4px 0; }
+
+.estimate-service {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.estimate-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4F46E5;
+  margin: 0 0 8px;
+}
+
+.estimate-reason {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.estimate-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text);
+  background: #F8FAFC;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.estimate-select:focus {
+  outline: none;
+  border-color: #6366F1;
+  background: #fff;
+}
+
+/* ── 印刷スタイル ── */
+@media print {
+  .no-print { display: none !important; }
+  .quiz-nav { display: none !important; }
+
+  body { background: #fff; }
+  .container { max-width: 100%; padding: 16px; }
+  .brand { margin-bottom: 8px; }
+
+  .score-card, .section-card, .stage-timeline, .prompt-item {
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .prompt-body {
+    border: 1px solid #ccc;
+  }
+
+  .btn-copy { display: none; }
+
+  .footer { margin-top: 24px; }
+}
+
+@media (max-width: 400px) {
+  .welcome-hero h1 { font-size: 22px; }
+}

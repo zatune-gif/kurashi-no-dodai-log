@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>研修カリキュラム タイムスケジュール | ざつね屋</title>
+  <style>
+    :root {
+      --primary:    #DA7756;
+      --primary-dk: #b8623f;
+      --primary-bg: rgba(218,119,86,0.12);
+      --bg:         #1C1C1C;
+      --bg-panel:   #141414;
+      --card:       #252525;
+      --card-2:     #2f2f2f;
+      --text:       #eeeeee;
+      --text-muted: #999999;
+      --border:     #3a3a3a;
+      --success:    #4caf7d;
+      --success-bg: rgba(76,175,125,0.12);
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    /* ── カバー ── */
+    .cover {
+      background: linear-gradient(145deg, #0a0a0a 0%, #181818 55%, #1f1a17 100%);
+      color: var(--text);
+      padding: 64px 56px 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(218,119,86,0.18) 0%, transparent 70%);
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -140px; left: -80px;
+      width: 440px; height: 440px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(218,119,86,0.07) 0%, transparent 70%);
+    }
+
+    .cover-logo {
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .cover-logo img {
+      height: 200px;
+      max-width: 100%;
+      width: auto;
+      filter: invert(1);
+      mix-blend-mode: screen;
+      display: block;
+    }
+
+    .cover h1 {
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.15;
+      color: #fff;
+      position: relative;
+    }
+
+    .cover h1 span {
+      display: inline-block;
+      width: 5px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 3px;
+      margin-right: 16px;
+      vertical-align: middle;
+      margin-bottom: 4px;
+    }
+
+    .cover-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .cover-title-row h1 { margin-bottom: 0; }
+
+    .cover-title-label {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding-left: 20px;
+      border-left: 1px solid var(--border);
+      white-space: nowrap;
+      position: relative;
+      top: -2px;
+    }
+
+    .cover-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.7;
+      position: relative;
+      margin-bottom: 36px;
+    }
+
+    .cover-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 13px;
+      position: relative;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cover-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cover-meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .cover-meta-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── ナビゲーション ── */
+    .nav-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-inner::-webkit-scrollbar { display: none; }
+
+    .nav-link {
+      white-space: nowrap;
+      padding: 14px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      letter-spacing: 0.03em;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* ── メインコンテンツ ── */
+    .main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+
+    /* ── セクション ── */
+    .section { margin-bottom: 60px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .chapter-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px; height: 38px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      border-radius: 8px;
+      flex-shrink: 0;
+      box-shadow: 0 0 16px rgba(218,119,86,0.4);
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .section-divider {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* ── コース詳細カード ── */
+    .course-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .course-head {
+      padding: 18px 22px 16px;
+      background: #1a1a1a;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .course-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .ci-1 { background: linear-gradient(135deg, #FDBA74, #FB923C); }
+    .ci-2 { background: linear-gradient(135deg, #FB923C, #F97316); }
+    .ci-3 { background: linear-gradient(135deg, #F97316, #EA580C); }
+    .ci-4 { background: linear-gradient(135deg, #EA580C, #C2410C); }
+    .ci-5 { background: linear-gradient(135deg, #C2410C, #9A3412); }
+
+    .course-head-info { flex: 1; }
+
+    .course-head-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .course-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 99px;
+    }
+
+    .tag-time {
+      background: var(--card-2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .tag-tool {
+      background: var(--primary-bg);
+      color: var(--primary);
+      border: 1px solid rgba(218,119,86,0.3);
+    }
+
+    /* ── タイムテーブル ── */
+    .timetable {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--card);
+    }
+
+    .timetable thead th {
+      background: #1a1410;
+      color: var(--primary);
+      font-weight: 700;
+      padding: 11px 16px;
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(218,119,86,0.3);
+    }
+
+    .timetable tbody tr:nth-child(even) { background: #202020; }
+    .timetable tbody tr:hover { background: var(--primary-bg); transition: background 0.15s; }
+
+    .timetable td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      color: var(--text);
+    }
+
+    .timetable tbody tr:last-child td { border-bottom: none; }
+
+    .timetable tr.row-title td {
+      background: rgba(218,119,86,0.06);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .timetable tr.row-break td {
+      background: var(--success-bg);
+      color: var(--success);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .timetable tr.row-special td {
+      background: rgba(255,255,255,0.03);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .td-num {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      width: 48px;
+    }
+
+    .td-section { font-weight: 600; }
+
+    .td-desc {
+      display: block;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.5;
+    }
+
+    .td-min {
+      text-align: right;
+      font-weight: 700;
+      white-space: nowrap;
+      width: 64px;
+    }
+
+    .td-total {
+      text-align: right;
+      color: var(--text-muted);
+      white-space: nowrap;
+      width: 64px;
+      font-size: 13px;
+    }
+
+    /* ── タイムバー ── */
+    .time-bar-wrap {
+      padding: 14px 22px;
+      border-top: 1px solid var(--border);
+      background: #1d1d1d;
+    }
+
+    .time-bar-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .time-bar {
+      display: flex;
+      height: 18px;
+      border-radius: 5px;
+      overflow: hidden;
+      gap: 1px;
+    }
+
+    .time-seg {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      white-space: nowrap;
+      overflow: hidden;
+      min-width: 2px;
+    }
+
+    .seg-open   { background: rgba(218,119,86,0.35); }
+    .seg-learn  { background: rgba(218,119,86,0.55); }
+    .seg-learn2 { background: rgba(218,119,86,0.70); }
+    .seg-learn3 { background: rgba(218,119,86,0.85); }
+    .seg-pract  { background: var(--primary); }
+    .seg-pract2 { background: var(--primary-dk); }
+    .seg-break  { background: rgba(76,175,125,0.5); }
+    .seg-wrap   { background: #444; }
+
+    /* ── 区切り ── */
+    .section-end { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* ── フッター ── */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--bg-panel);
+    }
+
+    /* ── 概要カード ── */
+    .overview-block {
+      background: #1a1410;
+      border: 1px solid rgba(218,119,86,0.3);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 22px 26px;
+      margin-bottom: 40px;
+      box-shadow: 0 0 40px rgba(218,119,86,0.06);
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .overview-block strong { color: var(--primary); }
+
+    /* ── 注記 ── */
+    .notes {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+      margin-top: 40px;
+    }
+
+    .notes p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 4px;
+    }
+
+    .notes p:last-child { margin-bottom: 0; }
+
+    .notes p::before {
+      content: '※';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+    }
+
+    /* ── レスポンシブ ── */
+    @media (max-width: 700px) {
+      .cover { padding: 40px 24px; }
+      .cover h1 { font-size: 28px; }
+      .cover-logo img { height: 130px; }
+      .cover-title-row { flex-direction: column; gap: 8px; }
+      .cover-title-label { border-left: none; padding-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- カバー -->
+<div class="cover">
+  <div class="cover-logo">
+    <img src="./logo.jpg" alt="ざつね屋">
+  </div>
+  <div class="cover-title-row">
+    <h1><span></span>研修カリキュラム</h1>
+    <div class="cover-title-label">タイムスケジュール</div>
+  </div>
+  <p class="cover-sub">中小企業向けAI活用支援研修 全5コース。各コースのセクション構成・時間配分をまとめています。</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">事業者名</div>
+      <div class="cover-meta-value">ざつね屋</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">コース数</div>
+      <div class="cover-meta-value">全5コース</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">対象</div>
+      <div class="cover-meta-value">中小企業・小規模事業者</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">作成日</div>
+      <div class="cover-meta-value">2026年6月</div>
+    </div>
+  </div>
+</div>
+
+<!-- ナビゲーション -->
+<nav class="nav-sticky">
+  <div class="nav-inner">
+    <a class="nav-link" href="#c1">① AI活用知識編</a>
+    <a class="nav-link" href="#c2">② 実践編（文書系）</a>
+    <a class="nav-link" href="#c3">③ 実践編（画像系）</a>
+    <a class="nav-link" href="#c4">④ 実践編（動画系）</a>
+    <a class="nav-link" href="#c5">⑤ Claude Code特化</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="overview-block">
+    <strong>フィードバックのお願い：</strong>各コースのセクション構成・時間配分についてご意見をいただけると幸いです。
+    特に「この時間では足りない／長すぎる」「この順番は分かりにくい」「このセクションは不要では？」といった観点で率直にお知らせください。
+  </div>
+
+  <!-- ── コース① ── -->
+  <section class="section" id="c1">
+    <div class="section-header">
+      <div class="chapter-num">①</div>
+      <div class="section-title">AI活用知識編</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="course-card">
+      <div class="course-head">
+        <div class="course-icon ci-1">①</div>
+        <div class="course-head-info">
+          <div class="course-head-name">AI活用知識編</div>
+          <div class="course-tags">
+            <span class="tag tag-time">⏱ 90分</span>
+            <span class="tag tag-tool">ChatGPT / Gemini（自由）</span>
+          </div>
+        </div>
+      </div>
+      <table class="timetable">
+        <thead>
+          <tr>
+            <th class="td-num">#</th>
+            <th>セクション</th>
+            <th class="td-min">時間</th>
+            <th class="td-total">累計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">挨拶・自己紹介<span class="td-desc">一言自己紹介 / 「今日90分、一緒にAIを体験しましょう」</span></td>
+            <td class="td-min">1分</td>
+            <td class="td-total">1分</td>
+          </tr>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">アジェンダ説明<span class="td-desc">「前半は知識・後半は実践。最後に自分で使えた状態を目指します」</span></td>
+            <td class="td-min">1分</td>
+            <td class="td-total">2分</td>
+          </tr>
+          <tr>
+            <td class="td-num">1</td>
+            <td class="td-section">AIの種類<span class="td-desc">会話型・画像生成型・動画生成型・エージェント型の4種類を整理。今日扱うのは会話型AI</span></td>
+            <td class="td-min">5分</td>
+            <td class="td-total">7分</td>
+          </tr>
+          <tr>
+            <td class="td-num">2</td>
+            <td class="td-section">できること / できないこと<span class="td-desc">期待値を正しく調整する。ハルシネーションの説明と「下書き・補助として使う」の徹底</span></td>
+            <td class="td-min">5分</td>
+            <td class="td-total">12分</td>
+          </tr>
+          <tr>
+            <td class="td-num">3</td>
+            <td class="td-section">業務別活用シーン<span class="td-desc">業種別にどの業務にAIが使えるかを一覧で確認。参加者に「使えそうな業務」を考えてもらう</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">22分</td>
+          </tr>
+          <tr>
+            <td class="td-num">4</td>
+            <td class="td-section">4軸マップ＋ツール別表<span class="td-desc">AI全体の地図を持ち帰ってもらう。今日は文書・テキスト領域を中心に体験することを共有</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">32分</td>
+          </tr>
+          <tr>
+            <td class="td-num">5</td>
+            <td class="td-section">セキュリティと社内ルール<span class="td-desc">「入れていい情報」と「入れてはいけない情報」を明確にする。社内ルール最低限3点を確認</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">42分</td>
+          </tr>
+          <tr class="row-break">
+            <td class="td-num">—</td>
+            <td class="td-section">休憩<span class="td-desc">後半はプロンプトの書き方と実践。スマホでAIをすぐ使える状態に</span></td>
+            <td class="td-min">5分</td>
+            <td class="td-total">47分</td>
+          </tr>
+          <tr>
+            <td class="td-num">6</td>
+            <td class="td-section">プロンプトの基本<span class="td-desc">役割・背景・指示・形式の4要素を入れるだけで出力が劇的に変わることをBefore/Afterで体感</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">57分</td>
+          </tr>
+          <tr>
+            <td class="td-num">7</td>
+            <td class="td-section">実践ワーク<span class="td-desc">社内お知らせ・SNS投稿文・求人票のたたき台から選び、4要素プロンプトで実際に生成→修正→発表</span></td>
+            <td class="td-min">30分</td>
+            <td class="td-total">87分</td>
+          </tr>
+          <tr>
+            <td class="td-num">8</td>
+            <td class="td-section">まとめ<span class="td-desc">チェックリストで学びを確認。持ち帰り資料（ツール別表・4要素メモ・社内ルールシート）の案内</span></td>
+            <td class="td-min">3分</td>
+            <td class="td-total">90分</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="time-bar-wrap">
+        <div class="time-bar-label">時間配分</div>
+        <div class="time-bar">
+          <div class="time-seg seg-open"  style="flex:2">導入</div>
+          <div class="time-seg seg-learn" style="flex:10">知識</div>
+          <div class="time-seg seg-learn2"style="flex:10">知識</div>
+          <div class="time-seg seg-learn3"style="flex:10">知識</div>
+          <div class="time-seg seg-break" style="flex:5">休憩</div>
+          <div class="time-seg seg-pract" style="flex:10">基礎</div>
+          <div class="time-seg seg-pract2"style="flex:30">実践</div>
+          <div class="time-seg seg-wrap"  style="flex:3">まとめ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-end">
+
+  <!-- ── コース② ── -->
+  <section class="section" id="c2">
+    <div class="section-header">
+      <div class="chapter-num">②</div>
+      <div class="section-title">実践編（文書系）</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="course-card">
+      <div class="course-head">
+        <div class="course-icon ci-2">②</div>
+        <div class="course-head-info">
+          <div class="course-head-name">実践編（文書系）</div>
+          <div class="course-tags">
+            <span class="tag tag-time">⏱ 120分</span>
+            <span class="tag tag-tool">Gemini 無料版</span>
+          </div>
+        </div>
+      </div>
+      <table class="timetable">
+        <thead>
+          <tr>
+            <th class="td-num">#</th>
+            <th>セクション</th>
+            <th class="td-min">時間</th>
+            <th class="td-total">累計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">挨拶・自己紹介<span class="td-desc">「今日は120分、文書作業をAIで大幅に効率化する実践をします」</span></td>
+            <td class="td-min">1分</td>
+            <td class="td-total">1分</td>
+          </tr>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">アジェンダ説明<span class="td-desc">「コース①未受講の方も大丈夫。必要な基礎は今日カバーします」</span></td>
+            <td class="td-min">1分</td>
+            <td class="td-total">2分</td>
+          </tr>
+          <tr>
+            <td class="td-num">1</td>
+            <td class="td-section">イントロ<span class="td-desc">Geminiログイン確認・プロンプト4要素の復習。ゴール：「業務別プロンプト10本を持ち帰る」</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">12分</td>
+          </tr>
+          <tr>
+            <td class="td-num">2</td>
+            <td class="td-section">社内文書<span class="td-desc">議事録（全員共通）→自由テーマ実践。メール返信・報告書・マニュアル・社内お知らせ等</span></td>
+            <td class="td-min">30分</td>
+            <td class="td-total">42分</td>
+          </tr>
+          <tr>
+            <td class="td-num">3</td>
+            <td class="td-section">広報・発信文書<span class="td-desc">SNS投稿（全員共通）→自由テーマ実践。チラシ文案・HP更新テキスト・メルマガ・キャッチコピー等</span></td>
+            <td class="td-min">30分</td>
+            <td class="td-total">72分</td>
+          </tr>
+          <tr class="row-break">
+            <td class="td-num">—</td>
+            <td class="td-section">休憩<span class="td-desc">後半は採用広報とライブラリ化。作ったプロンプトをそのまま残しておくよう案内</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">82分</td>
+          </tr>
+          <tr>
+            <td class="td-num">4</td>
+            <td class="td-section">採用広報<span class="td-desc">求人票（全員共通）→自由テーマ実践。会社紹介文・採用SNS・面接質問リスト・内定通知文等</span></td>
+            <td class="td-min">30分</td>
+            <td class="td-total">112分</td>
+          </tr>
+          <tr>
+            <td class="td-num">5</td>
+            <td class="td-section">ライブラリ化<span class="td-desc">今日作ったプロンプトを10本選び、固有情報を [ ] に置き換えてテンプレート化・保存</span></td>
+            <td class="td-min">5分</td>
+            <td class="td-total">117分</td>
+          </tr>
+          <tr>
+            <td class="td-num">6</td>
+            <td class="td-section">まとめ<span class="td-desc">3カテゴリの振り返り。「プロンプトライブラリは明日からそのまま使えます」</span></td>
+            <td class="td-min">3分</td>
+            <td class="td-total">120分</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="time-bar-wrap">
+        <div class="time-bar-label">時間配分</div>
+        <div class="time-bar">
+          <div class="time-seg seg-open"  style="flex:2">導入</div>
+          <div class="time-seg seg-learn" style="flex:10">イントロ</div>
+          <div class="time-seg seg-pract" style="flex:30">社内文書</div>
+          <div class="time-seg seg-pract2"style="flex:30">広報</div>
+          <div class="time-seg seg-break" style="flex:10">休憩</div>
+          <div class="time-seg seg-pract" style="flex:30">採用</div>
+          <div class="time-seg seg-learn2"style="flex:5">LIB</div>
+          <div class="time-seg seg-wrap"  style="flex:3">まとめ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-end">
+
+  <!-- ── コース③ ── -->
+  <section class="section" id="c3">
+    <div class="section-header">
+      <div class="chapter-num">③</div>
+      <div class="section-title">実践編（画像系）</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="course-card">
+      <div class="course-head">
+        <div class="course-icon ci-3">③</div>
+        <div class="course-head-info">
+          <div class="course-head-name">実践編（画像系）</div>
+          <div class="course-tags">
+            <span class="tag tag-time">⏱ 120分</span>
+            <span class="tag tag-tool">Canva 無料版</span>
+          </div>
+        </div>
+      </div>
+      <table class="timetable">
+        <thead>
+          <tr>
+            <th class="td-num">#</th>
+            <th>セクション</th>
+            <th class="td-min">時間</th>
+            <th class="td-total">累計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">挨拶・自己紹介<span class="td-desc">「今日はCanvaだけで完結。デザイン経験は一切不要です」</span></td>
+            <td class="td-min">1分</td>
+            <td class="td-total">1分</td>
+          </tr>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">アジェンダ説明<span class="td-desc">Canva操作を覚える→AI素材を作る→組み合わせてチラシ完成の流れを共有</span></td>
+            <td class="td-min">2分</td>
+            <td class="td-total">3分</td>
+          </tr>
+          <tr>
+            <td class="td-num">1</td>
+            <td class="td-section">イントロ<span class="td-desc">Canvaログイン確認・基本画面（デザイン作成ボタン・テンプレート一覧・編集画面）を把握</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">13分</td>
+          </tr>
+          <tr class="row-special">
+            <td class="td-num">—</td>
+            <td class="td-section">テンプレートの意味の違い（補足）<span class="td-desc">混乱防止：「Canvaのデザイン雛形」と「AIへの指示文のひな型（プロンプト）」の2種類があることを最初に明確化</span></td>
+            <td class="td-min">3分</td>
+            <td class="td-total">16分</td>
+          </tr>
+          <tr>
+            <td class="td-num">2</td>
+            <td class="td-section">SNS投稿画像<span class="td-desc">Instagram投稿（全員共通）→自由テーマ実践。テンプレートを選んで自社内容に書き換えるだけ</span></td>
+            <td class="td-min">30分</td>
+            <td class="td-total">46分</td>
+          </tr>
+          <tr>
+            <td class="td-num">3</td>
+            <td class="td-section">AI画像生成<span class="td-desc">Canva内のMagic Mediaでテキストから画像生成。ひな型「[スタイル]で[主題]の画像、[用途]向け」を使って実践</span></td>
+            <td class="td-min">30分</td>
+            <td class="td-total">76分</td>
+          </tr>
+          <tr class="row-break">
+            <td class="td-num">—</td>
+            <td class="td-section">休憩<span class="td-desc">後半はセクション2・3の技術を組み合わせてチラシを完成させる</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">86分</td>
+          </tr>
+          <tr>
+            <td class="td-num">4</td>
+            <td class="td-section">チラシ作成<span class="td-desc">A4テンプレートにAI生成画像を差し込み、テキストを自社内容に変更して完成品を1枚作る</span></td>
+            <td class="td-min">30分</td>
+            <td class="td-total">116分</td>
+          </tr>
+          <tr>
+            <td class="td-num">5</td>
+            <td class="td-section">まとめ<span class="td-desc">PNG/PDF書き出し・後から編集・社内共有の方法。ブランドカラー登録で統一感を出すコツ</span></td>
+            <td class="td-min">4分</td>
+            <td class="td-total">120分</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="time-bar-wrap">
+        <div class="time-bar-label">時間配分</div>
+        <div class="time-bar">
+          <div class="time-seg seg-open"  style="flex:3">導入</div>
+          <div class="time-seg seg-learn" style="flex:13">イントロ</div>
+          <div class="time-seg seg-pract" style="flex:30">SNS画像</div>
+          <div class="time-seg seg-pract2"style="flex:30">AI画像</div>
+          <div class="time-seg seg-break" style="flex:10">休憩</div>
+          <div class="time-seg seg-pract" style="flex:30">チラシ</div>
+          <div class="time-seg seg-wrap"  style="flex:4">まとめ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-end">
+
+  <!-- ── コース④ ── -->
+  <section class="section" id="c4">
+    <div class="section-header">
+      <div class="chapter-num">④</div>
+      <div class="section-title">実践編（動画系）</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="course-card">
+      <div class="course-head">
+        <div class="course-icon ci-4">④</div>
+        <div class="course-head-info">
+          <div class="course-head-name">実践編（動画系）</div>
+          <div class="course-tags">
+            <span class="tag tag-time">⏱ 120分</span>
+            <span class="tag tag-tool">CapCut 無料版</span>
+          </div>
+        </div>
+      </div>
+      <table class="timetable">
+        <thead>
+          <tr>
+            <th class="td-num">#</th>
+            <th>セクション</th>
+            <th class="td-min">時間</th>
+            <th class="td-total">累計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">挨拶・自己紹介<span class="td-desc">「今日は120分で実際にショート動画を1本作って帰ります」</span></td>
+            <td class="td-min">1分</td>
+            <td class="td-total">1分</td>
+          </tr>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">アジェンダ説明<span class="td-desc">映像AI（Seedance）→文書AI（Gemini）→読み上げAI（TTS）→字幕AI→人間仕上げの全工程をバトンタッチ形式で体験</span></td>
+            <td class="td-min">2分</td>
+            <td class="td-total">3分</td>
+          </tr>
+          <tr>
+            <td class="td-num">1</td>
+            <td class="td-section">イントロ<span class="td-desc">CapCutログイン確認・基本画面（新規プロジェクト・タイムライン・パネル構成）を把握</span></td>
+            <td class="td-min">7分</td>
+            <td class="td-total">10分</td>
+          </tr>
+          <tr>
+            <td class="td-num">2</td>
+            <td class="td-section">AI動画生成（Seedance）<span class="td-desc">テキスト入力だけで映像が生成される体験。会社雰囲気・商品イメージ・季節告知等を自由テーマで実践（1人あたり2〜3回目安）</span></td>
+            <td class="td-min">15分</td>
+            <td class="td-total">25分</td>
+          </tr>
+          <tr>
+            <td class="td-num">3</td>
+            <td class="td-section">ナレーション追加<span class="td-desc">Geminiで1分読み上げ用の台本を生成→CapCut TTSで音声化→タイムラインに配置</span></td>
+            <td class="td-min">15分</td>
+            <td class="td-total">40分</td>
+          </tr>
+          <tr>
+            <td class="td-num">4</td>
+            <td class="td-section">AI自動字幕<span class="td-desc">音声から字幕を自動生成（日本語）。無料版は月2回制限あり。修正は後半の編集時間で行う</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">50分</td>
+          </tr>
+          <tr class="row-break">
+            <td class="td-num">—</td>
+            <td class="td-section">休憩<span class="td-desc">後半は編集・書き出し。「自分が作りたい動画のイメージを整理しておいてください」</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">60分</td>
+          </tr>
+          <tr>
+            <td class="td-num">5</td>
+            <td class="td-section">基本編集・書き出し<span class="td-desc">字幕修正→クリップ編集・BGM追加→1080p MP4で書き出し。AIが作った素材を人間が磨いて完成品にする</span></td>
+            <td class="td-min">50分</td>
+            <td class="td-total">110分</td>
+          </tr>
+          <tr>
+            <td class="td-num">6</td>
+            <td class="td-section">まとめ<span class="td-desc">ダウンロード・SNS直接投稿・後から編集の方法。「テーマを変えるだけで同じ流れで量産できます」</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">120分</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="time-bar-wrap">
+        <div class="time-bar-label">時間配分</div>
+        <div class="time-bar">
+          <div class="time-seg seg-open"  style="flex:3">導入</div>
+          <div class="time-seg seg-learn" style="flex:7">イントロ</div>
+          <div class="time-seg seg-pract" style="flex:15">AI動画</div>
+          <div class="time-seg seg-pract" style="flex:15">ナレ</div>
+          <div class="time-seg seg-pract" style="flex:10">字幕</div>
+          <div class="time-seg seg-break" style="flex:10">休憩</div>
+          <div class="time-seg seg-pract2"style="flex:50">編集・書出し</div>
+          <div class="time-seg seg-wrap"  style="flex:10">まとめ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-end">
+
+  <!-- ── コース⑤ ── -->
+  <section class="section" id="c5">
+    <div class="section-header">
+      <div class="chapter-num">⑤</div>
+      <div class="section-title">実践編（Claude Code 特化）</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="course-card">
+      <div class="course-head">
+        <div class="course-icon ci-5">⑤</div>
+        <div class="course-head-info">
+          <div class="course-head-name">実践編（Claude Code 特化）</div>
+          <div class="course-tags">
+            <span class="tag tag-time">⏱ 120分</span>
+            <span class="tag tag-tool">Claude Code（Proプラン必須）</span>
+          </div>
+        </div>
+      </div>
+      <table class="timetable">
+        <thead>
+          <tr>
+            <th class="td-num">#</th>
+            <th>セクション</th>
+            <th class="td-min">時間</th>
+            <th class="td-total">累計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">挨拶・自己紹介<span class="td-desc">「今日は120分、Claude Codeという少し特別なAIを使ってみます。プログラミング知識は不要」</span></td>
+            <td class="td-min">1分</td>
+            <td class="td-total">1分</td>
+          </tr>
+          <tr class="row-title">
+            <td class="td-num">—</td>
+            <td class="td-section">アジェンダ説明<span class="td-desc">「前半で概念を理解、後半は実際の業務への応用まで進みます」（少人数3名以下）</span></td>
+            <td class="td-min">1分</td>
+            <td class="td-total">2分</td>
+          </tr>
+          <tr>
+            <td class="td-num">1</td>
+            <td class="td-section">Claude Code とは<span class="td-desc">4軸マップでの位置確認・他AIとの違い・できること/できないこと・利用条件（Proプラン $20/月）・APIの説明</span></td>
+            <td class="td-min">20分</td>
+            <td class="td-total">22分</td>
+          </tr>
+          <tr>
+            <td class="td-num">2</td>
+            <td class="td-section">セットアップ確認<span class="td-desc">デスクトップ版起動・Anthropicアカウントでサインイン・Proプラン確認・動作テスト。全員が動く状態になるまで個別サポート</span></td>
+            <td class="td-min">30分</td>
+            <td class="td-total">52分</td>
+          </tr>
+          <tr class="row-break">
+            <td class="td-num">—</td>
+            <td class="td-section">休憩<span class="td-desc">「後半は実際にPCの作業をClaude Codeにやってもらいます。自社で効率化したいことを考えておいてください」</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">62分</td>
+          </tr>
+          <tr>
+            <td class="td-num">3</td>
+            <td class="td-section">ユースケース紹介<span class="td-desc">①フォルダ整理・②CSV整形・③定型文書の一括生成を実演。「実際に動く様子を見て使えるイメージを持つ」</span></td>
+            <td class="td-min">10分</td>
+            <td class="td-total">72分</td>
+          </tr>
+          <tr>
+            <td class="td-num">4</td>
+            <td class="td-section">応用ワーク<span class="td-desc">CLAUDE.md作成（15分）→テンプレート化（10分）→トラブル対処7パターンの確認（5分）→自社業務への試行（10分）</span></td>
+            <td class="td-min">40分</td>
+            <td class="td-total">112分</td>
+          </tr>
+          <tr>
+            <td class="td-num">5</td>
+            <td class="td-section">まとめ・Q&amp;A<span class="td-desc">4つの学びの振り返り・伴走サービスの案内・質疑応答。「CLAUDE.mdは明日から使えます」</span></td>
+            <td class="td-min">8分</td>
+            <td class="td-total">120分</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="time-bar-wrap">
+        <div class="time-bar-label">時間配分</div>
+        <div class="time-bar">
+          <div class="time-seg seg-open"  style="flex:2">導入</div>
+          <div class="time-seg seg-learn" style="flex:20">概要</div>
+          <div class="time-seg seg-learn2"style="flex:30">セットアップ</div>
+          <div class="time-seg seg-break" style="flex:10">休憩</div>
+          <div class="time-seg seg-pract" style="flex:10">UC</div>
+          <div class="time-seg seg-pract2"style="flex:40">応用ワーク</div>
+          <div class="time-seg seg-wrap"  style="flex:8">Q&amp;A</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="notes">
+    <p>全5コースのうち①は90分、②〜⑤は120分です</p>
+    <p>コース⑤のみ受講条件あり（PC持参・Anthropicアカウント・Proプラン 約3,000円/月）</p>
+    <p>各コースは独立して受講可能です。セット受講も対応しています</p>
+  </div>
+
+</main>
+
+<footer>© 2026 ざつね屋</footer>
+
+</body>
+</html>

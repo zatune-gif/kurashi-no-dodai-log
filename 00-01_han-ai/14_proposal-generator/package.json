@@ -1,0 +1,16 @@
+{
+  "name": "proposal-generator",
+  "version": "1.0.0",
+  "description": "ざつね屋 提案書・見積書・診断結果PDF生成ツール",
+  "main": "main.js",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "electron": "^28.3.3"
+  }
+}

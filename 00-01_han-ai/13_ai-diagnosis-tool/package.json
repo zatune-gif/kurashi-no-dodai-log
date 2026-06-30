@@ -1,0 +1,8 @@
+{
+  "name": "ai-diagnosis-tool",
+  "version": "1.0.0",
+  "description": "AI活用準備度診断ツール by ざつね屋",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}

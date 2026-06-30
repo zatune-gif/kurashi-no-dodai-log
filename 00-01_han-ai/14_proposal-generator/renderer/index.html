@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>ざつね屋 提案書生成ツール</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ───── ツールバー ───── -->
+<header class="toolbar">
+  <div class="toolbar-title">ざつね屋 提案書生成ツール</div>
+  <div class="toolbar-actions">
+    <button id="btn-open-json" class="btn btn-primary">📂 JSONを読み込む</button>
+    <button id="btn-generate-proposal" class="btn btn-accent" disabled>🤖 提案書を生成（Claude）</button>
+    <button id="btn-generate-pdfs" class="btn btn-success" disabled>📄 PDF生成</button>
+  </div>
+</header>
+
+<!-- ───── クライアント情報 ───── -->
+<section class="client-bar">
+  <div class="field-row">
+    <div class="field-group">
+      <label>会社名 <span class="req">*</span></label>
+      <input id="f-company" type="text" placeholder="例：株式会社〇〇" class="field-input">
+    </div>
+    <div class="field-group">
+      <label>担当者名</label>
+      <input id="f-contact" type="text" placeholder="例：山田 太郎" class="field-input">
+    </div>
+    <div class="field-group">
+      <label>メールアドレス</label>
+      <input id="f-email" type="email" placeholder="例：taro@example.com" class="field-input">
+    </div>
+    <div class="field-group field-group-sm">
+      <label>業種</label>
+      <input id="f-industry" type="text" placeholder="例：製造業" class="field-input">
+    </div>
+    <div class="field-group field-group-sm">
+      <label>規模</label>
+      <input id="f-scale" type="text" placeholder="例：11〜30名" class="field-input">
+    </div>
+  </div>
+</section>
+
+<!-- ───── タブナビ ───── -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab-diagnosis">診断結果</button>
+  <button class="tab-btn" data-tab="tab-estimate">見積書</button>
+  <button class="tab-btn" data-tab="tab-proposal">提案書</button>
+</nav>
+
+<!-- ───── タブ：診断結果 ───── -->
+<div id="tab-diagnosis" class="tab-panel active">
+  <div class="panel-grid">
+    <div class="panel-col">
+      <div class="panel-section">
+        <div class="panel-section-title">スコア・ステージ</div>
+        <div class="score-row">
+          <div class="score-display">
+            <span id="d-score">—</span><small>点</small>
+          </div>
+          <div>
+            <div id="d-stage" class="stage-badge">—</div>
+            <div id="d-current-state" class="stage-state"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">強み</div>
+        <textarea id="d-strengths" class="textarea" rows="4" placeholder="診断結果から自動入力されます"></textarea>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">優先課題</div>
+        <textarea id="d-issues" class="textarea" rows="4" placeholder="診断結果から自動入力されます"></textarea>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">推奨アクション</div>
+        <textarea id="d-actions" class="textarea" rows="4" placeholder="診断結果から自動入力されます"></textarea>
+      </div>
+    </div>
+
+    <div class="panel-col">
+      <div class="panel-section">
+        <div class="panel-section-title">業務詳細（診断より）</div>
+        <div class="info-grid">
+          <div><span class="info-label">主な取引先</span><span id="d-customer-type">—</span></div>
+          <div><span class="info-label">最大の困りごと</span><span id="d-main-problem">—</span></div>
+          <div><span class="info-label">よく作る文書</span><span id="d-doc-types">—</span></div>
+          <div><span class="info-label">AI活用したい業務</span><span id="d-target-tasks">—</span></div>
+          <div><span class="info-label">AIツール希望</span><span id="d-ai-tool">—</span></div>
+          <div><span class="info-label">自社の特徴</span><span id="d-company-feature">—</span></div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">プロンプトライブラリ（Claude API生成分）</div>
+        <div id="d-library" class="library-list"><p class="empty-msg">JSONを読み込むと表示されます</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── タブ：見積書 ───── -->
+<div id="tab-estimate" class="tab-panel">
+  <div class="panel-grid">
+    <div class="panel-col">
+      <div class="panel-section">
+        <div class="panel-section-title">基本情報</div>
+        <div class="field-row field-row-wrap">
+          <div class="field-group">
+            <label>見積番号</label>
+            <input id="e-number" type="text" class="field-input" placeholder="例：2026-06-001">
+          </div>
+          <div class="field-group field-group-sm">
+            <label>モニター価格適用</label>
+            <label class="toggle"><input id="e-monitor" type="checkbox"><span>適用する（30%引き）</span></label>
+          </div>
+          <div class="field-group field-group-sm">
+            <label>助成金計算を表示</label>
+            <label class="toggle"><input id="e-subsidy" type="checkbox" checked><span>表示する（75%助成）</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">見積明細</div>
+        <div id="e-line-items" class="line-items"></div>
+        <button id="btn-add-line" class="btn btn-ghost btn-sm">＋ 行を追加</button>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-section-title">合計（自動計算）</div>
+        <div class="total-preview">
+          <div class="total-row"><span>小計（税別）</span><span id="e-subtotal">0円</span></div>
+          <div class="total-row"><span>消費税（10%）</span><span id="e-tax">0円</span></div>
+          <div class="total-row total-grand"><span>合計（税込）</span><span id="e-total">0円</span></div>
+        </div>
+        <div id="e-subsidy-preview" class="subsidy-preview">
+          <div class="subsidy-row"><span>助成額（75%）</span><span id="e-subsidy-amt" class="green"></span></div>
+          <div class="subsidy-row subsidy-burden"><span>企業様のご負担（25%）</span><span id="e-client-burden"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-col">
+      <div class="panel-section">
+        <div class="panel-section-title">AI推奨プラン（診断結果より）</div>
+        <div id="e-recommendations" class="rec-list"><p class="empty-msg">JSONを読み込むと表示されます</p></div>
+        <p class="help-text">上のプランを参考に、左の明細に金額を入力してください。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── タブ：提案書 ───── -->
+<div id="tab-proposal" class="tab-panel">
+  <div class="panel-section">
+    <div class="panel-section-title">
+      第1章・第2章（Claude APIで生成 → 編集）
+      <button id="btn-gen-inline" class="btn btn-accent btn-sm">🤖 生成する</button>
+    </div>
+    <div id="p-generating" class="generating-msg hidden">Claude APIで生成中...</div>
+    <div class="proposal-sections">
+      <div class="proposal-section-block">
+        <div class="proposal-section-label">1. 貴社の現状と課題</div>
+        <textarea id="p-section1" class="textarea" rows="10" placeholder="「提案書を生成（Claude）」ボタンで自動生成されます&#10;または直接入力してください"></textarea>
+      </div>
+      <div class="proposal-section-block">
+        <div class="proposal-section-label">2. ご提案するサービス</div>
+        <textarea id="p-section2" class="textarea" rows="10" placeholder="「提案書を生成（Claude）」ボタンで自動生成されます&#10;または直接入力してください"></textarea>
+      </div>
+    </div>
+    <p class="help-text">第3章（費用）は見積書タブの内容から自動生成されます。第4章・第5章は固定テンプレートです。</p>
+  </div>
+</div>
+
+<!-- ───── ステータスバー ───── -->
+<div id="status-bar" class="status-bar">JSON未読み込み</div>
+
+<!-- ───── 完了モーダル ───── -->
+<div id="modal-done" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-title">✅ PDF生成完了</div>
+    <div id="modal-body" class="modal-body"></div>
+    <button id="btn-modal-close" class="btn btn-primary">閉じる</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
