@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>半農プロジェクト｜暮らしのログプロジェクト 00-02</title>
+  <style>
+    :root { --primary: #DA7756; --primary-dk: #b8623f; --primary-bg: rgba(218,119,86,0.12); --bg: #1C1C1C; --bg-panel: #141414; --card: #252525; --card-2: #2f2f2f; --text: #eeeeee; --text-muted: #999999; --border: #3a3a3a; --success: #4caf7d; --warning: #f5a623; --radius: 12px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Yu Gothic UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
+
+    .site-nav { position: sticky; top: 0; z-index: 100; background: rgba(20,20,20,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 52px; display: flex; align-items: center; gap: 10px; }
+    .nav-back { font-size: 13px; font-weight: 700; color: var(--primary); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: #fff; }
+    .nav-sep { color: #444; }
+    .nav-current { font-size: 13px; color: var(--text-muted); }
+
+    .cover { background: linear-gradient(145deg, #0a0a0a 0%, #101a10 55%, #151f15 100%); padding: 48px 24px 44px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .cover::before { content: ''; position: absolute; top: -100px; right: -100px; width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle, rgba(76,175,125,0.12) 0%, transparent 70%); pointer-events: none; }
+    .cover-inner { max-width: 800px; margin: 0 auto; position: relative; }
+    .cover-eyebrow { font-size: 11px; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 12px; }
+    .cover h1 { font-size: 30px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.25; color: #fff; margin-bottom: 12px; }
+    .cover h1 span { display: inline-block; width: 5px; height: 28px; background: var(--success); border-radius: 3px; margin-right: 12px; vertical-align: middle; margin-bottom: 3px; }
+    .cover-sub { font-size: 14px; color: var(--text-muted); max-width: 520px; line-height: 1.8; margin-bottom: 28px; }
+    .cover-meta { display: flex; flex-wrap: wrap; gap: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .cover-meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .cover-meta-label { font-size: 10px; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cover-meta-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+    .main { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+    .section { margin-bottom: 52px; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+    .chapter-num { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--success); color: #fff; font-size: 13px; font-weight: 900; border-radius: 8px; flex-shrink: 0; box-shadow: 0 0 14px rgba(76,175,125,0.35); }
+    .section-title { font-size: 19px; font-weight: 800; color: var(--text); }
+    .section-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--border), transparent); }
+
+    .mission-block { background: #111c18; border: 1px solid rgba(76,175,125,0.3); border-left: 4px solid var(--success); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px; position: relative; overflow: hidden; }
+    .mission-block::before { content: '"'; position: absolute; top: -16px; right: 16px; font-size: 130px; color: rgba(76,175,125,0.06); font-family: Georgia, serif; line-height: 1; pointer-events: none; }
+    .mission-label { font-size: 10px; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 8px; }
+    .mission-text { font-size: 16px; font-weight: 800; color: #fff; line-height: 1.75; position: relative; }
+    .mission-note { font-size: 13px; color: var(--text-muted); margin-top: 12px; line-height: 1.7; }
+
+    .view-block { background: #111c18; border: 1px solid rgba(76,175,125,0.3); border-left: 4px solid var(--success); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 16px; }
+    .view-label { font-size: 10px; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 7px; }
+    .view-text { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+    .view-text strong { color: var(--text); }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 16px; border-radius: var(--radius); border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--card); }
+    thead th { background: #111c18; color: var(--success); font-weight: 700; padding: 11px 16px; text-align: left; font-size: 11px; letter-spacing: 0.05em; border-bottom: 1px solid rgba(76,175,125,0.25); }
+    tbody tr:nth-child(even) { background: #202020; }
+    tbody tr:hover { background: rgba(76,175,125,0.06); transition: background 0.15s; }
+    td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); font-size: 14px; }
+    tbody tr:last-child td { border-bottom: none; }
+    td:first-child { font-weight: 700; color: var(--success); white-space: nowrap; }
+
+    .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .bullet-list li { font-size: 14px; color: var(--text-muted); padding-left: 16px; position: relative; line-height: 1.6; }
+    .bullet-list li::before { content: '›'; position: absolute; left: 2px; color: var(--success); font-weight: 700; }
+
+    .unknown-card { background: #1a1510; border: 1px solid rgba(245,166,35,0.3); border-left: 3px solid var(--warning); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .unknown-label { font-size: 10px; font-weight: 700; color: var(--warning); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .unknown-items { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+    .unknown-items li { font-size: 12px; color: var(--text-muted); background: var(--card-2); border: 1px solid rgba(245,166,35,0.2); padding: 3px 10px; border-radius: 99px; }
+
+    /* ── 農地カード ── */
+    .farm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+    @media (max-width: 560px) { .farm-grid { grid-template-columns: 1fr; } }
+    .farm-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); border-top: 3px solid var(--success); padding: 16px 14px; text-align: center; }
+    .farm-icon { font-size: 28px; margin-bottom: 6px; }
+    .farm-count { font-size: 28px; font-weight: 900; color: var(--success); line-height: 1; margin-bottom: 4px; }
+    .farm-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .farm-note { font-size: 11px; color: var(--text-muted); }
+
+    /* ── 自給ステップ ── */
+    .jikyu-stack { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .jikyu-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; }
+    .jikyu-phase { font-size: 10px; font-weight: 800; color: var(--success); background: rgba(76,175,125,0.12); border: 1px solid rgba(76,175,125,0.25); padding: 3px 10px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; }
+    .jikyu-body { flex: 1; font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+    .jikyu-body strong { color: var(--text); }
+
+    /* ── コミュニティ対象 ── */
+    .community-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    @media (max-width: 500px) { .community-list { grid-template-columns: 1fr; } }
+    .community-item { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+    .community-item::before { content: '›'; color: var(--success); font-weight: 700; }
+
+    /* ── 健康アラート ── */
+    .health-alert { background: #1a1510; border: 1px solid rgba(245,166,35,0.35); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; }
+    .health-alert__label { font-size: 10px; font-weight: 700; color: var(--warning); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .health-alert__text { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+    .health-alert__text strong { color: var(--text); }
+
+    .info-bar { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+    .info-bar__icon { font-size: 18px; flex-shrink: 0; }
+    .info-bar__text { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+    .info-bar__text strong { color: var(--text); }
+
+    /* ── ロードマップ ── */
+    .roadmap { display: flex; flex-direction: column; }
+    .roadmap-conn { width: 2px; height: 24px; margin-left: 30px; opacity: 0.4; background: linear-gradient(to bottom, var(--success), transparent); }
+    .rm-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 28px 24px; position: relative; overflow: hidden; }
+    .rm-card.rm-current { background: #0e1c14; border-color: rgba(76,175,125,0.45); box-shadow: 0 0 50px rgba(76,175,125,0.08), inset 0 0 40px rgba(76,175,125,0.02); }
+    .rm-card.rm-future { opacity: 0.6; }
+    .rm-bg-num { position: absolute; right: 12px; top: 4px; font-size: 100px; font-weight: 900; color: rgba(255,255,255,0.025); line-height: 1; pointer-events: none; user-select: none; letter-spacing: -0.04em; }
+    .rm-current .rm-bg-num { color: rgba(76,175,125,0.08); }
+    .rm-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .rm-label { font-size: 10px; font-weight: 900; color: #fff; background: var(--success); padding: 3px 12px; border-radius: 99px; letter-spacing: 0.1em; flex-shrink: 0; }
+    .rm-future .rm-label { background: #2a2a2a; color: #666; }
+    .rm-title { font-size: 20px; font-weight: 900; color: var(--text); flex: 1; }
+    .rm-period { font-size: 11px; color: var(--text-muted); white-space: nowrap; background: var(--card-2); border: 1px solid var(--border); padding: 3px 12px; border-radius: 99px; }
+    .rm-now { font-size: 10px; font-weight: 900; letter-spacing: 0.12em; color: var(--success); border: 1.5px solid var(--success); padding: 2px 10px; border-radius: 99px; animation: rm-pulse-g 2s ease-in-out infinite; }
+    @keyframes rm-pulse-g { 0%,100%{opacity:1;} 50%{opacity:0.45;} }
+    .rm-divider { height: 1px; background: var(--border); margin-bottom: 18px; }
+    .rm-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px 28px; }
+    .rm-group-label { font-size: 10px; font-weight: 800; color: var(--success); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 7px; }
+    .rm-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .rm-bullets li { font-size: 13px; color: var(--text-muted); padding-left: 14px; position: relative; line-height: 1.55; }
+    .rm-bullets li::before { content: '›'; position: absolute; left: 2px; color: var(--success); font-weight: 700; }
+
+    .footer { text-align: center; font-size: 12px; color: #555; padding: 28px 24px; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="kurashi-no-dodai-log.html" class="nav-back">← 暮らしのログプロジェクト</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">00-02 半農プロジェクト</span>
+</nav>
+
+<div class="cover">
+  <div class="cover-inner">
+    <p class="cover-eyebrow">Project 00-02</p>
+    <h1><span></span>半農プロジェクト</h1>
+    <p class="cover-sub">
+      食料自給・地域理解・発信素材の3役割を担う軸。<br>
+      収益化を急がず、農作業を実践しながら記録していく。
+    </p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">農地所在</span>
+        <span class="cover-meta-value">福山市新市町</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">農地規模</span>
+        <span class="cover-meta-value">畑3か所・田んぼ2か所（面積未確認）</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">優先度</span>
+        <span class="cover-meta-value">収益化は急がない</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══ 1. 役割と位置づけ ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">役</div>
+      <h2 class="section-title">役割と位置づけ</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="mission-block">
+      <p class="mission-label">このプロジェクトの役割</p>
+      <p class="mission-text">農業自体が目的ではない。<br>暮らしのコスト削減・地域理解・発信素材の3つを担う。</p>
+      <p class="mission-note">農業法人・JA・集落営農との接点はP3以降のAI事業顧客候補にもなる。収益化は副産物として、まずは実践と記録。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>役割</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>食料自給</td><td>米・野菜の自給率向上。生活コストを下げ、AI事業への集中度を高める</td></tr>
+          <tr><td>地域理解</td><td>農業コミュニティへの参加を通じ、将来のAI事業顧客候補の課題を把握する</td></tr>
+          <tr><td>発信素材</td><td>「健康を守りながら農業とAIを実践する当事者」としての独自発信コンテンツ</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ 2. 農地情報 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">地</div>
+      <h2 class="section-title">農地情報</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="farm-grid">
+      <div class="farm-card">
+        <div class="farm-icon">🥬</div>
+        <div class="farm-count">3</div>
+        <div class="farm-name">畑</div>
+        <div class="farm-note">野菜・根菜類</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-icon">🌾</div>
+        <div class="farm-count">2</div>
+        <div class="farm-name">田んぼ</div>
+        <div class="farm-note">米作り</div>
+      </div>
+      <div class="farm-card">
+        <div class="farm-icon">🌲</div>
+        <div class="farm-count">あり</div>
+        <div class="farm-name">山</div>
+        <div class="farm-note">管理状況未確認</div>
+      </div>
+    </div>
+
+    <div class="unknown-card">
+      <p class="unknown-label">移住直後に確認が必要な事項</p>
+      <ul class="unknown-items">
+        <li>各農地の面積</li>
+        <li>土壌の状態</li>
+        <li>水利用状況</li>
+        <li>農地法上の扱い</li>
+        <li>利用可能な範囲</li>
+      </ul>
+    </div>
+
+    <div class="info-bar">
+      <div class="info-bar__icon">📍</div>
+      <div class="info-bar__text"><strong>所在地：福山市新市町</strong>。住居（府中市）とは別の市。移動時間・農作業の頻度設計が必要。</div>
+    </div>
+  </div>
+
+  <!-- ══ 3. 食料自給計画 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">食</div>
+      <h2 class="section-title">食料自給計画</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="jikyu-stack">
+      <div class="jikyu-item">
+        <span class="jikyu-phase">初年度（試験運用）</span>
+        <div class="jikyu-body">
+          <strong>米・ジャガイモ・玉ねぎ・サツマイモ・ネギ・大根</strong>を中心に試験運用。<br>
+          目的は食費削減。まず「一通り育てる経験」を積む。
+        </div>
+      </div>
+      <div class="jikyu-item">
+        <span class="jikyu-phase">1〜2年目</span>
+        <div class="jikyu-body">米・野菜の自給<strong>30〜50%</strong>を目指す。農作業の手順を記録して効率化。</div>
+      </div>
+      <div class="jikyu-item">
+        <span class="jikyu-phase">3年目以降</span>
+        <div class="jikyu-body">米<strong>50〜100%</strong>・野菜<strong>70%</strong>自給を目指す。農地の活用範囲を確定してから拡大。</div>
+      </div>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">食費削減効果の見通し</p>
+      <p class="view-text">
+        米の自給が実現すると、4人家族で<strong>月1〜2万円の食費削減</strong>が期待できる。
+        野菜の自給が加わると月2〜3万円規模。月15万円の生活費目標に直接貢献する。
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ 4. 農業コミュニティ形成 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">繋</div>
+      <h2 class="section-title">農業コミュニティ形成</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-weight: 700;">接点づくりの対象</p>
+    <div class="community-list">
+      <div class="community-item">農業法人</div>
+      <div class="community-item">地域農家（集落内）</div>
+      <div class="community-item">集落営農組織</div>
+      <div class="community-item">JA関連</div>
+      <div class="community-item">農機店・種苗店</div>
+      <div class="community-item">移住者コミュニティ</div>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">目的（収益化ではなく）</p>
+      <p class="view-text">
+        農業知識の習得・地域ネットワーク形成・地域課題の理解が目的。<br>
+        P3（6か月〜2年）以降、<strong>農業法人・JA の業務課題 → AI事業の提案先</strong>として繋がっていく。
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ 5. 健康面の留意 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">健</div>
+      <h2 class="section-title">健康面の留意</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="health-alert">
+      <p class="health-alert__label">既往歴による制約</p>
+      <p class="health-alert__text">
+        <strong>脳室内出血・高血圧</strong>の既往あり。農作業強度の管理が必要。<br>
+        「食費削減のための無理しない範囲での実践」と位置づけ、健康管理と両立させる。<br>
+        炎天下の作業・重労働は避け、無理のないペースで継続することを優先する。
+      </p>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">農業と健康の両立方針</p>
+      <p class="view-text">
+        農作業は<strong>「軽い運動・気分転換・食の安心感」</strong>として捉える。スマートウォッチで心拍・体調を記録しながら、無理なく続けられる作業量を見極める。
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ 6. 発信素材としての農業 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">発</div>
+      <h2 class="section-title">発信素材としての農業</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">発信上の独自性</p>
+      <p class="view-text">
+        「<strong>AI事業者が農業もやりながら暮らす</strong>」という当事者目線が発信の独自性になる。<br>
+        農業の成功・失敗・工夫・地域との関わりをそのまま記録することが価値になる。
+      </p>
+    </div>
+
+    <ul class="bullet-list">
+      <li>農地確認・初作業の記録（最初の1か月から発信）</li>
+      <li>米作りの初挑戦（田植え〜収穫まで）</li>
+      <li>野菜の種まき・失敗・改善の記録</li>
+      <li>地域農家から教わったこと</li>
+      <li>農作業とAI事業を並行する日常</li>
+    </ul>
+
+    <div class="info-bar">
+      <div class="info-bar__icon">📢</div>
+      <div class="info-bar__text">媒体候補：<strong>YouTube（農作業動画）</strong>・<strong>note（詳細記録）</strong>・<strong>X/Facebook（日常シェア）</strong></div>
+    </div>
+  </div>
+
+  <!-- ══ ロードマップ ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">道</div>
+      <h2 class="section-title">ロードマップ</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="view-block" style="margin-bottom: 24px;">
+      <p class="view-label">応援・助言してくださっている方々へ</p>
+      <p class="view-text">
+        農業は完全に未経験です。農地の詳細も移住してから初めて確認します。<strong>このプロジェクトは移住後（P2）から本格始動</strong>。失敗も記録しながら、焦らずデータを見て進めます。
+      </p>
+    </div>
+
+    <div class="roadmap">
+      <div class="rm-card rm-current">
+        <div class="rm-bg-num">P1</div>
+        <div class="rm-head">
+          <span class="rm-label">P1</span>
+          <span class="rm-title">移住前（準備）</span>
+          <span class="rm-period">現在進行中</span>
+          <span class="rm-now">NOW</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">情報収集</p>
+            <ul class="rm-bullets">
+              <li>農地の基本情報を事前に収集</li>
+              <li>農作業の基礎知識・農機具情報を習得</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">準備</p>
+            <ul class="rm-bullets">
+              <li>種苗・農機具の情報収集</li>
+              <li>地域農業の状況を把握</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P2</div>
+        <div class="rm-head">
+          <span class="rm-label">P2</span>
+          <span class="rm-title">確認・整備</span>
+          <span class="rm-period">移住直後〜6か月</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">農地確認</p>
+            <ul class="rm-bullets">
+              <li>農地の面積・土壌状態を確認・記録</li>
+              <li>水利用・農地法上の扱いを確認</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">初期整備</p>
+            <ul class="rm-bullets">
+              <li>状態に応じた初期整備を実施</li>
+              <li>小規模での試作を開始</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P3</div>
+        <div class="rm-head">
+          <span class="rm-label">P3</span>
+          <span class="rm-title">試験農作業</span>
+          <span class="rm-period">6か月〜2年</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">食料自給</p>
+            <ul class="rm-bullets">
+              <li>米・野菜作りを実践しながら記録</li>
+              <li>自給率 30〜50% を目標に</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">コミュニティ</p>
+            <ul class="rm-bullets">
+              <li>農業法人・集落営農との接点形成</li>
+              <li>地域農家から農作業を学ぶ</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P4</div>
+        <div class="rm-head">
+          <span class="rm-label">P4</span>
+          <span class="rm-title">自給率向上</span>
+          <span class="rm-period">2年〜</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">食料自給</p>
+            <ul class="rm-bullets">
+              <li>米 50〜100%・野菜 70% 自給を目指す</li>
+              <li>農作業の効率化・記録を継続</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">AI事業連携</p>
+            <ul class="rm-bullets">
+              <li>農業法人・JA の課題を AI 事業へ繋ぐ</li>
+              <li>農業×AI のコンテンツ発信を強化</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  © 2026 ざつね屋 — 暮らしのログプロジェクト / 00-02 半農プロジェクト
+</div>
+</body>
+</html>

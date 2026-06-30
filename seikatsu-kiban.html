@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生活基盤プロジェクト｜暮らしのログプロジェクト 00-03</title>
+  <style>
+    :root { --primary: #DA7756; --primary-dk: #b8623f; --primary-bg: rgba(218,119,86,0.12); --bg: #1C1C1C; --bg-panel: #141414; --card: #252525; --card-2: #2f2f2f; --text: #eeeeee; --text-muted: #999999; --border: #3a3a3a; --success: #4caf7d; --warning: #f5a623; --info: #5b9bd5; --radius: 12px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Yu Gothic UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
+
+    .site-nav { position: sticky; top: 0; z-index: 100; background: rgba(20,20,20,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 52px; display: flex; align-items: center; gap: 10px; }
+    .nav-back { font-size: 13px; font-weight: 700; color: var(--primary); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: #fff; }
+    .nav-sep { color: #444; }
+    .nav-current { font-size: 13px; color: var(--text-muted); }
+
+    .cover { background: linear-gradient(145deg, #0a0a0a 0%, #0f1520 55%, #131a25 100%); padding: 48px 24px 44px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .cover::before { content: ''; position: absolute; top: -100px; right: -100px; width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle, rgba(91,155,213,0.12) 0%, transparent 70%); pointer-events: none; }
+    .cover-inner { max-width: 800px; margin: 0 auto; position: relative; }
+    .cover-eyebrow { font-size: 11px; font-weight: 700; color: var(--info); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 12px; }
+    .cover h1 { font-size: 30px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.25; color: #fff; margin-bottom: 12px; }
+    .cover h1 span { display: inline-block; width: 5px; height: 28px; background: var(--info); border-radius: 3px; margin-right: 12px; vertical-align: middle; margin-bottom: 3px; }
+    .cover-sub { font-size: 14px; color: var(--text-muted); max-width: 520px; line-height: 1.8; margin-bottom: 28px; }
+    .cover-meta { display: flex; flex-wrap: wrap; gap: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .cover-meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .cover-meta-label { font-size: 10px; font-weight: 700; color: var(--info); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cover-meta-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+    .main { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+    .section { margin-bottom: 52px; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+    .chapter-num { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--info); color: #fff; font-size: 13px; font-weight: 900; border-radius: 8px; flex-shrink: 0; box-shadow: 0 0 14px rgba(91,155,213,0.35); }
+    .section-title { font-size: 19px; font-weight: 800; color: var(--text); }
+    .section-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--border), transparent); }
+
+    .mission-block { background: #101520; border: 1px solid rgba(91,155,213,0.3); border-left: 4px solid var(--info); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px; position: relative; overflow: hidden; }
+    .mission-label { font-size: 10px; font-weight: 700; color: var(--info); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 8px; }
+    .mission-text { font-size: 17px; font-weight: 800; color: #fff; line-height: 1.75; }
+    .mission-note { font-size: 13px; color: var(--text-muted); margin-top: 12px; line-height: 1.7; }
+
+    .view-block { background: #111c18; border: 1px solid rgba(76,175,125,0.3); border-left: 4px solid var(--success); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 16px; }
+    .view-label { font-size: 10px; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 7px; }
+    .view-text { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+    .view-text strong { color: var(--text); }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 16px; border-radius: var(--radius); border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--card); }
+    thead th { background: #101520; color: var(--info); font-weight: 700; padding: 11px 16px; text-align: left; font-size: 11px; letter-spacing: 0.05em; border-bottom: 1px solid rgba(91,155,213,0.25); }
+    tbody tr:nth-child(even) { background: #202020; }
+    tbody tr:hover { background: rgba(91,155,213,0.05); transition: background 0.15s; }
+    td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); font-size: 14px; }
+    tbody tr:last-child td { border-bottom: none; }
+    td:first-child { font-weight: 700; color: var(--info); white-space: nowrap; }
+
+    .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .bullet-list li { font-size: 14px; color: var(--text-muted); padding-left: 16px; position: relative; line-height: 1.6; }
+    .bullet-list li::before { content: '›'; position: absolute; left: 2px; color: var(--info); font-weight: 700; }
+
+    .unknown-card { background: #1a1510; border: 1px solid rgba(245,166,35,0.3); border-left: 3px solid var(--warning); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+    .unknown-label { font-size: 10px; font-weight: 700; color: var(--warning); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .unknown-items { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+    .unknown-items li { font-size: 12px; color: var(--text-muted); background: var(--card-2); border: 1px solid rgba(245,166,35,0.2); padding: 3px 10px; border-radius: 99px; }
+
+    .info-bar { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+    .info-bar__icon { font-size: 18px; flex-shrink: 0; }
+    .info-bar__text { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+    .info-bar__text strong { color: var(--text); }
+
+    /* ── 優先順位スタック ── */
+    .priority-stack { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .pcard { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start; }
+    .pcard-num { font-size: 40px; font-weight: 900; color: var(--info); opacity: 0.22; line-height: 1; flex-shrink: 0; width: 44px; text-align: center; }
+    .pcard-body { flex: 1; }
+    .pcard-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .pcard-items { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+    .pcard-budget { font-size: 12px; color: var(--info); font-weight: 700; margin-top: 8px; }
+
+    /* ── 健康機器テーブル ── */
+    .health-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    @media (max-width: 500px) { .health-grid { grid-template-columns: 1fr; } }
+    .health-item { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+    .health-item__icon { font-size: 20px; flex-shrink: 0; }
+    .health-item__name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .health-item__status { font-size: 11px; color: var(--success); margin-top: 2px; }
+
+    /* ── 3年後目標 ── */
+    .goal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+    @media (max-width: 500px) { .goal-grid { grid-template-columns: 1fr; } }
+    .goal-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); border-top: 3px solid var(--success); padding: 16px 14px; }
+    .goal-card__label { font-size: 10px; font-weight: 800; color: var(--success); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+    .goal-card__text { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.6; }
+
+    /* ── ロードマップ ── */
+    .roadmap { display: flex; flex-direction: column; }
+    .roadmap-conn { width: 2px; height: 24px; margin-left: 30px; opacity: 0.4; background: linear-gradient(to bottom, var(--info), transparent); }
+    .rm-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 28px 24px; position: relative; overflow: hidden; }
+    .rm-card.rm-current { background: #101520; border-color: rgba(91,155,213,0.45); box-shadow: 0 0 50px rgba(91,155,213,0.08), inset 0 0 40px rgba(91,155,213,0.02); }
+    .rm-card.rm-future { opacity: 0.6; }
+    .rm-bg-num { position: absolute; right: 12px; top: 4px; font-size: 100px; font-weight: 900; color: rgba(255,255,255,0.025); line-height: 1; pointer-events: none; user-select: none; letter-spacing: -0.04em; }
+    .rm-current .rm-bg-num { color: rgba(91,155,213,0.09); }
+    .rm-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .rm-label { font-size: 10px; font-weight: 900; color: #fff; background: var(--info); padding: 3px 12px; border-radius: 99px; letter-spacing: 0.1em; flex-shrink: 0; }
+    .rm-future .rm-label { background: #2a2a2a; color: #666; }
+    .rm-title { font-size: 20px; font-weight: 900; color: var(--text); flex: 1; }
+    .rm-period { font-size: 11px; color: var(--text-muted); white-space: nowrap; background: var(--card-2); border: 1px solid var(--border); padding: 3px 12px; border-radius: 99px; }
+    .rm-now { font-size: 10px; font-weight: 900; letter-spacing: 0.12em; color: var(--info); border: 1.5px solid var(--info); padding: 2px 10px; border-radius: 99px; animation: rm-pulse-b 2s ease-in-out infinite; }
+    @keyframes rm-pulse-b { 0%,100%{opacity:1;} 50%{opacity:0.45;} }
+    .rm-divider { height: 1px; background: var(--border); margin-bottom: 18px; }
+    .rm-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px 28px; }
+    .rm-group-label { font-size: 10px; font-weight: 800; color: var(--info); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 7px; }
+    .rm-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .rm-bullets li { font-size: 13px; color: var(--text-muted); padding-left: 14px; position: relative; line-height: 1.55; }
+    .rm-bullets li::before { content: '›'; position: absolute; left: 2px; color: var(--info); font-weight: 700; }
+
+    .footer { text-align: center; font-size: 12px; color: #555; padding: 28px 24px; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="kurashi-no-dodai-log.html" class="nav-back">← 暮らしのログプロジェクト</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">00-03 生活基盤プロジェクト</span>
+</nav>
+
+<div class="cover">
+  <div class="cover-inner">
+    <p class="cover-eyebrow">Project 00-03</p>
+    <h1><span></span>生活基盤プロジェクト</h1>
+    <p class="cover-sub">
+      月15万円で家族4人が持続可能に暮らす基盤を整える。<br>
+      住居・井戸・エネルギーを順番に確認・整備していく。
+    </p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">住居</span>
+        <span class="cover-meta-value">府中市・5LDK・築50年以上・家賃不要</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">生活費目標</span>
+        <span class="cover-meta-value">月15万円（4人家族）</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">固定資産税</span>
+        <span class="cover-meta-value">16,000円/年</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══ 1. 確定資産と目標 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">資</div>
+      <h2 class="section-title">確定資産と生活費目標</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="mission-block">
+      <p class="mission-label">生活費目標</p>
+      <p class="mission-text">月15万円で家族4人が持続可能に暮らす。</p>
+      <p class="mission-note">家賃ゼロ・固定資産税16,000円/年が前提。AI事業収入が安定するまでの「低コスト生活の基盤」として設計する。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th><th>状況</th></tr></thead>
+        <tbody>
+          <tr><td>住居</td><td>5LDK・2階建て・築50年以上</td><td>確定（家賃不要）</td></tr>
+          <tr><td>固定資産税</td><td>16,000円/年（約1,330円/月）</td><td>確定</td></tr>
+          <tr><td>井戸</td><td>利用可能</td><td>水量・飲用可否は未確認</td></tr>
+          <tr><td>家族</td><td>4人家族</td><td>確定</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">家賃ゼロの価値</p>
+      <p class="view-text">
+        広島近郊で4人家族が暮らす場合、家賃相場は月6〜10万円。それがゼロになることで、<strong>月15万円での生活が現実的</strong>になる。AI事業の立ち上げ期においても、生活水準を落とさず継続できる。
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ 2. 優先順位4段階 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">順</div>
+      <h2 class="section-title">整備の優先順位（4段階）</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="info-bar" style="margin-bottom: 20px;">
+      <div class="info-bar__icon">💡</div>
+      <div class="info-bar__text"><strong>方針：急いで設備投資しない。</strong>家賃ゼロなので余裕がある。データを取ってから判断する。</div>
+    </div>
+
+    <div class="priority-stack">
+      <div class="pcard">
+        <div class="pcard-num">①</div>
+        <div class="pcard-body">
+          <p class="pcard-title">井戸の確認（移住直後）</p>
+          <p class="pcard-items">
+            飲用可否・水量・ポンプ方式・停電時の利用可否を確認。<br>
+            必要なら手動ポンプ・雨水タンク（200〜1000L）を追加検討。
+          </p>
+          <p class="pcard-budget">予算目安：5〜15万円</p>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-num">②</div>
+        <div class="pcard-body">
+          <p class="pcard-title">住宅状態の確認（移住直後）</p>
+          <p class="pcard-items">
+            雨漏り → シロアリ → 電気配線 → 断熱性能の順で確認。<br>
+            省エネ化（内窓・隙間風対策・断熱カーテン・高効率エアコン）と給湯設備の現状確認（灯油/ガス/エコキュート）。
+          </p>
+          <p class="pcard-budget">予算目安：10〜30万円</p>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-num">③</div>
+        <div class="pcard-body">
+          <p class="pcard-title">電力消費量の計測（移住後3〜6か月）</p>
+          <p class="pcard-items">
+            実際の使用量・季節変動をデータで把握してから機器選定。<br>
+            急いで設備投資しない。家賃ゼロのため余裕がある。
+          </p>
+          <p class="pcard-budget">費用：ほぼゼロ（計測のみ）</p>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-num">④</div>
+        <div class="pcard-body">
+          <p class="pcard-title">蓄電池・太陽光の選定・導入</p>
+          <p class="pcard-items">
+            データをもとに過不足のない投資。安心感・災害対策を優先するなら<strong>Jackery 3000 New ＋ 200W×2枚（400Wソーラー）</strong>が合理的。<br>
+            AI事業用PC・冷蔵庫・通信を維持。停電時3〜7日の生活・仕事を維持。<br>
+            設置場所：2階ベランダ。将来800Wへ増設可能。
+          </p>
+          <p class="pcard-budget">予算目安：25〜35万円</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">投資の順序について</p>
+      <p class="view-text">
+        AI事業収入が安定してから大型設備投資（④）を行う。<strong>①②は移住直後に低コストで実施、③はデータ収集、④はAI事業が軌道に乗った後</strong>。焦って全部やろうとしない。
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ 3. 健康管理体制 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">健</div>
+      <h2 class="section-title">健康管理体制</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="unknown-card">
+      <p class="unknown-label">既往歴（管理が必要）</p>
+      <ul class="unknown-items">
+        <li>脳室内出血</li>
+        <li>高血圧</li>
+        <li>痛風</li>
+        <li>アトピー性皮膚炎</li>
+      </ul>
+    </div>
+
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-weight: 700;">整備済みの健康管理機器</p>
+    <div class="health-grid">
+      <div class="health-item">
+        <span class="health-item__icon">💊</span>
+        <div>
+          <p class="health-item__name">上腕式血圧計</p>
+          <p class="health-item__status">整備済み</p>
+        </div>
+      </div>
+      <div class="health-item">
+        <span class="health-item__icon">⌚</span>
+        <div>
+          <p class="health-item__name">スマートウォッチ</p>
+          <p class="health-item__status">整備済み</p>
+        </div>
+      </div>
+      <div class="health-item">
+        <span class="health-item__icon">⚖️</span>
+        <div>
+          <p class="health-item__name">体重計</p>
+          <p class="health-item__status">整備済み</p>
+        </div>
+      </div>
+      <div class="health-item">
+        <span class="health-item__icon">🔬</span>
+        <div>
+          <p class="health-item__name">定期血液検査</p>
+          <p class="health-item__status">体制整備済み</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">追加投資の判断</p>
+      <p class="view-text">
+        現時点で追加の健康機器導入は不要。<strong>データを継続して記録すること</strong>が最重要。農作業・AI事業・生活の3つのバランスを崩さないことを優先する。
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ 4. 3年後の目標状態 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">目</div>
+      <h2 class="section-title">3年後の目標状態</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="goal-grid">
+      <div class="goal-card">
+        <p class="goal-card__label">生活費</p>
+        <p class="goal-card__text">月15〜20万円で家族4人が安定。家賃ゼロを活かした持続可能な生活。</p>
+      </div>
+      <div class="goal-card">
+        <p class="goal-card__label">水</p>
+        <p class="goal-card__text">井戸を主体として活用。水道代の大幅削減。飲用・農業用双方で利用。</p>
+      </div>
+      <div class="goal-card">
+        <p class="goal-card__label">電力</p>
+        <p class="goal-card__text">太陽光＋蓄電池で一部自給。停電時も最低限の生活・仕事を継続できる。</p>
+      </div>
+      <div class="goal-card">
+        <p class="goal-card__label">住宅</p>
+        <p class="goal-card__text">断熱・省エネ改善済み。雨漏り・シロアリ対応完了。冬の暖房費を削減。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ロードマップ ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">道</div>
+      <h2 class="section-title">ロードマップ</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="view-block" style="margin-bottom: 24px;">
+      <p class="view-label">応援・助言してくださっている方々へ</p>
+      <p class="view-text">
+        住宅・設備の詳細は移住してから実際に確認します。<strong>急いで設備投資するのではなく、データを見ながら段階的に進める方針</strong>です。①井戸・②住宅を確認することから始めます。
+      </p>
+    </div>
+
+    <div class="roadmap">
+      <div class="rm-card rm-current">
+        <div class="rm-bg-num">P1</div>
+        <div class="rm-head">
+          <span class="rm-label">P1</span>
+          <span class="rm-title">移住前（事前確認）</span>
+          <span class="rm-period">現在進行中</span>
+          <span class="rm-now">NOW</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">情報収集</p>
+            <ul class="rm-bullets">
+              <li>住宅・農地の基本情報を事前収集</li>
+              <li>地域の工務店・業者情報を把握</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P2</div>
+        <div class="rm-head">
+          <span class="rm-label">P2</span>
+          <span class="rm-title">①② 確認フェーズ</span>
+          <span class="rm-period">移住直後</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">① 井戸確認</p>
+            <ul class="rm-bullets">
+              <li>水量・飲用可否・ポンプ方式を確認・記録</li>
+              <li>予算5〜15万円で必要な追加設備を整備</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">② 住宅確認</p>
+            <ul class="rm-bullets">
+              <li>雨漏り・配線・断熱・シロアリを確認・記録</li>
+              <li>優先度の高いものから修繕（予算10〜30万円）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P3</div>
+        <div class="rm-head">
+          <span class="rm-label">P3</span>
+          <span class="rm-title">③ 計測フェーズ</span>
+          <span class="rm-period">移住後3〜6か月</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">③ 電力計測</p>
+            <ul class="rm-bullets">
+              <li>季節をまたいで電力消費量を計測・記録</li>
+              <li>データを揃えてから設備選定。焦らない。</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">生活費把握</p>
+            <ul class="rm-bullets">
+              <li>実際の生活費データを記録・分析</li>
+              <li>月15万円に向けた支出の実態を把握</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P4</div>
+        <div class="rm-head">
+          <span class="rm-label">P4</span>
+          <span class="rm-title">④ 設備導入フェーズ</span>
+          <span class="rm-period">AI事業安定後（2年〜）</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">④ 蓄電池・太陽光</p>
+            <ul class="rm-bullets">
+              <li>計測データをもとに設備を選定・導入</li>
+              <li>Jackery 3000 New + 400W ソーラー（候補）</li>
+              <li>予算25〜35万円（AI事業収入から）</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">目標状態</p>
+            <ul class="rm-bullets">
+              <li>月15〜20万円で家族4人が安定</li>
+              <li>停電時も生活・仕事を継続できる</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  © 2026 ざつね屋 — 暮らしのログプロジェクト / 00-03 生活基盤プロジェクト
+</div>
+</body>
+</html>

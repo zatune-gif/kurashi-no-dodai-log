@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>暮らしのログプロジェクト｜2026年6月整理版</title>
+  <style>
+    :root {
+      --primary:    #DA7756;
+      --primary-dk: #b8623f;
+      --primary-bg: rgba(218,119,86,0.12);
+      --bg:         #1C1C1C;
+      --bg-panel:   #141414;
+      --card:       #252525;
+      --card-2:     #2f2f2f;
+      --text:       #eeeeee;
+      --text-muted: #999999;
+      --border:     #3a3a3a;
+      --success:    #4caf7d;
+      --success-bg: rgba(76,175,125,0.12);
+      --warning:    #f5a623;
+      --radius:     12px;
+      --shadow:     0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    /* ── カバー ── */
+    .cover {
+      background: linear-gradient(145deg, #0a0a0a 0%, #181818 55%, #1f1a17 100%);
+      padding: 56px 24px 52px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(218,119,86,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -140px; left: -80px;
+      width: 440px; height: 440px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(218,119,86,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cover-inner { max-width: 800px; margin: 0 auto; position: relative; }
+    .cover-eyebrow {
+      font-size: 11px; font-weight: 700; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 16px;
+    }
+    .cover h1 {
+      font-size: 32px; font-weight: 900; letter-spacing: -0.02em;
+      line-height: 1.25; color: #fff; margin-bottom: 14px;
+    }
+    .cover h1 span {
+      display: inline-block; width: 5px; height: 32px;
+      background: var(--primary); border-radius: 3px;
+      margin-right: 14px; vertical-align: middle; margin-bottom: 4px;
+    }
+    .cover-tagline {
+      font-size: 16px; font-weight: 700; color: var(--primary);
+      background: var(--primary-bg); border: 1px solid rgba(218,119,86,0.3);
+      border-radius: 8px; display: inline-block;
+      padding: 10px 20px; margin-bottom: 20px;
+    }
+    .cover-sub {
+      font-size: 14px; color: var(--text-muted); max-width: 560px;
+      line-height: 1.8; margin-bottom: 32px;
+    }
+    .cover-meta { display: flex; flex-wrap: wrap; gap: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .cover-meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .cover-meta-label { font-size: 10px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cover-meta-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+    /* ── メイン ── */
+    .main { max-width: 800px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* ── セクション ── */
+    .section { margin-bottom: 56px; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    .chapter-num {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; background: var(--primary); color: #fff;
+      font-size: 14px; font-weight: 900; border-radius: 8px; flex-shrink: 0;
+      box-shadow: 0 0 16px rgba(218,119,86,0.4);
+    }
+    .section-title { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.01em; }
+    .section-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--border), transparent); }
+
+    /* ── ミッションブロック ── */
+    .mission-block {
+      background: #1a1410; border: 1px solid rgba(218,119,86,0.3);
+      border-left: 4px solid var(--primary); border-radius: var(--radius);
+      padding: 28px 32px; margin-bottom: 16px; position: relative; overflow: hidden;
+      box-shadow: 0 0 40px rgba(218,119,86,0.06);
+    }
+    .mission-block::before {
+      content: '"'; position: absolute; top: -16px; right: 16px;
+      font-size: 140px; color: rgba(218,119,86,0.08);
+      font-family: Georgia, serif; line-height: 1; pointer-events: none;
+    }
+    .mission-label { font-size: 10px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 10px; }
+    .mission-text { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.75; position: relative; }
+    .mission-note { font-size: 13px; color: var(--text-muted); margin-top: 14px; line-height: 1.7; }
+
+    /* ── 見解ブロック ── */
+    .view-block {
+      background: #111c18; border: 1px solid rgba(76,175,125,0.3);
+      border-left: 4px solid var(--success); border-radius: var(--radius);
+      padding: 20px 24px; margin-bottom: 16px;
+    }
+    .view-label { font-size: 10px; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 8px; }
+    .view-text { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+    .view-text strong { color: var(--text); }
+
+    /* ── 名前の理由カード ── */
+    .name-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+    @media (max-width: 600px) { .name-grid { grid-template-columns: 1fr; } }
+    .name-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); border-top: 3px solid var(--primary); padding: 20px 18px;
+    }
+    .name-card__word { font-size: 28px; font-weight: 900; color: var(--primary); margin-bottom: 10px; letter-spacing: -0.02em; }
+    .name-card__not { font-size: 11px; color: #666; text-decoration: line-through; margin-bottom: 4px; }
+    .name-card__is { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.55; }
+    .name-card__note { font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.6; }
+
+    /* ── 問題意識リスト ── */
+    .risk-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .risk-item {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      display: flex; align-items: center; gap: 14px;
+      font-size: 15px; font-weight: 700; color: var(--text);
+    }
+    .risk-icon { font-size: 20px; flex-shrink: 0; width: 30px; text-align: center; }
+
+    /* ── テーマグリッド ── */
+    .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+    @media (max-width: 600px) { .theme-grid { grid-template-columns: repeat(2, 1fr); } }
+    .theme-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 16px;
+      transition: border-color 0.2s;
+    }
+    .theme-card:hover { border-color: rgba(218,119,86,0.4); }
+    .theme-icon { font-size: 26px; margin-bottom: 8px; }
+    .theme-name { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 6px; }
+    .theme-items { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+    .theme-items li { font-size: 12px; color: var(--text-muted); padding-left: 12px; position: relative; }
+    .theme-items li::before { content: '›'; position: absolute; left: 0; color: var(--primary); }
+
+    /* ── テーブル ── */
+    .table-wrap { overflow-x: auto; margin-bottom: 16px; border-radius: var(--radius); border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--card); }
+    thead th {
+      background: #1a1410; color: var(--primary); font-weight: 700;
+      padding: 12px 16px; text-align: left; font-size: 12px;
+      letter-spacing: 0.05em; border-bottom: 1px solid rgba(218,119,86,0.3);
+    }
+    tbody tr:nth-child(even) { background: #202020; }
+    tbody tr:hover { background: var(--primary-bg); transition: background 0.15s; }
+    td { padding: 11px 16px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); }
+    tbody tr:last-child td { border-bottom: none; }
+    td:first-child { font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+    /* ── 未確認カード ── */
+    .unknown-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+    @media (max-width: 560px) { .unknown-grid { grid-template-columns: 1fr; } }
+    .unknown-card {
+      background: #1a1510; border: 1px solid rgba(245,166,35,0.3);
+      border-left: 3px solid var(--warning); border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+    .unknown-card__label { font-size: 10px; font-weight: 700; color: var(--warning); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .unknown-card__title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .unknown-card__items { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .unknown-card__items li { font-size: 13px; color: var(--text-muted); padding-left: 14px; position: relative; }
+    .unknown-card__items li::before { content: '？'; position: absolute; left: 0; color: var(--warning); font-size: 10px; font-weight: 700; }
+
+    /* ── 発信例リスト ── */
+    .publish-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    @media (max-width: 560px) { .publish-list { grid-template-columns: 1fr; } }
+    .publish-item {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px;
+      font-size: 13px; color: var(--text-muted);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .publish-item::before { content: '›'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+
+    /* ── インフォバー ── */
+    .info-bar {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 20px;
+      display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px;
+    }
+    .info-bar__icon { font-size: 20px; flex-shrink: 0; }
+    .info-bar__text { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+    .info-bar__text strong { color: var(--text); }
+
+    /* ── プロジェクト位置づけカード ── */
+    .position-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+    @media (max-width: 600px) { .position-grid { grid-template-columns: 1fr; } }
+    .position-not {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 14px; text-align: center;
+      opacity: 0.55;
+    }
+    .position-not__x { font-size: 18px; margin-bottom: 6px; color: #666; }
+    .position-not__label { font-size: 13px; font-weight: 700; color: #777; text-decoration: line-through; }
+
+    /* ── ロードマップ ── */
+    .roadmap { display: flex; flex-direction: column; }
+    .roadmap-conn {
+      width: 2px; height: 24px; margin-left: 30px; opacity: 0.4;
+      background: linear-gradient(to bottom, var(--primary), transparent);
+    }
+    .rm-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 26px 28px 24px;
+      position: relative; overflow: hidden;
+    }
+    .rm-card.rm-current {
+      background: #1b1410; border-color: rgba(218,119,86,0.45);
+      box-shadow: 0 0 50px rgba(218,119,86,0.1), inset 0 0 40px rgba(218,119,86,0.03);
+    }
+    .rm-card.rm-future { opacity: 0.6; }
+    .rm-bg-num {
+      position: absolute; right: 12px; top: 4px;
+      font-size: 100px; font-weight: 900; color: rgba(255,255,255,0.025);
+      line-height: 1; pointer-events: none; user-select: none; letter-spacing: -0.04em;
+    }
+    .rm-current .rm-bg-num { color: rgba(218,119,86,0.09); }
+    .rm-head {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .rm-label {
+      font-size: 10px; font-weight: 900; color: #fff;
+      background: var(--primary); padding: 3px 12px; border-radius: 99px;
+      letter-spacing: 0.1em; flex-shrink: 0;
+    }
+    .rm-future .rm-label { background: #2a2a2a; color: #666; }
+    .rm-title { font-size: 20px; font-weight: 900; color: var(--text); flex: 1; }
+    .rm-period {
+      font-size: 11px; color: var(--text-muted); white-space: nowrap;
+      background: var(--card-2); border: 1px solid var(--border);
+      padding: 3px 12px; border-radius: 99px;
+    }
+    .rm-now {
+      font-size: 10px; font-weight: 900; letter-spacing: 0.12em;
+      color: var(--primary); border: 1.5px solid var(--primary);
+      padding: 2px 10px; border-radius: 99px;
+      animation: rm-pulse 2s ease-in-out infinite;
+    }
+    @keyframes rm-pulse { 0%,100%{opacity:1;} 50%{opacity:0.45;} }
+    .rm-divider { height: 1px; background: var(--border); margin-bottom: 18px; }
+    .rm-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px 28px; }
+    .rm-group-label {
+      font-size: 10px; font-weight: 800; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 7px;
+    }
+    .rm-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .rm-bullets li {
+      font-size: 13px; color: var(--text-muted);
+      padding-left: 14px; position: relative; line-height: 1.55;
+    }
+    .rm-bullets li::before { content: '›'; position: absolute; left: 2px; color: var(--primary); font-weight: 700; }
+
+    /* ── サブプロジェクトナビ ── */
+    .subproject-section { margin-bottom: 52px; }
+    .subproject-section-label { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 14px; }
+    .subproject-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    @media (max-width: 600px) { .subproject-grid { grid-template-columns: 1fr; } }
+    .subproject-card {
+      display: block; text-decoration: none;
+      border-radius: var(--radius); padding: 20px 18px;
+      border: 1px solid var(--border); position: relative; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .subproject-card:hover { transform: translateY(-2px); }
+    .subproject-card.sc-ai { background: #1b1410; border-color: rgba(218,119,86,0.3); }
+    .subproject-card.sc-ai:hover { border-color: rgba(218,119,86,0.6); }
+    .subproject-card.sc-farm { background: #111c18; border-color: rgba(76,175,125,0.3); }
+    .subproject-card.sc-farm:hover { border-color: rgba(76,175,125,0.6); }
+    .subproject-card.sc-life { background: #101520; border-color: rgba(91,155,213,0.3); }
+    .subproject-card.sc-life:hover { border-color: rgba(91,155,213,0.6); }
+    .sc-num { font-size: 10px; font-weight: 800; letter-spacing: 0.12em; margin-bottom: 8px; }
+    .sc-ai .sc-num { color: var(--primary); }
+    .sc-farm .sc-num { color: #4caf7d; }
+    .sc-life .sc-num { color: #5b9bd5; }
+    .sc-name { font-size: 16px; font-weight: 900; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+    .sc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.65; margin-bottom: 14px; }
+    .sc-arrow { font-size: 13px; font-weight: 700; }
+    .sc-ai .sc-arrow { color: var(--primary); }
+    .sc-farm .sc-arrow { color: #4caf7d; }
+    .sc-life .sc-arrow { color: #5b9bd5; }
+
+    /* ── フッター ── */
+    .footer {
+      text-align: center; font-size: 12px; color: #555;
+      padding: 32px 24px; border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ カバー ══ -->
+<div class="cover">
+  <div class="cover-inner">
+    <p class="cover-eyebrow">Project 00 ― 2026.06 整理版</p>
+    <h1><span></span>暮らしのログプロジェクト</h1>
+    <p class="cover-tagline">「これからの暮らしを、実際にやってみて記録するプロジェクト」</p>
+    <p class="cover-sub">
+      食料・水・エネルギー・仕事・子育て――。<br>
+      外部依存を少しずつ減らしながら暮らしを整え、<br>
+      そのプロセスを記録として残していく。
+    </p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">場所</span>
+        <span class="cover-meta-value">府中市（住居）・福山市新市町（農地）</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">主軸収入</span>
+        <span class="cover-meta-value">AI活用支援</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">最終更新</span>
+        <span class="cover-meta-value">2026年6月</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══ 1. 目的 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">目</div>
+      <h2 class="section-title">このプロジェクトの目的</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="mission-block">
+      <p class="mission-label">Mission</p>
+      <p class="mission-text">
+        子供たちの未来に向けて、<br>
+        暮らしの土台を実践しながら記録すること。
+      </p>
+      <p class="mission-note">
+        ノウハウを教えることが目的ではない。成功も失敗も記録し、実践の軌跡を残す。
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ サブプロジェクトナビ ══ -->
+  <div class="subproject-section">
+    <p class="subproject-section-label">3つのサブプロジェクト</p>
+    <div class="subproject-grid">
+      <a href="han-ai.html" class="subproject-card sc-ai">
+        <p class="sc-num">00-01</p>
+        <p class="sc-name">半AIプロジェクト</p>
+        <p class="sc-desc">AI活用支援を主軸に月25〜50万の収入基盤を築く。研修・オーダーメイド・伴走の3サービス構成。</p>
+        <p class="sc-arrow">詳細を見る →</p>
+      </a>
+      <a href="hannou.html" class="subproject-card sc-farm">
+        <p class="sc-num">00-02</p>
+        <p class="sc-name">半農プロジェクト</p>
+        <p class="sc-desc">食料自給・地域理解・発信素材の3役割を担う。畑3か所・田んぼ2か所。収益化は急がない。</p>
+        <p class="sc-arrow">詳細を見る →</p>
+      </a>
+      <a href="seikatsu-kiban.html" class="subproject-card sc-life">
+        <p class="sc-num">00-03</p>
+        <p class="sc-name">生活基盤プロジェクト</p>
+        <p class="sc-desc">月15万円で家族4人が持続可能に暮らす基盤。住居・井戸・エネルギーを順番に整備。</p>
+        <p class="sc-arrow">詳細を見る →</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══ 2. 名前の理由 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">名</div>
+      <h2 class="section-title">「暮らしのログプロジェクト」という名前</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="name-grid">
+      <div class="name-card">
+        <div class="name-card__word">暮らし</div>
+        <div class="name-card__not">農業プロジェクトではない</div>
+        <div class="name-card__not">AI事業プロジェクトではない</div>
+        <div class="name-card__not">移住プロジェクトでもない</div>
+        <div class="name-card__is">中心にあるのは「暮らし」そのもの</div>
+      </div>
+      <div class="name-card">
+        <div class="name-card__word">ログ</div>
+        <div class="name-card__not">教えることが目的ではない</div>
+        <div class="name-card__is">実践しながら記録すること。<br>成功も失敗も残す。</div>
+      </div>
+      <div class="name-card">
+        <div class="name-card__word">プロジェクト</div>
+        <div class="name-card__not">完成形ではない</div>
+        <div class="name-card__is">これから試行錯誤していく。<br>進行形である。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3. 問題意識 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">問</div>
+      <h2 class="section-title">問題意識</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <ul class="risk-list">
+      <li class="risk-item"><span class="risk-icon">🌾</span>食料価格上昇</li>
+      <li class="risk-item"><span class="risk-icon">⚡</span>エネルギー価格上昇</li>
+      <li class="risk-item"><span class="risk-icon">🌊</span>災害リスクの増加</li>
+      <li class="risk-item"><span class="risk-icon">📉</span>人口減少・過疎化</li>
+      <li class="risk-item"><span class="risk-icon">🔄</span>社会構造の変化</li>
+    </ul>
+
+    <div class="view-block">
+      <p class="view-label">このプロジェクトの応え方</p>
+      <p class="view-text">
+        これらの課題に対し、<strong>「子供たちが生きる選択肢を持てる状態」</strong>を考えていく。<br>
+        大きな解決策を打つのではなく、自分の暮らしの中で少しずつ外部依存を減らし、その実践を記録する。
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ 4. 扱うテーマ ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">テ</div>
+      <h2 class="section-title">扱うテーマ</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="theme-grid">
+      <div class="theme-card">
+        <div class="theme-icon">💼</div>
+        <div class="theme-name">仕事</div>
+        <ul class="theme-items">
+          <li>AI活用・Claude Code</li>
+          <li>ChatGPT・業務改善</li>
+          <li>中小企業DX支援</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <div class="theme-icon">🌾</div>
+        <div class="theme-name">食</div>
+        <ul class="theme-items">
+          <li>米作り・野菜作り</li>
+          <li>食料自給への取り組み</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <div class="theme-icon">💧</div>
+        <div class="theme-name">水</div>
+        <ul class="theme-items">
+          <li>井戸利用</li>
+          <li>水の自給・管理</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <div class="theme-icon">🏠</div>
+        <div class="theme-name">住まい</div>
+        <ul class="theme-items">
+          <li>築50年以上の住宅</li>
+          <li>維持管理・修繕</li>
+          <li>断熱・省エネ化</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <div class="theme-icon">🔋</div>
+        <div class="theme-name">エネルギー</div>
+        <ul class="theme-items">
+          <li>太陽光・蓄電池</li>
+          <li>電力使用量の把握</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <div class="theme-icon">👨‍👩‍👧</div>
+        <div class="theme-name">子育て</div>
+        <ul class="theme-items">
+          <li>生きる力の継承</li>
+          <li>次世代への記録</li>
+        </ul>
+      </div>
+      <div class="theme-card" style="grid-column: 1 / -1; max-width: 300px;">
+        <div class="theme-icon">🌍</div>
+        <div class="theme-name">地域</div>
+        <ul class="theme-items">
+          <li>府中市・福山市新市町</li>
+          <li>地域との関わり・コミュニティ</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 5. 現在の生活基盤 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">基</div>
+      <h2 class="section-title">現在の生活基盤</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>内容</th>
+            <th>備考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>住居</td>
+            <td>5LDK・2階建て・築50年以上</td>
+            <td>府中市。家賃不要・固定資産税16,000円/年</td>
+          </tr>
+          <tr>
+            <td>畑</td>
+            <td>3か所</td>
+            <td>福山市新市町。面積未確認</td>
+          </tr>
+          <tr>
+            <td>田んぼ</td>
+            <td>2か所</td>
+            <td>福山市新市町。面積未確認</td>
+          </tr>
+          <tr>
+            <td>水</td>
+            <td>井戸利用可能</td>
+            <td>水量・飲用可否は未確認</td>
+          </tr>
+          <tr>
+            <td>家族</td>
+            <td>4人家族</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ 6. 収入基盤 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">収</div>
+      <h2 class="section-title">収入基盤</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="info-bar">
+      <div class="info-bar__icon">💼</div>
+      <div class="info-bar__text">
+        <strong>主軸：AI活用支援</strong><br>
+        中小企業向け業務改善支援・生成AI活用支援・AI伴走支援。<br>
+        暮らしを成立させる経済的基盤であり、このプロジェクト全体を動かすエンジン。
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 7. ロードマップ ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">道</div>
+      <h2 class="section-title">ロードマップ</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="view-block" style="margin-bottom: 24px;">
+      <p class="view-label">このロードマップについて</p>
+      <p class="view-text">
+        厳密な計画ではない。<strong>「何を試して、何を記録するか」の大まかな時間軸</strong>。
+        未確認事項が多いため、実態に合わせて更新していく。
+      </p>
+    </div>
+
+    <div class="roadmap">
+
+      <!-- P1 現在 -->
+      <div class="rm-card rm-current">
+        <div class="rm-bg-num">P1</div>
+        <div class="rm-head">
+          <span class="rm-label">P1</span>
+          <span class="rm-title">移住前</span>
+          <span class="rm-period">現在進行中</span>
+          <span class="rm-now">NOW</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">仕事</p>
+            <ul class="rm-bullets">
+              <li>AI事業の営業ツール・診断ツール整備</li>
+              <li>提案書生成ツール開発</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">発信</p>
+            <ul class="rm-bullets">
+              <li>発信チャンネルの開設・記録スタート</li>
+              <li>移住準備の経緯を記録</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">住まい</p>
+            <ul class="rm-bullets">
+              <li>住宅・農地の事前情報収集</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <!-- P2 -->
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P2</div>
+        <div class="rm-head">
+          <span class="rm-label">P2</span>
+          <span class="rm-title">確認フェーズ</span>
+          <span class="rm-period">移住直後〜6か月</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">生活基盤の確認</p>
+            <ul class="rm-bullets">
+              <li>農地の面積・土壌状態を確認・記録</li>
+              <li>井戸の水量・飲用可否を確認・記録</li>
+              <li>住宅の状態（雨漏り・配線・断熱）を確認・記録</li>
+              <li>電力使用量の計測開始</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">仕事</p>
+            <ul class="rm-bullets">
+              <li>AI事業の地域での営業開始</li>
+              <li>地域企業・農業法人との接点づくり</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <!-- P3 -->
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P3</div>
+        <div class="rm-head">
+          <span class="rm-label">P3</span>
+          <span class="rm-title">試すフェーズ</span>
+          <span class="rm-period">6か月〜2年</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">食</p>
+            <ul class="rm-bullets">
+              <li>初めての米作り・野菜作りに挑戦・記録</li>
+              <li>食料自給率の把握</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">住まい・エネルギー</p>
+            <ul class="rm-bullets">
+              <li>優先度の高い住宅修繕を実施・記録</li>
+              <li>電力データをもとに設備を選定・導入</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">仕事</p>
+            <ul class="rm-bullets">
+              <li>AI事業の本稼働・顧問契約の確立</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <!-- P4 -->
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P4</div>
+        <div class="rm-head">
+          <span class="rm-label">P4</span>
+          <span class="rm-title">深めるフェーズ</span>
+          <span class="rm-period">2年〜</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">食</p>
+            <ul class="rm-bullets">
+              <li>米・野菜の自給率向上（試行と改善の繰り返し）</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">地域</p>
+            <ul class="rm-bullets">
+              <li>農業コミュニティへの参加・ネットワーク形成</li>
+              <li>AI事業×地域課題の展開</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">エネルギー</p>
+            <ul class="rm-bullets">
+              <li>太陽光・蓄電池の運用最適化</li>
+              <li>外部依存のさらなる低減</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /roadmap -->
+  </div>
+
+  <!-- ══ 8. 発信方針 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">発</div>
+      <h2 class="section-title">発信方針</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">スタンス</p>
+      <p class="view-text">
+        <strong>ノウハウ提供よりも実践記録。</strong><br>
+        うまくいったことも、うまくいかなかったことも残す。
+        「やってみた」が積み重なることが、将来の子供たちへの最大の資産になる。
+      </p>
+    </div>
+
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-weight: 700;">発信の例</p>
+    <div class="publish-list">
+      <div class="publish-item">移住準備の経緯と選択</div>
+      <div class="publish-item">井戸の調査・確認プロセス</div>
+      <div class="publish-item">田んぼ・畑の現状確認</div>
+      <div class="publish-item">AI事業の立ち上げ記録</div>
+      <div class="publish-item">米作りの初挑戦</div>
+      <div class="publish-item">電力消費量の実測</div>
+      <div class="publish-item">古い家の修繕記録</div>
+      <div class="publish-item">地域との関わりの記録</div>
+    </div>
+
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 700;">主な媒体候補</p>
+    <div class="info-bar">
+      <div class="info-bar__icon">📢</div>
+      <div class="info-bar__text">YouTube・note・Facebook・X（どれも記録を蓄積する形で運用）</div>
+    </div>
+  </div>
+
+  <!-- ══ 8. オフグリッド方針 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">Off</div>
+      <h2 class="section-title">オフグリッド方針</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="mission-block">
+      <p class="mission-label">目標の定義</p>
+      <p class="mission-text" style="font-size: 15px; font-style: normal;">
+        完全オフグリッドは目指さない。<br>
+        <strong style="color: var(--primary);">外部依存を少しずつ減らすこと</strong>が目標。
+      </p>
+    </div>
+
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px; font-weight: 700;">対象</p>
+    <div class="info-bar">
+      <div class="info-bar__icon">🎯</div>
+      <div class="info-bar__text">
+        <strong>水・食・エネルギーの3領域</strong>で、急がず、データを見ながら少しずつ自給率を高める。
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 9. 現時点の未確認事項 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">確</div>
+      <h2 class="section-title">現時点で未確認の重要事項</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="unknown-grid">
+      <div class="unknown-card">
+        <p class="unknown-card__label">要確認</p>
+        <p class="unknown-card__title">農地</p>
+        <ul class="unknown-card__items">
+          <li>各農地の面積</li>
+          <li>土壌の状態</li>
+          <li>利用可能な範囲</li>
+        </ul>
+      </div>
+      <div class="unknown-card">
+        <p class="unknown-card__label">要確認</p>
+        <p class="unknown-card__title">井戸</p>
+        <ul class="unknown-card__items">
+          <li>水量・水質</li>
+          <li>飲用可否</li>
+          <li>ポンプ方式</li>
+        </ul>
+      </div>
+      <div class="unknown-card">
+        <p class="unknown-card__label">要確認</p>
+        <p class="unknown-card__title">住宅</p>
+        <ul class="unknown-card__items">
+          <li>雨漏りの有無</li>
+          <li>電気配線の状態</li>
+          <li>断熱性能</li>
+          <li>シロアリ被害</li>
+        </ul>
+      </div>
+      <div class="unknown-card">
+        <p class="unknown-card__label">要確認</p>
+        <p class="unknown-card__title">エネルギー</p>
+        <ul class="unknown-card__items">
+          <li>実際の電力使用量</li>
+          <li>季節変動の把握</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">方針</p>
+      <p class="view-text">
+        未確認事項は<strong>移住直後に順番に確認</strong>していく。設備投資はデータを取ってから。
+        急いで判断せず、実態を把握してから行動する。
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ 10. プロジェクトの立ち位置 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">位</div>
+      <h2 class="section-title">プロジェクトの立ち位置</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="position-grid">
+      <div class="position-not">
+        <div class="position-not__x">✗</div>
+        <div class="position-not__label">地方創生プロジェクト</div>
+      </div>
+      <div class="position-not">
+        <div class="position-not__x">✗</div>
+        <div class="position-not__label">農業プロジェクト</div>
+      </div>
+      <div class="position-not">
+        <div class="position-not__x">✗</div>
+        <div class="position-not__label">AI起業プロジェクト</div>
+      </div>
+    </div>
+
+    <div class="mission-block">
+      <p class="mission-label">このプロジェクトの位置づけ</p>
+      <p class="mission-text">
+        子供たちの未来に向けて、<br>
+        暮らしの土台を実践しながら記録するプロジェクト。
+      </p>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  © 2026 ざつね屋 — 暮らしのログプロジェクト 2026年6月整理版
+</div>
+
+</body>
+</html>

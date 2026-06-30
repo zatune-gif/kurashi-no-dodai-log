@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>半AIプロジェクト｜暮らしのログプロジェクト 00-01</title>
+  <style>
+    :root { --primary: #DA7756; --primary-dk: #b8623f; --primary-bg: rgba(218,119,86,0.12); --bg: #1C1C1C; --bg-panel: #141414; --card: #252525; --card-2: #2f2f2f; --text: #eeeeee; --text-muted: #999999; --border: #3a3a3a; --success: #4caf7d; --warning: #f5a623; --radius: 12px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Yu Gothic UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
+
+    .site-nav { position: sticky; top: 0; z-index: 100; background: rgba(20,20,20,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 52px; display: flex; align-items: center; gap: 10px; }
+    .nav-back { font-size: 13px; font-weight: 700; color: var(--primary); text-decoration: none; transition: color 0.15s; }
+    .nav-back:hover { color: #fff; }
+    .nav-sep { color: #444; }
+    .nav-current { font-size: 13px; color: var(--text-muted); }
+
+    .cover { background: linear-gradient(145deg, #0a0a0a 0%, #181818 55%, #1f1a17 100%); padding: 48px 24px 44px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .cover::before { content: ''; position: absolute; top: -100px; right: -100px; width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle, rgba(218,119,86,0.15) 0%, transparent 70%); pointer-events: none; }
+    .cover-inner { max-width: 800px; margin: 0 auto; position: relative; }
+    .cover-eyebrow { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 12px; }
+    .cover h1 { font-size: 30px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.25; color: #fff; margin-bottom: 12px; }
+    .cover h1 span { display: inline-block; width: 5px; height: 28px; background: var(--primary); border-radius: 3px; margin-right: 12px; vertical-align: middle; margin-bottom: 3px; }
+    .cover-sub { font-size: 14px; color: var(--text-muted); max-width: 520px; line-height: 1.8; margin-bottom: 28px; }
+    .cover-meta { display: flex; flex-wrap: wrap; gap: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .cover-meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .cover-meta-label { font-size: 10px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; }
+    .cover-meta-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+    .main { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+    .section { margin-bottom: 52px; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+    .chapter-num { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--primary); color: #fff; font-size: 13px; font-weight: 900; border-radius: 8px; flex-shrink: 0; box-shadow: 0 0 14px rgba(218,119,86,0.4); }
+    .section-title { font-size: 19px; font-weight: 800; color: var(--text); }
+    .section-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--border), transparent); }
+
+    .mission-block { background: #1a1410; border: 1px solid rgba(218,119,86,0.3); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px; position: relative; overflow: hidden; }
+    .mission-block::before { content: '"'; position: absolute; top: -16px; right: 16px; font-size: 130px; color: rgba(218,119,86,0.07); font-family: Georgia, serif; line-height: 1; pointer-events: none; }
+    .mission-label { font-size: 10px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 8px; }
+    .mission-text { font-size: 17px; font-weight: 800; color: #fff; line-height: 1.75; position: relative; }
+    .mission-note { font-size: 13px; color: var(--text-muted); margin-top: 12px; line-height: 1.7; }
+
+    .view-block { background: #111c18; border: 1px solid rgba(76,175,125,0.3); border-left: 4px solid var(--success); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 16px; }
+    .view-label { font-size: 10px; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 7px; }
+    .view-text { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+    .view-text strong { color: var(--text); }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 16px; border-radius: var(--radius); border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--card); }
+    thead th { background: #1a1410; color: var(--primary); font-weight: 700; padding: 11px 16px; text-align: left; font-size: 11px; letter-spacing: 0.05em; border-bottom: 1px solid rgba(218,119,86,0.3); }
+    tbody tr:nth-child(even) { background: #202020; }
+    tbody tr:hover { background: var(--primary-bg); transition: background 0.15s; }
+    td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); font-size: 14px; }
+    tbody tr:last-child td { border-bottom: none; }
+    td:first-child { font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+    .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .bullet-list li { font-size: 14px; color: var(--text-muted); padding-left: 16px; position: relative; line-height: 1.6; }
+    .bullet-list li::before { content: '›'; position: absolute; left: 2px; color: var(--primary); font-weight: 700; }
+
+    .status { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 99px; }
+    .status-live { background: rgba(76,175,125,0.15); color: var(--success); border: 1px solid rgba(76,175,125,0.3); }
+    .status-wip { background: rgba(245,166,35,0.12); color: var(--warning); border: 1px solid rgba(245,166,35,0.3); }
+    .status-todo { background: var(--card-2); color: #666; border: 1px solid var(--border); }
+
+    /* ── サービスフロー ── */
+    .service-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 20px; position: relative; }
+    @media (max-width: 580px) { .service-flow { grid-template-columns: 1fr; gap: 10px; } }
+    .sv-card { background: var(--card); border: 1px solid var(--border); padding: 20px 18px; position: relative; }
+    .sv-card:first-child { border-radius: var(--radius) 0 0 var(--radius); border-right: none; }
+    .sv-card:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .sv-card:nth-child(2) { border-radius: 0; border-left: 1px solid var(--border); border-right: none; }
+    .sv-card.sv-accent { background: #1b1410; border-color: rgba(218,119,86,0.45); }
+    .sv-arrow { position: absolute; right: -14px; top: 50%; transform: translateY(-50%); z-index: 5; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; }
+    @media (max-width: 580px) { .sv-arrow { display: none; } }
+    .sv-num { font-size: 10px; font-weight: 800; color: var(--primary); letter-spacing: 0.1em; margin-bottom: 8px; text-transform: uppercase; }
+    .sv-title { font-size: 16px; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+    .sv-essence { font-size: 12px; font-weight: 700; color: var(--primary); font-style: italic; margin-bottom: 10px; }
+    .sv-desc { font-size: 12px; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── ツール行 ── */
+    .tool-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .tool-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start; }
+    .tool-icon { font-size: 22px; flex-shrink: 0; }
+    .tool-body { flex: 1; }
+    .tool-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+    .tool-name { font-size: 15px; font-weight: 800; color: var(--text); }
+    .tool-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 10px; }
+    .tool-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tool-link { font-size: 12px; font-weight: 700; color: var(--primary); background: rgba(218,119,86,0.1); border: 1.5px solid var(--primary); border-radius: 99px; padding: 4px 14px; text-decoration: none; transition: background 0.15s; }
+    .tool-link:hover { background: rgba(218,119,86,0.22); }
+
+    /* ── 差別化グリッド ── */
+    .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+    @media (max-width: 580px) { .diff-grid { grid-template-columns: 1fr; } }
+    .diff-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); border-top: 3px solid var(--primary); padding: 16px 14px; }
+    .diff-num { font-size: 28px; font-weight: 900; color: var(--primary); opacity: 0.2; line-height: 1; margin-bottom: 4px; }
+    .diff-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .diff-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── ロードマップ ── */
+    .roadmap { display: flex; flex-direction: column; }
+    .roadmap-conn { width: 2px; height: 24px; margin-left: 30px; opacity: 0.4; background: linear-gradient(to bottom, var(--primary), transparent); }
+    .rm-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 28px 24px; position: relative; overflow: hidden; }
+    .rm-card.rm-current { background: #1b1410; border-color: rgba(218,119,86,0.45); box-shadow: 0 0 50px rgba(218,119,86,0.1), inset 0 0 40px rgba(218,119,86,0.03); }
+    .rm-card.rm-future { opacity: 0.6; }
+    .rm-bg-num { position: absolute; right: 12px; top: 4px; font-size: 100px; font-weight: 900; color: rgba(255,255,255,0.025); line-height: 1; pointer-events: none; user-select: none; letter-spacing: -0.04em; }
+    .rm-current .rm-bg-num { color: rgba(218,119,86,0.09); }
+    .rm-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .rm-label { font-size: 10px; font-weight: 900; color: #fff; background: var(--primary); padding: 3px 12px; border-radius: 99px; letter-spacing: 0.1em; flex-shrink: 0; }
+    .rm-future .rm-label { background: #2a2a2a; color: #666; }
+    .rm-title { font-size: 20px; font-weight: 900; color: var(--text); flex: 1; }
+    .rm-period { font-size: 11px; color: var(--text-muted); white-space: nowrap; background: var(--card-2); border: 1px solid var(--border); padding: 3px 12px; border-radius: 99px; }
+    .rm-now { font-size: 10px; font-weight: 900; letter-spacing: 0.12em; color: var(--primary); border: 1.5px solid var(--primary); padding: 2px 10px; border-radius: 99px; animation: rm-pulse 2s ease-in-out infinite; }
+    @keyframes rm-pulse { 0%,100%{opacity:1;} 50%{opacity:0.45;} }
+    .rm-divider { height: 1px; background: var(--border); margin-bottom: 18px; }
+    .rm-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px 28px; }
+    .rm-group-label { font-size: 10px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 7px; }
+    .rm-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .rm-bullets li { font-size: 13px; color: var(--text-muted); padding-left: 14px; position: relative; line-height: 1.55; }
+    .rm-bullets li::before { content: '›'; position: absolute; left: 2px; color: var(--primary); font-weight: 700; }
+
+    .cover-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .cover-link { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; color: var(--primary); border: 1.5px solid rgba(218,119,86,0.4); padding: 8px 18px; border-radius: 99px; text-decoration: none; background: rgba(218,119,86,0.06); transition: background 0.15s, border-color 0.15s; letter-spacing: 0.02em; }
+    .cover-link:hover { background: rgba(218,119,86,0.15); border-color: var(--primary); color: #fff; }
+    .cover-link-icon { font-size: 15px; }
+
+    .footer { text-align: center; font-size: 12px; color: #555; padding: 28px 24px; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="kurashi-no-dodai-log.html" class="nav-back">← 暮らしのログプロジェクト</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">00-01 半AIプロジェクト</span>
+</nav>
+
+<div class="cover">
+  <div class="cover-inner">
+    <p class="cover-eyebrow">Project 00-01</p>
+    <h1><span></span>半AIプロジェクト</h1>
+    <p class="cover-sub">
+      AI活用支援を事業の主軸に、月25〜50万の収入基盤を築く。<br>
+      研修・オーダーメイド・伴走の3サービス＋自社ツール開発で構成。
+    </p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">役割</span>
+        <span class="cover-meta-value">暮らしのログの主収入エンジン</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">収益目標</span>
+        <span class="cover-meta-value">月25〜50万円</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">ターゲット</span>
+        <span class="cover-meta-value">中小企業・地域事業者</span>
+      </div>
+    </div>
+    <div class="cover-links">
+      <a href="https://melodious-selkie-665e84.netlify.app/" target="_blank" rel="noopener" class="cover-link">
+        <span class="cover-link-icon">📋</span>事業計画書を見る ↗
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══ 1. 役割と収益目標 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">役</div>
+      <h2 class="section-title">役割と収益目標</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="mission-block">
+      <p class="mission-label">このプロジェクトの役割</p>
+      <p class="mission-text">暮らしのログプロジェクトの主収入エンジン。</p>
+      <p class="mission-note">農業もオフグリッドも「暮らしのコスト削減」だが、収入の中心は当面このAI事業。月25〜50万を安定させることで、他の2プロジェクトへの大型投資が可能になる。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>サービス</th><th>月収目標</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>研修（単発）</td><td>5〜10万/月</td><td>件数×単価。依頼しやすい入口</td></tr>
+          <tr><td>オーダーメイド</td><td>10〜20万/件</td><td>有期完結型。期間と費用が明確</td></tr>
+          <tr><td>伴走（継続）</td><td>10〜20万/月</td><td>月次継続。収益の根幹</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ 2. 強みの源泉 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">強</div>
+      <h2 class="section-title">強みの源泉</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>経歴</th><th>この事業での強み</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>パソコン講師</td><td>教育・導入支援・伝え方が既にある</td></tr>
+          <tr><td>NPO代表</td><td>企画運営・プロジェクト設計</td></tr>
+          <tr><td>Webディレクター</td><td>業務整理・要件定義・フロー可視化</td></tr>
+          <tr><td>課長職</td><td>人材育成・SOP作成・業務改善</td></tr>
+          <tr><td>DX推進</td><td>IT導入・仕組み化・補助金活用</td></tr>
+          <tr><td>専門学校担任</td><td>伴走支援・継続サポート・定着化</td></tr>
+          <tr><td>AIプロダクト開発</td><td>生成AI活用・実装・プロンプト設計</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-num">1</div>
+        <div class="diff-title">教えられる実装者</div>
+        <div class="diff-desc">作れるだけでなく、現場に合わせて説明・定着支援まで担える</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-num">2</div>
+        <div class="diff-title">現場目線の伴走</div>
+        <div class="diff-desc">管理職・担任としての伴走経験。結果が出るまで付き合う</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-num">3</div>
+        <div class="diff-title">業務整理から入れる</div>
+        <div class="diff-desc">AIを入れる前の業務フロー整理・要件定義ができる</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3. 3サービス構成 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">サ</div>
+      <h2 class="section-title">3サービス構成</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="view-block" style="margin-bottom: 20px;">
+      <p class="view-label">導線</p>
+      <p class="view-text">研修 → オーダーメイド → 伴走の順に深まる。<strong>どこからでも入れる</strong>が、研修が最も自然な入口。</p>
+    </div>
+
+    <div class="service-flow">
+      <div class="sv-card sv-accent">
+        <div class="sv-arrow">›</div>
+        <p class="sv-num">Service 01 ― 入口</p>
+        <p class="sv-title">研修</p>
+        <p class="sv-essence">「使える人を作る」</p>
+        <p class="sv-desc">商工会議所・業界団体・社内勉強会向け。チャット活用編（5名/10名）/ Claude Code実践編（個別1名/グループ3名）。最も依頼しやすい。</p>
+      </div>
+      <div class="sv-card">
+        <div class="sv-arrow">›</div>
+        <p class="sv-num">Service 02 ― 課題解決</p>
+        <p class="sv-title">オーダーメイド</p>
+        <p class="sv-essence">「自社専用の仕組みを作る」</p>
+        <p class="sv-desc">ヒアリング → 課題特定 → 専用プロンプト・手順書制作 → 納品 → 初期運用サポート。有期完結型。期間と費用が明確。</p>
+      </div>
+      <div class="sv-card">
+        <p class="sv-num">Service 03 ― 継続収益</p>
+        <p class="sv-title">伴走</p>
+        <p class="sv-essence">「共に継続的にAI活用を深める」</p>
+        <p class="sv-desc">3〜6か月区切り。クライアントとMTGで知見を統合し開発を進める。継続収益の根幹。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 4. ツール開発状況 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">ツ</div>
+      <h2 class="section-title">ツール開発状況</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="tool-list">
+      <div class="tool-item">
+        <div class="tool-icon">🩺</div>
+        <div class="tool-body">
+          <div class="tool-head">
+            <span class="tool-name">AI活用準備度診断ツール</span>
+            <span class="status status-live">稼働中</span>
+          </div>
+          <p class="tool-desc">
+            12問（簡易版）→ 23問（詳細版）→ 資料請求 / 見積請求の流れ。<br>
+            Claude APIをNetlify Functionsでサーバーサイド実行。
+          </p>
+          <div class="tool-links">
+            <a href="https://ai-shindan-zatuneya.netlify.app/" target="_blank" rel="noopener" class="tool-link">簡易版（12問）↗</a>
+            <a href="https://ai-shindan-zatuneya.netlify.app/detail.html" target="_blank" rel="noopener" class="tool-link">詳細版（23問）↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="tool-item">
+        <div class="tool-icon">📄</div>
+        <div class="tool-body">
+          <div class="tool-head">
+            <span class="tool-name">提案書自動生成ツール</span>
+            <span class="status status-wip">開発中</span>
+          </div>
+          <p class="tool-desc">
+            Electronアプリ。ヒアリングメモを入力 → Claude APIが提案書・見積書・診断結果PDFを自動生成。<br>
+            自分専用の業務効率化ツール。多案件を効率的にこなすため。
+          </p>
+        </div>
+      </div>
+      <div class="tool-item">
+        <div class="tool-icon">📚</div>
+        <div class="tool-body">
+          <div class="tool-head">
+            <span class="tool-name">プロンプトライブラリ管理ツール</span>
+            <span class="status status-todo">未着手</span>
+          </div>
+          <p class="tool-desc">業種別・用途別プロンプト集の管理。クライアントへの「お土産」として渡す素材。Electron or Notion で実装予定。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">診断ツールのスコア設計</p>
+      <p class="view-text">
+        12問 × 最大10点（0/3/7/10）= 120点満点 → ÷1.2で100点換算。<br>
+        <strong>準備期</strong> 0〜30 / <strong>導入期</strong> 31〜60 / <strong>活用期</strong> 61〜80 / <strong>推進期</strong> 81〜100
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ 5. 今後の展開方針 ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">展</div>
+      <h2 class="section-title">今後の展開方針</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="view-block">
+      <p class="view-label">P3以降：地域特化型AI支援へ</p>
+      <p class="view-text">
+        移住後（P3：6か月〜2年）に農業法人・JA・集落営農との接点ができてくる。<br>
+        <strong>農業×AI</strong>という他の支援者が少ない領域で差別化。地域に根ざした継続案件として発展させる。
+      </p>
+    </div>
+
+    <ul class="bullet-list">
+      <li>農業法人向けAI業務改善（作業記録・収穫予測・販売管理）</li>
+      <li>地域商工会議所経由の研修展開</li>
+      <li>AI × 補助金申請支援（農業・中小企業向け）</li>
+      <li>伴走先の実績を事例として蓄積・発信</li>
+    </ul>
+  </div>
+
+  <!-- ══ ロードマップ ══ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="chapter-num">道</div>
+      <h2 class="section-title">ロードマップ</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="view-block" style="margin-bottom: 24px;">
+      <p class="view-label">応援・助言してくださっている方々へ</p>
+      <p class="view-text">
+        移住前の今（P1）は主に<strong>ツール整備と営業準備</strong>を進めています。移住直後からいきなり顧問案件を狙うのではなく、まず研修受注で地域接点をつくり、段階的にAI事業を育てていく計画です。
+      </p>
+    </div>
+
+    <div class="roadmap">
+      <div class="rm-card rm-current">
+        <div class="rm-bg-num">P1</div>
+        <div class="rm-head">
+          <span class="rm-label">P1</span>
+          <span class="rm-title">移住前</span>
+          <span class="rm-period">現在進行中</span>
+          <span class="rm-now">NOW</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">ツール開発</p>
+            <ul class="rm-bullets">
+              <li>診断ツールの継続改善</li>
+              <li>提案書生成ツールの開発完了</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">営業準備</p>
+            <ul class="rm-bullets">
+              <li>営業資料・事例の整備</li>
+              <li>研修コンテンツの完成</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P2</div>
+        <div class="rm-head">
+          <span class="rm-label">P2</span>
+          <span class="rm-title">営業フェーズ</span>
+          <span class="rm-period">移住直後〜6か月</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">受注</p>
+            <ul class="rm-bullets">
+              <li>地域での研修受注を開始</li>
+              <li>商工会議所・既存ネットワーク経由</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">接点形成</p>
+            <ul class="rm-bullets">
+              <li>地域企業・農業法人との初接触</li>
+              <li>オーダーメイド案件の初受注</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P3</div>
+        <div class="rm-head">
+          <span class="rm-label">P3</span>
+          <span class="rm-title">安定フェーズ</span>
+          <span class="rm-period">6か月〜2年</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">収益</p>
+            <ul class="rm-bullets">
+              <li>伴走（顧問）契約を2〜3件確立</li>
+              <li>月25万円の安定収益を達成</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">サービス深化</p>
+            <ul class="rm-bullets">
+              <li>研修の実績・事例を継続蓄積</li>
+              <li>プロンプトライブラリ整備・活用</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-conn"></div>
+
+      <div class="rm-card rm-future">
+        <div class="rm-bg-num">P4</div>
+        <div class="rm-head">
+          <span class="rm-label">P4</span>
+          <span class="rm-title">地域展開フェーズ</span>
+          <span class="rm-period">2年〜</span>
+        </div>
+        <div class="rm-divider"></div>
+        <div class="rm-groups">
+          <div>
+            <p class="rm-group-label">地域特化</p>
+            <ul class="rm-bullets">
+              <li>農業法人・JA向けAI支援を展開</li>
+              <li>農業×AIで他にない差別化ポジションへ</li>
+            </ul>
+          </div>
+          <div>
+            <p class="rm-group-label">収益拡大</p>
+            <ul class="rm-bullets">
+              <li>月50万円規模を目指す</li>
+              <li>地域事例を発信コンテンツへ転換</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  © 2026 ざつね屋 — 暮らしのログプロジェクト / 00-01 半AIプロジェクト
+</div>
+</body>
+</html>
