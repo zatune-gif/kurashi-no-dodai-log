@@ -177,6 +177,7 @@ def render_bullet(slide):
         "持ち帰り資料","次のステップ | ざつね屋のサービス案内",
         "実践（30分） — ツール","良いプロンプトの4要素",
     }
+    SKIP_BLOCKS = {"持ち帰り資料"}
     if any(t in BLOCK_HEADERS for t in items_all):
         return render_two_col(slide)
 
@@ -233,6 +234,7 @@ def render_two_col(slide):
         "持ち帰り資料","次のステップ | ざつね屋のサービス案内",
         "実践（30分） — ツール","良いプロンプトの4要素",
     }
+    SKIP_BLOCKS = {"持ち帰り資料"}
 
     blocks = []
     cur_hd, cur_items = None, []
@@ -244,6 +246,9 @@ def render_two_col(slide):
         else:
             cur_items.append(t)
     blocks.append((cur_hd, cur_items))
+
+    # 非表示ブロックを除外
+    blocks = [(bh, bi) for bh, bi in blocks if bh not in SKIP_BLOCKS]
 
     cols = ""
     for bh, bi in blocks[:4]:
