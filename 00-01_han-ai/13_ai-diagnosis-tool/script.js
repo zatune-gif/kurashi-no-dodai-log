@@ -295,6 +295,7 @@ async function showResults() {
   const { strengths, issues } = getInsights();
 
   let actions = FALLBACK_ACTIONS[stage];
+  let usedFallback = true;
   try {
     const res = await fetch('/.netlify/functions/generate-comment', {
       method: 'POST',
@@ -303,7 +304,7 @@ async function showResults() {
     });
     if (res.ok) {
       const data = await res.json();
-      if (data.actions?.length >= 3) actions = data.actions;
+      if (data.actions?.length >= 3) { actions = data.actions; usedFallback = false; }
     }
   } catch (_) {}
 
@@ -325,6 +326,8 @@ async function showResults() {
   renderList(DOM.issuesList,    DOM.issuesCard,    issues);
 
   DOM.actionsList.innerHTML = actions.map(a => `<li>${a}</li>`).join('');
+  const fallbackNote = document.getElementById('actions-fallback-note');
+  if (fallbackNote) fallbackNote.classList.toggle('hidden', !usedFallback);
 
   const mailBody = encodeURIComponent(
     `AI活用準備度診断を受けました。\n\n【スコア】${score}点\n【ステージ】${stage}\n\nご相談させてください。`

@@ -562,6 +562,7 @@ body {
 
 /* ── ユーティリティ ── */
 .hidden { display: none !important; }
+.fallback-note { font-size: 12px; color: var(--text-muted); margin-top: 10px; padding: 8px 12px; background: rgba(255,255,255,0.04); border-left: 3px solid var(--border); border-radius: 4px; line-height: 1.6; }
 .header-primary { color: var(--primary) !important; }
 .card-body { font-size: 14px; line-height: 1.75; color: var(--text); }
 .link-btn {

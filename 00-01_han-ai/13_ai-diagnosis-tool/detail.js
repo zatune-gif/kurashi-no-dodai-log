@@ -531,6 +531,7 @@ async function showResults() {
   let prompts = FALLBACK_PROMPTS;
   let actions = FALLBACK_ACTIONS[stage];
   let recommendations = FALLBACK_RECOMMENDATIONS[stage];
+  let usedFallback = true;
 
   try {
     const res = await fetch('/.netlify/functions/generate-library', {
@@ -543,6 +544,7 @@ async function showResults() {
       if (result.prompts?.length > 0) prompts = result.prompts;
       if (result.actions?.length >= 3) actions = result.actions;
       if (result.recommendations?.length > 0) recommendations = result.recommendations;
+      usedFallback = false;
     }
   } catch (_) {}
 
@@ -593,6 +595,8 @@ async function showResults() {
 
   // アクション
   DOM.actionsList.innerHTML = actions.map(a => `<li>${a}</li>`).join('');
+  const fallbackNote = document.getElementById('actions-fallback-note');
+  if (fallbackNote) fallbackNote.classList.toggle('hidden', !usedFallback);
 
   // サービス提案
   renderRecommendations(recommendations, score, stage);
