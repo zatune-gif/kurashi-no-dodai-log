@@ -1015,8 +1015,16 @@
     @media (max-width: 700px) {
       .info-pair { grid-template-columns: 1fr; }
       .course-prices { flex-direction: column; }
-      .price-col { border-right: none; border-bottom: 1px solid var(--border); }
+      .price-col { border-right: none; border-bottom: 1px solid var(--border); padding: 10px 12px; }
       .price-col:last-child { border-bottom: none; }
+    }
+    @media (max-width: 480px) {
+      .course-row { flex-wrap: wrap; }
+      .course-num { min-height: 48px; }
+      .course-info { flex: 1 1 180px; min-width: 0; }
+      .course-prices { flex: 0 0 100%; border-top: 1px solid var(--border); flex-direction: row; }
+      .price-col { flex: 1; border-right: 1px solid var(--border); border-bottom: none; padding: 10px 12px; }
+      .price-col:last-child { border-right: none; }
     }
 
     /* ── 印刷／PDF出力 ── */

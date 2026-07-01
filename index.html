@@ -154,6 +154,8 @@
     /* ── テーマグリッド ── */
     .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
     @media (max-width: 600px) { .theme-grid { grid-template-columns: repeat(2, 1fr); } }
+    .theme-card--last { grid-column: 1 / -1; max-width: 300px; margin: 0 auto; width: 100%; }
+    @media (max-width: 600px) { .theme-card--last { max-width: 100%; } }
     .theme-card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 18px 16px;
@@ -510,7 +512,7 @@
           <li>次世代への記録</li>
         </ul>
       </div>
-      <div class="theme-card" style="grid-column: 1 / -1; max-width: 300px;">
+      <div class="theme-card theme-card--last">
         <div class="theme-icon">🌍</div>
         <div class="theme-name">地域</div>
         <ul class="theme-items">

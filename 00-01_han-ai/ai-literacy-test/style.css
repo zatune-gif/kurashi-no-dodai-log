@@ -349,6 +349,10 @@ body {
   padding: 32px 0 0;
 }
 
+@media (max-width: 480px) {
+  .result-actions { flex-direction: column; }
+}
+
 @media (max-width: 400px) {
   .axis-scores { grid-template-columns: 1fr; }
   .axis-score-item:last-child:nth-child(odd) { grid-column: unset; }
