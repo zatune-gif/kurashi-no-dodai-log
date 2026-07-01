@@ -17,16 +17,15 @@ $('btn-do-diagnosis').addEventListener('click', () => {
 });
 
 $('btn-skip-diagnosis').addEventListener('click', () => {
-  const subject = encodeURIComponent(`資料請求（${contactInfo.companyName}）`);
-  const body = encodeURIComponent([
-    '資料請求がありました。',
-    '',
-    `【会社名】${contactInfo.companyName}`,
-    `【担当者】${contactInfo.contactName}`,
-    `【返送先メール】${contactInfo.email}`,
-    '',
-    '詳細診断なし・資料のみご送付ください。'
-  ].join('\n'));
-  window.location.href = `mailto:zatuneya@gmail.com?subject=${subject}&body=${body}`;
   showScreen('screen-thanks');
+  fetch('/.netlify/functions/save-inquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      type: '資料請求（診断なし）',
+      companyName: contactInfo.companyName,
+      contactName: contactInfo.contactName,
+      email: contactInfo.email,
+    }),
+  }).catch(() => {});
 });

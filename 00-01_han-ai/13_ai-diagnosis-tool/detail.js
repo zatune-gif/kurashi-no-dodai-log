@@ -642,6 +642,25 @@ async function showResults() {
     btnExport.onclick = () => exportDiagnosisData();
   }
 
+  // 問い合わせデータを保存・メール送信（fire-and-forget）
+  fetch('/.netlify/functions/save-inquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      type: _pageMode === 'estimate' ? '詳細診断・見積' : '詳細診断・相談',
+      companyName:     state.companyName,
+      contactName:     state.contactName,
+      email:           state.email,
+      score,
+      stage,
+      industry:        data.industry,
+      scale:           data.scale,
+      strengths,
+      issues,
+      recommendations,
+    }),
+  }).catch(() => {});
+
   showScreen('screen-results');
 }
 
