@@ -114,7 +114,7 @@ def render_cover(slide):
         f'line-height:1.08;letter-spacing:0.01em;">{h(title)}</h1>'
         f'<p style="margin:32px 0px 0px;font-size:28px;font-weight:500;'
         f'color:{MUTED};line-height:1.5;">{h(subtitle)}</p>'
-        f'{footer()}'
+        f'{footer(top=True)}'
         f'</section>'
     )
 
