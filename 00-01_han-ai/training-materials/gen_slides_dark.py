@@ -45,11 +45,12 @@ h1, h2, h3, p { margin: 0; padding: 0; }
 """
 
 # ── フッター（テンプレートと完全一致）──────────────────────
-def footer():
+def footer(top=False):
+    pos = "top:28px;right:80px;" if top else "bottom:56px;right:80px;"
     return (
-        f'<div style="position:absolute;bottom:56px;right:80px;display:flex;'
-        f'align-items:center;gap:12px;font-size:24px;font-weight:700;color:{TEXT};">'
-        f'<span style="width:12px;height:12px;border-radius:50%;background:{ACCENT};'
+        f'<div style="position:absolute;{pos}display:flex;'
+        f'align-items:center;gap:12px;font-size:20px;font-weight:700;color:{TEXT};">'
+        f'<span style="width:10px;height:10px;border-radius:50%;background:{ACCENT};'
         f'display:inline-block;"></span>ざつね屋</div>'
     )
 
@@ -141,7 +142,7 @@ def render_section(slide):
         f'<p style="margin:0px;font-size:26px;font-weight:500;color:{MUTED};'
         f'line-height:1.6;max-width:640px;">{h(desc)}</p>'
         f'</div>'
-        f'{footer()}'
+        f'{footer(top=True)}'
         f'</section>'
     )
 
@@ -155,9 +156,9 @@ def content_wrap(title_text, inner_html):
         f'<section style="width:1280px;height:720px;background:{BG};color:{TEXT};'
         f'box-sizing:border-box;position:relative;overflow:hidden;break-after:page;'
         f'padding:64px 80px;display:flex;flex-direction:column;">'
+        f'{footer(top=True)}'
         f'{title_h}'
         f'{inner_html}'
-        f'{footer()}'
         f'</section>'
     )
 
