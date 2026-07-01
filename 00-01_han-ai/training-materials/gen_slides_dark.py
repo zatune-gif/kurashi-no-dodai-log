@@ -188,11 +188,17 @@ def render_bullet(slide):
     n = len(mains)
     fs = "32px" if n <= 5 else "24px" if n <= 7 else "20px"
 
+    # 項目数が少ない場合（休憩スライド等）はセンター寄せ、多い場合は均等分割
+    sparse = n <= 2
+    row_flex = "display:flex;" if sparse else "flex:1 1 0%;display:flex;"
+    container_extra = "justify-content:center;gap:32px;" if sparse else ""
+    row_pad = "padding:20px 0;" if sparse else ""
+
     rows = ""
     for i, item in enumerate(mains):
-        border = f"border-bottom:1px solid {DIVIDER};" if i < n - 1 else ""
+        border = (f"border-bottom:1px solid {DIVIDER};" if i < n - 1 else "") if not sparse else ""
         rows += (
-            f'<div style="flex:1 1 0%;display:flex;align-items:center;gap:28px;{border}">'
+            f'<div style="{row_flex}align-items:center;gap:28px;{border}{row_pad}">'
             f'<span style="width:16px;height:16px;background:{ACCENT};flex-shrink:0;"></span>'
             f'<span style="font-size:{fs};font-weight:500;">{h(item)}</span>'
             f'</div>'
@@ -208,7 +214,7 @@ def render_bullet(slide):
         )
 
     inner = (
-        f'<div style="flex:1 1 0%;display:flex;flex-direction:column;margin-top:8px;">'
+        f'<div style="flex:1 1 0%;display:flex;flex-direction:column;margin-top:8px;{container_extra}">'
         f'{rows}</div>{note_html}'
     )
     return content_wrap(title, inner)
@@ -282,7 +288,7 @@ def render_table(slide):
     pad     = "0 24px" if compact else "0 40px"
 
     # グリッドカラム定義
-    col0_w = "120px" if compact else "200px"
+    col0_w = "160px" if compact else "220px"
     if n_cols == 2:
         grid_cols = "1fr 2fr"
     elif n_cols == 3:
@@ -300,7 +306,8 @@ def render_table(slide):
             ct = h(tbl.cell(r, c).text.strip())
             if r == 0:
                 if c == 0:
-                    st = f"background:{BG};"
+                    ct = ""  # コーナーセルは常に空
+                    st = f"background:{BG};display:flex;align-items:center;justify-content:center;"
                 else:
                     st = (
                         f"background:{ACCENT};color:{DARK};display:flex;"
@@ -310,7 +317,7 @@ def render_table(slide):
             elif c == 0:
                 st = (
                     f"background:{BG_CARD};display:flex;align-items:center;"
-                    f"justify-content:center;font-size:{font_b};font-weight:800;color:{ACCENT};"
+                    f"justify-content:center;padding:0 16px;font-size:{font_b};font-weight:800;color:{ACCENT};"
                 )
             else:
                 st = (
