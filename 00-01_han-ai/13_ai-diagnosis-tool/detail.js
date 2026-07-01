@@ -372,18 +372,24 @@ if (_pageMode === 'estimate') {
 // =====================
 // 情報フォーム
 // =====================
+function startDiagnosis(companyName, contactName, email) {
+  state.companyName  = companyName;
+  state.contactName  = contactName;
+  state.email        = email;
+  state.currentIndex = 0;
+  state.answers      = new Array(ALL_QUESTIONS.length).fill(null);
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
 $('btn-start').addEventListener('click', () => {
   const result = validateContactForm('form-error-msg');
   if (!result) return;
+  startDiagnosis(result.companyName, result.contactName, result.email);
+});
 
-  state.companyName = result.companyName;
-  state.contactName = result.contactName;
-  state.email       = result.email;
-  state.currentIndex = 0;
-  state.answers = new Array(ALL_QUESTIONS.length).fill(null);
-
-  showScreen('screen-quiz');
-  renderQuestion();
+$('btn-skip-form').addEventListener('click', () => {
+  startDiagnosis('', '', '');
 });
 
 // =====================
