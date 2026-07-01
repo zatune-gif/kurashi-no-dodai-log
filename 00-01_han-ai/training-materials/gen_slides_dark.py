@@ -1,26 +1,10 @@
 """
-研修スライド PDF 生成スクリプト（ダークテーマ版）
-pptx → HTML → PDF (Playwright)
-デザイン: #1C1C1C + #DA7756 (ざつね屋ブランドカラー)
+研修スライド PDF 生成スクリプト v3（テンプレート完全準拠版）
+研修用スライドHTMLテンプレート.html の inline style をそのまま使用
 """
-import sys, re, asyncio, os, html, textwrap
-
+import sys, re, asyncio, os, html as htmlmod
 from pptx import Presentation
 from playwright.async_api import async_playwright
-
-# ── カラー & デザイントークン ──────────────────────────────
-BG          = "#1C1C1C"
-BG2         = "#222222"
-BG3         = "#252525"
-ACCENT      = "#DA7756"
-ACCENT_DIM  = "#B85E3D"
-TEXT        = "#EEEEEE"
-TEXT_MUTED  = "#9CA3AF"
-TEXT_DIM    = "#6B7280"
-BORDER      = "#333333"
-NOTE_BG     = "#2A2A2A"
-
-OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 COURSES = [
     ("course01_AI活用知識編.pptx",        "course01_AI活用知識編.pdf"),
@@ -30,716 +14,429 @@ COURSES = [
     ("course05_jissen_claude_code.pptx",  "course05_jissen_claude_code.pdf"),
 ]
 
-# ── CSS ───────────────────────────────────────────────────
-GLOBAL_CSS = f"""
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
-@page {{ size: 1280px 720px; margin: 0; }}
-* {{ margin: 0; padding: 0; box-sizing: border-box; }}
-body {{
-  background: {BG};
-  font-family: 'Noto Sans JP', 'Yu Gothic', 'Hiragino Sans', sans-serif;
+# ── デザイントークン（テンプレートから直接移植）──────────────
+BG       = "rgb(28,28,28)"
+BG_CARD  = "rgb(37,37,37)"
+BG_PAGE  = "rgb(17,17,17)"
+ACCENT   = "rgb(218,119,86)"
+DIVIDER  = "rgb(56,56,56)"
+TEXT     = "rgb(238,238,238)"
+MUTED    = "rgb(144,144,144)"
+DARK     = "rgb(28,28,28)"
+
+def h(s): return htmlmod.escape(str(s))
+
+# ── ベースCSS ────────────────────────────────────────────────
+BASE_CSS = """
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800;900&display=swap');
+*, *::before, *::after {
+  box-sizing: border-box;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
-}}
-.slide {{
-  width: 1280px;
-  height: 720px;
-  background: {BG};
-  position: relative;
-  overflow: hidden;
-  page-break-after: always;
-  display: flex;
-  flex-direction: column;
-}}
-.slide:last-child {{ page-break-after: auto; }}
-
-/* 上部オレンジライン */
-.top-bar {{
-  width: 100%;
-  height: 5px;
-  background: {ACCENT};
-  flex-shrink: 0;
-}}
-
-/* フッター */
-.footer {{
-  position: absolute;
-  bottom: 20px;
-  right: 30px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: {TEXT_MUTED};
-  font-size: 14px;
-  font-weight: 600;
-}}
-.footer-dot {{
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: {ACCENT};
-}}
-
-/* バッジ */
-.badge {{
-  display: inline-block;
-  align-self: flex-start;
-  background: {ACCENT};
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  padding: 6px 16px;
-  border-radius: 8px;
-  letter-spacing: 0.02em;
-}}
-
-/* ── Cover ─────────────────────────────────────────── */
-.slide-cover .content-area {{
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0 80px 60px;
-  gap: 12px;
-}}
-.slide-cover .course-title {{
-  font-size: 64px;
-  font-weight: 900;
-  color: {TEXT};
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  margin-top: 16px;
-}}
-.slide-cover .subtitle {{
-  font-size: 20px;
-  color: {TEXT_MUTED};
-  font-weight: 400;
-  margin-top: 4px;
-}}
-.slide-cover .meta {{
-  font-size: 13px;
-  color: {TEXT_DIM};
-  margin-top: 10px;
-}}
-
-/* ── Section ───────────────────────────────────────── */
-.slide-section {{
-  background: #1A1A1A;
-}}
-.slide-section .content-area {{
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding: 0 80px;
-  gap: 40px;
-}}
-.section-num {{
-  width: 110px;
-  height: 110px;
-  background: {ACCENT};
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 56px;
-  font-weight: 900;
-  color: #fff;
-  flex-shrink: 0;
-}}
-.section-info {{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}}
-.section-name {{
-  font-size: 36px;
-  font-weight: 900;
-  color: {TEXT};
-  line-height: 1.2;
-}}
-.section-time {{
-  font-size: 16px;
-  color: {ACCENT};
-  font-weight: 600;
-}}
-.section-desc {{
-  font-size: 16px;
-  color: {TEXT_MUTED};
-  font-weight: 400;
-  margin-top: 4px;
-}}
-
-/* ── Table slide ───────────────────────────────────── */
-.slide-table .slide-header {{
-  background: {BG3};
-  padding: 18px 40px;
-  flex-shrink: 0;
-  border-bottom: 2px solid {ACCENT};
-}}
-.slide-header h2 {{
-  font-size: 22px;
-  font-weight: 700;
-  color: {TEXT};
-}}
-.slide-table .table-area {{
-  flex: 1;
-  padding: 20px 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow: hidden;
-}}
-table {{
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}}
-thead tr {{
-  background: {ACCENT};
-}}
-thead th {{
-  color: #fff;
-  font-weight: 700;
-  padding: 10px 14px;
-  text-align: left;
-  font-size: 13px;
-  border: 1px solid {ACCENT_DIM};
-}}
-tbody tr:nth-child(odd) {{ background: {BG3}; }}
-tbody tr:nth-child(even) {{ background: {BG2}; }}
-tbody td {{
-  color: {TEXT};
-  padding: 10px 14px;
-  border: 1px solid {BORDER};
-  font-size: 13px;
-  line-height: 1.45;
-  vertical-align: top;
-}}
-.note {{
-  background: {NOTE_BG};
-  border-left: 3px solid {ACCENT};
-  padding: 8px 14px;
-  border-radius: 4px;
-  font-size: 12px;
-  color: {TEXT_MUTED};
-  margin-top: 10px;
-  line-height: 1.5;
-}}
-
-/* ── Content slide ─────────────────────────────────── */
-.slide-content .slide-header {{
-  background: {BG3};
-  padding: 18px 40px;
-  flex-shrink: 0;
-  border-bottom: 2px solid {ACCENT};
-}}
-.slide-content .content-area {{
-  flex: 1;
-  padding: 24px 40px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}}
-.content-block {{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}}
-.content-block-title {{
-  font-size: 15px;
-  font-weight: 700;
-  color: {ACCENT};
-  margin-bottom: 4px;
-}}
-.bullet {{
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 14px;
-  color: {TEXT};
-  line-height: 1.5;
-}}
-.bullet::before {{
-  content: "▶";
-  color: {ACCENT};
-  font-size: 11px;
-  flex-shrink: 0;
-  margin-top: 3px;
-}}
-.check {{
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 14px;
-  color: {TEXT};
-  line-height: 1.5;
-}}
-
-/* 2カラムレイアウト */
-.two-col {{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  flex: 1;
-  overflow: hidden;
-}}
-.col-block {{
-  background: {BG3};
-  border-radius: 8px;
-  padding: 16px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}}
-.col-block-title {{
-  font-size: 14px;
-  font-weight: 700;
-  color: {ACCENT};
-  border-bottom: 1px solid {BORDER};
-  padding-bottom: 8px;
-  margin-bottom: 6px;
-}}
-
-/* 2×2グリッドマップ */
-.map-grid {{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 16px;
-  flex: 1;
-  padding: 20px 40px 60px;
-}}
-.map-cell {{
-  background: {BG3};
-  border: 1px solid {BORDER};
-  border-radius: 10px;
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 6px;
-}}
-.map-cell-title {{
-  font-size: 16px;
-  font-weight: 700;
-  color: {ACCENT};
-}}
-.map-cell-desc {{
-  font-size: 13px;
-  color: {TEXT_MUTED};
-  line-height: 1.5;
-}}
-
-/* Before/After */
-.before-after {{
-  display: grid;
-  grid-template-columns: 1fr 80px 1fr;
-  gap: 0;
-  align-items: center;
-  flex: 1;
-  padding: 0 40px 50px;
-}}
-.ba-block {{
-  background: {BG3};
-  border-radius: 10px;
-  padding: 20px 24px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}}
-.ba-label-bad  {{ font-size: 13px; font-weight: 700; color: #EF4444; }}
-.ba-label-good {{ font-size: 13px; font-weight: 700; color: #22C55E; }}
-.ba-text {{
-  font-size: 14px;
-  color: {TEXT};
-  line-height: 1.6;
-  white-space: pre-wrap;
-}}
-.ba-arrow {{
-  font-size: 22px;
-  color: {ACCENT};
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  line-height: 1.3;
-  word-break: keep-all;
-}}
+}
+html, body { margin: 0; padding: 0; background: rgb(17,17,17); }
+body { font-family: 'Noto Sans JP', 'Yu Gothic', 'Hiragino Sans', sans-serif; }
+h1, h2, h3, p { margin: 0; padding: 0; }
+@page { size: 1280px 720px; margin: 0; }
+@media print {
+  html, body { background: #ffffff; }
+  .deck-surround { padding: 0 !important; gap: 0 !important; background: #ffffff !important; }
+}
 """
 
-# ── ユーティリティ ────────────────────────────────────────
-def h(s): return html.escape(str(s))
+# ── フッター（テンプレートと完全一致）──────────────────────
+def footer():
+    return (
+        f'<div style="position:absolute;bottom:56px;right:80px;display:flex;'
+        f'align-items:center;gap:12px;font-size:24px;font-weight:700;color:{TEXT};">'
+        f'<span style="width:12px;height:12px;border-radius:50%;background:{ACCENT};'
+        f'display:inline-block;"></span>ざつね屋</div>'
+    )
 
-def extract_shapes(slide):
-    """スライドのすべてのテキスト・テーブル情報を順序付きで返す"""
-    items = []
-    for shape in slide.shapes:
-        if shape.has_text_frame:
-            texts = []
-            for para in shape.text_frame.paragraphs:
-                t = para.text.strip()
-                if t:
-                    texts.append(t)
-            if texts:
-                items.append(("text", shape, texts))
-        elif shape.has_table:
-            items.append(("table", shape, shape.table))
-    return items
+def top_bar():
+    return (
+        f'<div style="position:absolute;top:0px;left:0px;width:100%;height:8px;'
+        f'background:{ACCENT};"></div>'
+    )
 
-def get_all_texts(slide):
-    texts = []
+# ── テキスト抽出 ────────────────────────────────────────────
+def get_texts(slide):
+    out = []
     for shape in slide.shapes:
         if shape.has_text_frame:
             for para in shape.text_frame.paragraphs:
                 t = para.text.strip()
                 if t:
-                    texts.append(t)
-    return texts
+                    out.append(t)
+    return out
 
+def get_table(slide):
+    for shape in slide.shapes:
+        if shape.has_table:
+            return shape.table
+    return None
+
+# ── スライドタイプ判定 ──────────────────────────────────────
 def detect_type(slide):
-    texts = get_all_texts(slide)
+    texts = get_texts(slide)
     if not texts:
         return "blank"
-    # 矢印のみは 4軸マップ
-    arrow_count = sum(1 for t in texts if t in ("↑","↓","←","→"))
-    if arrow_count >= 3:
-        return "map_grid"
-    # Cover: 最初のテキストが「ざつね屋」かつコース名を含む
-    if texts[0] == "ざつね屋" or (len(texts) >= 2 and "ざつね屋" in texts[0] and "コース" in texts[1]):
+    arrows = sum(1 for t in texts if t in ("↑","↓","←","→"))
+    if arrows >= 3:
+        return "grid"
+    if texts[0] == "ざつね屋":
         return "cover"
-    # Before/After
     if any("Before" in t or "After" in t for t in texts):
         return "before_after"
-    # Section: 最初のテキストが単一数字
     if re.match(r'^[1-9]$', texts[0]):
         return "section"
-    # テーブル有
-    has_table = any(s.has_table for s in slide.shapes)
-    if has_table:
+    if get_table(slide):
         return "table"
-    return "content"
+    return "bullet"
 
-def table_html(tbl, extra_class=""):
-    rows_html = ""
+# ── 01 表紙（テンプレート完全一致）──────────────────────────
+def render_cover(slide):
+    texts = get_texts(slide)
+    badge    = texts[1] if len(texts) > 1 else ""
+    title    = texts[2] if len(texts) > 2 else ""
+    subtitle = texts[3] if len(texts) > 3 else ""
+
+    return (
+        f'<section style="width:1280px;height:720px;background:{BG};color:{TEXT};'
+        f'box-sizing:border-box;position:relative;overflow:hidden;break-after:page;'
+        f'padding:80px;display:flex;flex-direction:column;justify-content:center;">'
+        f'{top_bar()}'
+        f'<div style="display:inline-flex;align-self:flex-start;align-items:center;'
+        f'background:{ACCENT};color:{DARK};padding:10px 24px;border-radius:6px;'
+        f'font-weight:800;font-size:22px;letter-spacing:0.04em;">{h(badge)}</div>'
+        f'<h1 style="margin:36px 0px 0px;font-size:92px;font-weight:900;'
+        f'line-height:1.08;letter-spacing:0.01em;">{h(title)}</h1>'
+        f'<p style="margin:32px 0px 0px;font-size:28px;font-weight:500;'
+        f'color:{MUTED};line-height:1.5;">{h(subtitle)}</p>'
+        f'{footer()}'
+        f'</section>'
+    )
+
+# ── 02 セクション区切り（テンプレート完全一致）──────────────
+def render_section(slide):
+    texts = get_texts(slide)
+    num   = texts[0] if len(texts) > 0 else ""
+    name  = texts[1] if len(texts) > 1 else ""
+    time  = texts[2] if len(texts) > 2 else ""
+    desc  = texts[3] if len(texts) > 3 else ""
+
+    return (
+        f'<section style="width:1280px;height:720px;background:{BG};color:{TEXT};'
+        f'box-sizing:border-box;position:relative;overflow:hidden;break-after:page;'
+        f'padding:80px;display:flex;align-items:center;gap:72px;">'
+        f'<div style="font-size:340px;font-weight:900;line-height:0.8;color:{ACCENT};'
+        f'flex-shrink:0;">{h(num)}</div>'
+        f'<div style="width:3px;align-self:stretch;margin:64px 0px;'
+        f'background:{DIVIDER};flex-shrink:0;"></div>'
+        f'<div style="display:flex;flex-direction:column;gap:28px;">'
+        f'<div style="display:inline-flex;align-self:flex-start;align-items:center;'
+        f'gap:8px;border:2px solid {ACCENT};color:{ACCENT};padding:8px 20px;'
+        f'border-radius:999px;font-weight:700;font-size:22px;">{h(time)}</div>'
+        f'<h2 style="margin:0px;font-size:60px;font-weight:800;line-height:1.15;">{h(name)}</h2>'
+        f'<p style="margin:0px;font-size:26px;font-weight:500;color:{MUTED};'
+        f'line-height:1.6;max-width:640px;">{h(desc)}</p>'
+        f'</div>'
+        f'{footer()}'
+        f'</section>'
+    )
+
+# ── コンテンツスライド共通ラッパー ──────────────────────────
+def content_wrap(title_text, inner_html):
+    title_h = (
+        f'<h2 style="margin:0px 0px 28px;font-size:48px;font-weight:800;'
+        f'padding-bottom:22px;border-bottom:4px solid {ACCENT};">{h(title_text)}</h2>'
+    )
+    return (
+        f'<section style="width:1280px;height:720px;background:{BG};color:{TEXT};'
+        f'box-sizing:border-box;position:relative;overflow:hidden;break-after:page;'
+        f'padding:64px 80px;display:flex;flex-direction:column;">'
+        f'{title_h}'
+        f'{inner_html}'
+        f'{footer()}'
+        f'</section>'
+    )
+
+# ── 03 箇条書き（テンプレート完全一致）──────────────────────
+def render_bullet(slide):
+    texts = get_texts(slide)
+    if not texts:
+        return f'<section style="break-after:page;width:1280px;height:720px;background:{BG};"></section>'
+
+    title = texts[0]
+    items_all = texts[1:]
+
+    # ブロックヘッダーがあれば2カラムへ
+    BLOCK_HEADERS = {
+        "社内ルール（最低限）","出力を使うときの注意","本日の学び",
+        "持ち帰り資料","次のステップ | ざつね屋のサービス案内",
+        "実践（30分） — ツール","良いプロンプトの4要素",
+    }
+    if any(t in BLOCK_HEADERS for t in items_all):
+        return render_two_col(slide)
+
+    # 注記（⚠💡❗→ で始まる）を分離
+    note_pfx = ("⚠","💡","❗","📋","📚","🛠","✅","→","注意","ポイント","次のステップ")
+    mains = [t for t in items_all if not any(t.startswith(p) for p in note_pfx)]
+    notes = [t for t in items_all if any(t.startswith(p) for p in note_pfx)]
+
+    n = len(mains)
+    fs = "32px" if n <= 5 else "24px" if n <= 7 else "20px"
+
+    rows = ""
+    for i, item in enumerate(mains):
+        border = f"border-bottom:1px solid {DIVIDER};" if i < n - 1 else ""
+        rows += (
+            f'<div style="flex:1 1 0%;display:flex;align-items:center;gap:28px;{border}">'
+            f'<span style="width:16px;height:16px;background:{ACCENT};flex-shrink:0;"></span>'
+            f'<span style="font-size:{fs};font-weight:500;">{h(item)}</span>'
+            f'</div>'
+        )
+
+    note_html = ""
+    if notes:
+        note_text = "　".join(notes[:2])
+        note_html = (
+            f'<div style="margin-top:16px;padding:12px 20px;border-left:4px solid {ACCENT};'
+            f'background:{BG_CARD};font-size:18px;color:{MUTED};line-height:1.5;">'
+            f'{h(note_text)}</div>'
+        )
+
+    inner = (
+        f'<div style="flex:1 1 0%;display:flex;flex-direction:column;margin-top:8px;">'
+        f'{rows}</div>{note_html}'
+    )
+    return content_wrap(title, inner)
+
+# ── 2カラムコンテンツ ────────────────────────────────────────
+def render_two_col(slide):
+    texts = get_texts(slide)
+    if not texts:
+        return f'<section style="break-after:page;width:1280px;height:720px;background:{BG};"></section>'
+
+    title = texts[0]
+    rest  = texts[1:]
+
+    BLOCK_HEADERS = {
+        "社内ルール（最低限）","出力を使うときの注意","本日の学び",
+        "持ち帰り資料","次のステップ | ざつね屋のサービス案内",
+        "実践（30分） — ツール","良いプロンプトの4要素",
+    }
+
+    blocks = []
+    cur_hd, cur_items = None, []
+    for t in rest:
+        if t in BLOCK_HEADERS:
+            if cur_hd is not None or cur_items:
+                blocks.append((cur_hd, cur_items))
+            cur_hd, cur_items = t, []
+        else:
+            cur_items.append(t)
+    blocks.append((cur_hd, cur_items))
+
+    cols = ""
+    for bh, bi in blocks[:4]:
+        items_html = "".join(
+            f'<div style="display:flex;align-items:flex-start;gap:14px;'
+            f'font-size:20px;font-weight:500;line-height:1.5;">'
+            f'<span style="width:10px;height:10px;background:{ACCENT};'
+            f'flex-shrink:0;margin-top:6px;"></span>'
+            f'<span>{h(it)}</span></div>'
+            for it in bi
+        )
+        cols += (
+            f'<div style="background:{BG_CARD};border-radius:8px;padding:24px 28px;'
+            f'display:flex;flex-direction:column;gap:12px;">'
+            f'<div style="font-size:20px;font-weight:800;color:{ACCENT};'
+            f'padding-bottom:10px;border-bottom:1px solid {DIVIDER};">{h(bh or "")}</div>'
+            f'{items_html}</div>'
+        )
+
+    inner = (
+        f'<div style="flex:1 1 0%;display:grid;grid-template-columns:1fr 1fr;gap:20px;">'
+        f'{cols}</div>'
+    )
+    return content_wrap(title, inner)
+
+# ── 04 比較テーブル（CSS grid、テンプレート完全一致）────────
+def render_table(slide):
+    texts = get_texts(slide)
+    tbl   = get_table(slide)
+    title = texts[0] if texts else ""
+
+    if tbl is None:
+        return render_bullet(slide)
+
     n_rows = len(tbl.rows)
     n_cols = len(tbl.columns)
+
+    # フォントサイズ（列数・行数に応じてスケール）
+    compact = n_rows > 5 or n_cols > 3
+    font_h  = "22px" if compact else "30px"
+    font_b  = "18px" if compact else "26px"
+    pad     = "0 24px" if compact else "0 40px"
+
+    # グリッドカラム定義
+    col0_w = "120px" if compact else "200px"
+    if n_cols == 2:
+        grid_cols = "1fr 2fr"
+    elif n_cols == 3:
+        grid_cols = f"{col0_w} 1fr 1fr"
+    elif n_cols == 4:
+        grid_cols = f"{col0_w} 1fr 1fr 1fr"
+    else:
+        grid_cols = f"{col0_w} " + " ".join(["1fr"] * (n_cols - 1))
+
+    grid_rows = "auto " + " ".join(["1fr"] * max(n_rows - 1, 1))
+
+    cells = ""
     for r in range(n_rows):
-        cells = ""
         for c in range(n_cols):
-            text = h(tbl.cell(r, c).text.strip())
+            ct = h(tbl.cell(r, c).text.strip())
             if r == 0:
-                cells += f"<th>{text}</th>"
-            else:
-                cells += f"<td>{text}</td>"
-        tag = "thead" if r == 0 else "tbody"
-        rows_html += f"<{'tr' if r > 0 else f'tr class=\"header-row\"'}>{cells}</tr>"
-
-    # split thead/tbody properly
-    lines = []
-    for r in range(n_rows):
-        cells = ""
-        for c in range(n_cols):
-            text = h(tbl.cell(r, c).text.strip())
-            if r == 0:
-                cells += f"<th>{text}</th>"
-            else:
-                cells += f"<td>{text}</td>"
-        lines.append((r, cells))
-
-    thead = f"<thead><tr>{''.join(c for _, c in [(r, cells) for r, cells in lines if r == 0])}</tr></thead>"
-    tbody_rows = "".join(f"<tr>{cells}</tr>" for r, cells in lines if r > 0)
-    tbody = f"<tbody>{tbody_rows}</tbody>"
-    return f'<table class="{extra_class}">{thead}{tbody}</table>'
-
-def footer_html():
-    return f'<div class="footer"><div class="footer-dot"></div>ざつね屋</div>'
-
-# ── スライドレンダラー ────────────────────────────────────
-
-def render_cover(slide):
-    texts = get_all_texts(slide)
-    # texts[0]=ざつね屋, texts[1]=コース①など, texts[2]=タイトル, texts[3]=サブタイトル, texts[4]=メタ
-    badge_text = texts[1] if len(texts) > 1 else ""
-    title = texts[2] if len(texts) > 2 else texts[0]
-    subtitle = texts[3] if len(texts) > 3 else ""
-    meta = texts[4] if len(texts) > 4 else ""
-    return f"""
-<div class="slide slide-cover">
-  <div class="top-bar"></div>
-  <div class="content-area">
-    <div class="badge">{h(badge_text)}</div>
-    <div class="course-title">{h(title)}</div>
-    <div class="subtitle">{h(subtitle)}</div>
-    <div class="meta">{h(meta)}</div>
-  </div>
-  {footer_html()}
-</div>"""
-
-def render_section(slide):
-    texts = get_all_texts(slide)
-    num  = texts[0] if len(texts) > 0 else ""
-    name = texts[1] if len(texts) > 1 else ""
-    time = texts[2] if len(texts) > 2 else ""
-    desc = texts[3] if len(texts) > 3 else ""
-    return f"""
-<div class="slide slide-section">
-  <div class="top-bar"></div>
-  <div class="content-area">
-    <div class="section-num">{h(num)}</div>
-    <div class="section-info">
-      <div class="section-name">{h(name)}</div>
-      <div class="section-time">{h(time)}</div>
-      <div class="section-desc">{h(desc)}</div>
-    </div>
-  </div>
-  {footer_html()}
-</div>"""
-
-def render_table(slide):
-    items = extract_shapes(slide)
-    title = ""
-    tables = []
-    notes = []
-    note_keywords = ("⚠", "💡", "❗", "→", "手間", "学習", "専門")
-
-    for kind, shape, data in items:
-        if kind == "text":
-            for t in data:
-                # 最初の長くない(60字以内)テキストをタイトルとする
-                if not title and len(t) < 80 and not any(t.startswith(k) for k in note_keywords):
-                    title = t
+                if c == 0:
+                    st = f"background:{BG};"
                 else:
-                    notes.append(t)
-        elif kind == "table":
-            tables.append(data)
+                    st = (
+                        f"background:{ACCENT};color:{DARK};display:flex;"
+                        f"align-items:center;justify-content:center;"
+                        f"font-size:{font_h};font-weight:800;"
+                    )
+            elif c == 0:
+                st = (
+                    f"background:{BG_CARD};display:flex;align-items:center;"
+                    f"justify-content:center;font-size:{font_b};font-weight:800;color:{ACCENT};"
+                )
+            else:
+                st = (
+                    f"background:{BG_CARD};display:flex;align-items:center;"
+                    f"padding:{pad};font-size:{font_b};font-weight:500;line-height:1.5;"
+                )
+            cells += f'<div style="{st}">{ct}</div>'
 
-    tables_html = "".join(table_html(tbl) for tbl in tables)
-    notes_html = "".join(f'<div class="note">{h(n)}</div>' for n in notes if n != title)
+    # テーブル外の注記テキスト
+    tbl_texts = set()
+    for r in range(n_rows):
+        for c in range(n_cols):
+            tbl_texts.add(tbl.cell(r, c).text.strip())
+    extra = [t for t in texts[1:] if t not in tbl_texts and len(t) > 10]
+    note_html = ""
+    if extra:
+        note_html = (
+            f'<div style="margin-top:10px;padding:10px 18px;border-left:4px solid {ACCENT};'
+            f'background:{BG_CARD};font-size:16px;color:{MUTED};line-height:1.5;">'
+            f'{h(extra[0])}</div>'
+        )
 
-    return f"""
-<div class="slide slide-table">
-  <div class="top-bar"></div>
-  <div class="slide-header"><h2>{h(title)}</h2></div>
-  <div class="table-area">
-    {tables_html}
-    {notes_html}
-  </div>
-  {footer_html()}
-</div>"""
+    inner = (
+        f'<div style="flex:1 1 0%;display:grid;grid-template-columns:{grid_cols};'
+        f'grid-template-rows:{grid_rows};gap:2px;background:{DIVIDER};border:2px solid {DIVIDER};">'
+        f'{cells}</div>{note_html}'
+    )
+    return content_wrap(title, inner)
 
-def render_map_grid(slide):
-    texts = get_all_texts(slide)
-    # 矢印と「↑↓←→」を除いて、【...】形式の4項目を抽出
-    cells = []
-    title = ""
-    for t in texts:
-        if t in ("↑","↓","←","→"):
-            continue
-        if t.startswith("【") or t.startswith("●"):
-            cells.append(t)
-        elif not title:
-            title = t
+# ── 05 2×2グリッド（テンプレート完全一致）──────────────────
+def render_grid(slide):
+    texts = get_texts(slide)
+    filtered = [t for t in texts if t not in ("↑","↓","←","→") and t.strip()]
+    title = filtered[0] if filtered else ""
+    cells = filtered[1:]
 
-    # 4つのセルに分割
-    cell_html = ""
-    for cell in cells[:4]:
-        # 【タイトル】\nサブテキスト の形式を分割
-        parts = cell.split("\n", 1)
+    nums = ["01","02","03","04"]
+    cards = ""
+    for i, cell in enumerate(cells[:4]):
+        parts   = cell.split("\n", 1)
         c_title = parts[0].strip("【】●").strip()
         c_desc  = parts[1].strip() if len(parts) > 1 else ""
-        cell_html += f"""
-    <div class="map-cell">
-      <div class="map-cell-title">{h(c_title)}</div>
-      <div class="map-cell-desc">{h(c_desc)}</div>
-    </div>"""
+        num     = nums[i] if i < len(nums) else f"0{i+1}"
+        cards += (
+            f'<div style="background:{BG_CARD};border-radius:8px;padding:36px 40px;'
+            f'display:flex;flex-direction:column;justify-content:center;gap:14px;">'
+            f'<span style="font-size:26px;font-weight:900;color:{ACCENT};">{num}</span>'
+            f'<h3 style="margin:0px;font-size:38px;font-weight:800;">{h(c_title)}</h3>'
+            f'<p style="margin:0px;font-size:22px;font-weight:500;color:{MUTED};'
+            f'line-height:1.5;">{h(c_desc)}</p>'
+            f'</div>'
+        )
 
-    # 4セルに満たない場合、残りは空
-    while len(cells) < 4:
-        cell_html += '<div class="map-cell"></div>'
-        cells.append("")
+    inner = (
+        f'<div style="flex:1 1 0%;display:grid;grid-template-columns:1fr 1fr;'
+        f'grid-template-rows:1fr 1fr;gap:24px;">'
+        f'{cards}</div>'
+    )
+    return content_wrap(title, inner)
 
-    return f"""
-<div class="slide slide-content">
-  <div class="top-bar"></div>
-  <div class="slide-header"><h2>{h(title)}</h2></div>
-  <div class="map-grid">
-    {cell_html}
-  </div>
-  {footer_html()}
-</div>"""
-
+# ── Before/After ─────────────────────────────────────────────
 def render_before_after(slide):
-    texts = get_all_texts(slide)
-    title = ""
-    bad_label = ""
-    bad_text  = ""
-    good_label = ""
-    good_text  = ""
-    arrow = ""
-    state = "title"
+    texts = get_texts(slide)
+    title = texts[0] if texts else ""
+    bad_label = good_label = bad_text = good_text = ""
+    state = "none"
 
-    for t in texts:
-        if not title:
-            title = t
-            continue
-        if "Before" in t or "悪い" in t or "❌" in t:
-            bad_label = t
-            state = "bad"
-        elif "After" in t or "良い" in t or "✅" in t:
-            good_label = t
-            state = "good"
-        elif t in ("↓", "→", "⬇", "➡") or re.match(r'^[↓→⬇➡]\s*\S', t):
-            # 矢印記号のみ抽出、後続テキストは添え書きとして保持
-            arrow_char = t[0]
-            arrow_label = t[1:].strip() if len(t) > 1 else ""
-            arrow = arrow_char + (" " + arrow_label if arrow_label else "")
+    for t in texts[1:]:
+        if "Before" in t or "❌" in t or "悪い" in t:
+            bad_label = t; state = "bad"
+        elif "After" in t or "✅" in t or "良い" in t:
+            good_label = t; state = "good"
+        elif t in ("↓","→","⬇","➡"):
+            pass
         elif state == "bad":
             bad_text += t + "\n"
         elif state == "good":
             good_text += t + "\n"
 
-    return f"""
-<div class="slide slide-content">
-  <div class="top-bar"></div>
-  <div class="slide-header"><h2>{h(title)}</h2></div>
-  <div class="before-after">
-    <div class="ba-block">
-      <div class="ba-label-bad">{h(bad_label)}</div>
-      <div class="ba-text">{h(bad_text.strip())}</div>
-    </div>
-    <div class="ba-arrow">{h(arrow or "→")}</div>
-    <div class="ba-block">
-      <div class="ba-label-good">{h(good_label)}</div>
-      <div class="ba-text">{h(good_text.strip())}</div>
-    </div>
-  </div>
-  {footer_html()}
-</div>"""
-
-def render_content(slide):
-    """汎用コンテンツスライド：2カラムまたはシングルカラム"""
-    items = extract_shapes(slide)
-    title = ""
-    blocks = []  # list of (block_title, [lines])
-    current_block_title = None
-    current_lines = []
-
-    special_markers = ("✅", "📋", "📚", "🛠", "①", "②", "③")
-    block_starters  = any(
-        any(t.startswith(m) for m in ("① ", "② ", "③ ")) or
-        any(shape.has_text_frame and any(p.text.strip() in ("社内ルール（最低限）", "出力を使うときの注意", "本日の学び", "持ち帰り資料", "次のステップ | ざつね屋のサービス案内") for p in shape.text_frame.paragraphs) for shape in slide.shapes)
-        for shape in slide.shapes if shape.has_text_frame
-        for para in shape.text_frame.paragraphs
-        for t in [para.text.strip()] if t
+    inner = (
+        f'<div style="flex:1 1 0%;display:grid;grid-template-columns:1fr 80px 1fr;'
+        f'gap:0;align-items:center;">'
+        f'<div style="background:{BG_CARD};border-radius:8px;padding:28px 32px;'
+        f'height:100%;display:flex;flex-direction:column;gap:14px;">'
+        f'<div style="font-size:18px;font-weight:700;color:#EF4444;">{h(bad_label)}</div>'
+        f'<div style="font-size:22px;font-weight:500;line-height:1.6;white-space:pre-wrap;">'
+        f'{h(bad_text.strip())}</div></div>'
+        f'<div style="font-size:32px;color:{ACCENT};text-align:center;">→</div>'
+        f'<div style="background:{BG_CARD};border-radius:8px;padding:28px 32px;'
+        f'height:100%;display:flex;flex-direction:column;gap:14px;">'
+        f'<div style="font-size:18px;font-weight:700;color:#22C55E;">{h(good_label)}</div>'
+        f'<div style="font-size:22px;font-weight:500;line-height:1.6;white-space:pre-wrap;">'
+        f'{h(good_text.strip())}</div></div>'
+        f'</div>'
     )
+    return content_wrap(title, inner)
 
-    all_texts = get_all_texts(slide)
-    if not all_texts:
-        return f'<div class="slide"></div>'
-
-    title = all_texts[0]
-    rest  = all_texts[1:]
-
-    # ブロックヘッダーかどうか判定
-    block_headers = {"社内ルール（最低限）", "出力を使うときの注意",
-                     "本日の学び", "持ち帰り資料", "次のステップ | ざつね屋のサービス案内",
-                     "実践（30分） — ツール", "良いプロンプトの4要素"}
-
-    # 2カラム的な構造を検出
-    is_two_col = any(t in block_headers for t in rest)
-
-    if is_two_col:
-        # ブロック単位でまとめる
-        cols = []
-        cur_title = None
-        cur_items = []
-        for t in rest:
-            if t in block_headers:
-                if cur_title or cur_items:
-                    cols.append((cur_title, cur_items))
-                cur_title = t
-                cur_items = []
-            else:
-                cur_items.append(t)
-        if cur_title or cur_items:
-            cols.append((cur_title, cur_items))
-
-        # 最大2カラム（それ以上は縦積み）
-        col_divs = ""
-        for ct, ci in cols[:4]:
-            items_html = "".join(f'<div class="bullet">{h(li)}</div>' for li in ci)
-            col_divs += f"""
-        <div class="col-block">
-          <div class="col-block-title">{h(ct or "")}</div>
-          {items_html}
-        </div>"""
-
-        return f"""
-<div class="slide slide-content">
-  <div class="top-bar"></div>
-  <div class="slide-header"><h2>{h(title)}</h2></div>
-  <div class="content-area">
-    <div class="two-col">
-      {col_divs}
-    </div>
-  </div>
-  {footer_html()}
-</div>"""
-
-    # シングルカラム
-    lines_html = "".join(f'<div class="bullet">{h(t)}</div>' for t in rest)
-    return f"""
-<div class="slide slide-content">
-  <div class="top-bar"></div>
-  <div class="slide-header"><h2>{h(title)}</h2></div>
-  <div class="content-area">
-    <div class="content-block">
-      {lines_html}
-    </div>
-  </div>
-  {footer_html()}
-</div>"""
-
+# ── ルーター ─────────────────────────────────────────────────
 def render_slide(slide):
     t = detect_type(slide)
-    if t == "cover":       return render_cover(slide)
-    if t == "section":     return render_section(slide)
-    if t == "table":       return render_table(slide)
-    if t == "map_grid":    return render_map_grid(slide)
+    if t == "cover":        return render_cover(slide)
+    if t == "section":      return render_section(slide)
+    if t == "table":        return render_table(slide)
+    if t == "grid":         return render_grid(slide)
     if t == "before_after": return render_before_after(slide)
-    return render_content(slide)
+    return render_bullet(slide)
 
+# ── HTML 組み立て ────────────────────────────────────────────
 def build_html(pptx_path):
     prs = Presentation(pptx_path)
     slides_html = "\n".join(render_slide(s) for s in prs.slides)
-    return f"""<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <style>{GLOBAL_CSS}</style>
-</head>
-<body>
-{slides_html}
-</body>
-</html>"""
+    return (
+        f'<!DOCTYPE html>\n<html><head>\n<meta charset="utf-8">\n'
+        f'<style>{BASE_CSS}</style>\n</head>\n<body>\n'
+        f'<div class="deck-surround" style="display:flex;flex-direction:column;'
+        f'align-items:center;gap:40px;padding:40px;background:{BG_PAGE};">\n'
+        f'{slides_html}\n</div>\n</body></html>'
+    )
 
+# ── PDF 変換 ────────────────────────────────────────────────
 async def html_to_pdf(html_content, pdf_path):
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page()
         await page.set_content(html_content, wait_until="networkidle")
         await page.wait_for_timeout(2000)
-        await page.pdf(
-            path=pdf_path,
-            width="1280px",
-            height="720px",
-            print_background=True,
-        )
+        await page.pdf(path=pdf_path, width="1280px", height="720px", print_background=True)
         await browser.close()
 
 async def main():
@@ -750,16 +447,8 @@ async def main():
         if not os.path.exists(pptx_path):
             print(f"[SKIP] {pptx_name} not found")
             continue
-        print(f"[GEN] {pptx_name} → {pdf_name} ...", end=" ", flush=True)
-        html_content = build_html(pptx_path)
-
-        # HTML を一時ファイルに書いてから PDF 化
-        tmp_html = pdf_path.replace(".pdf", "_tmp.html")
-        with open(tmp_html, "w", encoding="utf-8") as f:
-            f.write(html_content)
-
-        await html_to_pdf(html_content, pdf_path)
-        os.remove(tmp_html)
+        print(f"[GEN] {pptx_name} ...", end=" ", flush=True)
+        await html_to_pdf(build_html(pptx_path), pdf_path)
         print("done")
     print("\n✅ 全コース PDF 生成完了")
 
