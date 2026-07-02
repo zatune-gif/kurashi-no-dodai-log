@@ -28,10 +28,16 @@ BLOCK_HEADERS = {
     "社内ルール（最低限）", "出力を使うときの注意", "本日の学び",
     "次のステップ | ざつね屋のサービス案内", "実践（30分） — ツール",
 }
-SKIP_BLOCKS = {"持ち帰り資料"}  # このブロックとその内容は非表示
+SKIP_BLOCKS   = {"持ち帰り資料"}
+STEP_HEADERS  = {"Step"}           # Step列は番号表示不要なため除外
+_SKIP_ROW_RES = [re.compile(r'^全体シェア'), re.compile(r'^バッファ')]
+
+def should_skip_row(ct):
+    return any(p.search(ct) for p in _SKIP_ROW_RES)
 
 # ── テキストユーティリティ ────────────────────────────────────
-_TIME_RE = re.compile(r'[（(]\s*\d+分[^）)]*[）)]')   # タイトル時間表記除去用
+_TIME_RE   = re.compile(r'[（(]\s*\d+分[^）)]*[）)]')   # タイトル時間表記除去
+_CIRCLE_RE = re.compile(r'[①-⓿]')  # 丸囲み数字（①②③等）除去
 
 _EMOJI_RE = re.compile(
     r'[\U0001F000-\U0001FFFF'   # 絵文字全般
@@ -44,16 +50,15 @@ _EMOJI_RE = re.compile(
 )
 
 def strip_emoji(s):
-    """絵文字・アイコン文字を除去"""
     return _EMOJI_RE.sub('', str(s)).strip()
 
 def is_subitem(s):
-    """→ で始まるサブ項目かどうか"""
     return s.startswith('→') or s.startswith('⇒')
 
 def clean(s):
-    """絵文字除去 → strip"""
-    return strip_emoji(s)
+    s = strip_emoji(s)
+    s = _CIRCLE_RE.sub('', s).strip()
+    return s
 
 def h(s):
     return htmlmod.escape(str(s))
@@ -175,14 +180,20 @@ def render_section(slide):
     )
 
 # ── コンテンツラッパー ──────────────────────────────────────
+def _title_fs(title):
+    """文字数に応じてタイトルfont-sizeを返す（全角=2, 半角=1で計算）"""
+    w = sum(2 if ord(c) > 0x2000 else 1 for c in title)
+    return "48px" if w <= 24 else "40px" if w <= 40 else "34px"
+
 def content_wrap(title_text, inner_html):
     clean_title = _TIME_RE.sub('', title_text).strip(' 　—–-').strip()
+    fs = _title_fs(clean_title)
     return (
         f'<section style="width:1280px;height:720px;background:{BG};color:{TEXT};'
         f'box-sizing:border-box;position:relative;overflow:hidden;break-after:page;'
         f'padding:64px 80px;display:flex;flex-direction:column;">'
         f'{footer(top=True)}'
-        f'<h2 style="margin:0px 0px 28px;font-size:48px;font-weight:800;'
+        f'<h2 style="margin:0px 0px 28px;font-size:{fs};font-weight:800;'
         f'padding-bottom:22px;border-bottom:4px solid {ACCENT};">{h(clean_title)}</h2>'
         f'{inner_html}</section>'
     )
@@ -313,15 +324,42 @@ def render_table(slide):
 
     n_rows = len(tbl.rows)
     n_cols = len(tbl.columns)
-
-    # 時間列はアジェンダ以外で非表示
     is_agenda = "アジェンダ" in title
+
+    # 列フィルタ: 時間列（アジェンダ除く）+ Step番号列を除外
     visible_cols = [c for c in range(n_cols)
-                    if is_agenda or "時間" not in tbl.cell(0, c).text.strip()]
+                    if (is_agenda or "時間" not in tbl.cell(0, c).text.strip())
+                    and tbl.cell(0, c).text.strip() not in STEP_HEADERS]
     n_vis = len(visible_cols)
     col0 = visible_cols[0] if visible_cols else 0
 
-    compact = n_rows > 5 or n_vis > 3
+    # 行フィルタ: スキップパターン（全体シェア・バッファ等）
+    visible_rows = [0]
+    for r in range(1, n_rows):
+        row_texts = [clean(tbl.cell(r, c).text.strip()) for c in visible_cols]
+        if not any(should_skip_row(ct) for ct in row_texts):
+            visible_rows.append(r)
+
+    # 単一列 → 箇条書きリスト形式で描画
+    if n_vis == 1:
+        content_col = visible_cols[0]
+        items = [clean(tbl.cell(r, content_col).text.strip()) for r in visible_rows[1:]]
+        items = [it for it in items if it]
+        n = len(items)
+        fs_b = "28px" if n <= 5 else "24px" if n <= 7 else "20px"
+        rows_html = "".join(
+            f'<div style="flex:1 1 0%;display:flex;align-items:center;gap:28px;'
+            f'border-bottom:1px solid {DIVIDER};">'
+            f'<span style="width:16px;height:16px;background:{ACCENT};flex-shrink:0;"></span>'
+            f'<span style="font-size:{fs_b};font-weight:500;">{h(it)}</span></div>'
+            for it in items
+        )
+        inner = f'<div style="flex:1 1 0%;display:flex;flex-direction:column;margin-top:8px;">{rows_html}</div>'
+        return content_wrap(title, inner)
+
+    # 複数列 → グリッドテーブル
+    n_vis_rows = len(visible_rows)
+    compact = n_vis_rows > 5 or n_vis > 3
     font_h  = "22px" if compact else "30px"
     font_b  = "18px" if compact else "26px"
     pad     = "0 20px" if compact else "0 40px"
@@ -336,10 +374,10 @@ def render_table(slide):
     else:
         grid_cols = f"{col0_w} " + " ".join(["1fr"] * (n_vis - 1))
 
-    grid_rows = "auto " + " ".join(["1fr"] * max(n_rows - 1, 1))
+    grid_rows = "auto " + " ".join(["1fr"] * max(n_vis_rows - 1, 1))
 
     cells = ""
-    for r in range(n_rows):
+    for r in visible_rows:
         for c in visible_cols:
             ct = h(clean(tbl.cell(r, c).text.strip()))
             if r == 0:
@@ -366,7 +404,7 @@ def render_table(slide):
             cells += f'<div style="{st}">{ct}</div>'
 
     tbl_texts = set()
-    for r in range(n_rows):
+    for r in visible_rows:
         for c in visible_cols:
             tbl_texts.add(tbl.cell(r, c).text.strip())
     extra = [t for t in texts[1:] if t not in tbl_texts and len(t) > 10 and "持ち帰り資料" not in t]
