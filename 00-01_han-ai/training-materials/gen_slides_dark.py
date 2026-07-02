@@ -31,6 +31,8 @@ BLOCK_HEADERS = {
 SKIP_BLOCKS = {"持ち帰り資料"}  # このブロックとその内容は非表示
 
 # ── テキストユーティリティ ────────────────────────────────────
+_TIME_RE = re.compile(r'[（(]\s*\d+分[^）)]*[）)]')   # タイトル時間表記除去用
+
 _EMOJI_RE = re.compile(
     r'[\U0001F000-\U0001FFFF'   # 絵文字全般
     r'☀-➿'            # 記号・装飾
@@ -174,13 +176,14 @@ def render_section(slide):
 
 # ── コンテンツラッパー ──────────────────────────────────────
 def content_wrap(title_text, inner_html):
+    clean_title = _TIME_RE.sub('', title_text).strip(' 　—–-').strip()
     return (
         f'<section style="width:1280px;height:720px;background:{BG};color:{TEXT};'
         f'box-sizing:border-box;position:relative;overflow:hidden;break-after:page;'
         f'padding:64px 80px;display:flex;flex-direction:column;">'
         f'{footer(top=True)}'
         f'<h2 style="margin:0px 0px 28px;font-size:48px;font-weight:800;'
-        f'padding-bottom:22px;border-bottom:4px solid {ACCENT};">{h(title_text)}</h2>'
+        f'padding-bottom:22px;border-bottom:4px solid {ACCENT};">{h(clean_title)}</h2>'
         f'{inner_html}</section>'
     )
 
@@ -311,30 +314,36 @@ def render_table(slide):
     n_rows = len(tbl.rows)
     n_cols = len(tbl.columns)
 
-    compact = n_rows > 5 or n_cols > 3
+    # 時間列はアジェンダ以外で非表示
+    is_agenda = "アジェンダ" in title
+    visible_cols = [c for c in range(n_cols)
+                    if is_agenda or "時間" not in tbl.cell(0, c).text.strip()]
+    n_vis = len(visible_cols)
+    col0 = visible_cols[0] if visible_cols else 0
+
+    compact = n_rows > 5 or n_vis > 3
     font_h  = "22px" if compact else "30px"
     font_b  = "18px" if compact else "26px"
     pad     = "0 20px" if compact else "0 40px"
 
-    # 列0の幅：long row headers に対応するため auto/min-content を使用
     col0_w = "minmax(160px,max-content)" if compact else "minmax(200px,max-content)"
-    if n_cols == 2:
-        grid_cols = f"1fr 2fr"
-    elif n_cols == 3:
+    if n_vis == 2:
+        grid_cols = "1fr 2fr"
+    elif n_vis == 3:
         grid_cols = f"{col0_w} 1fr 1fr"
-    elif n_cols == 4:
+    elif n_vis == 4:
         grid_cols = f"{col0_w} 1fr 1fr 1fr"
     else:
-        grid_cols = f"{col0_w} " + " ".join(["1fr"] * (n_cols - 1))
+        grid_cols = f"{col0_w} " + " ".join(["1fr"] * (n_vis - 1))
 
     grid_rows = "auto " + " ".join(["1fr"] * max(n_rows - 1, 1))
 
     cells = ""
     for r in range(n_rows):
-        for c in range(n_cols):
+        for c in visible_cols:
             ct = h(clean(tbl.cell(r, c).text.strip()))
             if r == 0:
-                if c == 0:
+                if c == col0:
                     ct = ""
                     st = f"background:{BG};display:flex;align-items:center;justify-content:center;"
                 else:
@@ -343,7 +352,7 @@ def render_table(slide):
                         f"align-items:center;justify-content:center;"
                         f"font-size:{font_h};font-weight:800;text-align:center;"
                     )
-            elif c == 0:
+            elif c == col0:
                 st = (
                     f"background:{BG_CARD};display:flex;align-items:center;"
                     f"justify-content:center;padding:{pad};font-size:{font_b};"
@@ -358,7 +367,7 @@ def render_table(slide):
 
     tbl_texts = set()
     for r in range(n_rows):
-        for c in range(n_cols):
+        for c in visible_cols:
             tbl_texts.add(tbl.cell(r, c).text.strip())
     extra = [t for t in texts[1:] if t not in tbl_texts and len(t) > 10 and "持ち帰り資料" not in t]
     note_html = ""
