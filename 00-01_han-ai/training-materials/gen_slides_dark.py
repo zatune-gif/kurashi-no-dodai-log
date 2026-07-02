@@ -30,14 +30,19 @@ BLOCK_HEADERS = {
 }
 SKIP_BLOCKS   = {"持ち帰り資料"}
 STEP_HEADERS  = {"Step"}           # Step列は番号表示不要なため除外
-_SKIP_ROW_RES = [re.compile(r'^全体シェア'), re.compile(r'^バッファ')]
+_SKIP_ROW_RES = [
+    re.compile(r'^全体シェア'),
+    re.compile(r'^バッファ'),
+    re.compile(r'^\[約?\d+分\]'),   # [10分] [約3分] 等の時間注記
+]
 
 def should_skip_row(ct):
     return any(p.search(ct) for p in _SKIP_ROW_RES)
 
 # ── テキストユーティリティ ────────────────────────────────────
 _TIME_RE   = re.compile(r'[（(]\s*\d+分[^）)]*[）)]')   # タイトル時間表記除去
-_CIRCLE_RE = re.compile(r'[①-⓿]')  # 丸囲み数字（①②③等）除去
+_CIRCLE_RE     = re.compile(r'[①-⓿]')        # 丸囲み数字（①②③等）除去
+_BRACKET_OK_RE = re.compile(r'^\[OK\]\s*')   # [OK]プレフィックス除去
 
 _EMOJI_RE = re.compile(
     r'[\U0001F000-\U0001FFFF'   # 絵文字全般
@@ -58,6 +63,7 @@ def is_subitem(s):
 def clean(s):
     s = strip_emoji(s)
     s = _CIRCLE_RE.sub('', s).strip()
+    s = _BRACKET_OK_RE.sub('', s).strip()
     return s
 
 def h(s):
@@ -187,6 +193,7 @@ def _title_fs(title):
 
 def content_wrap(title_text, inner_html):
     clean_title = _TIME_RE.sub('', title_text).strip(' 　—–-').strip()
+    clean_title = _CIRCLE_RE.sub('', clean_title).strip()
     fs = _title_fs(clean_title)
     return (
         f'<section style="width:1280px;height:720px;background:{BG};color:{TEXT};'
@@ -212,7 +219,7 @@ def render_bullet(slide):
 
     # 注記テキストを分離（先頭から見てあきらかに補足のもの）
     note_pfx = ("⚠","💡","❗","📋","📚","🛠","✅","注意","ポイント","次のステップ")
-    mains = [t for t in items_all if not any(t.startswith(p) for p in note_pfx)]
+    mains = [t for t in items_all if not any(t.startswith(p) for p in note_pfx) and not should_skip_row(t)]
     notes = [t for t in items_all if any(t.startswith(p) for p in note_pfx)]
 
     n = len(mains)
@@ -376,12 +383,16 @@ def render_table(slide):
 
     grid_rows = "auto " + " ".join(["1fr"] * max(n_vis_rows - 1, 1))
 
+    # col0 が元の0番目列のときだけ row-header スタイルを適用
+    # Step列除去後は visible_cols[0] != 0 になるため apply_row_header=False
+    apply_row_header = bool(visible_cols) and visible_cols[0] == 0
+
     cells = ""
     for r in visible_rows:
         for c in visible_cols:
             ct = h(clean(tbl.cell(r, c).text.strip()))
             if r == 0:
-                if c == col0:
+                if c == col0 and apply_row_header:
                     ct = ""
                     st = f"background:{BG};display:flex;align-items:center;justify-content:center;"
                 else:
@@ -390,7 +401,7 @@ def render_table(slide):
                         f"align-items:center;justify-content:center;"
                         f"font-size:{font_h};font-weight:800;text-align:center;"
                     )
-            elif c == col0:
+            elif c == col0 and apply_row_header:
                 st = (
                     f"background:{BG_CARD};display:flex;align-items:center;"
                     f"justify-content:center;padding:{pad};font-size:{font_b};"
