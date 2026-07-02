@@ -217,7 +217,6 @@ const DOM = {
   issuesCard:    document.getElementById('issues-card'),
   issuesList:    document.getElementById('issues-list'),
   actionsList:   document.getElementById('actions-list'),
-  btnCta:        document.querySelector('.btn-cta'),
 };
 
 // ── 状態 ──
@@ -328,11 +327,6 @@ async function showResults() {
   DOM.actionsList.innerHTML = actions.map(a => `<li>${a}</li>`).join('');
   const fallbackNote = document.getElementById('actions-fallback-note');
   if (fallbackNote) fallbackNote.classList.toggle('hidden', !usedFallback);
-
-  const mailBody = encodeURIComponent(
-    `AI活用準備度診断を受けました。\n\n【スコア】${score}点\n【ステージ】${stage}\n\nご相談させてください。`
-  );
-  DOM.btnCta.href = `mailto:zatuneya@gmail.com?subject=AI活用準備度診断を受けました&body=${mailBody}`;
 
   showScreen('screen-results');
 }
