@@ -157,7 +157,7 @@ def render_section(slide):
     texts = get_texts(slide)
     num   = texts[0] if len(texts) > 0 else ""
     name  = texts[1] if len(texts) > 1 else ""
-    time  = texts[2] if len(texts) > 2 else ""
+    # texts[2] は時間（アジェンダ以外では非表示）
     desc  = texts[3] if len(texts) > 3 else ""
     return (
         f'<section style="width:1280px;height:720px;background:{BG};color:{TEXT};'
@@ -166,9 +166,6 @@ def render_section(slide):
         f'<div style="font-size:340px;font-weight:900;line-height:0.8;color:{ACCENT};flex-shrink:0;">{h(num)}</div>'
         f'<div style="width:3px;align-self:stretch;margin:64px 0px;background:{DIVIDER};flex-shrink:0;"></div>'
         f'<div style="display:flex;flex-direction:column;gap:28px;">'
-        f'<div style="display:inline-flex;align-self:flex-start;align-items:center;'
-        f'gap:8px;border:2px solid {ACCENT};color:{ACCENT};padding:8px 20px;'
-        f'border-radius:999px;font-weight:700;font-size:22px;">{h(time)}</div>'
         f'<h2 style="margin:0px;font-size:60px;font-weight:800;line-height:1.15;">{h(name)}</h2>'
         f'<p style="margin:0px;font-size:26px;font-weight:500;color:{MUTED};'
         f'line-height:1.6;max-width:640px;">{h(desc)}</p>'
@@ -335,7 +332,7 @@ def render_table(slide):
     cells = ""
     for r in range(n_rows):
         for c in range(n_cols):
-            ct = h(tbl.cell(r, c).text.strip())
+            ct = h(clean(tbl.cell(r, c).text.strip()))
             if r == 0:
                 if c == 0:
                     ct = ""
@@ -363,7 +360,7 @@ def render_table(slide):
     for r in range(n_rows):
         for c in range(n_cols):
             tbl_texts.add(tbl.cell(r, c).text.strip())
-    extra = [t for t in texts[1:] if t not in tbl_texts and len(t) > 10]
+    extra = [t for t in texts[1:] if t not in tbl_texts and len(t) > 10 and "持ち帰り資料" not in t]
     note_html = ""
     if extra:
         note_html = (
@@ -419,8 +416,8 @@ def render_before_after(slide):
             bad_label = clean(t); state = "bad"
         elif "After" in t or "✅" in t or "良い" in t:
             good_label = clean(t); state = "good"
-        elif t in ("↓","→","⬇","➡"):
-            pass
+        elif re.match(r'^[↓⬇↑⬆→⇒➡]\s*', t):
+            pass  # 矢印・遷移注記はスキップ
         elif state == "bad":
             bad_text += clean(t) + "\n"
         elif state == "good":
@@ -452,11 +449,11 @@ def render_slide(slide):
     return render_bullet(slide)
 
 def should_skip_slide(slide):
-    """タイトルに除外キーワードを含むスライドは丸ごとスキップ"""
+    """タイトル（texts[0]）に除外キーワードを含むスライドのみスキップ"""
     texts = get_texts(slide)
     if not texts:
         return False
-    return any("持ち帰り資料" in t for t in texts[:2])
+    return "持ち帰り資料" in texts[0]
 
 def build_html(pptx_path):
     prs = Presentation(pptx_path)
