@@ -85,13 +85,13 @@ function testHtmlTemplates(data) {
   // 見積書HTML
   const estimateData = {
     estimateNumber: '2026-06-001',
-    lineItems: [{ service: 'AI業務改善オーダーメイドサービス Mプラン', plan: 'スタンダード', price: 198000 }],
+    lineItems: [{ service: 'AI業務改善オーダーメイドサービス Mプラン', plan: '制作＋運用サポート', price: 110000 }],
     applyMonitor: false,
     applySubsidy: true
   };
   const estHtml = buildEstimateHtml(clientData, estimateData, '2026年6月23日');
-  if (!estHtml.includes('198,000')) {
-    ng('見積書HTML: 金額が含まれていない', '198,000');
+  if (!estHtml.includes('110,000')) {
+    ng('見積書HTML: 金額が含まれていない', '110,000');
   } else {
     ok(`見積書HTML生成OK（${estHtml.length.toLocaleString()}文字）`);
   }
@@ -196,7 +196,7 @@ ${rec.service || ''}（${rec.price || ''}）
 
     log('Claude API呼び出し中...');
     const message = await client.messages.create({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-sonnet-5',
       max_tokens: 1500,
       messages: [{ role: 'user', content: prompt }]
     });
@@ -230,7 +230,7 @@ async function testPdfGeneration(data, proposalResult) {
   const dateJp = '2026年6月23日';
   const estimateData = {
     estimateNumber: '2026-06-001',
-    lineItems: [{ service: 'AI業務改善オーダーメイドサービス Mプラン', plan: 'スタンダード', price: 198000 }],
+    lineItems: [{ service: 'AI業務改善オーダーメイドサービス Mプラン', plan: '制作＋運用サポート', price: 110000 }],
     applyMonitor: false,
     applySubsidy: true
   };
