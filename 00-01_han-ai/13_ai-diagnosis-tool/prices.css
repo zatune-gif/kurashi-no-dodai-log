@@ -150,6 +150,26 @@
   color: #15803D;
 }
 
+/* ── カリキュラムリンク ── */
+.curriculum-link {
+  display: block;
+  text-align: center;
+  background: #fff;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.curriculum-link:hover {
+  background: #FFF7ED;
+}
+
 /* ── カード共通 ── */
 .card-body {
   font-size: 14px;
