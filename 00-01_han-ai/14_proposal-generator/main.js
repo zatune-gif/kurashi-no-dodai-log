@@ -222,7 +222,8 @@ ${deliverableLines}
     messages: [{ role: 'user', content: prompt }]
   });
 
-  return message.content[0].text;
+  const textBlock = message.content.find(b => b.type === 'text');
+  return textBlock?.text ?? '';
 });
 
 // ─────────────────────────────────────

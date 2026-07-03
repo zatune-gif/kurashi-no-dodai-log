@@ -200,7 +200,8 @@ ${rec.service || ''}（${rec.price || ''}）
       max_tokens: 1500,
       messages: [{ role: 'user', content: prompt }]
     });
-    const text = message.content[0].text;
+    const textBlock = message.content.find(b => b.type === 'text');
+    const text = textBlock?.text ?? '';
     if (!text || text.length < 100) throw new Error('レスポンスが短すぎる');
 
     // セクション分割確認
