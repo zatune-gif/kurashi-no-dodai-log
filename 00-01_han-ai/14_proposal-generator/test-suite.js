@@ -130,7 +130,7 @@ async function testClaudeApi(data) {
     const issues    = (d.issues    || []).map(i => `・${i}`).join('\n');
     const tasks     = (d.targetTasks || []).join('、');
 
-    const prompt = `あなたはざつね屋（広島近郊の中小企業向けAI活用支援専門家）のコンサルタントです。
+    const prompt = `あなたはざつね屋（広島県福山市近郊の中小企業向けAI活用支援専門家）のコンサルタントです。
 クライアントの診断データをもとに提案書のドラフトを作成してください。
 
 【クライアント情報】
@@ -505,7 +505,7 @@ h3{font-size:13px;font-weight:700;margin:14px 0 7px}
 <div class="tr grand"><span>合計（税込）</span><span>${fmtNum(total)}円</span></div>
 <h2>4. ざつね屋について</h2>
 <div class="about-box"><ul>
-  <li>広島近郊の中小企業・小規模事業者に特化したAI活用支援の専門家です</li>
+  <li>広島県福山市近郊の中小企業・小規模事業者に特化したAI活用支援の専門家です</li>
   <li>「教えること」「作ること」「一緒に開発すること」をワンストップで対応します</li>
   <li>実装・手順書化まで一貫して対応できます</li>
 </ul></div>
