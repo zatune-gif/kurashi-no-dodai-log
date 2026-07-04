@@ -4,39 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>研修カリキュラム タイムスケジュール | ざつね屋</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
+    /* 研修カリキュラム — ざつね屋 本公開ブランドデザイン（prices.html と同一ライトテーマ）
+       ※ 構造・クラス名は維持。ダークテーマ → ライトテーマへ配色のみ刷新。 */
     :root {
-      --primary:    #DA7756;
-      --primary-dk: #b8623f;
-      --primary-bg: rgba(218,119,86,0.12);
-      --bg:         #1C1C1C;
-      --bg-panel:   #141414;
-      --card:       #252525;
-      --card-2:     #2f2f2f;
-      --text:       #eeeeee;
-      --text-muted: #999999;
-      --border:     #3a3a3a;
-      --success:    #4caf7d;
-      --success-bg: rgba(76,175,125,0.12);
-      --radius: 12px;
-      --shadow: 0 4px 20px rgba(0,0,0,0.5);
+      --teal:       #5BBDC8;
+      --teal-dk:    #46A6B1;
+      --teal-soft:  #EAF6F8;
+      --teal-soft2: #DCF0F2;
+      --orange:     #F8981D;
+      --orange-dk:  #E28511;
+      --warm-bg:    #FFF9F0;
+      --warm-line:  #F6E4C8;
+
+      --primary:    #46A6B1;
+      --primary-dk: #3B929C;
+      --primary-bg: #EAF6F8;
+      --bg:         #EFF4F5;
+      --bg-panel:   #FFFFFF;
+      --card:       #FFFFFF;
+      --card-2:     #F6FBFC;
+      --text:       #575757;
+      --heading:    #3C3C3C;
+      --text-muted: #839CAA;
+      --border:     #E1EEF0;
+      --success:    #46A6B1;
+      --success-bg: #EAF6F8;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(40,60,70,0.06);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+      font-family: 'Noto Sans JP', 'Roboto', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.75;
+      line-height: 1.85;
       font-size: 15px;
+      -webkit-font-smoothing: antialiased;
     }
+    h1, .section-title, .course-head-name { font-family: 'Noto Sans JP', sans-serif; }
 
     /* ── カバー ── */
     .cover {
-      background: linear-gradient(145deg, #0a0a0a 0%, #181818 55%, #1f1a17 100%);
+      background: linear-gradient(150deg, #F1F7F8 0%, #EAF6F8 55%, #FFF9F0 100%);
       color: var(--text);
-      padding: 64px 56px 60px;
+      padding: 60px 56px 54px;
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
@@ -45,50 +62,48 @@
     .cover::before {
       content: '';
       position: absolute;
-      top: -100px; right: -100px;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(218,119,86,0.18) 0%, transparent 70%);
+      top: -120px; right: -80px;
+      width: 420px; height: 380px;
+      border-radius: 60% 40% 55% 45% / 55% 50% 50% 45%;
+      background: rgba(91,189,200,0.16);
     }
 
     .cover::after {
       content: '';
       position: absolute;
       bottom: -140px; left: -80px;
-      width: 440px; height: 440px;
+      width: 340px; height: 340px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(218,119,86,0.07) 0%, transparent 70%);
+      background: rgba(248,152,29,0.08);
     }
 
     .cover-logo {
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       position: relative;
     }
 
     .cover-logo img {
-      height: 200px;
+      height: 168px;
       max-width: 100%;
       width: auto;
-      filter: invert(1);
-      mix-blend-mode: screen;
       display: block;
     }
 
     .cover h1 {
       font-size: 40px;
       font-weight: 900;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       margin-bottom: 16px;
-      line-height: 1.15;
-      color: #fff;
+      line-height: 1.2;
+      color: var(--heading);
       position: relative;
     }
 
     .cover h1 span {
       display: inline-block;
       width: 5px;
-      height: 40px;
-      background: var(--primary);
+      height: 38px;
+      background: var(--orange);
       border-radius: 3px;
       margin-right: 16px;
       vertical-align: middle;
@@ -118,17 +133,17 @@
 
     .cover-sub {
       font-size: 14px;
-      color: var(--text-muted);
-      max-width: 500px;
-      line-height: 1.7;
+      color: var(--text);
+      max-width: 520px;
+      line-height: 1.9;
       position: relative;
-      margin-bottom: 36px;
+      margin-bottom: 34px;
     }
 
     .cover-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 28px;
       font-size: 13px;
       position: relative;
       padding-top: 24px;
@@ -142,17 +157,18 @@
     }
 
     .cover-meta-label {
+      font-family: 'Roboto', 'Noto Sans JP', sans-serif;
       font-size: 10px;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--teal-dk);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
     }
 
     .cover-meta-value {
       font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
+      font-weight: 700;
+      color: var(--heading);
     }
 
     /* ── ナビゲーション ── */
@@ -160,9 +176,10 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--bg-panel);
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 18px rgba(40,60,70,0.05);
     }
 
     .nav-inner {
@@ -179,9 +196,9 @@
     .nav-link {
       white-space: nowrap;
       padding: 14px 18px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #606060;
       text-decoration: none;
       border-bottom: 2px solid transparent;
       letter-spacing: 0.03em;
@@ -189,8 +206,8 @@
     }
 
     .nav-link:hover {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
+      color: var(--teal-dk);
+      border-bottom-color: var(--teal);
     }
 
     /* ── メインコンテンツ ── */
@@ -214,20 +231,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 38px; height: 38px;
-      background: var(--primary);
+      width: 40px; height: 40px;
+      background: var(--teal-dk);
       color: #fff;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 900;
-      border-radius: 8px;
+      border-radius: 12px;
       flex-shrink: 0;
-      box-shadow: 0 0 16px rgba(218,119,86,0.4);
+      box-shadow: 0 6px 16px rgba(70,166,177,0.30);
     }
 
     .section-title {
       font-size: 22px;
-      font-weight: 800;
-      color: var(--text);
+      font-weight: 900;
+      color: var(--heading);
       letter-spacing: -0.01em;
     }
 
@@ -243,11 +260,12 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
     .course-head {
       padding: 18px 22px 16px;
-      background: #1a1a1a;
+      background: var(--card-2);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
@@ -256,7 +274,7 @@
 
     .course-icon {
       width: 44px; height: 44px;
-      border-radius: 50%;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -266,18 +284,18 @@
       flex-shrink: 0;
     }
 
-    .ci-1 { background: linear-gradient(135deg, #FDBA74, #FB923C); }
-    .ci-2 { background: linear-gradient(135deg, #FB923C, #F97316); }
-    .ci-3 { background: linear-gradient(135deg, #F97316, #EA580C); }
-    .ci-4 { background: linear-gradient(135deg, #EA580C, #C2410C); }
-    .ci-5 { background: linear-gradient(135deg, #C2410C, #9A3412); }
+    .ci-1 { background: linear-gradient(135deg, #8AD1D9, #6BC3CD); }
+    .ci-2 { background: linear-gradient(135deg, #6BC3CD, #5BBDC8); }
+    .ci-3 { background: linear-gradient(135deg, #5BBDC8, #46A6B1); }
+    .ci-4 { background: linear-gradient(135deg, #46A6B1, #3B929C); }
+    .ci-5 { background: linear-gradient(135deg, #3B929C, #33808A); }
 
     .course-head-info { flex: 1; }
 
     .course-head-name {
       font-size: 18px;
-      font-weight: 800;
-      color: var(--text);
+      font-weight: 900;
+      color: var(--heading);
       margin-bottom: 6px;
     }
 
@@ -288,10 +306,12 @@
     }
 
     .tag {
+      display: inline-block;
+      white-space: nowrap;
       font-size: 11px;
       font-weight: 700;
-      padding: 2px 10px;
-      border-radius: 99px;
+      padding: 3px 12px;
+      border-radius: 999px;
     }
 
     .tag-time {
@@ -299,11 +319,15 @@
       color: var(--text-muted);
       border: 1px solid var(--border);
     }
+    .tag-time svg {
+      width: 12px; height: 12px; margin-right: 4px; vertical-align: -2px;
+      stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none;
+    }
 
     .tag-tool {
-      background: var(--primary-bg);
-      color: var(--primary);
-      border: 1px solid rgba(218,119,86,0.3);
+      background: var(--teal-soft);
+      color: var(--teal-dk);
+      border: 1px solid var(--teal-soft2);
     }
 
     /* ── タイムテーブル ── */
@@ -315,22 +339,21 @@
     }
 
     .timetable thead th {
-      background: #1a1410;
-      color: var(--primary);
+      background: var(--text-muted);
+      color: #fff;
       font-weight: 700;
       padding: 11px 16px;
       text-align: left;
       font-size: 12px;
       letter-spacing: 0.05em;
-      border-bottom: 1px solid rgba(218,119,86,0.3);
     }
 
-    .timetable tbody tr:nth-child(even) { background: #202020; }
-    .timetable tbody tr:hover { background: var(--primary-bg); transition: background 0.15s; }
+    .timetable tbody tr:nth-child(even) { background: var(--card-2); }
+    .timetable tbody tr:hover { background: var(--teal-soft); transition: background 0.15s; }
 
     .timetable td {
       padding: 11px 16px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #EDF3F4;
       vertical-align: middle;
       color: var(--text);
     }
@@ -338,7 +361,7 @@
     .timetable tbody tr:last-child td { border-bottom: none; }
 
     .timetable tr.row-title td {
-      background: rgba(218,119,86,0.06);
+      background: #F2F8F9;
       color: var(--text-muted);
       font-size: 13px;
     }
@@ -346,25 +369,26 @@
     .timetable tr.row-break td {
       background: var(--success-bg);
       color: var(--success);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 13px;
     }
 
     .timetable tr.row-special td {
-      background: rgba(255,255,255,0.03);
+      background: var(--warm-bg);
       color: var(--text-muted);
       font-size: 13px;
       font-style: italic;
     }
 
     .td-num {
+      font-family: 'Roboto', 'Noto Sans JP', sans-serif;
       font-size: 13px;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--teal-dk);
       width: 48px;
     }
 
-    .td-section { font-weight: 600; }
+    .td-section { font-weight: 700; color: var(--heading); }
 
     .td-desc {
       display: block;
@@ -372,7 +396,7 @@
       font-weight: 400;
       color: var(--text-muted);
       margin-top: 3px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .td-min {
@@ -380,6 +404,7 @@
       font-weight: 700;
       white-space: nowrap;
       width: 64px;
+      color: var(--heading);
     }
 
     .td-total {
@@ -390,14 +415,18 @@
       font-size: 13px;
     }
 
+    /* row-title / row-break / row-special の td-section は各行色を継承 */
+    .row-title .td-section, .row-break .td-section, .row-special .td-section { color: inherit; }
+
     /* ── タイムバー ── */
     .time-bar-wrap {
       padding: 14px 22px;
       border-top: 1px solid var(--border);
-      background: #1d1d1d;
+      background: var(--card-2);
     }
 
     .time-bar-label {
+      font-family: 'Roboto', 'Noto Sans JP', sans-serif;
       font-size: 10px;
       font-weight: 700;
       color: var(--text-muted);
@@ -409,7 +438,7 @@
     .time-bar {
       display: flex;
       height: 18px;
-      border-radius: 5px;
+      border-radius: 6px;
       overflow: hidden;
       gap: 1px;
     }
@@ -421,20 +450,20 @@
       justify-content: center;
       font-size: 9px;
       font-weight: 700;
-      color: rgba(255,255,255,0.85);
+      color: #fff;
       white-space: nowrap;
       overflow: hidden;
       min-width: 2px;
     }
 
-    .seg-open   { background: rgba(218,119,86,0.35); }
-    .seg-learn  { background: rgba(218,119,86,0.55); }
-    .seg-learn2 { background: rgba(218,119,86,0.70); }
-    .seg-learn3 { background: rgba(218,119,86,0.85); }
-    .seg-pract  { background: var(--primary); }
+    .seg-open   { background: #8ACED6; }
+    .seg-learn  { background: #6FC1CB; }
+    .seg-learn2 { background: #5BBDC8; }
+    .seg-learn3 { background: #4FB0BB; }
+    .seg-pract  { background: var(--teal-dk); }
     .seg-pract2 { background: var(--primary-dk); }
-    .seg-break  { background: rgba(76,175,125,0.5); }
-    .seg-wrap   { background: #444; }
+    .seg-break  { background: var(--orange); }
+    .seg-wrap   { background: #B0C2C8; }
 
     /* ── 区切り ── */
     .section-end { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
@@ -442,28 +471,27 @@
     /* ── フッター ── */
     footer {
       text-align: center;
-      padding: 32px 24px;
+      padding: 34px 24px;
       font-size: 12px;
       color: var(--text-muted);
       border-top: 1px solid var(--border);
-      background: var(--bg-panel);
+      background: var(--bg);
     }
 
-    /* ── 概要カード ── */
+    /* ── 概要カード（フィードバック依頼ボックス） ── */
     .overview-block {
-      background: #1a1410;
-      border: 1px solid rgba(218,119,86,0.3);
-      border-left: 4px solid var(--primary);
+      background: var(--teal-soft);
+      border: 1px solid var(--teal-soft2);
+      border-left: 4px solid var(--teal);
       border-radius: var(--radius);
       padding: 22px 26px;
       margin-bottom: 40px;
-      box-shadow: 0 0 40px rgba(218,119,86,0.06);
       font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.8;
+      color: var(--text);
+      line-height: 1.9;
     }
 
-    .overview-block strong { color: var(--primary); }
+    .overview-block strong { color: var(--teal-dk); }
 
     /* ── 注記 ── */
     .notes {
@@ -472,12 +500,13 @@
       border-radius: var(--radius);
       padding: 16px 22px;
       margin-top: 40px;
+      box-shadow: var(--shadow);
     }
 
     .notes p {
       font-size: 13px;
       color: var(--text-muted);
-      line-height: 1.7;
+      line-height: 1.8;
       padding-left: 18px;
       position: relative;
       margin-bottom: 4px;
@@ -489,14 +518,14 @@
       content: '※';
       position: absolute;
       left: 0;
-      color: var(--primary);
+      color: var(--teal-dk);
     }
 
     /* ── レスポンシブ ── */
     @media (max-width: 700px) {
       .cover { padding: 40px 24px; }
       .cover h1 { font-size: 28px; }
-      .cover-logo img { height: 130px; }
+      .cover-logo img { height: 120px; }
       .cover-title-row { flex-direction: column; gap: 8px; }
       .cover-title-label { border-left: none; padding-left: 0; }
     }
@@ -565,7 +594,7 @@
         <div class="course-head-info">
           <div class="course-head-name">AI活用知識編</div>
           <div class="course-tags">
-            <span class="tag tag-time">⏱ 90分</span>
+            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>90分</span>
             <span class="tag tag-tool">ChatGPT・Gemini・Claude（自由）</span>
           </div>
         </div>
@@ -679,7 +708,7 @@
         <div class="course-head-info">
           <div class="course-head-name">実践編（文書系）</div>
           <div class="course-tags">
-            <span class="tag tag-time">⏱ 120分</span>
+            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
             <span class="tag tag-tool">Gemini 無料版</span>
           </div>
         </div>
@@ -774,7 +803,7 @@
         <div class="course-head-info">
           <div class="course-head-name">実践編（画像系）</div>
           <div class="course-tags">
-            <span class="tag tag-time">⏱ 120分</span>
+            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
             <span class="tag tag-tool">Canva 無料版</span>
           </div>
         </div>
@@ -875,7 +904,7 @@
         <div class="course-head-info">
           <div class="course-head-name">実践編（動画系）</div>
           <div class="course-tags">
-            <span class="tag tag-time">⏱ 120分</span>
+            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
             <span class="tag tag-tool">CapCut 無料版</span>
           </div>
         </div>
@@ -977,7 +1006,7 @@
         <div class="course-head-info">
           <div class="course-head-name">実践編（Claude Code 特化）</div>
           <div class="course-tags">
-            <span class="tag tag-time">⏱ 120分</span>
+            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
             <span class="tag tag-tool">Claude Code（Proプラン必須）</span>
           </div>
         </div>

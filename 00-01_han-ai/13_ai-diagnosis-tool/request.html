@@ -4,24 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>資料請求 - ざつね屋</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="detail.css">
 </head>
 <body>
   <div class="container">
-    <div class="brand">ざつね屋</div>
+    <div class="brand">ざつね<span>屋</span></div>
 
     <!-- 入力フォーム -->
     <div id="screen-form" class="screen active">
       <div class="welcome-hero">
-        <div class="welcome-icon">📋</div>
+        <div class="welcome-icon"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 3.5h6v2.6H9z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h7"/><path d="M8.5 17.5h4"/></svg></div>
         <h1>資料請求</h1>
         <p class="welcome-sub">ざつね屋のサービス資料をお送りします。<br>下記フォームに必要事項を入力してください。</p>
       </div>
 
       <div class="section-card info-form">
         <div class="section-header header-primary">
-          <span class="section-icon">📋</span>
+          <span class="section-icon"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 3.5h6v2.6H9z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h7"/><path d="M8.5 17.5h4"/></svg></span>
           <span>基本情報</span>
         </div>
         <div class="form-group">
@@ -37,7 +40,8 @@
           <input type="email" id="contact-email" placeholder="例：taro@example.com" autocomplete="email">
         </div>
         <p id="form-error-msg" class="form-error-msg hidden">
-          ⚠ 未入力または形式が正しくない項目があります
+          <svg viewBox="0 0 24 24"><path d="M12 4l9 15.5H3L12 4z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".7" fill="currentColor" stroke="none"/></svg>
+          未入力または形式が正しくない項目があります
         </p>
       </div>
 
@@ -48,7 +52,7 @@
     <div id="screen-choice" class="screen">
       <div class="section-card">
         <div class="section-header header-primary">
-          <span class="section-icon">🔍</span>
+          <span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg></span>
           <span>詳細診断のご案内</span>
         </div>
         <p class="library-intro">
@@ -68,7 +72,7 @@
     <div id="screen-thanks" class="screen">
       <div class="section-card">
         <div class="section-header header-primary">
-          <span class="section-icon">✅</span>
+          <span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.4 12.2l2.5 2.4 4.7-5"/></svg></span>
           <span>資料請求を受け付けました</span>
         </div>
         <p class="card-body">

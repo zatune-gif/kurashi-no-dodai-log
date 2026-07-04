@@ -4,30 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>見積請求 - ざつね屋</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="detail.css">
 </head>
 <body>
   <div class="container">
-    <div class="brand">ざつね屋</div>
+    <div class="brand">ざつね<span>屋</span></div>
 
     <div class="welcome-hero">
-      <div class="welcome-icon">📝</div>
+      <div class="welcome-icon"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 6.5h8v3H8z"/><path d="M8.5 13h1M11.5 13h1M14.5 13h1M8.5 16h1M11.5 16h1M14.5 16h1M8.5 19h1M11.5 19h4"/></svg></div>
       <h1>見積請求</h1>
       <p class="welcome-sub">
         詳細診断（約7分）の結果をもとに<br>
         最適なプランの見積書を無料でご用意します。
       </p>
       <div class="welcome-meta">
-        <span>📋 詳細診断23問</span>
-        <span>⏱ 約7分</span>
-        <span>📄 見積書無料</span>
+        <span><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 3.5h6v2.6H9z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h7"/><path d="M8.5 17.5h4"/></svg>詳細診断23問</span>
+        <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>約7分</span>
+        <span><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v4h4"/><path d="M9 12.5h6"/><path d="M9 16h6"/></svg>見積書無料</span>
       </div>
     </div>
 
     <div class="section-card info-form">
-      <div class="section-header" style="color: var(--primary)">
-        <span class="section-icon">📋</span>
+      <div class="section-header header-primary">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 3.5h6v2.6H9z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h7"/><path d="M8.5 17.5h4"/></svg></span>
         <span>基本情報</span>
       </div>
       <div class="form-group">
@@ -42,8 +45,9 @@
         <label for="contact-email">メールアドレス <span class="required">必須</span></label>
         <input type="email" id="contact-email" placeholder="例：taro@example.com" autocomplete="email">
       </div>
-      <p id="form-error-msg" class="form-error-msg" style="display:none">
-        ⚠ 未入力または形式が正しくない項目があります
+      <p id="form-error-msg" class="form-error-msg hidden">
+        <svg viewBox="0 0 24 24"><path d="M12 4l9 15.5H3L12 4z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".7" fill="currentColor" stroke="none"/></svg>
+        未入力または形式が正しくない項目があります
       </p>
       <p class="form-note">※ 見積書と診断結果は2営業日以内にPDFでお送りします</p>
     </div>

@@ -1,33 +1,33 @@
-/* ── 情報入力フォーム ── */
+/* ── 情報入力フォーム（ざつね屋ブランドトークン準拠・style.css の :root を継承） ── */
 .info-form { margin-bottom: 24px; }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
   margin-bottom: 16px;
 }
 
 .form-group label {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 700;
+  color: var(--heading);
 }
 
 .form-group input {
-  padding: 12px 14px;
+  padding: 13px 16px;
   border: 2px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 15px;
   color: var(--text);
-  background: #F8FAFC;
-  transition: border-color 0.15s;
+  background: var(--card-tint);
+  transition: border-color 0.15s, background 0.15s;
   font-family: inherit;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--teal);
   background: #fff;
 }
 
@@ -37,25 +37,30 @@
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  background: var(--accent);
+  background: var(--orange);
   color: #fff;
-  padding: 1px 6px;
-  border-radius: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
   margin-left: 4px;
   vertical-align: middle;
 }
 
 .form-error-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
-  color: #EF4444;
-  font-weight: 600;
+  color: #E5484D;
+  font-weight: 700;
   margin-bottom: 12px;
 }
+.form-error-msg svg { width: 15px; height: 15px; flex-shrink: 0; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
 
 .form-note {
   font-size: 12px;
   color: var(--text-muted);
   margin-top: 4px;
+  line-height: 1.7;
 }
 
 .skip-note {
@@ -67,7 +72,7 @@
 .btn-skip-link {
   background: none;
   border: none;
-  color: var(--primary);
+  color: var(--teal-dk);
   font-size: 12px;
   font-family: inherit;
   cursor: pointer;
@@ -91,7 +96,7 @@
   justify-content: center;
   min-width: 22px;
   height: 22px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 2px solid var(--border);
   font-size: 13px;
   font-weight: 700;
@@ -101,8 +106,8 @@
 }
 
 .multi-btn.selected .multi-icon {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: var(--teal-dk);
+  border-color: var(--teal-dk);
   color: #fff;
 }
 
@@ -111,17 +116,17 @@
   width: 100%;
   padding: 14px 16px;
   border: 2px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 15px;
   color: var(--text);
-  background: #F8FAFC;
+  background: var(--card-tint);
   font-family: inherit;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, background 0.15s;
 }
 
 .text-input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--teal);
   background: #fff;
 }
 
@@ -132,21 +137,21 @@
 }
 
 /* ── プロンプトライブラリ ── */
-.library-card { border-left: 4px solid var(--primary); }
+.library-card { border-left: 4px solid var(--teal); }
 
-.library-header { color: var(--primary); }
+.library-header { color: var(--teal-dk); }
 
 .library-intro {
   font-size: 13px;
   color: var(--text-muted);
   margin-bottom: 16px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .prompt-item {
-  background: #F8FAFC;
+  background: var(--card-tint);
   border: 1.5px solid var(--border);
-  border-radius: 10px;
+  border-radius: 14px;
   padding: 16px;
   margin-bottom: 16px;
 }
@@ -162,25 +167,25 @@
 .prompt-tag {
   font-size: 11px;
   font-weight: 700;
-  background: var(--primary);
+  background: var(--teal-dk);
   color: #fff;
-  padding: 3px 10px;
-  border-radius: 99px;
+  padding: 3px 12px;
+  border-radius: 999px;
 }
 
 .prompt-title {
   font-size: 14px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--heading);
 }
 
 .prompt-body {
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--text);
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 12px 14px;
   white-space: pre-wrap;
   word-break: break-word;
@@ -189,44 +194,44 @@
 }
 
 .btn-copy {
-  padding: 7px 16px;
-  background: transparent;
-  border: 1.5px solid var(--primary);
-  border-radius: 8px;
+  padding: 8px 18px;
+  background: #fff;
+  border: 1.5px solid var(--teal);
+  border-radius: 999px;
   font-size: 13px;
-  font-weight: 600;
-  color: var(--primary);
+  font-weight: 700;
+  color: var(--teal-dk);
   cursor: pointer;
   transition: all 0.15s;
 }
 
-.btn-copy:hover { background: var(--primary); color: #fff; }
+.btn-copy:hover { background: var(--teal-dk); color: #fff; }
 
 /* ── サービス提案 ── */
-.recommend-card { border-left: 4px solid #F59E0B !important; }
+.recommend-card { border-left: 4px solid var(--orange) !important; }
 
-.recommend-header { color: #D97706 !important; }
+.recommend-header { color: var(--orange-dk) !important; }
 
 .recommend-intro {
   font-size: 13px;
   color: var(--text-muted);
   margin-bottom: 16px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .recommend-item {
-  border-radius: 10px;
+  border-radius: 14px;
   padding: 16px;
   margin-bottom: 12px;
 }
 
 .recommend-item.rank-1 {
-  background: #FFFBEB;
-  border: 1.5px solid #F59E0B;
+  background: var(--warm-bg);
+  border: 1.5px solid var(--warm-line);
 }
 
 .recommend-item.rank-2 {
-  background: #F8FAFC;
+  background: var(--card-tint);
   border: 1.5px solid var(--border);
 }
 
@@ -234,39 +239,39 @@
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  padding: 2px 10px;
-  border-radius: 99px;
+  padding: 2px 12px;
+  border-radius: 999px;
   margin-bottom: 8px;
 }
 
 .rank-1 .recommend-rank {
-  background: #F59E0B;
+  background: var(--orange);
   color: #fff;
 }
 
 .rank-2 .recommend-rank {
-  background: #E5E7EB;
-  color: #6B7280;
+  background: #E3EDEF;
+  color: #7B8F9B;
 }
 
 .recommend-service {
   font-size: 16px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--heading);
   margin: 0 0 4px;
 }
 
 .recommend-price {
   font-size: 13px;
-  font-weight: 600;
-  color: var(--primary);
+  font-weight: 700;
+  color: var(--orange-dk);
   margin: 0 0 8px;
 }
 
 .recommend-reason {
   font-size: 13px;
   color: var(--text);
-  line-height: 1.65;
+  line-height: 1.7;
   margin: 0;
 }
 
@@ -286,41 +291,41 @@
 }
 
 /* ── 見積プラン ── */
-.estimate-plan-card { border-left: 4px solid #6366F1 !important; }
+.estimate-plan-card { border-left: 4px solid var(--teal) !important; }
 
-.estimate-plan-header { color: #4F46E5 !important; }
+.estimate-plan-header { color: var(--teal-dk) !important; }
 
 .estimate-plan-body { padding: 4px 0; }
 
 .estimate-service {
   font-size: 16px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--heading);
   margin: 0 0 4px;
 }
 
 .estimate-price {
   font-size: 13px;
-  font-weight: 600;
-  color: #4F46E5;
+  font-weight: 700;
+  color: var(--teal-dk);
   margin: 0 0 8px;
 }
 
 .estimate-reason {
   font-size: 13px;
   color: var(--text);
-  line-height: 1.65;
+  line-height: 1.7;
   margin: 0;
 }
 
 .estimate-select {
   width: 100%;
-  padding: 12px 14px;
+  padding: 13px 16px;
   border: 2px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 14px;
   color: var(--text);
-  background: #F8FAFC;
+  background: var(--card-tint);
   font-family: inherit;
   cursor: pointer;
   appearance: none;
@@ -329,7 +334,7 @@
 
 .estimate-select:focus {
   outline: none;
-  border-color: #6366F1;
+  border-color: var(--teal);
   background: #fff;
 }
 
@@ -357,5 +362,5 @@
 }
 
 @media (max-width: 400px) {
-  .welcome-hero h1 { font-size: 22px; }
+  .welcome-hero h1 { font-size: 23px; }
 }
