@@ -230,28 +230,33 @@ const QUESTIONS = [
   }
 ];
 
+// レベルアイコンはブランド準拠のモノラインSVG（絵文字は使用しません）
 const RECS = [
   {
     min: 0, max: 39,
-    icon: '🌱', level: 'AI入門前',
+    icon: '<svg viewBox="0 0 24 24"><path d="M12 20v-8"/><path d="M12 12c0-3 2-5.5 5.5-5.5C17.5 10 15.5 12 12 12z"/><path d="M12 14c0-2.6-1.8-4.7-4.8-4.7C7.2 11.9 9 14 12 14z"/></svg>',
+    level: 'AI入門前',
     message: 'AIの基礎からしっかり学ぶことで、業務効率が大きく変わります。まずは正しい知識を身につけましょう。',
     course: 'コース①「AI活用知識編」から始めましょう'
   },
   {
     min: 40, max: 59,
-    icon: '🌿', level: '知識はあるが未実践',
+    icon: '<svg viewBox="0 0 24 24"><path d="M5 19c9 2 14-3 14-13-9-2-14 3-14 13z"/><path d="M8 16c2-4 5-6.5 8-7.5"/></svg>',
+    level: '知識はあるが未実践',
     message: '基礎知識はありますが、実際の業務への落とし込みがカギです。手を動かして定着させましょう。',
     course: 'コース②③「実践編（文章・画像）」で体験を積みましょう'
   },
   {
     min: 60, max: 79,
-    icon: '🌳', level: '実践できている',
+    icon: '<svg viewBox="0 0 24 24"><path d="M12 15V21"/><circle cx="12" cy="9" r="5.5"/></svg>',
+    level: '実践できている',
     message: '実践力があります。組織全体への展開や、より高度な活用で差をつけましょう。',
     course: '全コースセットか、伴走サービスでさらに深めましょう'
   },
   {
     min: 80, max: 100,
-    icon: '🚀', level: '上級者',
+    icon: '<svg viewBox="0 0 24 24"><path d="M12 3c3 2 4.5 5 4.5 9 0 1.6-.5 3-1.5 4.2h-6C8 15 7.5 13.6 7.5 12c0-4 1.5-7 4.5-9z"/><circle cx="12" cy="9.5" r="1.6"/><path d="M9.2 16.5l-1.7 3.5 3-1.2M14.8 16.5l1.7 3.5-3-1.2"/></svg>',
+    level: '上級者',
     message: '高い理解度と実践力があります。AIを使って自分でツールを作る段階に進みましょう。',
     course: 'コース⑤「Claude Code実践編」または伴走サービスへ'
   }
@@ -332,7 +337,7 @@ function drawRadar(canvas, scores) {
       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
     ctx.closePath();
-    ctx.strokeStyle = '#E5E7EB';
+    ctx.strokeStyle = '#DCE9EB';
     ctx.lineWidth = 1;
     ctx.stroke();
   });
@@ -342,12 +347,12 @@ function drawRadar(canvas, scores) {
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
-    ctx.strokeStyle = '#E5E7EB';
+    ctx.strokeStyle = '#DCE9EB';
     ctx.lineWidth = 1;
     ctx.stroke();
   });
 
-  // Data polygon
+  // Data polygon（ブランド ティール）
   ctx.beginPath();
   angles.forEach((a, i) => {
     const ratio = scores[i] / 100;
@@ -356,9 +361,9 @@ function drawRadar(canvas, scores) {
     i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   });
   ctx.closePath();
-  ctx.fillStyle = 'rgba(218, 119, 86, 0.25)';
+  ctx.fillStyle = 'rgba(91, 189, 200, 0.28)';
   ctx.fill();
-  ctx.strokeStyle = '#DA7756';
+  ctx.strokeStyle = '#46A6B1';
   ctx.lineWidth = 2;
   ctx.stroke();
 
@@ -369,7 +374,7 @@ function drawRadar(canvas, scores) {
     const y = cy + r * ratio * Math.sin(a);
     ctx.beginPath();
     ctx.arc(x, y, 4, 0, Math.PI * 2);
-    ctx.fillStyle = '#DA7756';
+    ctx.fillStyle = '#46A6B1';
     ctx.fill();
   });
 
@@ -382,8 +387,8 @@ function drawRadar(canvas, scores) {
     ['業務応用']
   ];
   const labelR = r + 28;
-  ctx.font = `bold 11px 'Hiragino Kaku Gothic ProN', sans-serif`;
-  ctx.fillStyle = '#374151';
+  ctx.font = `bold 11px 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif`;
+  ctx.fillStyle = '#3C3C3C';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
 
