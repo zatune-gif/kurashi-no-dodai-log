@@ -8,7 +8,7 @@ require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const Anthropic = require('@anthropic-ai/sdk');
 
-const CLIENT_BASE_DIR = 'C:\\Users\\ooto\\仕事\\中小企業向けAI活用支援事業\\クライアント';
+const CLIENT_BASE_DIR = 'C:\\Users\\ooto\\work\\中小企業向けAI活用支援事業\\クライアント';
 
 let mainWindow;
 

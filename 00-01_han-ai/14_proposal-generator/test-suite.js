@@ -51,7 +51,7 @@ function testLoadJson() {
 // ─── テスト2: パス構築 ───
 function testPathConstruction() {
   console.log('\n[2] パス構築テスト');
-  const CLIENT_BASE_DIR = 'C:\\Users\\ooto\\仕事\\中小企業向けAI活用支援事業\\クライアント';
+  const CLIENT_BASE_DIR = 'C:\\Users\\ooto\\work\\中小企業向けAI活用支援事業\\クライアント';
   const companyName = 'テスト建設株式会社';
   const outputDir = path.join(CLIENT_BASE_DIR, companyName);
 
