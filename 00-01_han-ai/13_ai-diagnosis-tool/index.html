@@ -2,168 +2,17 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+    このファイルはリダイレクト専用のスタブです。実体は diagnosis-simple.html。
+    フォルダ直下URL（.../13_ai-diagnosis-tool/）を維持するためだけに存在します。
+    サイト内の新規リンクは直接 diagnosis-simple.html を指してください。
+  -->
+  <meta http-equiv="refresh" content="0; url=./diagnosis-simple.html">
+  <link rel="canonical" href="./diagnosis-simple.html">
   <title>AI活用準備度診断 | ざつね屋</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <script>location.replace('./diagnosis-simple.html');</script>
 </head>
 <body>
-
-  <!-- ウェルカム画面 -->
-  <div id="screen-welcome" class="screen active">
-    <div class="container">
-      <div class="brand">ざつね<span>屋</span></div>
-      <div class="welcome-hero">
-        <div class="welcome-icon"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3.5"/><path d="M12 4.5v3.5"/><circle cx="12" cy="3.2" r="1.3"/><circle cx="9.3" cy="13" r="1.15"/><circle cx="14.7" cy="13" r="1.15"/><path d="M9.5 16.6h5"/><path d="M2 12.5v3"/><path d="M22 12.5v3"/></svg></div>
-        <h1>AI活用準備度診断</h1>
-        <p class="welcome-sub">12の質問に答えるだけで、あなたの会社のAI活用準備度と<br>優先すべきアクションがわかります。</p>
-        <div class="welcome-meta">
-          <span><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 3.5h6v2.6H9z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h7"/><path d="M8.5 17.5h4"/></svg>全12問</span>
-          <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>約3〜5分</span>
-          <span><svg viewBox="0 0 24 24"><path d="M4 12.5V5.6A1.6 1.6 0 0 1 5.6 4h6.9l7.4 7.4a1.6 1.6 0 0 1 0 2.2l-6.1 6.1a1.6 1.6 0 0 1-2.2 0L4 12.5z"/><circle cx="8.6" cy="8.6" r="1.3"/></svg>無料</span>
-        </div>
-      </div>
-      <button id="btn-start" class="btn-primary btn-large">診断をはじめる</button>
-      <p class="welcome-note">※ 回答内容は診断結果の生成にのみ使用します</p>
-    </div>
-  </div>
-
-  <!-- クイズ画面 -->
-  <div id="screen-quiz" class="screen">
-    <div class="container">
-      <div class="quiz-header">
-        <div class="block-label" id="block-label"></div>
-        <div class="question-counter" id="question-counter"></div>
-      </div>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar" id="progress-bar"></div>
-      </div>
-      <div class="question-card">
-        <p class="question-text" id="question-text"></p>
-        <div class="options" id="options"></div>
-      </div>
-      <div class="quiz-nav">
-        <button id="btn-back" class="btn-secondary">← 戻る</button>
-        <button id="btn-next" class="btn-primary" disabled>次へ →</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ローディング画面 -->
-  <div id="screen-loading" class="screen">
-    <div class="container">
-      <div class="loading-wrap">
-        <div class="spinner"></div>
-        <p class="loading-title">診断結果を生成中...</p>
-        <p class="loading-sub">AIがあなたの回答を分析しています</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 結果画面 -->
-  <div id="screen-results" class="screen">
-    <div class="container">
-
-      <!-- 最終ゴール -->
-      <div class="final-goal-box">
-        <div class="final-goal-label"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1"/></svg>目指すゴール</div>
-        <p class="final-goal-text">AIと仕組みが回り、社員が本来の仕事に集中できる会社</p>
-        <p class="final-goal-sub">定型作業はAIが担い、人は判断・関係・創造に時間を使える状態</p>
-      </div>
-
-      <!-- ステージ進捗 -->
-      <div class="stage-timeline">
-        <div class="stage-item" data-stage="準備期">
-          <div class="stage-dot"></div>
-          <div class="stage-name">準備期</div>
-        </div>
-        <div class="stage-arrow">→</div>
-        <div class="stage-item" data-stage="導入期">
-          <div class="stage-dot"></div>
-          <div class="stage-name">導入期</div>
-        </div>
-        <div class="stage-arrow">→</div>
-        <div class="stage-item" data-stage="活用期">
-          <div class="stage-dot"></div>
-          <div class="stage-name">活用期</div>
-        </div>
-        <div class="stage-arrow">→</div>
-        <div class="stage-item" data-stage="推進期">
-          <div class="stage-dot"></div>
-          <div class="stage-name">推進期</div>
-        </div>
-      </div>
-
-      <!-- スコア -->
-      <div class="score-card" id="score-card">
-        <div class="score-number" id="score-number"></div>
-        <div class="score-label">点 / 100点</div>
-        <div class="stage-badge" id="stage-badge"></div>
-      </div>
-
-      <!-- 現ステージのゴール -->
-      <div class="section-card">
-        <div class="section-header current-state-header">
-          <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 21c4.5-4.5 7-7.6 7-11a7 7 0 1 0-14 0c0 3.4 2.5 6.5 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-          <span>現在の状態</span>
-        </div>
-        <p class="current-state-text" id="current-state-text"></p>
-        <div class="section-header stage-goal-header">
-          <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M4 15l5-5 3.5 3.5L20 6"/><path d="M15 6h5v5"/></svg></span>
-          <span>このステージのゴール</span>
-        </div>
-        <p class="stage-goal-text" id="stage-goal-text"></p>
-      </div>
-
-      <!-- 強み -->
-      <div class="section-card" id="strengths-card">
-        <div class="section-header strengths-header">
-          <span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.4 12.2l2.5 2.4 4.7-5"/></svg></span>
-          <span>あなたの会社の強み</span>
-        </div>
-        <ul class="insight-list strengths-list" id="strengths-list"></ul>
-      </div>
-
-      <!-- 優先課題 -->
-      <div class="section-card" id="issues-card">
-        <div class="section-header issues-header">
-          <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M13 3l-7 10.5h5l-1 7.5 7-10.5h-5l1-7.5z"/></svg></span>
-          <span>優先して取り組む課題</span>
-        </div>
-        <ul class="insight-list issues-list" id="issues-list"></ul>
-      </div>
-
-      <!-- 推奨アクション -->
-      <div class="section-card actions-card">
-        <div class="section-header actions-header">
-          <span class="section-icon"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 3.5h6v2.6H9z"/><path d="M8.4 10.3l1.2 1.2 2-2"/><path d="M8.4 15.3l1.2 1.2 2-2"/><path d="M14 10.6h2.6"/><path d="M14 15.6h2.6"/></svg></span>
-          <span>推奨アクション</span>
-        </div>
-        <ol class="actions-list" id="actions-list"></ol>
-        <p class="fallback-note hidden" id="actions-fallback-note">※ 仮公開期間中のため固定テキストを表示しています。本公開後は回答内容に沿ったコメントが反映されます。</p>
-      </div>
-
-      <!-- CTA -->
-      <div class="cta-section">
-        <p class="cta-headline">次のステップへ</p>
-        <p class="cta-sub">詳細診断（約7分）で貴社専用のプロンプトライブラリとサービス提案をご用意します。</p>
-        <div class="cta-actions">
-          <a href="./request.html" class="btn-secondary"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v4h4"/><path d="M9 12.5h6"/><path d="M9 16h6"/></svg>資料請求</a>
-          <a href="./estimate.html" class="btn-primary"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7.5h8"/><path d="M8.5 12h1"/><path d="M11.5 12h1"/><path d="M14.5 12h1"/><path d="M8.5 15.5h1"/><path d="M11.5 15.5h4"/></svg>見積請求</a>
-        </div>
-        <p class="cta-note">どちらも詳細診断から始まります・返信2営業日以内</p>
-        <a href="./prices.html" class="cta-prices-link">料金の詳細を確認する →</a>
-      </div>
-
-      <button id="btn-retry" class="btn-secondary btn-retry">もう一度診断する</button>
-
-      <footer class="footer">© 2026 ざつね屋</footer>
-    </div>
-  </div>
-
-  <script src="utils.js"></script>
-  <script src="script.js"></script>
+  <p><a href="./diagnosis-simple.html">AI活用準備度診断へ進む</a></p>
 </body>
 </html>
