@@ -9,6 +9,10 @@ function validateEmail(email) {
 }
 
 function validateContactForm(errorMsgId) {
+  // ハニーポット：人間には見えない項目。ここが埋まっていればボットとみなし黙って処理を止める
+  const honeypot = document.getElementById('hp-website');
+  if (honeypot && honeypot.value.trim() !== '') return null;
+
   const fields = [
     { id: 'company-name',  ok: v => v.length > 0 },
     { id: 'contact-name',  ok: v => v.length > 0 },

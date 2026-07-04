@@ -364,3 +364,12 @@
 @media (max-width: 400px) {
   .welcome-hero h1 { font-size: 23px; }
 }
+
+/* スパム対策用ハニーポット：人間には見えないが、機械的にフォームを埋めるボットには見える */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

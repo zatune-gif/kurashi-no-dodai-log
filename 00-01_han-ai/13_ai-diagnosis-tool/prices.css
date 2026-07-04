@@ -31,7 +31,7 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Noto Sans JP', 'Roboto', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
-  background: #fff; color: var(--text); line-height: 1.9; font-size: 15px;
+  background: #fff; color: var(--text); line-height: 1.9; font-size: 16px;
   overflow-x: hidden;
 }
 
