@@ -290,6 +290,8 @@
   margin-bottom: 24px;
 }
 
+#btn-export svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; fill: none; vertical-align: -3px; margin-right: 6px; }
+
 /* ── 見積プラン ── */
 .estimate-plan-card { border-left: 4px solid var(--teal) !important; }
 

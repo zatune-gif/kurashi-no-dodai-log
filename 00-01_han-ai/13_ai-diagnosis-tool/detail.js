@@ -601,12 +601,22 @@ async function showResults() {
   // サービス提案
   renderRecommendations(recommendations, score, stage);
 
-  // 見積請求モード：CTAを見積画面への遷移に変更
+  // CTA分岐：
+  // ・見積請求モード（estimate）      → 「見積プランを確認する」1ボタンのみ
+  // ・相談・スキップモード（inquiry/standalone）→「相談する」＋「見積を請求する」の2ボタン
+  const btnCtaEstimate = $('btn-cta-estimate');
   if (_pageMode === 'estimate') {
     const btnCta = $('btn-cta');
     btnCta.textContent = '見積プランを確認する →';
     btnCta.removeAttribute('href');
     btnCta.onclick = e => {
+      e.preventDefault();
+      showEstimateScreen(recommendations, score, stage);
+    };
+    if (btnCtaEstimate) btnCtaEstimate.classList.add('hidden');
+  } else if (btnCtaEstimate) {
+    btnCtaEstimate.classList.remove('hidden');
+    btnCtaEstimate.onclick = e => {
       e.preventDefault();
       showEstimateScreen(recommendations, score, stage);
     };
