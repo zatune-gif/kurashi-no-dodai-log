@@ -402,6 +402,21 @@ h1, h2 { font-family: 'Noto Sans JP', sans-serif; }
   padding: 34px 0 0;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.footer-links a {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--teal-dk);
+  text-decoration: none;
+}
+.footer-links a:hover { text-decoration: underline; }
+
 @media (max-width: 480px) {
   .result-actions { flex-direction: column; }
 }

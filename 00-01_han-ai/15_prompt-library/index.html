@@ -90,6 +90,9 @@ body{background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic Pr
 
 /* フッター */
 .site-footer{text-align:center;padding:28px;color:var(--sub);font-size:12px;border-top:1px solid var(--line);margin-top:48px}
+.footer-links{display:flex;flex-wrap:wrap;gap:14px 18px;justify-content:center;margin-bottom:10px}
+.footer-links a{font-size:12.5px;font-weight:700;color:var(--teal);text-decoration:none}
+.footer-links a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -145,7 +148,15 @@ body{background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic Pr
   </div>
 </main>
 
-<footer class="site-footer">© 2026 ざつね屋</footer>
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://zatune-gif.github.io/zatuneya-hp/">トップページ</a>
+    <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/prices.html">料金案内</a>
+    <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/diagnosis-simple.html">無料診断</a>
+    <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/request.html">資料請求</a>
+  </div>
+  © 2026 ざつね屋
+</footer>
 
 <script>
 let prompts = [];
