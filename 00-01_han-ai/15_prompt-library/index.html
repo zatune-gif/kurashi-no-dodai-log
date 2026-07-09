@@ -52,6 +52,7 @@ body{background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic Pr
 .badge-tool{background:#1E2F33;color:#5BBDC8}
 .badge-level{background:#2A2A2A;color:#999}
 .badge-level.easy{background:#1E2E1E;color:#5CB85C}
+.badge-industry{background:#332A1E;color:#C9974B}
 .card-title{font-size:14.5px;font-weight:700;color:#F0F0F0;line-height:1.5}
 .prompt-box{position:relative;background:var(--card2);border-radius:10px;padding:14px 14px 40px}
 .prompt-text{font-size:13px;line-height:1.8;color:#CCC;white-space:pre-wrap;word-break:break-all}
@@ -65,8 +66,13 @@ body{background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic Pr
 .no-results p{font-size:15px}
 
 /* 印刷用 */
+.print-header{display:none}
 @media print{
   .site-header,.filter-bar,.print-btn{display:none!important}
+  .print-header{display:block;margin-bottom:22px;padding-bottom:14px;border-bottom:2px solid #DA7756}
+  .print-header-eyebrow{font-size:11px;letter-spacing:.08em;color:#C5644A;font-weight:700;margin-bottom:4px}
+  .print-header-title{font-size:21px;font-weight:900;color:#1a1a1a;margin-bottom:8px}
+  .print-header-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:11.5px;color:#555}
   .card-grid{grid-template-columns:1fr 1fr}
   .card{page-break-inside:avoid}
   body{background:#fff;color:#1a1a1a}
@@ -74,7 +80,11 @@ body{background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic Pr
   .prompt-box{background:#f8f8f8}
   .badge-task{background:#FFE8DF;color:#C5644A}
   .badge-tool{background:#DCF0F2;color:#3A9BAA}
+  .badge-industry{background:#F5EBD8;color:#8A6420}
   .prompt-text,.card-title{color:#1a1a1a}
+  .placeholder-hint{color:#555}
+  .placeholder-hint strong{color:#C5644A}
+  .source-tag{color:#666}
   .copy-btn{display:none}
 }
 
@@ -108,6 +118,12 @@ body{background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic Pr
       <option value="">すべて</option>
     </select>
   </div>
+  <div class="filter-group">
+    <label>業種：</label>
+    <select id="filter-industry">
+      <option value="">すべて</option>
+    </select>
+  </div>
   <div class="filter-group search-wrap">
     <input type="text" id="search" placeholder="キーワードで検索...">
   </div>
@@ -115,6 +131,14 @@ body{background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic Pr
 </div>
 
 <main class="main">
+  <div class="print-header" id="print-header">
+    <p class="print-header-eyebrow">ざつね屋 生成AIプロンプト集</p>
+    <h2 class="print-header-title" id="print-header-title">生成AIプロンプト集</h2>
+    <div class="print-header-meta">
+      <span id="print-header-date">発行日：</span>
+      <span class="print-header-credit">発行：ざつね屋</span>
+    </div>
+  </div>
   <div class="card-grid" id="card-grid"></div>
   <div class="no-results" id="no-results" style="display:none">
     <p>条件に合うプロンプトがありません。</p>
@@ -146,6 +170,7 @@ function renderCards(list) {
 
   grid.innerHTML = list.map(p => {
     const tools = p.tools.map(t => `<span class="badge badge-tool">ツール：${escHtml(t)}</span>`).join('');
+    const industries = (p.industries || []).map(i => `<span class="badge badge-industry">業種：${escHtml(i)}</span>`).join('');
     const levelClass = p.level === 'そのまま使える' ? 'easy' : '';
     const ph = p.placeholders.length
       ? `<p class="placeholder-hint"><strong>[ ] に入れる内容：</strong>${p.placeholders.map(x => `「${escHtml(x)}」`).join('、')}</p>`
@@ -153,6 +178,7 @@ function renderCards(list) {
     return `<div class="card">
   <div class="card-meta">
     <span class="badge badge-task">用途：${escHtml(p.task)}</span>
+    ${industries}
     ${tools}
     <span class="badge badge-level ${levelClass}">${escHtml(p.level)}</span>
   </div>
@@ -168,17 +194,28 @@ function renderCards(list) {
 }
 
 function getFiltered() {
-  const task   = document.getElementById('filter-task').value;
-  const tool   = document.getElementById('filter-tool').value;
-  const source = document.getElementById('filter-source').value;
-  const kw     = document.getElementById('search').value.trim().toLowerCase();
+  const task     = document.getElementById('filter-task').value;
+  const tool     = document.getElementById('filter-tool').value;
+  const source   = document.getElementById('filter-source').value;
+  const industry = document.getElementById('filter-industry').value;
+  const kw       = document.getElementById('search').value.trim().toLowerCase();
   return prompts.filter(p => {
-    if (task   && p.task !== task) return false;
-    if (tool   && !p.tools.includes(tool)) return false;
-    if (source && p.source !== source) return false;
-    if (kw && ![p.title, p.prompt, p.task, ...p.tools, p.source].join(' ').toLowerCase().includes(kw)) return false;
+    if (task     && p.task !== task) return false;
+    if (tool     && !p.tools.includes(tool)) return false;
+    if (source   && p.source !== source) return false;
+    if (industry && !(p.industries || []).includes(industry)) return false;
+    if (kw && ![p.title, p.prompt, p.task, ...p.tools, ...(p.industries || []), p.source].join(' ').toLowerCase().includes(kw)) return false;
     return true;
   });
+}
+
+function updatePrintHeader() {
+  const industry = document.getElementById('filter-industry').value;
+  const titleEl  = document.getElementById('print-header-title');
+  const dateEl   = document.getElementById('print-header-date');
+  titleEl.textContent = industry ? `${industry}向け 生成AIプロンプト集` : '生成AIプロンプト集';
+  const now = new Date();
+  dateEl.textContent = `発行日：${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
 }
 
 function populateFilter(id, values) {
@@ -195,14 +232,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   const res = await fetch('./prompts.json');
   prompts = await res.json();
 
-  populateFilter('filter-task',   prompts.map(p => p.task));
-  populateFilter('filter-tool',   prompts.flatMap(p => p.tools));
-  populateFilter('filter-source', prompts.map(p => p.source));
+  populateFilter('filter-task',     prompts.map(p => p.task));
+  populateFilter('filter-tool',     prompts.flatMap(p => p.tools));
+  populateFilter('filter-source',   prompts.map(p => p.source));
+  populateFilter('filter-industry', prompts.flatMap(p => p.industries || []));
 
   renderCards(prompts);
+  updatePrintHeader();
 
-  ['filter-task','filter-tool','filter-source','search'].forEach(id => {
-    document.getElementById(id).addEventListener('input', () => renderCards(getFiltered()));
+  ['filter-task','filter-tool','filter-source','filter-industry','search'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      renderCards(getFiltered());
+      updatePrintHeader();
+    });
   });
 
   document.getElementById('card-grid').addEventListener('click', e => {
