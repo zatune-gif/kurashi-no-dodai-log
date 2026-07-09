@@ -475,20 +475,38 @@
       background: var(--bg);
     }
 
-    /* ── 概要カード（フィードバック依頼ボックス） ── */
-    .overview-block {
-      background: var(--teal-soft);
-      border: 1px solid var(--teal-soft2);
-      border-left: 4px solid var(--teal);
+    /* ── CTA ── */
+    .cta-section {
+      position: relative;
+      background: var(--card);
       border-radius: var(--radius);
-      padding: 22px 26px;
-      margin-bottom: 40px;
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.9;
+      box-shadow: var(--shadow);
+      padding: 40px 32px;
+      margin-top: 48px;
+      text-align: center;
+      overflow: hidden;
     }
-
-    .overview-block strong { color: var(--teal-dk); }
+    .cta-section::before {
+      content: '';
+      position: absolute; top: -90px; right: -60px;
+      width: 260px; height: 260px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(248,152,29,0.12), rgba(248,152,29,0) 70%);
+      pointer-events: none;
+    }
+    .cta-headline { position: relative; font-size: 21px; font-weight: 900; color: var(--heading); }
+    .cta-sub { position: relative; font-size: 14px; color: var(--text); margin: 10px 0 24px; }
+    .cta-actions { position: relative; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-cta {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      font-size: 15px; font-weight: 700; text-decoration: none; color: #fff;
+      padding: 14px 30px; border-radius: 999px;
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+    .btn-cta:hover { transform: translateY(-2px); }
+    .btn-cta-primary { background: var(--orange); box-shadow: 0 12px 28px rgba(248,152,29,0.36); }
+    .btn-cta-primary:hover { background: var(--orange-dk); }
+    .btn-cta-outline { background: var(--teal-dk); box-shadow: 0 8px 20px rgba(91,189,200,0.30); }
+    .btn-cta-outline:hover { background: var(--teal); }
 
     /* ── 注記 ── */
     .notes {
@@ -571,11 +589,6 @@
 </nav>
 
 <main class="main">
-
-  <div class="overview-block">
-    <strong>フィードバックのお願い：</strong>各コースのセクション構成・時間配分についてご意見をいただけると幸いです。
-    特に「この時間では足りない／長すぎる」「この順番は分かりにくい」「このセクションは不要では？」といった観点で率直にお知らせください。
-  </div>
 
   <!-- ── コース① ── -->
   <section class="section" id="c1">
@@ -1061,6 +1074,17 @@
       </div>
     </div>
   </section>
+
+  <hr class="section-end">
+
+  <div class="cta-section">
+    <p class="cta-headline">ご相談・お見積りは無料です</p>
+    <p class="cta-sub">研修だけでなく、業務改善オーダーメイド・AI開発伴走サービスもご案内できます。<br>まずはお気軽にお問い合わせください。</p>
+    <div class="cta-actions">
+      <a href="./request.html" class="btn-cta btn-cta-primary">資料請求する</a>
+      <a href="./estimate.html" class="btn-cta btn-cta-outline">お見積りを依頼する</a>
+    </div>
+  </div>
 
   <div class="notes">
     <p>全5コースのうち①は90分、②〜⑤は120分です</p>
