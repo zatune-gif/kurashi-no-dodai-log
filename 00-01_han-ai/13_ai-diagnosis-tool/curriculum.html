@@ -47,7 +47,7 @@
       font-size: 15px;
       -webkit-font-smoothing: antialiased;
     }
-    h1, .section-title, .course-head-name { font-family: 'Noto Sans JP', sans-serif; }
+    h1, .section-title { font-family: 'Noto Sans JP', sans-serif; }
 
     /* ── カバー ── */
     .cover {
@@ -75,18 +75,6 @@
       width: 340px; height: 340px;
       border-radius: 50%;
       background: rgba(248,152,29,0.08);
-    }
-
-    .cover-logo {
-      margin-bottom: 28px;
-      position: relative;
-    }
-
-    .cover-logo img {
-      height: 168px;
-      max-width: 100%;
-      width: auto;
-      display: block;
     }
 
     .cover h1 {
@@ -306,33 +294,6 @@
       display: flex;
       align-items: center;
       gap: 14px;
-    }
-
-    .course-icon {
-      width: 44px; height: 44px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 17px;
-      font-weight: 900;
-      color: #fff;
-      flex-shrink: 0;
-    }
-
-    .ci-1 { background: linear-gradient(135deg, #8AD1D9, #6BC3CD); }
-    .ci-2 { background: linear-gradient(135deg, #6BC3CD, #5BBDC8); }
-    .ci-3 { background: linear-gradient(135deg, #5BBDC8, #46A6B1); }
-    .ci-4 { background: linear-gradient(135deg, #46A6B1, #3B929C); }
-    .ci-5 { background: linear-gradient(135deg, #3B929C, #33808A); }
-
-    .course-head-info { flex: 1; }
-
-    .course-head-name {
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--heading);
-      margin-bottom: 6px;
     }
 
     .course-tags {
@@ -561,7 +522,6 @@
     @media (max-width: 700px) {
       .cover { padding: 40px 24px; }
       .cover h1 { font-size: 28px; }
-      .cover-logo img { height: 120px; }
       .cover-title-row { flex-direction: column; gap: 8px; }
       .cover-title-label { border-left: none; padding-left: 0; }
       .nav-brand { display: none; }
@@ -572,9 +532,6 @@
 
 <!-- カバー -->
 <div class="cover">
-  <div class="cover-logo">
-    <img src="./logo.jpg" alt="ざつね屋">
-  </div>
   <div class="cover-title-row">
     <h1><span></span>研修カリキュラム</h1>
     <div class="cover-title-label">タイムスケジュール</div>
@@ -592,10 +549,6 @@
     <div class="cover-meta-item">
       <div class="cover-meta-label">対象</div>
       <div class="cover-meta-value">中小企業・小規模事業者</div>
-    </div>
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">作成日</div>
-      <div class="cover-meta-value">2026年6月</div>
     </div>
   </div>
 </div>
@@ -633,13 +586,9 @@
     </div>
     <div class="course-card">
       <div class="course-head">
-        <div class="course-icon ci-1">①</div>
-        <div class="course-head-info">
-          <div class="course-head-name">AI活用知識編</div>
-          <div class="course-tags">
-            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>90分</span>
-            <span class="tag tag-tool">ChatGPT・Gemini・Claude（自由）</span>
-          </div>
+        <div class="course-tags">
+          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>90分</span>
+          <span class="tag tag-tool">ChatGPT・Gemini・Claude（自由）</span>
         </div>
       </div>
       <table class="timetable">
@@ -747,13 +696,9 @@
     </div>
     <div class="course-card">
       <div class="course-head">
-        <div class="course-icon ci-2">②</div>
-        <div class="course-head-info">
-          <div class="course-head-name">実践編（文書系）</div>
-          <div class="course-tags">
-            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
-            <span class="tag tag-tool">Gemini 無料版</span>
-          </div>
+        <div class="course-tags">
+          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
+          <span class="tag tag-tool">Gemini 無料版</span>
         </div>
       </div>
       <table class="timetable">
@@ -842,13 +787,9 @@
     </div>
     <div class="course-card">
       <div class="course-head">
-        <div class="course-icon ci-3">③</div>
-        <div class="course-head-info">
-          <div class="course-head-name">実践編（画像系）</div>
-          <div class="course-tags">
-            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
-            <span class="tag tag-tool">Canva 無料版</span>
-          </div>
+        <div class="course-tags">
+          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
+          <span class="tag tag-tool">Canva 無料版</span>
         </div>
       </div>
       <table class="timetable">
@@ -943,13 +884,9 @@
     </div>
     <div class="course-card">
       <div class="course-head">
-        <div class="course-icon ci-4">④</div>
-        <div class="course-head-info">
-          <div class="course-head-name">実践編（動画系）</div>
-          <div class="course-tags">
-            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
-            <span class="tag tag-tool">CapCut 無料版</span>
-          </div>
+        <div class="course-tags">
+          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
+          <span class="tag tag-tool">CapCut 無料版</span>
         </div>
       </div>
       <table class="timetable">
@@ -1045,13 +982,9 @@
     </div>
     <div class="course-card">
       <div class="course-head">
-        <div class="course-icon ci-5">⑤</div>
-        <div class="course-head-info">
-          <div class="course-head-name">実践編（Claude Code 特化）</div>
-          <div class="course-tags">
-            <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
-            <span class="tag tag-tool">Claude Code（Proプラン必須）</span>
-          </div>
+        <div class="course-tags">
+          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
+          <span class="tag tag-tool">Claude Code（Proプラン必須）</span>
         </div>
       </div>
       <table class="timetable">
