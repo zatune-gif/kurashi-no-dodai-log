@@ -207,6 +207,23 @@
     }
     .nav-back:hover { text-decoration: underline; }
 
+    .nav-home-icon {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: var(--card-2);
+      color: var(--heading);
+      flex-shrink: 0;
+    }
+    .nav-home-icon svg {
+      width: 18px; height: 18px;
+      stroke: currentColor; stroke-width: 1.8;
+      stroke-linecap: round; stroke-linejoin: round; fill: none;
+    }
+    .nav-home-icon:hover { background: var(--teal-soft); color: var(--teal-dk); }
+
     .nav-scroll {
       display: flex;
       overflow-x: auto;
@@ -466,14 +483,27 @@
     .section-end { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
 
     /* ── フッター ── */
-    footer {
+    .site-footer {
       text-align: center;
       padding: 34px 24px;
-      font-size: 12px;
-      color: var(--text-muted);
       border-top: 1px solid var(--border);
       background: var(--bg);
     }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--teal-dk);
+      text-decoration: none;
+    }
+    .footer-links a:hover { text-decoration: underline; }
+    .site-footer .copy { font-size: 12px; color: var(--text-muted); }
 
     /* ── CTA ── */
     .cta-section {
@@ -507,6 +537,16 @@
     .btn-cta-primary:hover { background: var(--orange-dk); }
     .btn-cta-outline { background: var(--teal-dk); box-shadow: 0 8px 20px rgba(91,189,200,0.30); }
     .btn-cta-outline:hover { background: var(--teal); }
+    .cta-secondary-link {
+      position: relative;
+      display: block;
+      margin-top: 18px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--teal-dk);
+      text-decoration: none;
+    }
+    .cta-secondary-link:hover { text-decoration: underline; }
 
     /* ── 注記 ── */
     .notes {
@@ -543,6 +583,11 @@
       .cover-title-row { flex-direction: column; gap: 8px; }
       .cover-title-label { border-left: none; padding-left: 0; }
       .nav-brand { display: none; }
+      .nav-home-icon { display: flex; }
+      .cta-section { padding: 32px 20px; }
+      .cta-actions { flex-direction: column; }
+      .btn-cta { width: 100%; }
+      .footer-links { gap: 14px 18px; }
     }
   </style>
 </head>
@@ -576,6 +621,9 @@
   <div class="nav-inner">
     <div class="nav-left">
       <a class="nav-brand" href="https://zatune-gif.github.io/zatuneya-hp/">生成AI活用支援のざつね<span>屋</span></a>
+      <a class="nav-home-icon" href="https://zatune-gif.github.io/zatuneya-hp/" aria-label="トップページへ">
+        <svg viewBox="0 0 24 24"><path d="M4 11.5L12 4l8 7.5"/><path d="M6 10v9.5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V10"/></svg>
+      </a>
       <a class="nav-back" href="./prices.html">← 料金案内へ戻る</a>
     </div>
     <div class="nav-scroll">
@@ -1077,6 +1125,12 @@
 
   <hr class="section-end">
 
+  <div class="notes">
+    <p>全5コースのうち①は90分、②〜⑤は120分です</p>
+    <p>コース⑤のみ受講条件あり（PC持参・Anthropicアカウント・Proプラン 約3,000円/月）</p>
+    <p>各コースは独立して受講可能です。セット受講も対応しています</p>
+  </div>
+
   <div class="cta-section">
     <p class="cta-headline">ご相談・お見積りは無料です</p>
     <p class="cta-sub">研修だけでなく、業務改善オーダーメイド・AI開発伴走サービスもご案内できます。<br>まずはお気軽にお問い合わせください。</p>
@@ -1084,17 +1138,21 @@
       <a href="./request.html" class="btn-cta btn-cta-primary">資料請求する</a>
       <a href="./estimate.html" class="btn-cta btn-cta-outline">お見積りを依頼する</a>
     </div>
-  </div>
-
-  <div class="notes">
-    <p>全5コースのうち①は90分、②〜⑤は120分です</p>
-    <p>コース⑤のみ受講条件あり（PC持参・Anthropicアカウント・Proプラン 約3,000円/月）</p>
-    <p>各コースは独立して受講可能です。セット受講も対応しています</p>
+    <a href="./diagnosis-simple.html" class="cta-secondary-link">どのコースが合うか迷ったら、無料診断（約7分）から →</a>
   </div>
 
 </main>
 
-<footer>© 2026 ざつね屋</footer>
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://zatune-gif.github.io/zatuneya-hp/">トップページ</a>
+    <a href="./prices.html">料金案内</a>
+    <a href="./diagnosis-simple.html">無料診断</a>
+    <a href="./request.html">資料請求</a>
+    <a href="./estimate.html">お見積り</a>
+  </div>
+  <div class="copy">© 2026 ざつね屋</div>
+</footer>
 
 </body>
 </html>
