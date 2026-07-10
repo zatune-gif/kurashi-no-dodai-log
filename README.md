@@ -8,7 +8,6 @@
 - 00-01 半AIプロジェクト: https://zatune-gif.github.io/kurashi-no-dodai-log/han-ai.html
 - 00-02 半農プロジェクト: https://zatune-gif.github.io/kurashi-no-dodai-log/hannou.html
 - 00-03 生活基盤プロジェクト: https://zatune-gif.github.io/kurashi-no-dodai-log/seikatsu-kiban.html
-- 事業計画書: https://zatune-gif.github.io/kurashi-no-dodai-log/business-plan/
 
 ## リポジトリ構成
 
@@ -20,7 +19,6 @@
 | `00-01_han-ai/training-materials/` | 研修資料5コース（pptx・PDF・台本・生成スクリプト） |
 | `00-02_hannou/` | 半農プロジェクト（移住後に本格始動） |
 | `00-03_seikatsu-kiban/` | 生活基盤プロジェクト（移住後に本格始動） |
-| `business-plan/` | 事業計画書（HTML） |
 
 ## 公開方針
 

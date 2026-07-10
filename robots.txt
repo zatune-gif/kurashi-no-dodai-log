@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /00-01_han-ai/13_ai-diagnosis-tool/
+
+Sitemap: https://zatune-gif.github.io/kurashi-no-dodai-log/sitemap.xml
