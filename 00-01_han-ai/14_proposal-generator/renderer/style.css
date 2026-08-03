@@ -387,23 +387,12 @@ html, body {
   padding: 10px 12px;
 }
 
-.subsidy-row {
-  display: flex;
-  justify-content: space-between;
+.subsidy-note {
   font-size: 12px;
-  padding: 2px 0;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0;
 }
-
-.subsidy-burden {
-  font-size: 14px;
-  font-weight: 900;
-  color: var(--accent);
-  padding-top: 5px;
-  margin-top: 3px;
-  border-top: 1px solid rgba(76, 175, 80, 0.2);
-}
-
-.green { color: var(--success); font-weight: 700; }
 
 /* ─── 推奨プランリスト ─── */
 .rec-list { display: flex; flex-direction: column; gap: 8px; }

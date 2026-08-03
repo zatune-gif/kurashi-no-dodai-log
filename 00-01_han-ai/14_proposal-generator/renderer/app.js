@@ -41,8 +41,6 @@ const DOM = {
   eTax:           $('e-tax'),
   eTotal:         $('e-total'),
   eSubsidyPreview:$('e-subsidy-preview'),
-  eSubsidyAmt:    $('e-subsidy-amt'),
-  eClientBurden:  $('e-client-burden'),
   eRecs:          $('e-recommendations'),
 
   pSection1:      $('p-section1'),
@@ -210,11 +208,6 @@ function calcTotals() {
   DOM.eSubtotal.textContent = fmtNum(adjustedSubtotal) + '円';
   DOM.eTax.textContent      = fmtNum(tax)              + '円';
   DOM.eTotal.textContent    = fmtNum(total)            + '円';
-
-  const subsidyAmt   = Math.round(adjustedSubtotal * 0.75);
-  const clientBurden = adjustedSubtotal - subsidyAmt;
-  DOM.eSubsidyAmt.textContent   = fmtNum(subsidyAmt)   + '円';
-  DOM.eClientBurden.textContent = fmtNum(clientBurden) + '円（税別）';
 
   DOM.eSubsidyPreview.style.display = DOM.eSubsidy.checked ? 'block' : 'none';
 }
