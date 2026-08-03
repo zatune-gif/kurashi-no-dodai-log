@@ -370,8 +370,6 @@ function buildEstimateHtml(clientData, estimateData, dateJp) {
   const subtotal = items.reduce((s, x) => s + (Number(x.price) || 0), 0);
   const tax      = Math.round(subtotal * 0.1);
   const total    = subtotal + tax;
-  const subsidyAmt   = Math.round(subtotal * 0.75);
-  const clientBurden = subtotal - subsidyAmt;
 
   const rows = items.map(item => `
     <tr>
@@ -424,10 +422,8 @@ body{font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-
 </div>
 ${estimateData.applySubsidy ? `
 <div class="sub-box">
-  <div class="sub-ttl">人材開発支援助成金 活用時（最大75%助成）</div>
-  <div class="sub-r"><span>助成額（75%）</span><span style="font-weight:700;color:#2e7d32">${fmtNum(subsidyAmt)}円</span></div>
-  <div class="sub-r"><span>企業様のご負担（25%）</span><span style="font-weight:900;font-size:14px;color:#DA7756">${fmtNum(clientBurden)}円（税別）</span></div>
-  <div class="note" style="margin-top:7px">※ 助成金の申請・採択は企業様の手続きによります。期限：2027年3月末</div>
+  <div class="sub-ttl">人材開発支援助成金など公的支援について</div>
+  <div class="note">研修サービスは人材開発支援助成金など公的支援の対象となり得ます。適用には雇用保険の適用状況・訓練内容などの要件確認が必要です。詳細はお問い合わせください。</div>
 </div>` : ''}
 <div class="sec-ttl">お支払い条件</div>
 <div class="pay-box">
