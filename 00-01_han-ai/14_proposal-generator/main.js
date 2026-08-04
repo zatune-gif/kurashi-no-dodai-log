@@ -129,6 +129,17 @@ function getServiceDeliverables(serviceName) {
     return ['チームで共有できる自動化テンプレート集', '各自の演習成果ファイル'];
   }
 
+  // ── AI経営改善パッケージ ──
+  // 圧縮版（2か月・270,000円）・標準版（3か月・16h・360,000円）・拡張版（4か月・540,000円）
+  if (n.includes('AI経営改善パッケージ') || n.includes('経営改善パッケージ')) {
+    return [
+      '現状診断レポート',
+      'KPI設計書',
+      '体制設計書（組織改善計画）',
+      '実装マニュアル'
+    ];
+  }
+
   // ── 対応不可（別途相談）──
   return null;
 }
@@ -459,8 +470,8 @@ body{font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-
 </div>
 ${estimateData.applySubsidy ? `
 <div class="sub-box">
-  <div class="sub-ttl">🎁 人材開発支援助成金など公的支援について</div>
-  <div class="note">研修サービスは人材開発支援助成金など公的支援の対象となり得ます。適用には雇用保険の適用状況・訓練内容などの要件確認が必要です。詳細はお問い合わせください。</div>
+  <div class="sub-ttl">🎁 公的支援（助成金・補助金）について</div>
+  <div class="note">ご利用いただくサービスは、要件を満たす場合に人材開発支援助成金・IT導入補助金など公的支援の対象となり得ます。適用には雇用保険の適用状況・支援内容などの要件確認が必要です。詳細はお問い合わせください。</div>
 </div>` : ''}
 <div class="sec-ttl">お支払い条件</div>
 <div class="pay-box">
@@ -468,6 +479,7 @@ ${estimateData.applySubsidy ? `
     ・研修サービス：研修実施日の2週間前までに全額お振込みください<br>
     ・AI業務改善オーダーメイドサービス：契約締結後・制作開始前に全額お振込みください<br>
     ・AI開発伴走サービス：毎月末日までに翌月分をお振込みください<br>
+    ・AI経営改善パッケージ：ご契約後に月次または一括でお振込みください（詳細はご相談に応じます）<br>
     ・振込手数料：お客様のご負担となります
   </div>
 </div>
@@ -545,16 +557,27 @@ h3{font-size:13px;font-weight:700;margin:14px 0 7px}
 <div class="tr"><span>小計（税別）</span><span>${fmtNum(subtotal)}円</span></div>
 <div class="tr"><span>消費税（10%）</span><span>${fmtNum(tax)}円</span></div>
 <div class="tr grand"><span>合計（税込）</span><span>${fmtNum(total)}円</span></div>
-<p class="note" style="margin-top:10px">※研修サービスは人材開発支援助成金など公的支援の対象となり得ます。適用には雇用保険の適用状況・訓練内容などの要件確認が必要です。詳細はお問い合わせください。</p>
+<p class="note" style="margin-top:10px">※ご利用いただくサービスは、要件を満たす場合に人材開発支援助成金・IT導入補助金など公的支援の対象となり得ます。適用には雇用保険の適用状況・支援内容などの要件確認が必要です。詳細はお問い合わせください。</p>
 
 <h3>標準スケジュール</h3>
 <table class="pt">
   <thead><tr><th>期間</th><th>内容</th></tr></thead>
   <tbody>
+    ${(() => {
+      const svc = (diagData.recommendations?.[0]?.service || '');
+      if (svc.includes('AI経営改善パッケージ') || svc.includes('経営改善パッケージ')) {
+        return `
+    <tr><td>1か月目</td><td>現状診断・課題整理・KPI設計</td></tr>
+    <tr><td>2か月目</td><td>体制設計・実装支援・マニュアル整備</td></tr>
+    <tr><td>3か月目（標準版）</td><td>実装定着・成果確認・成果物最終納品</td></tr>
+    <tr><td>4か月目（拡張版）</td><td>追加課題対応・定着フォロー（拡張版のみ）</td></tr>`;
+      }
+      return `
     <tr><td>1週目</td><td>ヒアリング追加確認・スコープ確定・ご契約</td></tr>
     <tr><td>2〜3週目</td><td>プロンプト設計・手順書制作</td></tr>
     <tr><td>4週目</td><td>貴社レビュー → 修正 → 引き渡しMTG → 納品</td></tr>
-    <tr><td>5〜8週目</td><td>運用サポート期間（オプション選択時）</td></tr>
+    <tr><td>5〜8週目</td><td>運用サポート期間（オプション選択時）</td></tr>`;
+    })()}
   </tbody>
 </table>
 
