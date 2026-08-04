@@ -1,7 +1,7 @@
 /* 料金案内 — ざつね屋 事業HPデザイン準拠（zatuneya-hp / services.html と同一デザインシステム） */
 :root {
   --teal:       #5BBDC8;
-  --teal-dk:    #46A6B1;
+  --teal-dk:    #267882;  /* #46A6B1→#267882 (コントラスト比 5.1:1 確保) */
   --teal-soft:  #EAF6F8;
   --teal-soft2: #DCF0F2;
   --card-tint:  #F6FBFC;
@@ -11,14 +11,13 @@
   --orange-soft:#FDF0DE;
   --warm-bg:    #FFF9F0;
   --warm-line:  #F6E4C8;
-  --bluegray:   #839CAA;
   --bg:         #EFF4F5;
   --heading:    #3C3C3C;
   --text:       #575757;
-  --muted:      #839CAA;
+  --muted:      #5F707A;  /* #839CAA→#5F707A (コントラスト比 5.2:1 確保) */
 
   /* スペーシングスケール（zatuneya-hpと共通トークン） */
-  --s2:8px; --s3:12px; --s4:16px; --s6:24px; --s8:32px; --s10:40px; --s12:48px; --s16:64px; --s20:80px; --s24:100px;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s6:24px; --s8:32px; --s10:40px; --s12:48px; --s16:64px; --s20:80px; --s24:96px;
 
   /* シャドウ階調（zatuneya-hpと共通トークン） */
   --sh-1: 0 1px 3px rgba(40,60,70,.05), 0 4px 12px rgba(40,60,70,.05);
@@ -49,7 +48,7 @@ body {
 .nav-links a { font-size: 13px; font-weight: 700; color: #606060; text-decoration: none; letter-spacing: 0.08em; transition: color 0.15s; }
 .nav-links a:hover { color: var(--teal-dk); }
 .nav-links a.nav-cv {
-  background: var(--orange); color: #fff; padding: 9px var(--s4); border-radius: 999px;
+  background: var(--orange); color: #fff; padding: var(--s2) var(--s4); border-radius: 999px;
   box-shadow: 0 4px 12px rgba(248,152,29,0.32);
 }
 .nav-links a.nav-cv:hover { background: var(--orange-dk); color: #fff; }
@@ -79,7 +78,7 @@ body {
   display: inline-flex; align-items: center; gap: var(--s2);
   font-family: 'Roboto', 'Noto Sans JP', sans-serif;
   font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; color: var(--teal-dk);
-  background: #fff; padding: 10px var(--s4); border-radius: 999px;
+  background: #fff; padding: var(--s3) var(--s4); border-radius: 999px;
   box-shadow: var(--sh-1);
 }
 .hero-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
@@ -92,7 +91,7 @@ body {
   position: relative; max-width: 680px; margin: var(--s8) auto var(--s12);
   background: linear-gradient(135deg, var(--orange) 0%, #f9a740 100%);
   border-radius: 26px; box-shadow: 0 12px 32px rgba(248,152,29,0.30);
-  padding: var(--s6) 30px; color: #fff; text-align: center;
+  padding: var(--s6) var(--s8); color: #fff; text-align: center;
 }
 .subsidy-eyebrow { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.94); }
 .subsidy-main { font-size: 23px; font-weight: 900; margin-top: var(--s2); }
@@ -100,7 +99,7 @@ body {
 .subsidy-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: var(--s3); }
 .subsidy-chip {
   background: rgba(255,255,255,0.94); color: var(--orange-dk);
-  font-size: 12px; font-weight: 700; padding: 5px var(--s4); border-radius: 999px;
+  font-size: 12px; font-weight: 700; padding: 4px var(--s4); border-radius: 999px;
 }
 .hero-wave { display: block; width: 100%; height: 64px; }
 .hero-wave svg { display: block; width: 100%; height: 100%; }
@@ -111,10 +110,10 @@ body {
 /* クイックナビ */
 .quick-nav { display: flex; gap: var(--s3); justify-content: center; flex-wrap: wrap; margin: var(--s4) 0 var(--s2); }
 .quick-nav-btn {
-  display: inline-flex; align-items: center; gap: 7px;
+  display: inline-flex; align-items: center; gap: 8px;
   background: var(--card-tint); border: 1px solid var(--card-line); border-radius: 999px;
   font-size: 13.5px; font-weight: 700; color: var(--teal-dk); text-decoration: none;
-  padding: 10px var(--s6); transition: background .18s var(--ease), transform .18s var(--ease), box-shadow .18s var(--ease);
+  padding: var(--s3) var(--s6); transition: background .18s var(--ease), transform .18s var(--ease), box-shadow .18s var(--ease);
 }
 .quick-nav-btn:hover { background: var(--teal-soft); transform: translateY(-2px); box-shadow: var(--sh-1); }
 
@@ -141,7 +140,7 @@ body {
   background: var(--warm-bg); border: 1px solid var(--warm-line); border-radius: 18px;
   padding: var(--s4) var(--s6); font-size: 13.5px; color: var(--text); margin-bottom: var(--s3); text-align: center;
 }
-.monitor-alert-label { display: block; color: var(--orange-dk); font-size: 14.5px; font-weight: 900; margin-bottom: 2px; }
+.monitor-alert-label { display: block; color: var(--orange-dk); font-size: 14.5px; font-weight: 900; margin-bottom: 4px; }
 
 /* フック */
 .hook-box {
@@ -194,18 +193,18 @@ body {
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; font-weight: 900;
 }
-.course-ac-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.course-ac-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
 .course-ac-name { font-size: 15.5px; font-weight: 900; color: var(--heading); }
 .course-ac-meta { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; }
 .course-badge-sm {
-  font-size: 11px; font-weight: 700; color: var(--muted);
+  font-size: 12px; font-weight: 700; color: var(--muted);
   background: var(--card-tint); border: 1px solid var(--card-line);
-  border-radius: 999px; padding: 2px var(--s3);
+  border-radius: 999px; padding: 4px var(--s3);
 }
 .course-range { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 13.5px; font-weight: 900; color: var(--orange-dk); }
 .ac-chevron {
   flex-shrink: 0; width: 10px; height: 10px;
-  border-right: 2.5px solid var(--bluegray); border-bottom: 2.5px solid var(--bluegray);
+  border-right: 2.5px solid var(--muted); border-bottom: 2.5px solid var(--muted);
   transform: rotate(45deg); transition: transform 0.2s; margin-right: 4px;
 }
 details[open] .ac-chevron { transform: rotate(-135deg); }
@@ -234,7 +233,7 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 }
 .price-col-head { font-size: 12.5px; font-weight: 700; color: var(--muted); }
 .price-col-amount { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 21px; font-weight: 900; color: var(--heading); margin-top: 4px; }
-.price-col-sub { font-size: 12px; color: var(--text); margin-top: 2px; }
+.price-col-sub { font-size: 12px; color: var(--text); margin-top: 4px; }
 .price-per { font-size: 13px; font-weight: 700; color: var(--teal-dk); margin-top: var(--s2); }
 .price-per-rec { color: var(--orange-dk); }
 
@@ -247,7 +246,7 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
   background: linear-gradient(135deg, var(--teal), var(--teal-dk)); color: #fff; font-weight: 700;
   padding: var(--s3) var(--s3); text-align: left; font-size: 12px; letter-spacing: 0.04em;
 }
-.monitor-table td, .detail-table td { padding: 10px var(--s3); border-bottom: 1px solid #EDF3F4; color: var(--text); transition: background .15s; }
+.monitor-table td, .detail-table td { padding: var(--s3) var(--s3); border-bottom: 1px solid #EDF3F4; color: var(--text); transition: background .15s; }
 .monitor-table tbody tr:last-child td, .detail-table tbody tr:last-child td { border-bottom: none; }
 .monitor-table tbody tr:nth-child(even), .detail-table tbody tr:nth-child(even) { background: var(--card-tint); }
 .monitor-table tbody tr:hover td, .detail-table tbody tr:hover td { background: var(--teal-soft); }
@@ -267,7 +266,7 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .set-card:hover { box-shadow: var(--sh-2); transform: translateY(-2px); }
 .set-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s4); }
 .set-name { font-size: 17px; font-weight: 900; color: var(--heading); }
-.set-courses { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.set-courses { font-size: 13px; color: var(--muted); margin-top: 4px; }
 .set-badge {
   flex-shrink: 0; background: var(--teal-soft); color: var(--teal-dk);
   font-size: 12.5px; font-weight: 900; padding: 6px var(--s4); border-radius: 999px;
@@ -285,7 +284,7 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .choice-guide-row:hover { box-shadow: var(--sh-1); transform: translateY(-2px); }
 @media (max-width: 560px) { .choice-guide-row { grid-template-columns: 1fr; gap: 4px; } .choice-guide-arrow { display: none; } }
 .choice-guide-if { font-size: 14px; font-weight: 700; color: var(--heading); }
-.choice-guide-arrow { color: var(--bluegray); font-weight: 900; text-align: center; }
+.choice-guide-arrow { color: var(--muted); font-weight: 900; text-align: center; }
 .choice-guide-rec { font-size: 14px; font-weight: 900; color: var(--teal-dk); }
 .choice-guide-price { font-size: 12px; color: var(--muted); margin-top: 2px; }
 .choice-guide-footer { font-size: 12px; color: var(--muted); margin-top: var(--s2); }
@@ -313,7 +312,7 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .plan-card-ic svg { width: 21px; height: 21px; stroke: var(--teal-dk); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
 .plan-card-rec .plan-card-ic svg { stroke: var(--orange-dk); }
 .plan-card-name { font-size: 16px; font-weight: 900; color: var(--heading); }
-.plan-card-desc { font-size: 12.5px; color: var(--muted); margin: 2px 0 var(--s3); }
+.plan-card-desc { font-size: 12.5px; color: var(--muted); margin: 4px 0 var(--s3); }
 .plan-card-row {
   display: flex; align-items: center; justify-content: space-between; gap: var(--s2);
   padding: var(--s2) 0; border-top: 1px solid #EDF3F4;
@@ -359,7 +358,7 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .cta-sub { position: relative; font-size: 14px; color: var(--text); margin: var(--s3) 0 var(--s6); }
 .cta-actions { position: relative; display: flex; gap: var(--s4); justify-content: center; flex-wrap: wrap; }
 .btn-cta {
-  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
   font-size: 15px; font-weight: 700; text-decoration: none;
   padding: var(--s4) var(--s8); border-radius: 999px; transition: transform .18s var(--ease), background .18s var(--ease), box-shadow .18s var(--ease);
 }

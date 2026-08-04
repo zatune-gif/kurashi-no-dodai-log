@@ -13,7 +13,7 @@
        ※ 構造・クラス名は維持。ダークテーマ → ライトテーマへ配色のみ刷新。 */
     :root {
       --teal:       #5BBDC8;
-      --teal-dk:    #46A6B1;
+      --teal-dk:    #267882;  /* #46A6B1→#267882 (コントラスト比 5.1:1 確保) */
       --teal-soft:  #EAF6F8;
       --teal-soft2: #DCF0F2;
       --orange:     #F8981D;
@@ -21,7 +21,6 @@
       --warm-bg:    #FFF9F0;
       --warm-line:  #F6E4C8;
 
-      --primary:    #46A6B1;
       --primary-dk: #3B929C;
       --primary-bg: #EAF6F8;
       --bg:         #EFF4F5;
@@ -30,7 +29,7 @@
       --card-2:     #F6FBFC;
       --text:       #575757;
       --heading:    #3C3C3C;
-      --text-muted: #839CAA;
+      --text-muted: #5F707A;  /* #839CAA→#5F707A (コントラスト比 5.2:1 確保) */
       --border:     #E1EEF0;
       --success:    #46A6B1;
       --success-bg: #EAF6F8;
@@ -54,7 +53,7 @@
     .cover {
       background: linear-gradient(150deg, #F1F7F8 0%, #EAF6F8 55%, #FFF9F0 100%);
       color: var(--text);
-      padding: 60px 56px 54px;
+      padding: 64px 48px 48px;
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
@@ -126,13 +125,13 @@
       max-width: 520px;
       line-height: 1.9;
       position: relative;
-      margin-bottom: 34px;
+      margin-bottom: 32px;
     }
 
     .cover-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 28px;
+      gap: 32px;
       font-size: 13px;
       position: relative;
       padding-top: 24px;
@@ -142,12 +141,12 @@
     .cover-meta-item {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
     }
 
     .cover-meta-label {
       font-family: 'Roboto', 'Noto Sans JP', sans-serif;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--teal-dk);
       text-transform: uppercase;
@@ -237,7 +236,7 @@
 
     .nav-link {
       white-space: nowrap;
-      padding: 14px 18px;
+      padding: 12px 16px;
       font-size: 12.5px;
       font-weight: 700;
       color: #606060;
@@ -260,13 +259,13 @@
     }
 
     /* ── セクション ── */
-    .section { margin-bottom: 60px; }
+    .section { margin-bottom: 64px; }
 
     .section-header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 28px;
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
     .chapter-num {
@@ -306,26 +305,26 @@
     }
 
     .course-head {
-      padding: 18px 22px 16px;
+      padding: 16px 24px;
       background: var(--card-2);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .course-tags {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .tag {
       display: inline-block;
       white-space: nowrap;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
-      padding: 3px 12px;
+      padding: 4px 12px;
       border-radius: 999px;
     }
 
@@ -357,7 +356,7 @@
       background: var(--text-muted);
       color: #fff;
       font-weight: 700;
-      padding: 11px 16px;
+      padding: 12px 16px;
       text-align: left;
       font-size: 12px;
       letter-spacing: 0.05em;
@@ -367,7 +366,7 @@
     .timetable tbody tr:hover { background: var(--teal-soft); transition: background 0.15s; }
 
     .timetable td {
-      padding: 11px 16px;
+      padding: 12px 16px;
       border-bottom: 1px solid #EDF3F4;
       vertical-align: middle;
       color: var(--text);
@@ -410,7 +409,7 @@
       font-size: 12px;
       font-weight: 400;
       color: var(--text-muted);
-      margin-top: 3px;
+      margin-top: 4px;
       line-height: 1.6;
     }
 
@@ -435,14 +434,14 @@
 
     /* ── タイムバー ── */
     .time-bar-wrap {
-      padding: 14px 22px;
+      padding: 12px 24px;
       border-top: 1px solid var(--border);
       background: var(--card-2);
     }
 
     .time-bar-label {
       font-family: 'Roboto', 'Noto Sans JP', sans-serif;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--text-muted);
       letter-spacing: 0.08em;
@@ -463,7 +462,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 9px;
+      font-size: 12px;
       font-weight: 700;
       color: #fff;
       white-space: nowrap;
@@ -480,13 +479,31 @@
     .seg-break  { background: var(--orange); }
     .seg-wrap   { background: #B0C2C8; }
 
+    /* タイムバー flex ユーティリティ（インライン style 排除） */
+    .seg-f-2  { flex: 2; }
+    .seg-f-3  { flex: 3; }
+    .seg-f-4  { flex: 4; }
+    .seg-f-5  { flex: 5; }
+    .seg-f-6  { flex: 6; }
+    .seg-f-7  { flex: 7; }
+    .seg-f-8  { flex: 8; }
+    .seg-f-10 { flex: 10; }
+    .seg-f-13 { flex: 13; }
+    .seg-f-15 { flex: 15; }
+    .seg-f-20 { flex: 20; }
+    .seg-f-30 { flex: 30; }
+    .seg-f-35 { flex: 35; }
+    .seg-f-40 { flex: 40; }
+    .seg-f-50 { flex: 50; }
+    .seg-f-52 { flex: 52; }
+
     /* ── 区切り ── */
     .section-end { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
 
     /* ── フッター ── */
     .site-footer {
       text-align: center;
-      padding: 34px 24px;
+      padding: 32px 24px;
       border-top: 1px solid var(--border);
       background: var(--bg);
     }
@@ -495,7 +512,7 @@
       flex-wrap: wrap;
       gap: 20px;
       justify-content: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .footer-links a {
       font-size: 13px;
@@ -525,12 +542,12 @@
       pointer-events: none;
     }
     .cta-headline { position: relative; font-size: 21px; font-weight: 900; color: var(--heading); }
-    .cta-sub { position: relative; font-size: 14px; color: var(--text); margin: 10px 0 24px; }
-    .cta-actions { position: relative; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .cta-sub { position: relative; font-size: 14px; color: var(--text); margin: 8px 0 24px; }
+    .cta-actions { position: relative; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
     .btn-cta {
-      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
       font-size: 15px; font-weight: 700; text-decoration: none; color: #fff;
-      padding: 14px 30px; border-radius: 999px;
+      padding: 16px 32px; border-radius: 999px;
       transition: transform .18s, box-shadow .18s, background .18s;
     }
     .btn-cta:hover { transform: translateY(-2px); }
@@ -541,7 +558,7 @@
     .cta-secondary-link {
       position: relative;
       display: block;
-      margin-top: 18px;
+      margin-top: 16px;
       font-size: 13px;
       font-weight: 700;
       color: var(--teal-dk);
@@ -554,7 +571,7 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 16px 22px;
+      padding: 16px 24px;
       margin-top: 40px;
       box-shadow: var(--shadow);
     }
@@ -563,7 +580,7 @@
       font-size: 13px;
       color: var(--text-muted);
       line-height: 1.8;
-      padding-left: 18px;
+      padding-left: 16px;
       position: relative;
       margin-bottom: 4px;
     }
@@ -588,7 +605,7 @@
       .cta-section { padding: 32px 20px; }
       .cta-actions { flex-direction: column; }
       .btn-cta { width: 100%; }
-      .footer-links { gap: 14px 18px; }
+      .footer-links { gap: 12px 16px; }
     }
   </style>
 </head>
@@ -735,14 +752,14 @@
       <div class="time-bar-wrap">
         <div class="time-bar-label">時間配分</div>
         <div class="time-bar">
-          <div class="time-seg seg-open"  style="flex:2">導入</div>
-          <div class="time-seg seg-learn" style="flex:10">知識</div>
-          <div class="time-seg seg-learn2"style="flex:10">知識</div>
-          <div class="time-seg seg-learn3"style="flex:10">知識</div>
-          <div class="time-seg seg-break" style="flex:5">休憩</div>
-          <div class="time-seg seg-pract" style="flex:10">基礎</div>
-          <div class="time-seg seg-pract2"style="flex:30">実践</div>
-          <div class="time-seg seg-wrap"  style="flex:3">まとめ</div>
+          <div class="time-seg seg-open seg-f-2">導入</div>
+          <div class="time-seg seg-learn seg-f-10">知識</div>
+          <div class="time-seg seg-learn2 seg-f-10">知識</div>
+          <div class="time-seg seg-learn3 seg-f-10">知識</div>
+          <div class="time-seg seg-break seg-f-5">休憩</div>
+          <div class="time-seg seg-pract seg-f-10">基礎</div>
+          <div class="time-seg seg-pract2 seg-f-30">実践</div>
+          <div class="time-seg seg-wrap seg-f-3">まとめ</div>
         </div>
       </div>
     </div>
@@ -827,13 +844,13 @@
       <div class="time-bar-wrap">
         <div class="time-bar-label">時間配分</div>
         <div class="time-bar">
-          <div class="time-seg seg-open"  style="flex:2">導入</div>
-          <div class="time-seg seg-learn" style="flex:10">イントロ</div>
-          <div class="time-seg seg-pract" style="flex:30">社内文書</div>
-          <div class="time-seg seg-pract2"style="flex:30">文書→表</div>
-          <div class="time-seg seg-break" style="flex:10">休憩</div>
-          <div class="time-seg seg-pract" style="flex:30">表→文書</div>
-          <div class="time-seg seg-wrap"  style="flex:8">まとめ</div>
+          <div class="time-seg seg-open seg-f-2">導入</div>
+          <div class="time-seg seg-learn seg-f-10">イントロ</div>
+          <div class="time-seg seg-pract seg-f-30">社内文書</div>
+          <div class="time-seg seg-pract2 seg-f-30">文書→表</div>
+          <div class="time-seg seg-break seg-f-10">休憩</div>
+          <div class="time-seg seg-pract seg-f-30">表→文書</div>
+          <div class="time-seg seg-wrap seg-f-8">まとめ</div>
         </div>
       </div>
     </div>
@@ -924,13 +941,13 @@
       <div class="time-bar-wrap">
         <div class="time-bar-label">時間配分</div>
         <div class="time-bar">
-          <div class="time-seg seg-open"  style="flex:3">導入</div>
-          <div class="time-seg seg-learn" style="flex:13">イントロ</div>
-          <div class="time-seg seg-pract" style="flex:30">SNS画像</div>
-          <div class="time-seg seg-pract2"style="flex:30">AI画像</div>
-          <div class="time-seg seg-break" style="flex:10">休憩</div>
-          <div class="time-seg seg-pract" style="flex:30">チラシ</div>
-          <div class="time-seg seg-wrap"  style="flex:4">まとめ</div>
+          <div class="time-seg seg-open seg-f-3">導入</div>
+          <div class="time-seg seg-learn seg-f-13">イントロ</div>
+          <div class="time-seg seg-pract seg-f-30">SNS画像</div>
+          <div class="time-seg seg-pract2 seg-f-30">AI画像</div>
+          <div class="time-seg seg-break seg-f-10">休憩</div>
+          <div class="time-seg seg-pract seg-f-30">チラシ</div>
+          <div class="time-seg seg-wrap seg-f-4">まとめ</div>
         </div>
       </div>
     </div>
@@ -1021,14 +1038,14 @@
       <div class="time-bar-wrap">
         <div class="time-bar-label">時間配分</div>
         <div class="time-bar">
-          <div class="time-seg seg-open"  style="flex:3">導入</div>
-          <div class="time-seg seg-learn" style="flex:7">イントロ</div>
-          <div class="time-seg seg-pract" style="flex:15">AI動画</div>
-          <div class="time-seg seg-pract" style="flex:15">ナレ</div>
-          <div class="time-seg seg-pract" style="flex:10">字幕</div>
-          <div class="time-seg seg-break" style="flex:10">休憩</div>
-          <div class="time-seg seg-pract2"style="flex:50">編集・書出し</div>
-          <div class="time-seg seg-wrap"  style="flex:10">まとめ</div>
+          <div class="time-seg seg-open seg-f-3">導入</div>
+          <div class="time-seg seg-learn seg-f-7">イントロ</div>
+          <div class="time-seg seg-pract seg-f-15">AI動画</div>
+          <div class="time-seg seg-pract seg-f-15">ナレ</div>
+          <div class="time-seg seg-pract seg-f-10">字幕</div>
+          <div class="time-seg seg-break seg-f-10">休憩</div>
+          <div class="time-seg seg-pract2 seg-f-50">編集・書出し</div>
+          <div class="time-seg seg-wrap seg-f-10">まとめ</div>
         </div>
       </div>
     </div>
@@ -1113,13 +1130,13 @@
       <div class="time-bar-wrap">
         <div class="time-bar-label">時間配分</div>
         <div class="time-bar">
-          <div class="time-seg seg-open"  style="flex:3">導入</div>
-          <div class="time-seg seg-learn" style="flex:20">現状確認</div>
-          <div class="time-seg seg-pract" style="flex:40">ルール策定</div>
-          <div class="time-seg seg-break" style="flex:10">休憩</div>
-          <div class="time-seg seg-pract2"style="flex:35">定着の仕組み</div>
-          <div class="time-seg seg-pract" style="flex:35">実践ワーク</div>
-          <div class="time-seg seg-wrap"  style="flex:7">Q&amp;A</div>
+          <div class="time-seg seg-open seg-f-3">導入</div>
+          <div class="time-seg seg-learn seg-f-20">現状確認</div>
+          <div class="time-seg seg-pract seg-f-40">ルール策定</div>
+          <div class="time-seg seg-break seg-f-10">休憩</div>
+          <div class="time-seg seg-pract2 seg-f-35">定着の仕組み</div>
+          <div class="time-seg seg-pract seg-f-35">実践ワーク</div>
+          <div class="time-seg seg-wrap seg-f-7">Q&amp;A</div>
         </div>
       </div>
     </div>
@@ -1204,13 +1221,13 @@
       <div class="time-bar-wrap">
         <div class="time-bar-label">時間配分</div>
         <div class="time-bar">
-          <div class="time-seg seg-open"  style="flex:2">導入</div>
-          <div class="time-seg seg-learn" style="flex:20">概要</div>
-          <div class="time-seg seg-learn2"style="flex:10">UC</div>
-          <div class="time-seg seg-learn3"style="flex:20">セットアップ</div>
-          <div class="time-seg seg-break" style="flex:10">休憩</div>
-          <div class="time-seg seg-pract2"style="flex:52">実践ワーク</div>
-          <div class="time-seg seg-wrap"  style="flex:6">Q&amp;A</div>
+          <div class="time-seg seg-open seg-f-2">導入</div>
+          <div class="time-seg seg-learn seg-f-20">概要</div>
+          <div class="time-seg seg-learn2 seg-f-10">UC</div>
+          <div class="time-seg seg-learn3 seg-f-20">セットアップ</div>
+          <div class="time-seg seg-break seg-f-10">休憩</div>
+          <div class="time-seg seg-pract2 seg-f-52">実践ワーク</div>
+          <div class="time-seg seg-wrap seg-f-6">Q&amp;A</div>
         </div>
       </div>
     </div>

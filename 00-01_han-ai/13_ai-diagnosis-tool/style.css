@@ -6,7 +6,7 @@
 :root {
   /* brand */
   --teal:        #5BBDC8;
-  --teal-dk:     #46A6B1;
+  --teal-dk:     #267882;  /* #46A6B1→#267882 (コントラスト比 5.1:1 確保) */
   --teal-soft:   #EAF6F8;
   --teal-soft2:  #DCF0F2;
   --orange:      #F8981D;
@@ -16,7 +16,7 @@
   --warm-line:   #F6E4C8;
 
   /* semantic aliases (旧トークン名を維持しつつブランド色へ) */
-  --primary:      #46A6B1;   /* 見出し・構造・リンク → ティール濃 */
+  --primary:      #267882;   /* #46A6B1→#267882 (コントラスト比 5.1:1 確保) */
   --primary-dark: #3B929C;
   --accent:       #F8981D;   /* CTA・進捗・強調 → オレンジ */
   --accent-dark:  #E28511;
@@ -31,10 +31,10 @@
   --card-tint:  #F6FBFC;
   --text:       #575757;
   --heading:    #3C3C3C;
-  --text-muted: #839CAA;
+  --text-muted: #5F707A;  /* #839CAA→#5F707A (コントラスト比 5.2:1 確保) */
   --border:     #E1EEF0;
-  --success:    #46A6B1;     /* 強み → ティール */
-  --warning:    #E28511;     /* 課題 → オレンジ濃 */
+  --success:    #267882;  /* #46A6B1→#267882 */
+  --warning:    #A85E00;  /* #E28511→#A85E00 (コントラスト比 4.9:1 確保) */
 
   --radius: 20px;
 
@@ -63,7 +63,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 .container {
   max-width: 640px;
   margin: 0 auto;
-  padding: 24px 18px 56px;
+  padding: 24px 16px 64px;
 }
 
 /* ── 画面切り替え ── */
@@ -82,13 +82,13 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   color: var(--heading);
   letter-spacing: 0.08em;
   padding-top: 12px;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 .brand span { color: var(--orange); }
 
 .welcome-hero {
   text-align: center;
-  padding: 48px 26px 44px;
+  padding: 48px 24px 40px;
   background: var(--card);
   border-radius: 26px;
   box-shadow: var(--shadow-2);
@@ -97,7 +97,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 
 .welcome-icon {
   width: 88px; height: 88px;
-  margin: 0 auto 22px;
+  margin: 0 auto 24px;
   border-radius: 26px;
   background: linear-gradient(150deg, var(--teal-soft) 0%, var(--teal-soft2) 100%);
   color: var(--teal-dk);
@@ -110,7 +110,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   font-size: 27px;
   font-weight: 900;
   color: var(--heading);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   letter-spacing: 0.01em;
   line-height: 1.45;
 }
@@ -118,18 +118,18 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 .welcome-sub {
   font-size: 15px;
   color: var(--text);
-  margin-bottom: 26px;
+  margin-bottom: 24px;
   line-height: 1.95;
 }
 
 .welcome-meta {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 .welcome-meta span {
-  display: inline-flex; align-items: center; gap: 7px;
+  display: inline-flex; align-items: center; gap: 8px;
   background: var(--teal-soft);
   color: var(--teal-dk);
   font-size: 13px; font-weight: 700;
@@ -197,7 +197,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-  padding-top: 14px;
+  padding-top: 16px;
 }
 
 .block-label {
@@ -215,10 +215,10 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 }
 
 .progress-bar-wrap {
-  height: 7px;
+  height: 8px;
   background: var(--teal-soft2);
   border-radius: 99px;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
   overflow: hidden;
 }
 
@@ -233,7 +233,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   background: var(--card);
   border-radius: 24px;
   box-shadow: var(--shadow-2);
-  padding: 30px 26px;
+  padding: 32px 24px;
   margin-bottom: 20px;
 }
 
@@ -245,11 +245,11 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   line-height: 1.6;
 }
 
-.options { display: flex; flex-direction: column; gap: 10px; }
+.options { display: flex; flex-direction: column; gap: 8px; }
 
 .option-btn {
   width: 100%;
-  padding: 15px 18px;
+  padding: 16px 20px;
   background: var(--card-tint);
   border: 2px solid var(--border);
   border-radius: 14px;
@@ -290,7 +290,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   border-top-color: var(--teal);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -309,7 +309,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dk) 100%);
   color: #fff;
   border-radius: 26px;
-  padding: 30px 26px;
+  padding: 32px 24px;
   margin-top: 24px;
   margin-bottom: 20px;
   text-align: center;
@@ -347,7 +347,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   gap: 4px;
   background: var(--card);
   border-radius: 24px;
-  padding: 22px 16px;
+  padding: 24px 16px;
   margin-bottom: 20px;
   box-shadow: var(--shadow);
   flex-wrap: nowrap;
@@ -371,7 +371,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 }
 
 .stage-name {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--text-muted);
   font-weight: 700;
   text-align: center;
@@ -385,15 +385,15 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 }
 
 .stage-item.active .stage-dot {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-width: 3px;
   box-shadow: 0 4px 10px rgba(40,60,70,.14);
 }
 
 .stage-item.active .stage-name {
   font-weight: 900;
-  font-size: 12px;
+  font-size: 12px;  /* ベースと同値で統一 */
 }
 
 .stage-item[data-stage="準備期"] { --stage-color: var(--stage-prep); }
@@ -414,7 +414,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   background: var(--card);
   border-radius: 24px;
   box-shadow: var(--shadow-2);
-  padding: 30px 26px;
+  padding: 32px 24px;
   text-align: center;
   margin-bottom: 20px;
   border-top: 5px solid var(--stage-color, var(--teal));
@@ -437,7 +437,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 
 .stage-badge {
   display: inline-block;
-  padding: 7px 22px;
+  padding: 8px 24px;
   border-radius: 999px;
   font-size: 15px;
   font-weight: 900;
@@ -454,17 +454,17 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   background: var(--card);
   border-radius: 22px;
   box-shadow: var(--shadow);
-  padding: 24px 22px;
+  padding: 24px;
   margin-bottom: 16px;
 }
 
 .section-header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-size: 14.5px;
   font-weight: 900;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   padding-bottom: 12px;
   border-bottom: 1.5px solid var(--border);
 }
@@ -476,7 +476,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 .section-icon svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; fill: none; }
 
 .current-state-header { color: var(--text-muted); }
-.stage-goal-header { color: var(--teal-dk); margin-top: 18px; }
+.stage-goal-header { color: var(--teal-dk); margin-top: 16px; }
 .strengths-header { color: var(--success); }
 .issues-header { color: var(--warning); }
 .actions-header { color: var(--teal-dk); }
@@ -564,7 +564,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 28px;
-  padding: 34px 24px;
+  padding: 32px 24px;
   text-align: center;
   margin-bottom: 16px;
   box-shadow: var(--shadow-3);
@@ -583,25 +583,25 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   font-size: 20px;
   font-weight: 900;
   color: var(--heading);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .cta-sub {
   position: relative;
   font-size: 14px;
   color: var(--text);
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   line-height: 1.8;
 }
 
 .btn-cta {
   display: inline-block;
   width: auto;
-  padding: 16px 36px;
+  padding: 16px 40px;
   font-size: 17px;
   background: var(--orange);
   border-radius: 999px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .btn-cta:hover { background: var(--orange-dk); }
 
@@ -615,7 +615,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 .cta-prices-link {
   position: relative;
   display: block !important;
-  margin-top: 14px;
+  margin-top: 16px;
   font-size: 13px;
   font-weight: 700;
   color: var(--teal-dk);
@@ -641,9 +641,9 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px 18px;
+  gap: 12px 16px;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .footer-links a {
   font-size: 12.5px;
@@ -655,7 +655,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 
 /* ── ユーティリティ ── */
 .hidden { display: none !important; }
-.fallback-note { font-size: 12px; color: var(--text-muted); margin-top: 10px; padding: 10px 14px; background: var(--card-tint); border-left: 3px solid var(--border); border-radius: 8px; line-height: 1.7; }
+.fallback-note { font-size: 12px; color: var(--text-muted); margin-top: 8px; padding: 8px 12px; background: var(--card-tint); border-left: 3px solid var(--border); border-radius: 8px; line-height: 1.7; }
 .header-primary { color: var(--teal-dk) !important; }
 .card-body { font-size: 14px; line-height: 1.85; color: var(--text); }
 .link-btn { display: block; text-align: center; text-decoration: none; margin-top: 16px; }
@@ -672,7 +672,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 8px;
   text-decoration: none;
   text-align: center;
 }
@@ -682,7 +682,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 @media (max-width: 400px) {
   .welcome-hero h1 { font-size: 23px; }
   .score-number { font-size: 54px; }
-  .stage-timeline { gap: 2px; padding: 18px 8px; }
-  .stage-name { font-size: 10.5px; }
+  .stage-timeline { gap: 4px; padding: 16px 8px; }
+  .stage-name { font-size: 12px; }
   .btn-cta { width: 100%; }
 }
