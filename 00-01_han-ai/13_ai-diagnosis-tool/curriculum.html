@@ -608,8 +608,89 @@
       .footer-links { gap: 12px 16px; }
     }
   </style>
+  <style>
+  /* ─── ざつね屋 グローバルヘッダー・ナビ・フッター ─── */
+  :root{--gz-tt:#31747C;--gz-tt-d:#267882;--gz-ts:#EAF6F8;--gz-cl:#E1EEF0;--gz-tx:#575757;--gz-hd:#3C3C3C}
+  .site-header{position:sticky;top:0;z-index:500;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--gz-cl)}
+  .site-header__inner{display:flex;align-items:center;max-width:1200px;margin:0 auto;padding:0 24px;height:64px}
+  .site-logo{font-weight:700;font-size:1.1rem;color:var(--gz-tt);text-decoration:none;letter-spacing:.02em;white-space:nowrap}
+  .site-logo__prefix{font-size:.73em;font-weight:400;color:var(--gz-tx)}
+  .site-header .site-nav{position:static;top:auto;z-index:auto;background:transparent;backdrop-filter:none;border-bottom:none;padding:0;height:auto;display:flex;align-items:center;gap:8px;margin-left:auto;justify-content:flex-end}
+  .site-nav__list{display:flex;list-style:none;margin:0;padding:0;gap:4px;align-items:center}
+  .site-nav__link{font-size:.9375rem;padding:8px 12px;color:var(--gz-tx);text-decoration:none;letter-spacing:.02em;display:inline-block;transition:color .2s}
+  .site-nav__link:hover,.site-nav__link.is-active{color:var(--gz-tt)}
+  .site-nav__item--dropdown{position:relative}
+  .site-nav__dropdown-trigger{background:none;border:none;cursor:pointer;font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic UI',sans-serif;font-size:.9375rem;padding:8px 12px;color:var(--gz-tx);letter-spacing:.02em;display:inline-flex;align-items:center;gap:4px;transition:color .2s}
+  .site-nav__dropdown-trigger:hover{color:var(--gz-tt)}
+  .site-nav__caret{font-size:.75rem;pointer-events:none}
+  .site-nav__dropdown{position:absolute;top:100%;left:0;min-width:200px;background:#fff;box-shadow:0 8px 24px rgba(40,60,70,.12);border-radius:4px;list-style:none;padding:8px 0;margin:0;opacity:0;pointer-events:none;transform:translateY(-4px);transition:opacity .2s,transform .2s}
+  .site-nav__item--dropdown.is-open .site-nav__dropdown{opacity:1;pointer-events:auto;transform:translateY(0)}
+  .site-nav__dropdown-link{display:block;padding:8px 16px;color:var(--gz-hd);text-decoration:none;font-size:.875rem;letter-spacing:.02em;transition:background .15s,color .15s}
+  .site-nav__dropdown-link:hover{background:var(--gz-ts);color:var(--gz-tt)}
+  .site-nav__cta{background:#5BBDC8;color:#fff;padding:8px 20px;border-radius:4px;font-weight:600;text-decoration:none;font-size:.875rem;letter-spacing:.02em;transition:background .2s;white-space:nowrap;margin-left:8px}
+  .site-nav__cta:hover{background:var(--gz-tt-d);color:#fff}
+  .site-nav__hamburger{display:none;flex-direction:column;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:8px;width:40px;height:40px;margin-left:8px}
+  .site-nav__hamburger-line{display:block;width:24px;height:2px;background:var(--gz-hd);margin:3px 0;transition:transform .3s,opacity .3s}
+  .site-nav__hamburger[aria-expanded="true"] .site-nav__hamburger-line:nth-child(1){transform:translateY(8px) rotate(45deg)}
+  .site-nav__hamburger[aria-expanded="true"] .site-nav__hamburger-line:nth-child(2){opacity:0}
+  .site-nav__hamburger[aria-expanded="true"] .site-nav__hamburger-line:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+  /* nav-sticky は site-header の下に sticky するよう top をオフセット */
+  .nav-sticky{top:64px !important}
+  @media(max-width:768px){
+    .site-nav__hamburger{display:flex}
+    .site-header .site-nav{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(255,255,255,.98);border-bottom:1px solid var(--gz-cl);padding:16px 24px;flex-direction:column;align-items:flex-start;gap:0;margin-left:0;box-shadow:0 8px 24px rgba(40,60,70,.12)}
+    .site-header .site-nav.is-open{display:flex}
+    .site-nav__list{flex-direction:column;width:100%;gap:0}
+    .site-nav__item{width:100%}
+    .site-nav__link{display:block;width:100%;padding:12px 16px}
+    .site-nav__dropdown-trigger{width:100%;padding:12px 16px}
+    .site-nav__item--dropdown{position:static}
+    .site-nav__dropdown{position:static;box-shadow:none;border-radius:0;opacity:1;pointer-events:none;transform:none;display:none;padding:0 0 0 16px}
+    .site-nav__item--dropdown.is-open .site-nav__dropdown{display:block;pointer-events:auto}
+    .site-nav__cta{margin-top:12px;margin-left:0;display:block;text-align:center}
+  }
+  /* フッター上書き（ざつね屋統一デザイン） */
+  .site-footer{background:#334A52 !important;padding:48px 24px 32px !important;text-align:left !important;border-top:none !important}
+  .site-footer__inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:16px}
+  .site-footer__logo{font-weight:700;color:#fff;text-decoration:none;font-size:1rem;letter-spacing:.02em}
+  .site-footer__nav{display:flex;flex-wrap:wrap;gap:24px}
+  .site-footer__nav a{font-size:.8125rem;color:#b7c6cb;text-decoration:none;letter-spacing:.02em;transition:color .15s}
+  .site-footer__nav a:hover{color:#fff}
+  .site-footer__copy{font-size:.75rem;color:#A6B7BC;margin:0;letter-spacing:.02em}
+  @media(max-width:480px){
+    .site-footer__inner{flex-direction:column;align-items:center;text-align:center}
+    .site-footer__nav{justify-content:center}
+  }
+  </style>
 </head>
 <body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-logo" aria-label="ざつね屋 トップページ"><span class="site-logo__prefix">生成AI活用支援の</span>ざつね屋</a>
+    <nav class="site-nav" id="site-nav" aria-label="グローバルナビゲーション">
+      <ul class="site-nav__list">
+        <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/#services" class="site-nav__link">サービス</a></li>
+        <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/works.html" class="site-nav__link">実績</a></li>
+        <li class="site-nav__item"><a href="prices.html" class="site-nav__link">料金</a></li>
+        <li class="site-nav__item site-nav__item--dropdown">
+          <button class="site-nav__dropdown-trigger site-nav__link" aria-expanded="false" aria-haspopup="true">無料ツール<span class="site-nav__caret" aria-hidden="true">▾</span></button>
+          <ul class="site-nav__dropdown">
+            <li><a href="diagnosis-simple.html" class="site-nav__dropdown-link">AI活用準備度診断</a></li>
+            <li><a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/" class="site-nav__dropdown-link">プロンプトライブラリ</a></li>
+          </ul>
+        </li>
+        <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/profile.html" class="site-nav__link">代表について</a></li>
+      </ul>
+      <a href="https://zatune-gif.github.io/zatuneya-hp/#contact" class="site-nav__cta">お問い合わせ</a>
+    </nav>
+    <button class="site-nav__hamburger" id="nav-hamburger" aria-label="メニューを開閉する" aria-controls="site-nav" aria-expanded="false">
+      <span class="site-nav__hamburger-line"></span>
+      <span class="site-nav__hamburger-line"></span>
+      <span class="site-nav__hamburger-line"></span>
+    </button>
+  </div>
+</header>
 
 <!-- カバー -->
 <div class="cover">
@@ -638,7 +719,6 @@
 <nav class="nav-sticky">
   <div class="nav-inner">
     <div class="nav-left">
-      <a class="nav-brand" href="https://zatune-gif.github.io/zatuneya-hp/">生成AI活用支援のざつね<span>屋</span></a>
       <a class="nav-home-icon" href="https://zatune-gif.github.io/zatuneya-hp/" aria-label="トップページへ">
         <svg viewBox="0 0 24 24"><path d="M4 11.5L12 4l8 7.5"/><path d="M6 10v9.5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V10"/></svg>
       </a>
@@ -1254,15 +1334,67 @@
 </main>
 
 <footer class="site-footer">
-  <div class="footer-links">
-    <a href="https://zatune-gif.github.io/zatuneya-hp/">トップページ</a>
-    <a href="./prices.html">料金案内</a>
-    <a href="./diagnosis-simple.html">無料診断</a>
-    <a href="./request.html">資料請求</a>
-    <a href="./estimate.html">お見積り</a>
+  <div class="site-footer__inner">
+    <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-footer__logo" aria-label="ざつね屋 トップページ">ざつね屋</a>
+    <nav class="site-footer__nav" aria-label="フッターナビゲーション">
+      <a href="prices.html">料金</a>
+      <a href="diagnosis-simple.html">AI活用準備度診断</a>
+      <a href="https://zatune-gif.github.io/zatuneya-hp/">トップページ</a>
+      <a href="https://zatune-gif.github.io/zatuneya-hp/profile.html">代表について</a>
+    </nav>
+    <p class="site-footer__copy">© 2026 ざつね屋</p>
   </div>
-  <div class="copy">© 2026 ざつね屋</div>
 </footer>
+
+<script>
+/* ざつね屋 グローバルナビ制御 */
+(function(){
+  'use strict';
+  var hamburger=document.getElementById('nav-hamburger');
+  var siteNav=document.getElementById('site-nav');
+  if(hamburger&&siteNav){
+    hamburger.addEventListener('click',function(){
+      var isOpen=hamburger.getAttribute('aria-expanded')==='true';
+      hamburger.setAttribute('aria-expanded',String(!isOpen));
+      siteNav.classList.toggle('is-open',!isOpen);
+    });
+  }
+  document.querySelectorAll('.site-nav__dropdown-trigger').forEach(function(trigger){
+    trigger.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isOpen=trigger.getAttribute('aria-expanded')==='true';
+      document.querySelectorAll('.site-nav__item--dropdown.is-open').forEach(function(el){
+        el.classList.remove('is-open');
+        el.querySelector('.site-nav__dropdown-trigger').setAttribute('aria-expanded','false');
+      });
+      if(!isOpen){
+        trigger.setAttribute('aria-expanded','true');
+        var parent=trigger.closest('.site-nav__item--dropdown');
+        if(parent)parent.classList.add('is-open');
+      }
+    });
+  });
+  document.addEventListener('click',function(e){
+    if(hamburger&&siteNav&&siteNav.classList.contains('is-open')&&!siteNav.contains(e.target)&&!hamburger.contains(e.target)){
+      siteNav.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded','false');
+    }
+    if(!e.target.closest('.site-nav__item--dropdown')){
+      document.querySelectorAll('.site-nav__item--dropdown.is-open').forEach(function(el){
+        el.classList.remove('is-open');
+        el.querySelector('.site-nav__dropdown-trigger').setAttribute('aria-expanded','false');
+      });
+    }
+  });
+  var here=location.pathname.split('/').pop()||'index.html';
+  document.querySelectorAll('.site-nav__link[href]').forEach(function(a){
+    var href=a.getAttribute('href')||'';
+    if(href.startsWith('http'))return;
+    var file=href.split('#')[0].split('/').pop();
+    if(file&&file===here)a.classList.add('is-active');
+  });
+})();
+</script>
 
 </body>
 </html>
