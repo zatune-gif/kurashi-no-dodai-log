@@ -1,0 +1,3 @@
+[submodule "00-01_han-ai/zatuneya-hp"]
+	path = 00-01_han-ai/zatuneya-hp
+	url = https://github.com/zatune-gif/zatuneya-hp.git
