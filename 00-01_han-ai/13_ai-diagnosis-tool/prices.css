@@ -378,3 +378,16 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .footer-links { margin-bottom: var(--s3); display: flex; gap: var(--s4); justify-content: center; flex-wrap: wrap; }
 .footer a { color: #7b8f9b; text-decoration: none; font-weight: 700; }
 .footer a:hover { color: var(--teal-dk); }
+
+/* 状況別 サービスの選び方 早見表 */
+.choice-guide-rec-link {
+  text-decoration: none;
+  display: inline-block;
+  transition: color .15s var(--ease);
+}
+.choice-guide-rec-link:hover { color: var(--teal); }
+.choice-guide-row-free {
+  background: var(--teal-soft);
+  border-color: var(--teal-soft2);
+}
+.choice-guide-rec-free { color: var(--teal-dk); }
