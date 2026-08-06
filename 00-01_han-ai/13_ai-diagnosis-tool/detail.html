@@ -12,8 +12,10 @@
   :root{--gz-tt:#31747C;--gz-tt-d:#267882;--gz-ts:#EAF6F8;--gz-cl:#E1EEF0;--gz-tx:#575757;--gz-hd:#3C3C3C}
   .site-header{position:sticky;top:0;z-index:500;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--gz-cl)}
   .site-header__inner{display:flex;align-items:center;max-width:1200px;margin:0 auto;padding:0 24px;height:64px}
-  .site-logo{font-weight:700;font-size:1.1rem;color:var(--gz-tt);text-decoration:none;letter-spacing:.02em;white-space:nowrap}
-  .site-logo__prefix{font-size:.73em;font-weight:400;color:var(--gz-tx)}
+  .site-logo{font-weight:700;font-size:1.1rem;color:var(--gz-tt);text-decoration:none;letter-spacing:.02em;white-space:nowrap;display:inline-flex;align-items:baseline;gap:0.12em}
+  .site-logo__pre{font-size:.73em;font-weight:400;color:var(--gz-tx)}
+  .site-logo__ai{color:#F8981D;font-weight:700}
+  .site-logo__name{color:var(--gz-tt);font-weight:700}
   .site-header .site-nav{position:static;top:auto;z-index:auto;background:transparent;backdrop-filter:none;border-bottom:none;padding:0;height:auto;display:flex;align-items:center;gap:8px;margin-left:auto;justify-content:flex-end}
   .site-nav__list{display:flex;list-style:none;margin:0;padding:0;gap:4px;align-items:center}
   .site-nav__link{font-size:.9375rem;padding:8px 12px;color:var(--gz-tx);text-decoration:none;letter-spacing:.02em;display:inline-block;transition:color .2s}
@@ -63,10 +65,21 @@
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-logo" aria-label="ざつね屋 トップページ"><span class="site-logo__prefix">生成AI活用支援の</span>ざつね屋</a>
+    <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-logo" aria-label="ざつね屋 トップページ"><span class="site-logo__pre">中小企業向け<span class="site-logo__ai">AI</span>活用支援の</span><span class="site-logo__name">ざつね屋</span></a>
     <nav class="site-nav" id="site-nav" aria-label="グローバルナビゲーション">
       <ul class="site-nav__list">
-        <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/#services" class="site-nav__link">サービス</a></li>
+        <li class="site-nav__item site-nav__item--dropdown">
+          <button class="site-nav__dropdown-trigger site-nav__link" aria-expanded="false" aria-haspopup="true">
+            サービス<span class="site-nav__caret" aria-hidden="true">▾</span>
+          </button>
+          <ul class="site-nav__dropdown">
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/services.html" class="site-nav__dropdown-link">サービス一覧</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-training.html" class="site-nav__dropdown-link">AI研修ワークショップ</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-order.html" class="site-nav__dropdown-link">AI業務改善オーダーメイド</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-management.html" class="site-nav__dropdown-link">AI経営改善パッケージ</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-banso.html" class="site-nav__dropdown-link">AI活用伴走サービス</a></li>
+          </ul>
+        </li>
         <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/works.html" class="site-nav__link">実績</a></li>
         <li class="site-nav__item"><a href="prices.html" class="site-nav__link">料金</a></li>
         <li class="site-nav__item site-nav__item--dropdown">
@@ -78,7 +91,7 @@
         </li>
         <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/profile.html" class="site-nav__link">代表について</a></li>
       </ul>
-      <a href="https://zatune-gif.github.io/zatuneya-hp/#contact" class="site-nav__cta">お問い合わせ</a>
+      <a href="https://zatune-gif.github.io/zatuneya-hp/contact.html" class="site-nav__cta">お問い合わせ</a>
     </nav>
     <button class="site-nav__hamburger" id="nav-hamburger" aria-label="メニューを開閉する" aria-controls="site-nav" aria-expanded="false">
       <span class="site-nav__hamburger-line"></span>

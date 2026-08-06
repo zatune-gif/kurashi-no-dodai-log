@@ -34,29 +34,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ── ナビ ── */
-.site-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(255,255,255,0.94); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--card-line);
-  padding: 0 var(--s6); height: 60px;
-  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
-}
-.nav-brand { font-size: 17px; font-weight: 900; color: var(--heading); text-decoration: none; letter-spacing: 0.06em; white-space: nowrap; }
-.nav-brand span { color: var(--orange); }
-.nav-links { display: flex; gap: var(--s4); flex-wrap: wrap; align-items: center; }
-.nav-links a { font-size: 13px; font-weight: 700; color: #606060; text-decoration: none; letter-spacing: 0.08em; transition: color 0.15s; }
-.nav-links a:hover { color: var(--teal-dk); }
-.nav-links a.nav-cv {
-  background: var(--orange); color: #fff; padding: var(--s2) var(--s4); border-radius: 999px;
-  box-shadow: 0 4px 12px rgba(248,152,29,0.32);
-}
-.nav-links a.nav-cv:hover { background: var(--orange-dk); color: #fff; }
-@media (max-width: 720px) { .nav-links a:not(.nav-cv) { display: none; } }
-@media (max-width: 480px) {
-  .nav-brand .brand-lead { display: none; }
-  .nav-links a.nav-cv { padding: 9px var(--s3); font-size: 12px; }
-}
+/* ── ナビ（prices.htmlは site-header を使用、旧 .site-nav/.nav-brand/.nav-links ルールは削除済み） ── */
 
 /* ── ページヘッダー ── */
 .hero {
@@ -112,7 +90,7 @@ body {
 .quick-nav-btn {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--card-tint); border: 1px solid var(--card-line); border-radius: 999px;
-  font-size: 13.5px; font-weight: 700; color: var(--teal-dk); text-decoration: none;
+  font-size: 15px; font-weight: 700; color: var(--teal-dk); text-decoration: none;
   padding: var(--s3) var(--s6); transition: background .18s var(--ease), transform .18s var(--ease), box-shadow .18s var(--ease);
 }
 .quick-nav-btn:hover { background: var(--teal-soft); transform: translateY(-2px); box-shadow: var(--sh-1); }
@@ -132,7 +110,7 @@ body {
   font-family: 'Roboto', sans-serif; font-size: 12px; font-weight: 700;
   letter-spacing: 0.18em; color: var(--teal);
 }
-.section-head .title { font-size: 25px; font-weight: 900; color: var(--heading); line-height: 1.5; }
+.section-head .title { font-size: 28px; font-weight: 900; color: var(--heading); line-height: 1.5; }
 @media (max-width: 640px) { .section-head .title { font-size: 20px; } }
 
 /* モニターアラート */
@@ -164,7 +142,7 @@ body {
 .section-card {
   background: var(--card-tint); border: 1px solid var(--card-line); border-radius: 26px;
   box-shadow: var(--sh-1);
-  padding: var(--s6); margin-bottom: var(--s6);
+  padding: var(--s8); margin-bottom: var(--s6);
 }
 @media (max-width: 640px) { .section-card { padding: var(--s4); } }
 .section-header {
@@ -173,7 +151,7 @@ body {
   padding-bottom: var(--s4); margin-bottom: var(--s4); border-bottom: 1px solid var(--card-line);
 }
 .section-header.header-primary { color: var(--teal-dk); }
-.card-body { font-size: 13.5px; color: var(--text); margin-bottom: var(--s4); }
+.card-body { font-size: 15px; color: var(--text); margin-bottom: var(--s4); }
 
 /* コースアコーディオン */
 .course-ac {
@@ -194,7 +172,7 @@ body {
   font-size: 18px; font-weight: 900;
 }
 .course-ac-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-.course-ac-name { font-size: 15.5px; font-weight: 900; color: var(--heading); }
+.course-ac-name { font-size: 17px; font-weight: 900; color: var(--heading); }
 .course-ac-meta { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; }
 .course-badge-sm {
   font-size: 12px; font-weight: 700; color: var(--muted);
@@ -209,9 +187,9 @@ body {
 }
 details[open] .ac-chevron { transform: rotate(-135deg); }
 .course-ac-body { padding: 4px var(--s4) var(--s4); }
-.course-desc { font-size: 13.5px; color: var(--text); line-height: 1.85; margin-bottom: var(--s4); }
+.course-desc { font-size: 15px; color: var(--text); line-height: 1.85; margin-bottom: var(--s4); }
 .course-cond {
-  margin-top: var(--s3); font-size: 12.5px; color: var(--muted);
+  margin-top: var(--s3); font-size: 13.5px; color: var(--muted);
   background: var(--card-tint); border-radius: 12px; padding: 10px var(--s3);
 }
 
@@ -239,20 +217,20 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 
 /* テーブル */
 .monitor-table, .detail-table {
-  width: 100%; border-collapse: collapse; font-size: 13.5px; background: #fff;
+  width: 100%; border-collapse: collapse; font-size: 14.5px; background: #fff;
   border-radius: 16px; overflow: hidden; box-shadow: var(--sh-1);
 }
 .monitor-table thead th, .detail-table thead th {
   background: linear-gradient(135deg, var(--teal), var(--teal-dk)); color: #fff; font-weight: 700;
-  padding: var(--s3) var(--s3); text-align: left; font-size: 12px; letter-spacing: 0.04em;
+  padding: var(--s3) var(--s3); text-align: left; font-size: 13px; letter-spacing: 0.04em;
 }
-.monitor-table td, .detail-table td { padding: var(--s3) var(--s3); border-bottom: 1px solid #EDF3F4; color: var(--text); transition: background .15s; }
+.monitor-table td, .detail-table td { padding: var(--s4) var(--s4); border-bottom: 1px solid #EDF3F4; color: var(--text); transition: background .15s; }
 .monitor-table tbody tr:last-child td, .detail-table tbody tr:last-child td { border-bottom: none; }
 .monitor-table tbody tr:nth-child(even), .detail-table tbody tr:nth-child(even) { background: var(--card-tint); }
 .monitor-table tbody tr:hover td, .detail-table tbody tr:hover td { background: var(--teal-soft); }
 .monitor-table td:first-child, .detail-table td:first-child { font-weight: 700; color: var(--heading); }
 .td-na { color: #c3ced4; }
-.detail-table { font-size: 12.5px; }
+.detail-table { font-size: 14.5px; }
 .detail-table td { white-space: nowrap; }
 .table-scroll { overflow-x: auto; }
 
@@ -265,8 +243,8 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 }
 .set-card:hover { box-shadow: var(--sh-2); transform: translateY(-2px); }
 .set-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s4); }
-.set-name { font-size: 17px; font-weight: 900; color: var(--heading); }
-.set-courses { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.set-name { font-size: 19px; font-weight: 900; color: var(--heading); }
+.set-courses { font-size: 14.5px; color: var(--muted); margin-top: 4px; }
 .set-badge {
   flex-shrink: 0; background: var(--teal-soft); color: var(--teal-dk);
   font-size: 12.5px; font-weight: 900; padding: 6px var(--s4); border-radius: 999px;
@@ -283,9 +261,9 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 }
 .choice-guide-row:hover { box-shadow: var(--sh-1); transform: translateY(-2px); }
 @media (max-width: 560px) { .choice-guide-row { grid-template-columns: 1fr; gap: 4px; } .choice-guide-arrow { display: none; } }
-.choice-guide-if { font-size: 14px; font-weight: 700; color: var(--heading); }
+.choice-guide-if { font-size: 15px; font-weight: 700; color: var(--heading); }
 .choice-guide-arrow { color: var(--muted); font-weight: 900; text-align: center; }
-.choice-guide-rec { font-size: 14px; font-weight: 900; color: var(--teal-dk); }
+.choice-guide-rec { font-size: 15px; font-weight: 900; color: var(--teal-dk); }
 .choice-guide-price { font-size: 12px; color: var(--muted); margin-top: 2px; }
 .choice-guide-footer { font-size: 12px; color: var(--muted); margin-top: var(--s2); }
 
@@ -311,30 +289,30 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .plan-card-rec .plan-card-ic { background: var(--orange-soft); }
 .plan-card-ic svg { width: 21px; height: 21px; stroke: var(--teal-dk); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
 .plan-card-rec .plan-card-ic svg { stroke: var(--orange-dk); }
-.plan-card-name { font-size: 16px; font-weight: 900; color: var(--heading); }
-.plan-card-desc { font-size: 12.5px; color: var(--muted); margin: 4px 0 var(--s3); }
+.plan-card-name { font-size: 18px; font-weight: 900; color: var(--heading); }
+.plan-card-desc { font-size: 14px; color: var(--muted); margin: 4px 0 var(--s3); }
 .plan-card-row {
   display: flex; align-items: center; justify-content: space-between; gap: var(--s2);
   padding: var(--s2) 0; border-top: 1px solid #EDF3F4;
 }
 .plan-card-row-highlight .plan-card-label { font-weight: 700; color: var(--heading); }
-.plan-card-label { font-size: 12.5px; color: var(--text); }
-.plan-card-price { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 17px; font-weight: 900; color: var(--orange-dk); }
+.plan-card-label { font-size: 14px; color: var(--text); }
+.plan-card-price { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 20px; font-weight: 900; color: var(--orange-dk); }
 .plan-card-monthly { display: flex; align-items: baseline; gap: 4px; padding-top: var(--s2); border-top: 1px solid #EDF3F4; }
-.plan-card-monthly .plan-card-price { font-size: 24px; }
+.plan-card-monthly .plan-card-price { font-size: 28px; }
 .plan-card-unit { font-size: 13px; color: var(--muted); }
 .plan-note {
-  font-size: 12.5px; color: var(--text); line-height: 1.8;
+  font-size: 14px; color: var(--text); line-height: 1.8;
   background: #fff; border: 1px solid var(--card-line); border-radius: 12px;
   padding: var(--s3) var(--s4); margin: var(--s3) 0;
 }
 
 /* 詳細見出し・リスト */
-.detail-heading { font-size: 14.5px; font-weight: 900; color: var(--heading); margin: var(--s6) 0 var(--s3); padding-left: var(--s3); border-left: 4px solid var(--teal); }
+.detail-heading { font-size: 16px; font-weight: 900; color: var(--heading); margin: var(--s6) 0 var(--s3); padding-left: var(--s3); border-left: 4px solid var(--teal); }
 .service-detail-list { list-style: none; display: flex; flex-direction: column; gap: var(--s2); }
-.service-detail-list li { font-size: 13px; color: var(--text); padding-left: var(--s4); position: relative; }
+.service-detail-list li { font-size: 15px; color: var(--text); padding-left: var(--s4); position: relative; }
 .service-detail-list li::before { content: '✓'; position: absolute; left: 0; color: var(--teal); font-weight: 900; }
-.service-desc { font-size: 14px; }
+.service-desc { font-size: 15px; }
 
 /* CTA */
 .cta-section {
