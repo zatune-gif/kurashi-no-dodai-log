@@ -53,10 +53,17 @@
     .cover {
       background: linear-gradient(150deg, #F1F7F8 0%, #EAF6F8 55%, #FFF9F0 100%);
       color: var(--text);
-      padding: 64px 48px 48px;
+      padding: 64px 0 48px;
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
+    }
+
+    .cover-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+      padding: 0 48px;
     }
 
     .cover::before {
@@ -120,7 +127,7 @@
     }
 
     .cover-sub {
-      font-size: 14px;
+      font-size: 15.5px;
       color: var(--text);
       max-width: 520px;
       line-height: 1.9;
@@ -132,7 +139,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 32px;
-      font-size: 13px;
+      font-size: 14px;
       position: relative;
       padding-top: 24px;
       border-top: 1px solid var(--border);
@@ -154,7 +161,7 @@
     }
 
     .cover-meta-value {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--heading);
     }
@@ -197,7 +204,7 @@
     .nav-brand span { color: var(--orange); }
 
     .nav-back {
-      font-size: 12.5px;
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--teal-dk);
       text-decoration: none;
@@ -237,7 +244,7 @@
     .nav-link {
       white-space: nowrap;
       padding: 12px 16px;
-      font-size: 12.5px;
+      font-size: 13.5px;
       font-weight: 700;
       color: #606060;
       text-decoration: none;
@@ -279,11 +286,11 @@
       font-weight: 900;
       border-radius: 12px;
       flex-shrink: 0;
-      box-shadow: 0 6px 16px rgba(70,166,177,0.30);
+      box-shadow: 0 6px 16px rgba(38,120,130,0.30);
     }
 
     .section-title {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 900;
       color: var(--heading);
       letter-spacing: -0.01em;
@@ -322,7 +329,7 @@
     .tag {
       display: inline-block;
       white-space: nowrap;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       padding: 4px 12px;
       border-radius: 999px;
@@ -358,7 +365,7 @@
       font-weight: 700;
       padding: 12px 16px;
       text-align: left;
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 0.05em;
     }
 
@@ -406,7 +413,7 @@
 
     .td-desc {
       display: block;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 400;
       color: var(--text-muted);
       margin-top: 4px;
@@ -426,7 +433,7 @@
       color: var(--text-muted);
       white-space: nowrap;
       width: 64px;
-      font-size: 13px;
+      font-size: 14px;
     }
 
     /* row-title / row-break / row-special の td-section は各行色を継承 */
@@ -520,7 +527,7 @@
       pointer-events: none;
     }
     .cta-headline { position: relative; font-size: 21px; font-weight: 900; color: var(--heading); }
-    .cta-sub { position: relative; font-size: 14px; color: var(--text); margin: 8px 0 24px; }
+    .cta-sub { position: relative; font-size: 15px; color: var(--text); margin: 8px 0 24px; }
     .cta-actions { position: relative; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
     .btn-cta {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -537,7 +544,7 @@
       position: relative;
       display: block;
       margin-top: 16px;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--teal-dk);
       text-decoration: none;
@@ -555,7 +562,7 @@
     }
 
     .notes p {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-muted);
       line-height: 1.8;
       padding-left: 16px;
@@ -574,7 +581,8 @@
 
     /* ── レスポンシブ ── */
     @media (max-width: 700px) {
-      .cover { padding: 40px 24px; }
+      .cover { padding: 40px 0; }
+      .cover-inner { padding: 0 24px; }
       .cover h1 { font-size: 28px; }
       .cover-title-row { flex-direction: column; gap: 8px; }
       .cover-title-label { border-left: none; padding-left: 0; }
@@ -691,6 +699,7 @@
 
 <!-- カバー -->
 <div class="cover">
+  <div class="cover-inner">
   <div class="cover-title-row">
     <h1><span></span>研修カリキュラム</h1>
     <div class="cover-title-label">タイムスケジュール</div>
@@ -709,6 +718,7 @@
       <div class="cover-meta-label">対象</div>
       <div class="cover-meta-value">中小企業・小規模事業者</div>
     </div>
+  </div>
   </div>
 </div>
 
