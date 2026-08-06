@@ -13,17 +13,17 @@
   /* ─── ざつね屋 グローバルヘッダー・ナビ・フッター ─── */
   :root{--gz-tt:#31747C;--gz-tt-d:#267882;--gz-ts:#EAF6F8;--gz-cl:#E1EEF0;--gz-tx:#575757;--gz-hd:#3C3C3C}
   .site-header{position:sticky;top:0;z-index:500;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--gz-cl)}
-  .site-header__inner{display:flex;align-items:center;max-width:1200px;margin:0 auto;padding:0 24px;height:64px}
+  .site-header__inner{display:flex;align-items:center;max-width:1200px;margin:0 auto;padding:0 24px;height:72px}
   .site-logo{font-weight:700;font-size:1.1rem;color:var(--gz-tt);text-decoration:none;letter-spacing:.02em;white-space:nowrap;display:inline-flex;align-items:baseline;gap:0.12em}
   .site-logo__pre{font-size:.73em;font-weight:400;color:var(--gz-tx)}
   .site-logo__ai{color:#F8981D;font-weight:700}
   .site-logo__name{color:var(--gz-tt);font-weight:700}
-  .site-header .site-nav{position:static;top:auto;z-index:auto;background:transparent;backdrop-filter:none;border-bottom:none;padding:0;height:auto;display:flex;align-items:center;gap:8px;margin-left:auto;justify-content:flex-end}
+  .site-header .site-nav{position:static;top:auto;z-index:auto;background:transparent;backdrop-filter:none;border-bottom:none;padding:0;height:auto;display:flex;align-items:center;gap:20px;margin-left:auto;justify-content:flex-end}
   .site-nav__list{display:flex;list-style:none;margin:0;padding:0;gap:4px;align-items:center}
-  .site-nav__link{font-size:.9375rem;padding:8px 12px;color:var(--gz-tx);text-decoration:none;letter-spacing:.02em;display:inline-block;transition:color .2s}
+  .site-nav__link{font-size:.9375rem;padding:8px 14px;color:var(--gz-tx);text-decoration:none;letter-spacing:.02em;display:inline-block;transition:color .2s}
   .site-nav__link:hover,.site-nav__link.is-active{color:var(--gz-tt)}
   .site-nav__item--dropdown{position:relative}
-  .site-nav__dropdown-trigger{background:none;border:none;cursor:pointer;font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic UI',sans-serif;font-size:.9375rem;padding:8px 12px;color:var(--gz-tx);letter-spacing:.02em;display:inline-flex;align-items:center;gap:4px;transition:color .2s}
+  .site-nav__dropdown-trigger{background:none;border:none;cursor:pointer;font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic UI',sans-serif;font-size:.9375rem;padding:8px 14px;color:var(--gz-tx);letter-spacing:.02em;display:inline-flex;align-items:center;gap:4px;transition:color .2s}
   .site-nav__dropdown-trigger:hover{color:var(--gz-tt)}
   .site-nav__caret{font-size:.75rem;pointer-events:none}
   .site-nav__dropdown{position:absolute;top:100%;left:0;min-width:200px;background:#fff;box-shadow:0 8px 24px rgba(40,60,70,.12);border-radius:4px;list-style:none;padding:8px 0;margin:0;opacity:0;pointer-events:none;transform:translateY(-4px);transition:opacity .2s,transform .2s}
@@ -50,17 +50,24 @@
     .site-nav__item--dropdown.is-open .site-nav__dropdown{display:block;pointer-events:auto}
     .site-nav__cta{margin-top:12px;margin-left:0;display:block;text-align:center}
   }
-  .site-footer{background:#334A52;padding:48px 24px 32px}
-  .site-footer__inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:16px}
-  .site-footer__logo{font-weight:700;color:#fff;text-decoration:none;font-size:1rem;letter-spacing:.02em}
-  .site-footer__nav{display:flex;flex-wrap:wrap;gap:24px}
-  .site-footer__nav a{font-size:.8125rem;color:#b7c6cb;text-decoration:none;letter-spacing:.02em;transition:color .15s}
-  .site-footer__nav a:hover{color:#fff}
-  .site-footer__copy{font-size:.75rem;color:#A6B7BC;margin:0;letter-spacing:.02em}
-  @media(max-width:480px){
-    .site-footer__inner{flex-direction:column;align-items:center;text-align:center}
-    .site-footer__nav{justify-content:center}
-  }
+  /* FOOTER */
+  .site-footer{background:#1a3a3e;color:#c8dde0;padding:56px 0 0;margin-top:80px}
+  .site-footer__inner{max-width:1100px;margin:0 auto;padding:0 24px 48px;display:grid;grid-template-columns:200px 1fr;gap:48px}
+  .site-footer__brand{display:flex;flex-direction:column;gap:12px}
+  .site-footer__logo{font-size:1.2rem;font-weight:700;color:#fff;text-decoration:none}
+  .site-footer__tagline{font-size:.78rem;line-height:1.7;color:#9bbdc1;margin:0}
+  .site-footer__sitemap{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+  .site-footer__col-title{display:block;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#7bbfc4;margin-bottom:12px}
+  .site-footer__col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+  .site-footer__col ul li a{font-size:.83rem;color:#b0cdd1;text-decoration:none;transition:color .2s}
+  .site-footer__col ul li a:hover{color:#fff}
+  .site-footer__bottom{border-top:1px solid rgba(255,255,255,.1);max-width:1100px;margin:0 auto;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .site-footer__legal{list-style:none;padding:0;margin:0;display:flex;gap:24px;flex-wrap:wrap}
+  .site-footer__legal a{font-size:.75rem;color:#7bbfc4;text-decoration:none}
+  .site-footer__legal a:hover{color:#fff}
+  .site-footer__copy{font-size:.75rem;color:#7bbfc4;margin:0}
+  @media(max-width:768px){.site-footer__inner{grid-template-columns:1fr;gap:32px}.site-footer__sitemap{grid-template-columns:repeat(2,1fr);gap:24px}.site-footer__bottom{flex-direction:column;align-items:flex-start}}
+  @media(max-width:480px){.site-footer__sitemap{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -254,13 +261,45 @@
 
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-footer__logo" aria-label="ざつね屋 トップページ">ざつね屋</a>
-    <nav class="site-footer__nav" aria-label="フッターナビゲーション">
-      <a href="prices.html">料金</a>
-      <a href="diagnosis-simple.html">AI活用準備度診断</a>
-      <a href="https://zatune-gif.github.io/zatuneya-hp/">トップページ</a>
-      <a href="https://zatune-gif.github.io/zatuneya-hp/profile.html">代表について</a>
+    <div class="site-footer__brand">
+      <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-footer__logo">ざつね屋</a>
+      <p class="site-footer__tagline">広島県東部の中小企業に<br>AI活用支援を届ける</p>
+    </div>
+    <nav class="site-footer__sitemap" aria-label="サイトマップ">
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">サービス</span>
+        <ul>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/services.html">サービス一覧</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-training.html">AI研修ワークショップ</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-order.html">AI業務改善オーダーメイド</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-management.html">AI経営改善パッケージ</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-banso.html">AI活用伴走サービス</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">会社情報</span>
+        <ul>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/works.html">支援実績</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/profile.html">代表について</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/faq.html">よくある質問</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">ツール・料金</span>
+        <ul>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/contact.html">相談・お見積もり</a></li>
+          <li><a href="diagnosis-simple.html">無料AI診断ツール</a></li>
+          <li><a href="prices.html">料金・プラン</a></li>
+        </ul>
+      </div>
     </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <ul class="site-footer__legal">
+      <li><a href="https://zatune-gif.github.io/zatuneya-hp/faq.html">よくある質問</a></li>
+      <li><a href="https://zatune-gif.github.io/zatuneya-hp/privacy.html">プライバシーポリシー</a></li>
+      <li><a href="https://zatune-gif.github.io/zatuneya-hp/tokusho.html">特定商取引法に基づく表記</a></li>
+    </ul>
     <p class="site-footer__copy">© 2026 ざつね屋</p>
   </div>
 </footer>
