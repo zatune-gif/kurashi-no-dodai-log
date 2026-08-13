@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ざつね屋 事業計画書ドラフト</title>
+<style>
+/* =====================================================
+   CSS カスタムプロパティ（テーマ変数）
+   ===================================================== */
+:root[data-theme="dark"],
+:root {
+  --bg: #10121a;
+  --surface: #181c2a;
+  --surface-raised: #1e2235;
+  --border: #282d42;
+  --text: #dde2f0;
+  --text-sub: #7a82a0;
+  --accent: #4e7cff;
+  --accent-hover: #6b92ff;
+  --warning: #e8a740;
+  --warning-bg: rgba(232, 167, 64, 0.12);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --surface-raised: #f0f2f8;
+    --border: #dde0ee;
+    --text: #181c2a;
+    --text-sub: #52597a;
+    --accent: #2755e6;
+    --accent-hover: #1a40c2;
+    --warning: #c47a00;
+    --warning-bg: rgba(196, 122, 0, 0.1);
+  }
+}
+
+:root[data-theme="light"] {
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --surface-raised: #f0f2f8;
+  --border: #dde0ee;
+  --text: #181c2a;
+  --text-sub: #52597a;
+  --accent: #2755e6;
+  --accent-hover: #1a40c2;
+  --warning: #c47a00;
+  --warning-bg: rgba(196, 122, 0, 0.1);
+}
+
+/* =====================================================
+   ベースリセット・基本スタイル
+   ===================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "游ゴシック", "Meiryo", sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+/* =====================================================
+   メタバナー
+   ===================================================== */
+.meta-banner {
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0.625rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-sub);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.meta-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.meta-label {
+  color: var(--text-sub);
+  font-size: 0.75rem;
+}
+
+.meta-value {
+  color: var(--text);
+  font-size: 0.8125rem;
+}
+
+.meta-action {
+  background-color: var(--warning-bg);
+  color: var(--warning);
+  border: 1px solid var(--warning);
+  border-radius: 4px;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   テーマ切替ボタン
+   ===================================================== */
+.theme-toggle {
+  margin-left: auto;
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+
+.theme-toggle:hover {
+  background-color: var(--border);
+}
+
+/* =====================================================
+   ページレイアウト（2カラム）
+   ===================================================== */
+.page-layout {
+  display: flex;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+/* =====================================================
+   サイドバー・TOC
+   ===================================================== */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  position: sticky;
+  top: calc(2rem + 40px);
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  padding: 1.5rem 0;
+}
+
+.sidebar-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  margin-bottom: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+.toc-list {
+  list-style: none;
+}
+
+.toc-item {
+  border-left: 2px solid var(--border);
+  transition: border-color 0.15s;
+}
+
+.toc-item.active {
+  border-left-color: var(--accent);
+}
+
+.toc-link {
+  display: block;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-sub);
+  line-height: 1.5;
+  transition: color 0.15s;
+}
+
+.toc-link:hover {
+  color: var(--text);
+}
+
+.toc-item.active .toc-link {
+  color: var(--accent);
+}
+
+.toc-num {
+  font-size: 0.6875rem;
+  opacity: 0.7;
+  margin-right: 0.25rem;
+}
+
+.sidebar-meta {
+  margin-top: 1.5rem;
+  padding: 0.875rem 0.75rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--text-sub);
+  line-height: 1.7;
+}
+
+.sidebar-meta-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.375rem;
+  font-size: 0.75rem;
+}
+
+.sidebar-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* =====================================================
+   メインコンテンツ
+   ===================================================== */
+.main-content {
+  flex: 1;
+  max-width: 720px;
+  padding: 2rem 0 4rem;
+}
+
+/* =====================================================
+   ページヘッダー
+   ===================================================== */
+.page-header {
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-label {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  margin-bottom: 0.75rem;
+}
+
+.page-title {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "游明朝", "HGS明朝E", serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-sub);
+}
+
+/* =====================================================
+   セクション共通
+   ===================================================== */
+.section {
+  margin-bottom: 3rem;
+}
+
+/* =====================================================
+   章ヘッダー
+   ===================================================== */
+.chapter-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.chapter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent);
+  color: #ffffff;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.2em 0.6em;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chapter-title {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "游明朝", "HGS明朝E", serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* =====================================================
+   小見出し
+   ===================================================== */
+.section-heading {
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "游ゴシック", "Meiryo", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* =====================================================
+   本文・リスト
+   ===================================================== */
+p {
+  margin-bottom: 0.875rem;
+}
+
+ul, ol {
+  margin-bottom: 0.875rem;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+li ul, li ol {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+/* =====================================================
+   定義リスト（メタ情報）
+   ===================================================== */
+.dl-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.375rem 1rem;
+  font-size: 0.9375rem;
+}
+
+.dl-grid dt {
+  color: var(--text-sub);
+  font-size: 0.8125rem;
+  padding-top: 0.125rem;
+  white-space: nowrap;
+}
+
+.dl-grid dd {
+  color: var(--text);
+}
+
+/* =====================================================
+   【要確認】ボックス
+   ===================================================== */
+.warning-box {
+  background: var(--warning-bg);
+  border-left: 3px solid var(--warning);
+  padding: 0.75rem 1rem;
+  border-radius: 0 4px 4px 0;
+  margin: 1rem 0;
+}
+
+.warning-box-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--warning);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.warning-box-text {
+  font-size: 0.875rem;
+  color: var(--warning);
+  line-height: 1.65;
+}
+
+/* =====================================================
+   【要確認】インライン表示（テーブルセル内用）
+   ===================================================== */
+.warning-inline {
+  color: var(--warning);
+  font-size: 0.8125rem;
+}
+
+/* =====================================================
+   テーブル
+   ===================================================== */
+.table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+thead th {
+  background-color: var(--surface-raised);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+thead th.num {
+  text-align: right;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.1s;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background-color: var(--surface-raised);
+}
+
+tbody td {
+  padding: 0.5625rem 0.875rem;
+  color: var(--text);
+  vertical-align: top;
+}
+
+tbody td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+tbody td.total {
+  font-weight: 600;
+}
+
+/* =====================================================
+   カード（サービスカテゴリ）
+   ===================================================== */
+.service-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  margin-bottom: 0.25rem;
+}
+
+.service-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.service-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.875rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.service-note {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-sub);
+  background-color: var(--surface-raised);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+}
+
+/* =====================================================
+   強み・差別化リスト
+   ===================================================== */
+.strength-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.strength-list li {
+  display: flex;
+  gap: 0.625rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.65;
+}
+
+.strength-list li:last-child {
+  border-bottom: none;
+}
+
+.strength-dot {
+  color: var(--accent);
+  font-size: 1.1em;
+  flex-shrink: 0;
+  margin-top: 0.1em;
+}
+
+/* =====================================================
+   フェーズバッジ
+   ===================================================== */
+.phase-section {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.125rem 1.375rem;
+  margin-bottom: 1rem;
+}
+
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.625rem;
+}
+
+.phase-badge {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.2em 0.6em;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.phase-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.phase-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.phase-list li {
+  font-size: 0.875rem;
+  color: var(--text);
+  padding: 0.2rem 0;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.phase-list li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--text-sub);
+}
+
+/* =====================================================
+   フッター
+   ===================================================== */
+.page-footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 0 1rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--text-sub);
+}
+
+/* =====================================================
+   区切り線
+   ===================================================== */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* =====================================================
+   スクロールバー（サイドバー）
+   ===================================================== */
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* =====================================================
+   レスポンシブ（モバイル）
+   ===================================================== */
+@media (max-width: 768px) {
+  .page-layout {
+    padding: 0 1rem;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    padding: 1.5rem 0 3rem;
+    max-width: 100%;
+  }
+
+  .meta-banner-inner {
+    gap: 1rem;
+  }
+
+  .meta-action {
+    display: none;
+  }
+
+  .page-title {
+    font-size: 1.375rem;
+  }
+
+  .chapter-title {
+    font-size: 1.125rem;
+  }
+
+  .dl-grid {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .dl-grid dt {
+    margin-top: 0.5rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- =====================================================
+     メタバナー
+     ===================================================== -->
+<div class="meta-banner">
+  <div class="meta-banner-inner">
+    <div class="meta-item">
+      <span class="meta-label">更新日：</span>
+      <span class="meta-value">2026-08-07</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-action">次アクション：8/18 府中商工会議所相談後に正式テンプレートへ流し込み</span>
+    </div>
+  </div>
+  <button class="theme-toggle" id="themeToggle" aria-label="テーマを切り替える">ライト / ダーク</button>
+</div>
+
+<!-- =====================================================
+     ページレイアウト
+     ===================================================== -->
+<div class="page-layout">
+
+  <!-- サイドバー TOC -->
+  <aside class="sidebar" aria-label="目次">
+    <div class="sidebar-title">目次</div>
+    <nav>
+      <ul class="toc-list" id="toc">
+        <li class="toc-item" data-target="section-1">
+          <a class="toc-link" href="#section-1"><span class="toc-num">1.</span>創業者の概要</a>
+        </li>
+        <li class="toc-item" data-target="section-2">
+          <a class="toc-link" href="#section-2"><span class="toc-num">2.</span>創業の動機・背景</a>
+        </li>
+        <li class="toc-item" data-target="section-3">
+          <a class="toc-link" href="#section-3"><span class="toc-num">3.</span>事業の概要</a>
+        </li>
+        <li class="toc-item" data-target="section-4">
+          <a class="toc-link" href="#section-4"><span class="toc-num">4.</span>提供するサービス・商品</a>
+        </li>
+        <li class="toc-item" data-target="section-5">
+          <a class="toc-link" href="#section-5"><span class="toc-num">5.</span>ターゲット顧客・市場</a>
+        </li>
+        <li class="toc-item" data-target="section-6">
+          <a class="toc-link" href="#section-6"><span class="toc-num">6.</span>競合・強み・差別化</a>
+        </li>
+        <li class="toc-item" data-target="section-7">
+          <a class="toc-link" href="#section-7"><span class="toc-num">7.</span>集客・販売計画</a>
+        </li>
+        <li class="toc-item" data-target="section-8">
+          <a class="toc-link" href="#section-8"><span class="toc-num">8.</span>売上計画（3年間）</a>
+        </li>
+        <li class="toc-item" data-target="section-9">
+          <a class="toc-link" href="#section-9"><span class="toc-num">9.</span>経費計画</a>
+        </li>
+        <li class="toc-item" data-target="section-10">
+          <a class="toc-link" href="#section-10"><span class="toc-num">10.</span>資金計画</a>
+        </li>
+        <li class="toc-item" data-target="section-11">
+          <a class="toc-link" href="#section-11"><span class="toc-num">11.</span>今後の方針・展望</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-meta">
+      <div class="sidebar-meta-title">文書情報</div>
+      <div class="sidebar-meta-row">
+        <span>屋号：ざつね屋</span>
+        <span>代表：大音晃司</span>
+        <span>更新：2026-08-07</span>
+        <span>ステータス：ドラフト</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- メインコンテンツ -->
+  <main class="main-content">
+
+    <!-- ページヘッダー -->
+    <header class="page-header">
+      <div class="doc-label">事業計画書 ドラフト</div>
+      <h1 class="page-title">ざつね屋 創業事業計画</h1>
+      <p class="page-subtitle">AI活用支援・業務改善支援事業 ／ 広島県府中市</p>
+    </header>
+
+    <!-- =====================================================
+         第1章 創業者の概要
+         ===================================================== -->
+    <section class="section" id="section-1">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 1 章</span>
+        <h2 class="chapter-title">創業者の概要</h2>
+      </div>
+
+      <dl class="dl-grid">
+        <dt>屋号</dt>
+        <dd>ざつね屋</dd>
+        <dt>代表者氏名</dt>
+        <dd>大音晃司</dd>
+        <dt>事業形態</dt>
+        <dd>個人事業主</dd>
+        <dt>事業所所在地</dt>
+        <dd>広島県府中市（2026年8月17日移住）</dd>
+        <dt>開業届提出</dt>
+        <dd>府中商工会議所との相談（特定創業支援等事業）完了後に提出予定</dd>
+        <dt>商工会議所相談</dt>
+        <dd>2026年8月18日（予約済み）</dd>
+      </dl>
+
+      <h3 class="section-heading">代表者の経歴・保有スキル</h3>
+      <ul>
+        <li>製造業のDX推進支援</li>
+        <li>専門学校担任（教育・人材育成）</li>
+        <li>AIプロダクト開発</li>
+        <li>NPO代表</li>
+        <li>Webディレクター</li>
+        <li>AI活用支援・業務改善コンサルティング（既存クライアントへの納品実績あり）</li>
+      </ul>
+    </section>
+
+    <!-- =====================================================
+         第2章 創業の動機・背景
+         ===================================================== -->
+    <section class="section" id="section-2">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 2 章</span>
+        <h2 class="chapter-title">創業の動機・背景</h2>
+      </div>
+
+      <ul>
+        <li>地域の中小企業では、人手不足・業務の属人化・デジタル人材不足が深刻な課題となっている</li>
+        <li>生成AIへの関心は経営者・従業員ともに高まっているが、現場での業務活用・社内への定着が進んでいない</li>
+        <li>「AIを知っている」状態から「実際に業務で使える」状態へ引き上げる伴走支援の担い手が不足している</li>
+        <li>府中市は製造業・印刷業が集積する地域であり、AI活用支援の空白地帯となっている</li>
+        <li>代表者自身が移住・定住を通じて地域に根ざす形で、信頼ベースの長期支援を提供したいという意思がある</li>
+      </ul>
+
+      <h3 class="section-heading">顧客が得られる価値</h3>
+      <ul class="strength-list">
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>従業員が翌日から使えるAI活用スキルを習得できる</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>業務の「見える化」によって属人化・手作業の削減ができる</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>導入で終わらず定着するまで伴走するため、投資が無駄にならない</span>
+        </li>
+      </ul>
+
+      <h3 class="section-heading">提供方法・対応エリア</h3>
+      <ul class="strength-list">
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>訪問型（顧客先への出張対応：広島県内）</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>リモート型（オンラインMTG・画面共有）</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>併用型（ヒアリング・研修は訪問、定期相談はリモート）</span>
+        </li>
+      </ul>
+
+      <h3 class="section-heading">競合との比較</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>比較軸</th>
+              <th>一般的なAI研修会社</th>
+              <th>ざつね屋</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>支援の起点</td>
+              <td>知識・ツール提供</td>
+              <td>業務課題の整理から</td>
+            </tr>
+            <tr>
+              <td>対応地域</td>
+              <td>全国・東京基準</td>
+              <td>広島近郊専門</td>
+            </tr>
+            <tr>
+              <td>支援期間</td>
+              <td>研修で完結</td>
+              <td>定着まで伴走</td>
+            </tr>
+            <tr>
+              <td>価格帯</td>
+              <td>高単価（大企業向け）</td>
+              <td>中小企業向け価格</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         第3章 事業の概要
+         ===================================================== -->
+    <section class="section" id="section-3">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 3 章</span>
+        <h2 class="chapter-title">事業の概要</h2>
+      </div>
+
+      <dl class="dl-grid">
+        <dt>事業名</dt>
+        <dd>AI活用支援・業務改善支援事業</dd>
+        <dt>対象エリア</dt>
+        <dd>広島県府中市および周辺地域（福山・東広島・三次エリア等）</dd>
+        <dt>対象顧客</dt>
+        <dd>中小企業・小規模事業者</dd>
+        <dt>事業内容</dt>
+        <dd>生成AI活用研修、業務改善コンサルティング、AI業務ツール開発、導入・定着支援</dd>
+      </dl>
+    </section>
+
+    <!-- =====================================================
+         第4章 提供するサービス・商品
+         ===================================================== -->
+    <section class="section" id="section-4">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 4 章</span>
+        <h2 class="chapter-title">提供するサービス・商品</h2>
+      </div>
+
+      <!-- サービス① -->
+      <div class="service-card">
+        <div class="service-card-title">サービス① AI活用研修</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>コース</th>
+                <th class="num">時間</th>
+                <th class="num">5名（税別）</th>
+                <th class="num">10名（税別）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>①AI活用知識編</td>
+                <td class="num">90分</td>
+                <td class="num">60,000円</td>
+                <td class="num">80,000円</td>
+              </tr>
+              <tr>
+                <td>②実践編（文書系）</td>
+                <td class="num">120分</td>
+                <td class="num">100,000円</td>
+                <td class="num">140,000円</td>
+              </tr>
+              <tr>
+                <td>③実践編（画像系）</td>
+                <td class="num">120分</td>
+                <td class="num">100,000円</td>
+                <td class="num">140,000円</td>
+              </tr>
+              <tr>
+                <td>④実践編（動画系）</td>
+                <td class="num">120分</td>
+                <td class="num">100,000円</td>
+                <td class="num">140,000円</td>
+              </tr>
+              <tr>
+                <td>⑤AI活用ルール・運用定着編</td>
+                <td class="num">150分</td>
+                <td class="num">120,000円</td>
+                <td class="num">160,000円</td>
+              </tr>
+              <tr>
+                <td><strong>10時間パッケージ（①〜⑤）</strong></td>
+                <td class="num">600分</td>
+                <td class="num total">400,000円</td>
+                <td class="num total">560,000円</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="service-note">開業直後：先着3社にモニター割引（各コース30%引き）を適用。事例化を条件とする。</div>
+      </div>
+
+      <!-- サービス② -->
+      <div class="service-card">
+        <div class="service-card-title">サービス② AI経営改善パッケージ</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>版</th>
+                <th>期間</th>
+                <th class="num">時間</th>
+                <th class="num">価格（税別）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>標準版</td>
+                <td>3か月</td>
+                <td class="num">16時間</td>
+                <td class="num">360,000円</td>
+              </tr>
+              <tr>
+                <td>拡張版</td>
+                <td>4か月</td>
+                <td class="num">24時間</td>
+                <td class="num">540,000円</td>
+              </tr>
+              <tr>
+                <td>圧縮版</td>
+                <td>2か月</td>
+                <td class="num">12時間</td>
+                <td class="num">270,000円</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="service-note">標準版の成果物（計6点）：現状診断報告書、業務棚卸マップ、KPIロードマップ、スキルマップ、業務改善手順書、90日行動計画</div>
+      </div>
+
+      <!-- サービス③ -->
+      <div class="service-card">
+        <div class="service-card-title">サービス③ AI業務改善オーダーメイド</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>プラン</th>
+                <th>内容</th>
+                <th class="num">価格（税別）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sプラン（制作のみ）</td>
+                <td>1つの困りごとを解決</td>
+                <td class="num">50,000円</td>
+              </tr>
+              <tr>
+                <td>Sプラン（制作＋2か月サポート）</td>
+                <td>同上</td>
+                <td class="num">70,000円</td>
+              </tr>
+              <tr>
+                <td>Mプラン（制作のみ）</td>
+                <td>複数・複雑な困りごと</td>
+                <td class="num">90,000円</td>
+              </tr>
+              <tr>
+                <td>Mプラン（制作＋2か月サポート）</td>
+                <td>同上</td>
+                <td class="num">110,000円</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- サービス④ -->
+      <div class="service-card">
+        <div class="service-card-title">サービス④ AI開発伴走</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>プラン</th>
+                <th class="num">月額（税別）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>月1MTGプラン（60〜90分/月）</td>
+                <td class="num">60,000円</td>
+              </tr>
+              <tr>
+                <td>月2MTGプラン（各60〜90分/月）</td>
+                <td class="num">100,000円</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="service-note">契約期間：3か月区切り（成果確認後に更新または完了）</div>
+      </div>
+
+      <!-- サービス⑤ -->
+      <div class="service-card">
+        <div class="service-card-title">サービス⑤ 業務ツール開発</div>
+        <p>個別見積（開発工数ベース）</p>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         第5章 ターゲット顧客・市場
+         ===================================================== -->
+    <section class="section" id="section-5">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 5 章</span>
+        <h2 class="chapter-title">ターゲット顧客・市場</h2>
+      </div>
+
+      <dl class="dl-grid">
+        <dt>対象地域</dt>
+        <dd>広島県府中市および周辺地域（福山・東広島・三次エリア等）</dd>
+        <dt>対象顧客</dt>
+        <dd>中小企業・小規模事業者</dd>
+        <dt>主な対象業種</dt>
+        <dd>製造業、印刷業、建設業、サービス業</dd>
+        <dt>従業員規模</dt>
+        <dd>おおむね50名以下の企業</dd>
+      </dl>
+
+      <div class="warning-box">
+        <div class="warning-box-label">要確認</div>
+        <div class="warning-box-text">府中市周辺の企業数・業種構成（2026年8月18日 府中商工会議所相談にて把握予定）</div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         第6章 競合・強み・差別化
+         ===================================================== -->
+    <section class="section" id="section-6">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 6 章</span>
+        <h2 class="chapter-title">競合・強み・差別化</h2>
+      </div>
+
+      <h3 class="section-heading">強み</h3>
+      <ul class="strength-list">
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>「研修も実装もできる」希少なポジション（多くのコンサルタントは研修または実装のどちらかに特化）</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>業務整理から支援できる（AI導入前の業務棚卸・フロー改善から対応可能）</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>Web制作・業務設計・AI活用を横断的に対応できる</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>既存クライアントへの納品実績あり（組織診断・KPIロードマップ・スキルマップ等）</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>移住・定住による地域密着（東京基準ではない価格設定と信頼構築）</span>
+        </li>
+      </ul>
+
+      <h3 class="section-heading">差別化</h3>
+      <ul class="strength-list">
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>広島近郊の中小企業に特化したAI活用支援（地域専門）</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>診断ツール（Webアプリ、稼働中）を活用した課題可視化から始める支援フロー</span>
+        </li>
+        <li>
+          <span class="strength-dot">▸</span>
+          <span>成果物の納品で終わらず、現場定着まで伴走するサービス設計</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- =====================================================
+         第7章 集客・販売計画
+         ===================================================== -->
+    <section class="section" id="section-7">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 7 章</span>
+        <h2 class="chapter-title">集客・販売計画</h2>
+      </div>
+
+      <div class="phase-section">
+        <div class="phase-header">
+          <span class="phase-badge">Phase 1</span>
+          <span class="phase-title">開業〜3か月</span>
+        </div>
+        <ul class="phase-list">
+          <li>府中商工会議所・知人経営者経由でモニター3社を獲得（モニター割引30%・事例化条件）</li>
+          <li>AI活用準備度診断ツール（Webアプリ、稼働中）を集客の入口として活用</li>
+          <li>商工会議所・よろず支援拠点への専門家登録を目指す</li>
+        </ul>
+
+        <div class="warning-box">
+          <div class="warning-box-label">要確認</div>
+          <div class="warning-box-text">商工会議所を通じた専門家紹介・登録制度の有無（2026年8月18日相談で確認）</div>
+        </div>
+      </div>
+
+      <div class="phase-section">
+        <div class="phase-header">
+          <span class="phase-badge">Phase 2以降</span>
+          <span class="phase-title">4か月目〜</span>
+        </div>
+        <ul class="phase-list">
+          <li>モニター企業の事例・声をもとに通常価格での受注を開始</li>
+          <li>紹介による横展開（既存顧客からの紹介を主要チャネルとして育成）</li>
+          <li>補助金活用支援との連携（採択実績のある支援機関との協力関係構築）</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         第8章 売上計画（3年間）
+         ===================================================== -->
+    <section class="section" id="section-8">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 8 章</span>
+        <h2 class="chapter-title">売上計画（3年間）</h2>
+      </div>
+
+      <h3 class="section-heading">月次売上シナリオ（3段階）</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>サービス</th>
+              <th>保守（生存ライン）</th>
+              <th>目標</th>
+              <th>楽観</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>研修</td>
+              <td>2回×70,000円＝140,000円</td>
+              <td>3回×90,000円＝270,000円</td>
+              <td>4回×110,000円＝440,000円</td>
+            </tr>
+            <tr>
+              <td>オーダーメイド制作</td>
+              <td>1件×70,000円＝70,000円</td>
+              <td>1件×90,000円＝90,000円</td>
+              <td>2件×90,000円＝180,000円</td>
+            </tr>
+            <tr>
+              <td>伴走</td>
+              <td>月1MTG×1社＝60,000円</td>
+              <td>月1MTG×2社＝120,000円</td>
+              <td>月2MTG×2社＋月1MTG×1社＝260,000円</td>
+            </tr>
+            <tr>
+              <td class="total">月商合計</td>
+              <td class="num total">270,000円</td>
+              <td class="num total">480,000円</td>
+              <td class="num total">880,000円</td>
+            </tr>
+            <tr>
+              <td class="total">年商</td>
+              <td class="num total">3,240,000円</td>
+              <td class="num total">5,760,000円</td>
+              <td class="num total">10,560,000円</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="section-heading">フェーズ別月商目標</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>フェーズ</th>
+              <th>期間</th>
+              <th class="num">月商目標</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Phase 1：実績作り（モニター）</td>
+              <td>開業〜3か月</td>
+              <td class="num">100,000〜200,000円</td>
+            </tr>
+            <tr>
+              <td>Phase 2：通常価格展開</td>
+              <td>4〜6か月</td>
+              <td class="num">250,000〜400,000円</td>
+            </tr>
+            <tr>
+              <td>Phase 3：安定期</td>
+              <td>7〜12か月</td>
+              <td class="num">400,000〜600,000円</td>
+            </tr>
+            <tr>
+              <td>Year 2〜：拡大期</td>
+              <td>2年目以降</td>
+              <td class="num">500,000円〜</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="section-heading">損益分岐点</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>レベル</th>
+              <th class="num">月商</th>
+              <th>内容</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>LEVEL 1</td>
+              <td class="num">約50,000円</td>
+              <td>廃業しないライン</td>
+            </tr>
+            <tr>
+              <td>LEVEL 2</td>
+              <td class="num">約240,000円</td>
+              <td>手取り月収15万円相当</td>
+            </tr>
+            <tr>
+              <td>LEVEL 3</td>
+              <td class="num">約350,000〜400,000円</td>
+              <td>手取り月収30万円相当</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         第9章 経費計画
+         ===================================================== -->
+    <section class="section" id="section-9">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 9 章</span>
+        <h2 class="chapter-title">経費計画</h2>
+      </div>
+
+      <h3 class="section-heading">月次固定費</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>費目</th>
+              <th class="num">月額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>事業固定費（軽自動車・ツール類・通信費）</td>
+              <td class="num">30,000円</td>
+            </tr>
+            <tr>
+              <td>税・社会保険</td>
+              <td class="num">売上の約25%（変動費）</td>
+            </tr>
+            <tr>
+              <td class="total">年間固定費概算（固定費のみ）</td>
+              <td class="num total">360,000円</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warning-box">
+        <div class="warning-box-label">要確認</div>
+        <div class="warning-box-text">事務所費用（自宅兼事務所か別拠点かによって変動。方針確定後に追記）</div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         第10章 資金計画
+         ===================================================== -->
+    <section class="section" id="section-10">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 10 章</span>
+        <h2 class="chapter-title">資金計画（自己資金・助成金・補助金・借入）</h2>
+      </div>
+
+      <h3 class="section-heading">自己資金</h3>
+      <div class="warning-box">
+        <div class="warning-box-label">要確認・記載が必要</div>
+        <div class="warning-box-text">開業時の自己資金額を正式テンプレートへの流し込み前に確認・追記する</div>
+      </div>
+
+      <h3 class="section-heading">初期投資計画（開業時一時費用）</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>費目</th>
+              <th>内容</th>
+              <th class="num">金額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>名刺・販促物</td>
+              <td>名刺デザイン・印刷、簡易会社案内等</td>
+              <td class="num">
+                <span class="warning-inline">【要確認】</span>
+              </td>
+            </tr>
+            <tr>
+              <td>備品・機材</td>
+              <td>PC周辺機器・プロジェクター・マイク等</td>
+              <td class="num">
+                <span class="warning-inline">【要確認】</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Webサイト整備</td>
+              <td>ドメイン・ホスティング・制作改善費等</td>
+              <td class="num">
+                <span class="warning-inline">【要確認】</span>
+              </td>
+            </tr>
+            <tr>
+              <td>ツール・サービス利用料（初期）</td>
+              <td>AIツール・業務ソフト等の初期費用</td>
+              <td class="num">
+                <span class="warning-inline">【要確認】</span>
+              </td>
+            </tr>
+            <tr>
+              <td>諸費用</td>
+              <td>開業届・印鑑・書類・口座開設等</td>
+              <td class="num">
+                <span class="warning-inline">【要確認】</span>
+              </td>
+            </tr>
+            <tr>
+              <td>運転資金（3か月分）</td>
+              <td>生活費＋固定費×3か月</td>
+              <td class="num">
+                <span class="warning-inline">【要確認】</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="total">合計</td>
+              <td></td>
+              <td class="num total">
+                <span class="warning-inline">【要確認】</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="section-heading">開業後6か月 月次収支予測（保守シナリオ）</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>月</th>
+              <th class="num">売上収入</th>
+              <th class="num">固定費</th>
+              <th class="num">変動費（税・社保 売上×25%）</th>
+              <th class="num">月次収支</th>
+              <th class="num">累積残高</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1か月目</td>
+              <td class="num">0〜50,000円</td>
+              <td class="num">30,000円</td>
+              <td class="num">〜12,500円</td>
+              <td class="num">▲30,000〜▲42,500円</td>
+              <td class="num"><span class="warning-inline">【自己資金額による】</span></td>
+            </tr>
+            <tr>
+              <td>2か月目</td>
+              <td class="num">50,000〜100,000円</td>
+              <td class="num">30,000円</td>
+              <td class="num">12,500〜25,000円</td>
+              <td class="num">7,500〜▲5,000円</td>
+              <td class="num">—</td>
+            </tr>
+            <tr>
+              <td>3か月目</td>
+              <td class="num">100,000〜200,000円</td>
+              <td class="num">30,000円</td>
+              <td class="num">25,000〜50,000円</td>
+              <td class="num">45,000〜120,000円</td>
+              <td class="num">—</td>
+            </tr>
+            <tr>
+              <td>4か月目</td>
+              <td class="num">200,000〜300,000円</td>
+              <td class="num">30,000円</td>
+              <td class="num">50,000〜75,000円</td>
+              <td class="num">120,000〜195,000円</td>
+              <td class="num">—</td>
+            </tr>
+            <tr>
+              <td>5か月目</td>
+              <td class="num">250,000〜350,000円</td>
+              <td class="num">30,000円</td>
+              <td class="num">62,500〜87,500円</td>
+              <td class="num">157,500〜232,500円</td>
+              <td class="num">—</td>
+            </tr>
+            <tr>
+              <td>6か月目</td>
+              <td class="num">270,000〜400,000円</td>
+              <td class="num">30,000円</td>
+              <td class="num">67,500〜100,000円</td>
+              <td class="num">172,500〜270,000円</td>
+              <td class="num">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warning-box">
+        <div class="warning-box-label">注記</div>
+        <div class="warning-box-text">累積残高は自己資金額が確定次第、初月から記入する。</div>
+      </div>
+
+      <h3 class="section-heading">助成金・補助金（申請予定・受給確定ではない）</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>制度</th>
+              <th class="num">金額</th>
+              <th>条件・時期</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>府中市起業祝い助成金</td>
+              <td class="num">10万円</td>
+              <td>特定創業支援等事業完了＋開業届提出後に申請</td>
+            </tr>
+            <tr>
+              <td>小規模事業者持続化補助金（第20回）</td>
+              <td class="num">上限50万円（補助率2/3）</td>
+              <td>受付期間：11/5〜12/15。採択前購入は対象外</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul>
+        <li>補助金は「後払い・採択確定後に使用開始」が原則</li>
+        <li>補助金は収入として計上しない（収受後に会計処理）</li>
+      </ul>
+
+      <h3 class="section-heading">融資</h3>
+      <ul>
+        <li>当面利用予定なし</li>
+        <li>理由：税金納付実績・帳簿整備・事業実績を積み上げてから将来的に検討する</li>
+      </ul>
+    </section>
+
+    <!-- =====================================================
+         第11章 今後の方針・展望
+         ===================================================== -->
+    <section class="section" id="section-11">
+      <div class="chapter-header">
+        <span class="chapter-badge">第 11 章</span>
+        <h2 class="chapter-title">今後の方針・展望</h2>
+      </div>
+
+      <div class="phase-section">
+        <div class="phase-header">
+          <span class="phase-badge">1年目</span>
+          <span class="phase-title">開業〜12か月</span>
+        </div>
+        <ul class="phase-list">
+          <li>府中市内で3〜5社の継続支援先を確保する</li>
+          <li>支援事例・顧客の声・業務削減効果（数値）を記録・蓄積する</li>
+          <li>開業届提出・帳簿管理・確定申告の基盤を整える</li>
+        </ul>
+      </div>
+
+      <div class="phase-section">
+        <div class="phase-header">
+          <span class="phase-badge">2年目</span>
+          <span class="phase-title">13〜24か月</span>
+        </div>
+        <ul class="phase-list">
+          <li>商工会議所・よろず支援拠点への専門家派遣登録を強化する</li>
+          <li>補助金活用支援との連携を広げ、広島県内への広域展開を進める</li>
+          <li>蓄積した事例・数値を補助金申請・営業資料として活用する</li>
+        </ul>
+      </div>
+
+      <div class="phase-section">
+        <div class="phase-header">
+          <span class="phase-badge">長期方針</span>
+          <span class="phase-title">半農半AIモデルの実現</span>
+        </div>
+        <ul class="phase-list">
+          <li>農業と組み合わせた地域密着型の事業モデルを構築する</li>
+          <li>府中市を起点に、地方中小企業のAI活用支援の実践事例を作り続ける</li>
+          <li>支援実績を通じて「地域に根ざしたAI活用支援の専門家」としてのブランドを確立する</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="page-footer">
+      <p>© 2026 ざつね屋</p>
+      <p>本文書はドラフトです。2026年8月18日 府中商工会議所相談後に正式テンプレートへ流し込み予定。</p>
+    </footer>
+
+  </main>
+</div>
+
+<!-- =====================================================
+     JavaScript（テーマ切替 ＋ TOCアクティブ制御）
+     ===================================================== -->
+<script>
+(function () {
+  /* ---------- テーマ切替 ---------- */
+  var root = document.documentElement;
+  var toggleBtn = document.getElementById('themeToggle');
+
+  function getInitialTheme() {
+    var saved = localStorage.getItem('zatuneya-theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('zatuneya-theme', theme);
+  }
+
+  applyTheme(getInitialTheme());
+
+  toggleBtn.addEventListener('click', function () {
+    var current = root.getAttribute('data-theme');
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ---------- TOC アクティブ制御（IntersectionObserver） ---------- */
+  var sections = document.querySelectorAll('.section[id]');
+  var tocItems = document.querySelectorAll('.toc-item[data-target]');
+
+  if ('IntersectionObserver' in window) {
+    var activeId = null;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          activeId = entry.target.id;
+          tocItems.forEach(function (item) {
+            if (item.getAttribute('data-target') === activeId) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, {
+      rootMargin: '-40px 0px -60% 0px',
+      threshold: 0
+    });
+
+    sections.forEach(function (section) {
+      observer.observe(section);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
