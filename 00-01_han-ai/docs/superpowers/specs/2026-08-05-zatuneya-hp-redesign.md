@@ -297,3 +297,43 @@
 - `index.html` と `index-v2.html` のどちらを正本とするかが曖昧であり、意図しないページを更新するリスクがある。大規模変更の前に正本と公開経路を明確化する。
 - 今回は共同運用設計の追記のみとし、HTML、CSS、JavaScript は変更しない。
 - 実装予定のルールファイルは `zatuneya-hp/AGENTS.md` と `zatuneya-hp/CLAUDE.md` のみとする。サイト本体およびその他のファイルは、この設計追記の対象外とする。
+## 2026-08-14 下層ページデザインカンプの採用判断
+
+### 受領
+- design-comps/zatuneya-hpにPC 5枚、Mobile 5枚、design-spec.mdを保存。
+- ZIP SHA256 A6E20D1E149097E38414FE07CB0E3C1499FD5D3DE3A7790B4FC1E544531B8C3C。
+
+### 結論
+- 白基調、ティール、オレンジ、明朝見出し、写真＋波形の視覚方向は採用。
+- 文字切れ、Mobile重なり、CTAコントラスト、情報不足、共通ヘッダー不一致はCodexが実装時に補正。
+- works-profile-mobileとlegal-status-mobileは構成を再設計し、他は条件付き採用。
+- オレンジ#F8981D上の白文字2.21:1は使用せず、濃ティール#173F46等を使用。
+- 意味を持つティール文字・アイコンは濃色化。
+- 波形・巨大明朝の反復を抑え、意味のある章境界に限定。
+
+### 確定実装方針
+- お問い合わせはGoogle Formsを維持。
+- ヘッダーは現行の有用リンクを維持し、視覚のみカンプへ寄せる。
+- 写真は既存assetsを優先。
+- 導入事例はモデルケースと明記。
+- 法務・プロフィールは現行情報を正本とし、推測変更しない。
+- TOP本文は変更せず、共通ヘッダー／フッターのみindex.htmlとindex-v2.htmlへ同期。
+- FAQはアクセシブルなアコーディオン。
+- Mobileは原則1列、操作領域44x44px以上。
+- 320/375/390/768/1280pxで検証。
+
+### 対象と順序
+- 共通基盤: style.css, nav.js
+- サービス: services.htmlとservice-*.html 4件
+- 実績/プロフィール: works.html, profile.html
+- FAQ/問い合わせ: faq.html, contact.html
+- 法務/状態: privacy.html, tokusho.html, thank-you.html, 404.html
+- TOP 2件は共通シェル同期のみ。
+- 共通基盤→サービス→実績/プロフィール→FAQ/問い合わせ→法務/状態の順。
+
+### 既知課題
+- 個別style 14ページ、inline style 11箇所。
+- 重複header/footerの更新漏れリスク。
+- 診断URL混在、著作権年、tokusho/tokusyou不一致。
+- カンプ写真素材は未提供。既存assetsで代替。
+- 本記録時点ではサイトコード未変更。
