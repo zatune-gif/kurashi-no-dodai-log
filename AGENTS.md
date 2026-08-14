@@ -31,7 +31,7 @@ Project 00「半農半AI」の公開サイト・関連ツール群。GitHub Page
 
 ## Quality Standards
 
-AGENTS.md in ClaudeCodeTest1（`C:\Users\ooto\work\Codex\ClaudeCodeTest1\AGENTS.md`）のルールブックを参照。
+ClaudeCodeTest1（`C:\Users\ooto\work\ClaudeCode\own\ClaudeCodeTest1`）の開発ルールブック（`docs\superpowers\specs\dev-rulebook.md`）を参照。
 
 ### Top-level rules（never skip）
 
