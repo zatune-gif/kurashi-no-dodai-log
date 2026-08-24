@@ -140,14 +140,18 @@
     .rm-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 24px 24px; position: relative; overflow: hidden; }
     .rm-card.rm-current { border-color: var(--teal-deep); border-width: 1.5px; box-shadow: var(--shadow); }
     .rm-card.rm-future { background: var(--surface-2); }
+    .rm-card.rm-done { background: var(--surface-2); opacity: 0.85; }
     .rm-bg-num { position: absolute; right: 16px; top: 4px; font-size: 92px; font-weight: 700; color: rgba(23,63,70,0.05); line-height: 1; pointer-events: none; user-select: none; }
     .rm-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; position: relative; }
     .rm-label { font-size: 10.5px; font-weight: 700; color: #fff; background: var(--teal-deep); padding: 4px 12px; border-radius: 99px; letter-spacing: 0.08em; flex-shrink: 0; }
     .rm-future .rm-label { background: var(--ink-muted); }
+    .rm-done .rm-label { background: var(--ok); }
     .rm-title { font-size: 19px; font-weight: 700; color: var(--ink); flex: 1; }
     .rm-period { font-size: 11px; color: var(--ink-muted); white-space: nowrap; background: var(--surface); border: 1px solid var(--border); padding: 4px 12px; border-radius: 99px; font-weight: 500; }
     .rm-future .rm-period { background: var(--surface-2); }
+    .rm-done .rm-period { background: var(--surface-2); }
     .rm-now-stamp { width: 52px; height: 52px; border-radius: 50%; background: var(--orange); color: var(--ink); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 11px; letter-spacing: 0.05em; transform: rotate(-8deg); box-shadow: 0 4px 10px rgba(248,152,29,0.35); border: 2px dashed rgba(31,46,49,0.3); flex-shrink: 0; }
+    .rm-done-stamp { width: 52px; height: 52px; border-radius: 50%; background: var(--ok); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; box-shadow: 0 4px 10px rgba(46,139,87,0.3); flex-shrink: 0; }
     .rm-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
     .rm-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px 32px; }
     .rm-group-label { font-size: 10.5px; font-weight: 700; color: var(--teal-deep); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
@@ -398,18 +402,18 @@
     <div class="view-block" style="margin-bottom: 24px;">
       <p class="view-label">応援・助言してくださっている方々へ</p>
       <p class="view-text">
-        農業は完全に未経験です。農地の詳細も移住してから初めて確認します。<strong>このプロジェクトは移住後（P2：確認フェーズ）から本格始動</strong>。失敗も記録しながら、焦らずデータを見て進めます。
+        農業は完全に未経験です。2026年8月18日に移住が完了し、<strong>現在はP2（確認フェーズ）に入り、農地の詳細を確認している段階</strong>です（面積・土壌状態などの具体的な確認結果はまだ得られていません）。失敗も記録しながら、焦らずデータを見て進めます。
       </p>
     </div>
 
     <div class="roadmap">
-      <div class="rm-card rm-current">
+      <div class="rm-card rm-done">
         <div class="rm-bg-num">P1</div>
         <div class="rm-head">
           <span class="rm-label">P1</span>
           <span class="rm-title">移住前</span>
-          <span class="rm-period">現在進行中</span>
-          <span class="rm-now-stamp">NOW</span>
+          <span class="rm-period">完了</span>
+          <span class="rm-done-stamp">✓</span>
         </div>
         <div class="rm-divider"></div>
         <div class="rm-groups">
@@ -432,12 +436,13 @@
 
       <div class="roadmap-conn"></div>
 
-      <div class="rm-card rm-future">
+      <div class="rm-card rm-current">
         <div class="rm-bg-num">P2</div>
         <div class="rm-head">
           <span class="rm-label">P2</span>
           <span class="rm-title">確認フェーズ</span>
-          <span class="rm-period">移住直後〜6か月</span>
+          <span class="rm-period">現在進行中（移住直後〜6か月）</span>
+          <span class="rm-now-stamp">NOW</span>
         </div>
         <div class="rm-divider"></div>
         <div class="rm-groups">

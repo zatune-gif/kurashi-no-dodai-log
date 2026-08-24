@@ -207,6 +207,12 @@ img,svg{display:block;max-width:100%}
   box-shadow:0 20px 44px rgba(23,63,70,0.22);
 }
 .rm-card.rm-future{opacity:0.72}
+.rm-card.rm-done{opacity:0.72}
+.rm-done .rm-label{background:var(--ok)}
+.rm-done-badge{
+  font-size:12px; font-weight:700; letter-spacing:0.1em; color:#fff;
+  background:var(--ok); padding:var(--sp-1) var(--sp-3); border-radius:999px;
+}
 .rm-bg-num{
   position:absolute; right:var(--sp-4); top:-6px; font-size:96px; font-weight:700;
   font-family:'Shippori Mincho',serif; color:rgba(23,63,70,0.04); line-height:1;
@@ -383,7 +389,7 @@ img,svg{display:block;max-width:100%}
     <div class="hero-meta">
       <div class="hero-meta-item">
         <span class="hero-meta-label">最終更新</span>
-        <span class="hero-meta-value">2026年8月24日</span>
+        <span class="hero-meta-value">2026年8月25日</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">主軸事業</span>
@@ -391,7 +397,7 @@ img,svg{display:block;max-width:100%}
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">現在地</span>
-        <span class="hero-meta-value">P1（移住前フェーズ）</span>
+        <span class="hero-meta-value">P2（確認フェーズ／2026年8月18日移住完了）</span>
       </div>
     </div>
     <div class="hero-links">
@@ -432,12 +438,12 @@ img,svg{display:block;max-width:100%}
         <a href="hannou.html" class="pillar-card">
           <div class="pillar-top">
             <span class="pillar-num">00-02</span>
-            <span class="badge badge-neutral">・ 着手前（P2から）</span>
+            <span class="badge badge-neutral">・ 確認中（P2）</span>
           </div>
           <h3 class="pillar-name">半農プロジェクト</h3>
           <p class="pillar-desc">
             食料自給・地域理解・発信素材の3つの役割を担う。畑3か所・田んぼ2か所。
-            収益化は急がず、移住後の確認フェーズから本格的に着手します。
+            移住が完了し、農地の状態を確認する段階に入りました。収益化は急がず、確認フェーズから段階的に進めます。
           </p>
           <span class="pillar-arrow">詳細を見る →</span>
         </a>
@@ -445,12 +451,12 @@ img,svg{display:block;max-width:100%}
         <a href="seikatsu-kiban.html" class="pillar-card">
           <div class="pillar-top">
             <span class="pillar-num">00-03</span>
-            <span class="badge badge-neutral">・ 着手前（P2から）</span>
+            <span class="badge badge-neutral">・ 確認中（P2）</span>
           </div>
           <h3 class="pillar-name">生活基盤プロジェクト</h3>
           <p class="pillar-desc">
             月15万円で家族4人が持続可能に暮らせる基盤づくり。井戸・住居・エネルギーの順に、
-            移住後に状態を確認しながら整備していきます。
+            移住が完了し、状態を確認しながら整備を進めています。
           </p>
           <span class="pillar-arrow">詳細を見る →</span>
         </a>
@@ -464,7 +470,7 @@ img,svg{display:block;max-width:100%}
     <div class="wrap">
       <div class="section-head">
         <p class="section-num">全体ロードマップ</p>
-        <h2 class="section-title">P1〜P4 ／ 現在地はP1</h2>
+        <h2 class="section-title">P1〜P4 ／ 現在地はP2</h2>
         <p class="section-desc">
           厳密な計画ではなく、「何を試して、何を記録するか」の大まかな時間軸です。未確認事項が多いため、実態に合わせて更新していきます。
         </p>
@@ -472,13 +478,13 @@ img,svg{display:block;max-width:100%}
 
       <div class="roadmap">
 
-        <div class="rm-card rm-current">
+        <div class="rm-card rm-done">
           <p class="rm-bg-num">P1</p>
           <div class="rm-head">
             <span class="rm-label">P1</span>
             <h3 class="rm-title">移住前</h3>
-            <span class="rm-period">現在進行中</span>
-            <span class="rm-now">NOW</span>
+            <span class="rm-period">完了</span>
+            <span class="rm-done-badge">✓ 完了</span>
           </div>
           <div class="rm-divider"></div>
           <div class="rm-groups">
@@ -499,12 +505,13 @@ img,svg{display:block;max-width:100%}
           </div>
         </div>
 
-        <div class="rm-card rm-future">
+        <div class="rm-card rm-current">
           <p class="rm-bg-num">P2</p>
           <div class="rm-head">
             <span class="rm-label">P2</span>
             <h3 class="rm-title">確認フェーズ</h3>
-            <span class="rm-period">移住直後〜6か月</span>
+            <span class="rm-period">現在進行中（移住直後〜6か月）</span>
+            <span class="rm-now">NOW</span>
           </div>
           <div class="rm-divider"></div>
           <div class="rm-groups">
@@ -740,8 +747,8 @@ img,svg{display:block;max-width:100%}
           </div>
           <div class="prep-content">
             <p class="prep-date">2026年8月18日</p>
-            <p class="prep-title">府中商工会議所 開業相談（予約済み）</p>
-            <p class="prep-desc">確認済み。</p>
+            <p class="prep-title">府中商工会議所 開業相談（予約済み）／ 移住完了</p>
+            <p class="prep-desc">確認済み。2026年8月18日時点で転居・移住は完了しています。</p>
           </div>
         </div>
 
@@ -750,7 +757,7 @@ img,svg{display:block;max-width:100%}
             <span class="prep-dot">？</span>
           </div>
           <div class="prep-content">
-            <p class="prep-date">2026年8月24日時点</p>
+            <p class="prep-date">2026年8月25日時点</p>
             <p class="prep-title">開業相談の結果・開業届の提出状況</p>
             <p class="prep-desc">記録がなく、未確認です。次回更新時に確認して反映します。</p>
           </div>
