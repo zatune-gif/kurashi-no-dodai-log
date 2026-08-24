@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ざつね屋事業 進捗管理｜暮らしのログプロジェクト</title>
-<meta name="description" content="半農半AI・半農・生活基盤の3本柱で進める、ざつね屋事業の全体構想と進捗を一枚にまとめたダッシュボード。収益状況・ツール開発状況・開業準備の進捗・懸念事項をそのまま記録しています。">
+<meta name="description" content="半AI・半農・生活基盤の3本柱で進める、ざつね屋事業の全体構想と進捗を一枚にまとめたダッシュボード。収益状況・ツール開発状況・開業準備の進捗・懸念事項をそのまま記録しています。">
 <link rel="canonical" href="https://zatune-gif.github.io/kurashi-no-dodai-log/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ざつね屋">
 <meta property="og:title" content="ざつね屋事業 進捗管理｜暮らしのログプロジェクト">
-<meta property="og:description" content="半農半AI・半農・生活基盤の3本柱で進める、ざつね屋事業の全体構想と進捗を一枚にまとめたダッシュボード。">
+<meta property="og:description" content="半AI・半農・生活基盤の3本柱で進める、ざつね屋事業の全体構想と進捗を一枚にまとめたダッシュボード。">
 <meta property="og:url" content="https://zatune-gif.github.io/kurashi-no-dodai-log/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -324,6 +324,7 @@ img,svg{display:block;max-width:100%}
 }
 .prep-step.is-done .prep-dot{background:var(--ok); color:#fff}
 .prep-step.is-pending .prep-dot{background:var(--surface); border:2px dashed var(--warn); color:var(--warn-text)}
+.prep-step.is-scheduled .prep-dot{background:var(--surface); border:2px solid var(--teal-deep); color:var(--teal-deep)}
 .prep-line{width:2px; flex:1; background:var(--border); margin:var(--sp-1) 0; min-height:var(--sp-8)}
 .prep-step:last-child .prep-line{display:none}
 .prep-content{flex:1; padding-bottom:var(--sp-8)}
@@ -382,7 +383,7 @@ img,svg{display:block;max-width:100%}
     <p class="hero-eyebrow"><span class="dot"></span>Project 00 ／ ざつね屋事業 全体構想</p>
     <h1>ざつね屋事業<br>進捗管理</h1>
     <p class="hero-lead">
-      半農半AI・半農・生活基盤の3本柱で進めている、ざつね屋の事業構想と現時点までの進捗を一枚にまとめています。
+      半AI・半農・生活基盤の3本柱で進めている、ざつね屋の事業構想と現時点までの進捗を一枚にまとめています。
       伴走先候補・関係者など、事業の全体像を共有したい相手に向けたページです。
       宣伝ではなく、今どこまで進んでいて、何がまだ確定していないかを、そのまま記録することを目的にしています。
     </p>
@@ -752,14 +753,14 @@ img,svg{display:block;max-width:100%}
           </div>
         </div>
 
-        <div class="prep-step is-pending">
+        <div class="prep-step is-scheduled">
           <div class="prep-marker">
-            <span class="prep-dot">？</span>
+            <span class="prep-dot">📅</span>
           </div>
           <div class="prep-content">
             <p class="prep-date">2026年8月25日時点</p>
-            <p class="prep-title">開業相談の結果・開業届の提出状況</p>
-            <p class="prep-desc">記録がなく、未確認です。次回更新時に確認して反映します。</p>
+            <p class="prep-title">開業相談は順調、開業予定日は2026年9月18日</p>
+            <p class="prep-desc">府中商工会議所での開業相談は順調に進んでいます。開業届の提出は2026年9月18日を予定しており、現時点ではまだ提出していません。提出後にあらためて確認・反映します。</p>
           </div>
         </div>
 
@@ -780,14 +781,14 @@ img,svg{display:block;max-width:100%}
 
       <div class="concern-list">
 
-        <div class="concern-row">
-          <span class="concern-icon">⚠</span>
+        <div class="concern-row concern-info">
+          <span class="concern-icon">📎</span>
           <div class="concern-body">
             <div class="concern-head">
-              <span class="concern-title">開業準備の進捗が2026年8月18日以降、未確認</span>
-              <span class="badge badge-warn">！ 要確認</span>
+              <span class="concern-title">開業届の提出は2026年9月18日予定（提出前）</span>
+              <span class="badge badge-neutral">・ 予定確定</span>
             </div>
-            <p class="concern-desc">府中商工会議所での開業相談の結果、開業届の提出状況を確認する必要があります。</p>
+            <p class="concern-desc">府中商工会議所での開業相談は順調に進み、開業届の提出予定日が2026年9月18日に確定しました。提出自体はまだ完了していないため、提出後にあらためて確認・反映します。</p>
           </div>
         </div>
 
