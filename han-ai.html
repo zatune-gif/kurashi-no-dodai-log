@@ -146,6 +146,14 @@
     .tool-link { font-size: 12px; font-weight: 700; color: var(--teal-deep); background: var(--surface-2); border: 1.5px solid var(--teal-deep); border-radius: 99px; padding: 4px 16px; text-decoration: none; transition: background .15s; }
     .tool-link:hover { background: rgba(23,63,70,0.08); }
 
+    /* ── 自社開発ツール（グリッド） ── */
+    .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(272px, 1fr)); gap: 16px; margin-bottom: 16px; }
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
+    .tool-card .tool-head { margin-bottom: 0; }
+    .tool-card .tool-desc { margin-bottom: 0; flex: 1; }
+    .tool-tag { align-self: flex-start; font-size: 11px; font-weight: 700; color: var(--ink-muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 99px; padding: 4px 12px; }
+    @media (max-width: 480px) { .tool-grid { grid-template-columns: 1fr; } }
+
     /* ── 差別化グリッド ── */
     .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
     .diff-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); border-top: 3px solid var(--teal-deep); padding: 16px 16px; }
@@ -380,89 +388,192 @@
     </div>
   </div>
 
-  <!-- ══ 4. ツール開発状況 ══ -->
-  <div class="section">
+  <!-- ══ 4. 自社開発ツール ══ -->
+  <div class="section" id="tools">
     <div class="section-header">
       <div class="chapter-num">ツ</div>
-      <h2 class="section-title">ツール開発状況</h2>
+      <h2 class="section-title">自社開発ツール</h2>
       <div class="section-divider"></div>
     </div>
 
-    <div class="tool-list">
-      <div class="tool-item">
-        <div class="tool-icon">診</div>
-        <div class="tool-body">
-          <div class="tool-head">
-            <span class="tool-name">AI活用準備度診断ツール（13番）</span>
-            <span class="status status-live">稼働中</span>
-          </div>
-          <p class="tool-desc">
-            12問（簡易版）→ 23問（詳細版）→ 資料請求 / 見積請求の流れ。<br>
-            Claude APIをNetlify Functionsでサーバーサイド実行。
-          </p>
-          <div class="tool-links">
-            <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/" target="_blank" rel="noopener" class="tool-link">簡易版（12問）↗</a>
-            <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/detail.html" target="_blank" rel="noopener" class="tool-link">詳細版（23問）↗</a>
-          </div>
+    <p style="font-size:13px; color:var(--ink-muted); margin-bottom:16px; line-height:1.8;">
+      いずれもClaude Codeを使って開発した実績物です。AI事業の業務ツールから、業務外で開発した個人開発物まで、ジャンルを問わず「自社開発ツール」として一覧化しています。稼働状況を含めてそのまま掲載しています。
+    </p>
+
+    <div class="tool-grid">
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">13番｜AI活用準備度診断ツール</span>
+          <span class="status status-live">稼働中</span>
+        </div>
+        <p class="tool-desc">
+          12問（簡易版）→ 23問（詳細版）→ 資料請求 / 見積請求の流れ。Claude APIをNetlify Functionsでサーバーサイド実行。
+        </p>
+        <div class="tool-links">
+          <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/" target="_blank" rel="noopener noreferrer" class="tool-link">簡易版（12問）↗</a>
+          <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/detail.html" target="_blank" rel="noopener noreferrer" class="tool-link">詳細版（23問）↗</a>
         </div>
       </div>
-      <div class="tool-item">
-        <div class="tool-icon">測</div>
-        <div class="tool-body">
-          <div class="tool-head">
-            <span class="tool-name">AIツール理解度テスト</span>
-            <span class="status status-live">稼働中</span>
-          </div>
-          <p class="tool-desc">
-            20問・約3分で5軸スコアをレーダーチャートで可視化。研修のフックとしてHP上で自己診断できる。
-          </p>
-          <div class="tool-links">
-            <a href="./00-01_han-ai/ai-literacy-test/" class="tool-link">テストを受ける →</a>
-          </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">14番｜提案書自動生成（Electron）</span>
+          <span class="status status-live">完成</span>
+        </div>
+        <p class="tool-desc">
+          Electronアプリ。ヒアリングメモを入力 → Claude APIが提案書・見積書・診断結果PDFを自動生成。自分専用の業務効率化ツール。
+        </p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">15番｜プロンプトライブラリ</span>
+          <span class="status status-live">公開済み・22本</span>
+        </div>
+        <p class="tool-desc">業種別・用途別プロンプト集。クライアントへの「お土産」として渡す素材。</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">AIツール理解度テスト</span>
+          <span class="status status-live">稼働中</span>
+        </div>
+        <p class="tool-desc">
+          20問・約3分で5軸スコアをレーダーチャートで可視化。研修のフックとしてHP上で自己診断できる。
+        </p>
+        <div class="tool-links">
+          <a href="./00-01_han-ai/ai-literacy-test/" class="tool-link">テストを受ける →</a>
         </div>
       </div>
-      <div class="tool-item">
-        <div class="tool-icon">書</div>
-        <div class="tool-body">
-          <div class="tool-head">
-            <span class="tool-name">提案書自動生成ツール（14番）</span>
-            <span class="status status-live">完成</span>
-          </div>
-          <p class="tool-desc">
-            Electronアプリ。ヒアリングメモを入力 → Claude APIが提案書・見積書・診断結果PDFを自動生成。自分専用の業務効率化ツール。
-          </p>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">研修コース①〜⑤ 教材一式</span>
+          <span class="status status-live">完成</span>
+        </div>
+        <p class="tool-desc">各コースのスライド（PDF／PowerPoint）・台本・アンケート・案内文までを一式で作成済み。</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">この「暮らしの土台プロジェクト」公開サイト自体</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">index.html／han-ai.html／hannou.html／seikatsu-kiban.htmlの4ページ構成。2026年8月25日に全面刷新。</p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">漢字書き順なぞりゲーム</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">小学1〜6年生の漢字1,006字を指でなぞって覚えるWebアプリ。インストール不要でURLから即利用可。</p>
+        <div class="tool-links">
+          <a href="https://zatune-gif.github.io/kanji-stroke-order/" target="_blank" rel="noopener noreferrer" class="tool-link">サイトを見る ↗</a>
         </div>
       </div>
-      <div class="tool-item">
-        <div class="tool-icon">集</div>
-        <div class="tool-body">
-          <div class="tool-head">
-            <span class="tool-name">プロンプトライブラリ（15番）</span>
-            <span class="status status-live">公開済み・22本</span>
-          </div>
-          <p class="tool-desc">業種別・用途別プロンプト集。クライアントへの「お土産」として渡す素材。</p>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">離乳食レシピ提案アプリ</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">月齢・食材を選ぶだけでGemini APIがレシピを提案。予防接種スケジュールの自動計算機能も搭載。</p>
+        <div class="tool-links">
+          <a href="https://zatune-gif.github.io/ikuji-support/" target="_blank" rel="noopener noreferrer" class="tool-link">サイトを見る ↗</a>
         </div>
       </div>
-      <div class="tool-item">
-        <div class="tool-icon">頁</div>
-        <div class="tool-body">
-          <div class="tool-head">
-            <span class="tool-name">ざつね屋事業HP V2</span>
-            <span class="status status-wip">構築中</span>
-          </div>
-          <p class="tool-desc">現行の本番サイトと並存させながらV2を構築中。デザイン刷新・導線整理を進めている。</p>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">材料逆引き献立提案</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">冷蔵庫にある食材を入力するとAIが献立を提案。ジャンル・調理時間での絞り込みにも対応。</p>
+        <div class="tool-links">
+          <a href="https://zatune-gif.github.io/menu-suggester/" target="_blank" rel="noopener noreferrer" class="tool-link">サイトを見る ↗</a>
         </div>
       </div>
-      <div class="tool-item">
-        <div class="tool-icon">円</div>
-        <div class="tool-body">
-          <div class="tool-head">
-            <span class="tool-name">OMPお金の流れ管理ツール</span>
-            <span class="status status-live">v0.1.14・運用中</span>
-          </div>
-          <p class="tool-desc">伴走先（OMP）向けに開発したElectronアプリ。freee連携によるお金の流れ管理。伴走支援の実績事例。</p>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">YouTube Shortsジェネレーター</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">VOICEVOX合成音声とAI生成画像を組み合わせてショート動画を自動生成するデスクトップツール（Python製）。</p>
+        <div class="tool-links">
+          <a href="https://github.com/zatune-gif/shorts-video-generator" target="_blank" rel="noopener noreferrer" class="tool-link">GitHubを見る ↗</a>
         </div>
       </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">Slack人員管理リマインダーBot</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">月2回の状態チェックインをSlack DMで自動送信し、AIがスコアを分析して管理者に声かけのタイミングと方針を通知するBot（Python製）。</p>
+        <div class="tool-links">
+          <a href="https://github.com/zatune-gif/personnel-reminder" target="_blank" rel="noopener noreferrer" class="tool-link">GitHubを見る ↗</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">安酒愛好外飲み会 公式サイト</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">25年以上続く地域コミュニティのイベント告知・情報発信用サイト。</p>
+        <div class="tool-links">
+          <a href="https://zatune-gif.github.io/yasuzake-hp/" target="_blank" rel="noopener noreferrer" class="tool-link">サイトを見る ↗</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">ふらふら頭突き対戦ゲーム</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">Unityで制作したブラウザプレイ可能な2人対戦アクションゲーム。itch.ioにて公開。</p>
+        <div class="tool-links">
+          <a href="https://zatuneya.itch.io/furafura-headbutt-battle" target="_blank" rel="noopener noreferrer" class="tool-link">itch.ioで見る ↗</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">美術館展示情報 Facebook自動投稿Bot</span>
+          <span class="status status-live">稼働中</span>
+        </div>
+        <p class="tool-desc">福岡県内の美術館展示情報を自動収集しFacebookページへ定期投稿するBot。</p>
+        <div class="tool-links">
+          <a href="https://www.facebook.com/profile.php?id=61590408237008" target="_blank" rel="noopener noreferrer" class="tool-link">Facebookページを見る ↗</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">プロジェクト管理スケジュールツール</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">工程・予算・スケジュールを一元管理するツール。工数と単価入力で予算自動計算・営業日ベースのスケジュール自動生成・遅延シミュレーター機能を搭載。5種類のサンプルプロジェクト収録。</p>
+        <span class="tool-tag">Googleスプレッドシート</span>
+        <div class="tool-links">
+          <a href="https://docs.google.com/spreadsheets/d/11vG5_3e9SGzu20oVnyUq7F84BuwIlSH59wj-EnhDE0A/template/preview" target="_blank" rel="noopener noreferrer" class="tool-link">テンプレートを見る ↗</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-head">
+          <span class="tool-name">Web制作事業運営ツール</span>
+          <span class="status status-live">公開中</span>
+        </div>
+        <p class="tool-desc">受注ヒヤリングから契約書・見積書・請求書のPDF生成、AIによるテストサイト3案の自動生成（Claude API・DALL-E3使用）、公開前チェック、保守（GA分析・月次レポート）までを一気通貫で行うElectronデスクトップアプリ。テスト290件（Jest・Playwright E2E）、営業資料一式（紹介PDF・ワンページャー・デモ動画）も整備済み。</p>
+        <div class="tool-links">
+          <a href="https://github.com/zatune-gif/web-project-manager" target="_blank" rel="noopener noreferrer" class="tool-link">GitHubを見る ↗</a>
+        </div>
+      </div>
+
     </div>
 
     <div class="view-block">
