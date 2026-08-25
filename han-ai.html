@@ -137,7 +137,7 @@
     /* ── ツール行 ── */
     .tool-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
     .tool-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start; }
-    .tool-icon { font-size: 22px; flex-shrink: 0; width: 30px; text-align: center; }
+    .tool-icon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 8px; background: var(--teal-deep); color: #fff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
     .tool-body { flex: 1; min-width: 0; }
     .tool-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
     .tool-name { font-size: 15px; font-weight: 700; color: var(--ink); }
@@ -172,6 +172,7 @@
     .rm-done .rm-period { background: var(--surface-2); }
     .rm-now-stamp { width: 52px; height: 52px; border-radius: 50%; background: var(--orange); color: var(--ink); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 11px; letter-spacing: 0.05em; transform: rotate(-8deg); box-shadow: 0 4px 10px rgba(248,152,29,0.35); border: 2px dashed rgba(31,46,49,0.3); flex-shrink: 0; }
     .rm-done-stamp { width: 52px; height: 52px; border-radius: 50%; background: var(--ok); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; box-shadow: 0 4px 10px rgba(46,139,87,0.3); flex-shrink: 0; }
+    .rm-done-stamp::before { content: ''; width: 18px; height: 10px; border-left: 3px solid #fff; border-bottom: 3px solid #fff; transform: rotate(-45deg) translate(1px, -3px); }
     .rm-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
     .rm-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px 32px; }
     .rm-group-label { font-size: 10.5px; font-weight: 700; color: var(--teal-deep); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
@@ -218,7 +219,7 @@
       </div>
     </div>
     <div class="cover-links">
-      <a href="./00-01_han-ai/ai-literacy-test/" class="cover-link">🧠 AIツール理解度テストを受ける</a>
+      <a href="./00-01_han-ai/ai-literacy-test/" class="cover-link">AIツール理解度テストを受ける →</a>
     </div>
   </div>
 </div>
@@ -389,7 +390,7 @@
 
     <div class="tool-list">
       <div class="tool-item">
-        <div class="tool-icon">🩺</div>
+        <div class="tool-icon">診</div>
         <div class="tool-body">
           <div class="tool-head">
             <span class="tool-name">AI活用準備度診断ツール（13番）</span>
@@ -406,7 +407,7 @@
         </div>
       </div>
       <div class="tool-item">
-        <div class="tool-icon">🧠</div>
+        <div class="tool-icon">測</div>
         <div class="tool-body">
           <div class="tool-head">
             <span class="tool-name">AIツール理解度テスト</span>
@@ -421,7 +422,7 @@
         </div>
       </div>
       <div class="tool-item">
-        <div class="tool-icon">📄</div>
+        <div class="tool-icon">書</div>
         <div class="tool-body">
           <div class="tool-head">
             <span class="tool-name">提案書自動生成ツール（14番）</span>
@@ -433,7 +434,7 @@
         </div>
       </div>
       <div class="tool-item">
-        <div class="tool-icon">📚</div>
+        <div class="tool-icon">集</div>
         <div class="tool-body">
           <div class="tool-head">
             <span class="tool-name">プロンプトライブラリ（15番）</span>
@@ -443,7 +444,7 @@
         </div>
       </div>
       <div class="tool-item">
-        <div class="tool-icon">🌐</div>
+        <div class="tool-icon">頁</div>
         <div class="tool-body">
           <div class="tool-head">
             <span class="tool-name">ざつね屋事業HP V2</span>
@@ -453,7 +454,7 @@
         </div>
       </div>
       <div class="tool-item">
-        <div class="tool-icon">💰</div>
+        <div class="tool-icon">円</div>
         <div class="tool-body">
           <div class="tool-head">
             <span class="tool-name">OMPお金の流れ管理ツール</span>
@@ -519,7 +520,7 @@
           <span class="rm-label">P1</span>
           <span class="rm-title">移住前</span>
           <span class="rm-period">完了</span>
-          <span class="rm-done-stamp">✓</span>
+          <span class="rm-done-stamp" aria-hidden="true"></span>
         </div>
         <div class="rm-divider"></div>
         <div class="rm-groups">

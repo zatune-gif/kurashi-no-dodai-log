@@ -102,7 +102,7 @@
     .unknown-items li { font-size: 12.5px; color: var(--ink); background: var(--surface); border: 1px solid rgba(181,114,10,0.25); padding: 4px 12px; border-radius: 99px; font-weight: 500; }
 
     .info-bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
-    .info-bar__icon { font-size: 18px; flex-shrink: 0; }
+    .info-bar__icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; background: var(--teal-deep); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
     .info-bar__text { font-size: 13.5px; color: var(--ink-muted); line-height: 1.8; }
     .info-bar__text strong { color: var(--ink); font-weight: 700; }
 
@@ -118,7 +118,7 @@
     /* ── 健康機器 ── */
     .health-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
     .health-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 16px; display: flex; align-items: center; gap: 12px; }
-    .health-item__icon { font-size: 20px; flex-shrink: 0; }
+    .health-item__icon { flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px; background: var(--teal-deep); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
     .health-item__name { font-size: 13px; font-weight: 700; color: var(--ink); }
     .health-item__status { font-size: 11.5px; color: var(--ink-muted); margin-top: 4px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
     .health-item__status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); flex-shrink: 0; }
@@ -155,6 +155,7 @@
     .rm-done .rm-period { background: var(--surface-2); }
     .rm-now-stamp { width: 52px; height: 52px; border-radius: 50%; background: var(--orange); color: var(--ink); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 11px; letter-spacing: 0.05em; transform: rotate(-8deg); box-shadow: 0 4px 10px rgba(248,152,29,0.35); border: 2px dashed rgba(31,46,49,0.3); flex-shrink: 0; }
     .rm-done-stamp { width: 52px; height: 52px; border-radius: 50%; background: var(--ok); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; box-shadow: 0 4px 10px rgba(46,139,87,0.3); flex-shrink: 0; }
+    .rm-done-stamp::before { content: ''; width: 18px; height: 10px; border-left: 3px solid #fff; border-bottom: 3px solid #fff; transform: rotate(-45deg) translate(1px, -3px); }
     .rm-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
     .rm-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px 32px; }
     .rm-group-label { font-size: 10.5px; font-weight: 700; color: var(--teal-deep); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
@@ -248,7 +249,7 @@
     </div>
 
     <div class="info-bar" style="margin-bottom: 20px;">
-      <div class="info-bar__icon">💡</div>
+      <div class="info-bar__icon">針</div>
       <div class="info-bar__text"><strong>方針：急いで設備投資しない。</strong>家賃ゼロなので余裕がある。データを取ってから判断する。</div>
     </div>
 
@@ -330,28 +331,28 @@
     <p style="font-size: 13px; color: var(--ink-muted); margin-bottom: 12px; font-weight: 700;">整備済みの健康管理機器</p>
     <div class="health-grid">
       <div class="health-item">
-        <span class="health-item__icon">💊</span>
+        <span class="health-item__icon">圧</span>
         <div>
           <p class="health-item__name">上腕式血圧計</p>
           <p class="health-item__status">整備済み</p>
         </div>
       </div>
       <div class="health-item">
-        <span class="health-item__icon">⌚</span>
+        <span class="health-item__icon">時</span>
         <div>
           <p class="health-item__name">スマートウォッチ</p>
           <p class="health-item__status">整備済み</p>
         </div>
       </div>
       <div class="health-item">
-        <span class="health-item__icon">⚖️</span>
+        <span class="health-item__icon">重</span>
         <div>
           <p class="health-item__name">体重計</p>
           <p class="health-item__status">整備済み</p>
         </div>
       </div>
       <div class="health-item">
-        <span class="health-item__icon">🔬</span>
+        <span class="health-item__icon">検</span>
         <div>
           <p class="health-item__name">定期血液検査</p>
           <p class="health-item__status">体制整備済み</p>
@@ -417,7 +418,7 @@
           <span class="rm-label">P1</span>
           <span class="rm-title">移住前</span>
           <span class="rm-period">完了</span>
-          <span class="rm-done-stamp">✓</span>
+          <span class="rm-done-stamp" aria-hidden="true"></span>
         </div>
         <div class="rm-divider"></div>
         <div class="rm-groups">

@@ -129,7 +129,7 @@
     /* ── 農地カード ── */
     .farm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
     .farm-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); border-top: 3px solid var(--teal-deep); padding: 20px 16px; text-align: center; }
-    .farm-icon { font-size: 26px; margin-bottom: 8px; }
+    .farm-icon { width: 10px; height: 10px; margin: 0 auto 14px; border-radius: 50%; background: var(--teal-deep); }
     .farm-count { font-size: 28px; font-weight: 700; color: var(--teal-deep); line-height: 1; margin-bottom: 8px; }
     .farm-name { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
     .farm-note { font-size: 11.5px; color: var(--ink-muted); }
@@ -155,7 +155,8 @@
     .health-alert__text strong { color: var(--danger); font-weight: 700; }
 
     .info-bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
-    .info-bar__icon { font-size: 18px; flex-shrink: 0; }
+    .info-bar__icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; background: var(--teal-deep); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .info-bar__icon--warn { background: var(--warn); }
     .info-bar__text { font-size: 13.5px; color: var(--ink-muted); line-height: 1.8; }
     .info-bar__text strong { color: var(--ink); font-weight: 700; }
 
@@ -177,6 +178,7 @@
     .rm-done .rm-period { background: var(--surface-2); }
     .rm-now-stamp { width: 52px; height: 52px; border-radius: 50%; background: var(--orange); color: var(--ink); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 11px; letter-spacing: 0.05em; transform: rotate(-8deg); box-shadow: 0 4px 10px rgba(248,152,29,0.35); border: 2px dashed rgba(31,46,49,0.3); flex-shrink: 0; }
     .rm-done-stamp { width: 52px; height: 52px; border-radius: 50%; background: var(--ok); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; box-shadow: 0 4px 10px rgba(46,139,87,0.3); flex-shrink: 0; }
+    .rm-done-stamp::before { content: ''; width: 18px; height: 10px; border-left: 3px solid #fff; border-bottom: 3px solid #fff; transform: rotate(-45deg) translate(1px, -3px); }
     .rm-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
     .rm-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px 32px; }
     .rm-group-label { font-size: 10.5px; font-weight: 700; color: var(--teal-deep); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
@@ -294,19 +296,19 @@
 
       <div class="farm-grid">
         <div class="farm-card">
-          <div class="farm-icon">🥬</div>
+          <div class="farm-icon"></div>
           <div class="farm-count">3</div>
           <div class="farm-name">畑</div>
           <div class="farm-note">野菜・根菜類</div>
         </div>
         <div class="farm-card">
-          <div class="farm-icon">🌾</div>
+          <div class="farm-icon"></div>
           <div class="farm-count">2</div>
           <div class="farm-name">田んぼ</div>
           <div class="farm-note">米作り</div>
         </div>
         <div class="farm-card">
-          <div class="farm-icon">🌲</div>
+          <div class="farm-icon"></div>
           <div class="farm-count">あり</div>
           <div class="farm-name">山</div>
           <div class="farm-note">管理状況未確認</div>
@@ -314,7 +316,7 @@
       </div>
 
       <div class="info-bar">
-        <div class="info-bar__icon">🔗</div>
+        <div class="info-bar__icon">関</div>
         <div class="info-bar__text">この畑3か所・田んぼ2か所・山は、<strong>妻の実家が所有する農地と同一</strong>。Bレイヤー「妻の農業経営」の就農予定地でもある（詳細は後述）。</div>
       </div>
 
@@ -331,7 +333,7 @@
       </div>
 
       <div class="info-bar">
-        <div class="info-bar__icon">📍</div>
+        <div class="info-bar__icon">地</div>
         <div class="info-bar__text"><strong>所在地：福山市新市町</strong>。住居（府中市）とは別の市。移動時間・農作業の頻度設計が必要。</div>
       </div>
     </div>
@@ -448,7 +450,7 @@
       </ul>
 
       <div class="info-bar">
-        <div class="info-bar__icon">📢</div>
+        <div class="info-bar__icon">報</div>
         <div class="info-bar__text">媒体候補：<strong>YouTube（農作業動画）</strong>・<strong>note（詳細記録）</strong>・<strong>X/Facebook（日常シェア）</strong></div>
       </div>
     </div>
@@ -503,7 +505,7 @@
       </div>
 
       <div class="info-bar">
-        <div class="info-bar__icon">📍</div>
+        <div class="info-bar__icon">地</div>
         <div class="info-bar__text"><strong>就農予定地：広島県福山市新市町</strong>。居住地の府中市とは別の市。既存の畑3か所・田んぼ2か所・山と<strong>同一の農地</strong>（妻の実家所有）。</div>
       </div>
 
@@ -549,7 +551,7 @@
       </div>
 
       <div class="info-bar">
-        <div class="info-bar__icon">⚠️</div>
+        <div class="info-bar__icon info-bar__icon--warn">注</div>
         <div class="info-bar__text">いずれの制度も、要件・締切・対象条件は<strong>今後、農林水産省・広島県・福山市の公式情報で確認予定</strong>。現時点では断定しない。</div>
       </div>
     </div>
@@ -647,7 +649,7 @@
           <span class="rm-label">P1</span>
           <span class="rm-title">移住前</span>
           <span class="rm-period">完了</span>
-          <span class="rm-done-stamp">✓</span>
+          <span class="rm-done-stamp" aria-hidden="true"></span>
         </div>
         <div class="rm-divider"></div>
         <div class="rm-groups">
