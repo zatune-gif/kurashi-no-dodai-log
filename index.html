@@ -293,7 +293,6 @@ img,svg{display:block;max-width:100%}
   background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius);
   padding:var(--sp-5) var(--sp-6);
 }
-.info-note-icon{font-size:15px; flex-shrink:0}
 .info-note-text{font-size:13px; color:var(--ink-muted); line-height:1.8}
 .info-note-text strong{color:var(--ink)}
 
@@ -303,11 +302,6 @@ img,svg{display:block;max-width:100%}
   display:flex; gap:var(--sp-5); align-items:flex-start;
   background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
   padding:var(--sp-6);
-}
-.tool-icon{
-  flex-shrink:0; width:44px; height:44px; border-radius:12px;
-  background:var(--surface-2); display:flex; align-items:center; justify-content:center;
-  font-size:20px;
 }
 .tool-body{flex:1; min-width:0}
 .tool-head{display:flex; align-items:center; gap:var(--sp-3); flex-wrap:wrap; margin-bottom:var(--sp-2)}
@@ -330,10 +324,6 @@ img,svg{display:block;max-width:100%}
   padding:var(--sp-6); transition:transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
 }
 a.achieve-card:hover{transform:translateY(-3px); box-shadow:0 14px 32px rgba(23,63,70,0.12); border-color:var(--teal)}
-.achieve-icon{
-  width:40px; height:40px; border-radius:10px; flex-shrink:0;
-  background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:18px;
-}
 .achieve-name{font-size:14.5px; font-weight:700; color:var(--ink); line-height:1.5}
 .achieve-desc{font-size:13px; line-height:1.75; color:var(--ink-muted); flex:1}
 .achieve-link{font-size:12.5px; font-weight:700; color:var(--teal-text)}
@@ -389,7 +379,6 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
   border-radius:var(--radius); padding:var(--sp-6);
 }
 .concern-row.concern-info{border-left-color:var(--teal)}
-.concern-icon{font-size:18px; flex-shrink:0}
 .concern-body{flex:1}
 .concern-head{display:flex; align-items:center; gap:var(--sp-3); flex-wrap:wrap; margin-bottom:var(--sp-2)}
 .concern-title{font-size:15px; font-weight:700; color:var(--ink)}
@@ -475,7 +464,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
         <a href="han-ai.html" class="pillar-card">
           <div class="pillar-top">
             <span class="pillar-num">00-01</span>
-            <span class="badge badge-ok">✓ 進行中</span>
+            <span class="badge badge-ok">進行中</span>
           </div>
           <h3 class="pillar-name">半AIプロジェクト</h3>
           <p class="pillar-desc">
@@ -488,7 +477,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
         <a href="hannou.html" class="pillar-card">
           <div class="pillar-top">
             <span class="pillar-num">00-02</span>
-            <span class="badge badge-neutral">・ 確認中（P2）</span>
+            <span class="badge badge-neutral">確認中（P2）</span>
           </div>
           <h3 class="pillar-name">半農プロジェクト</h3>
           <p class="pillar-desc">
@@ -501,7 +490,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
         <a href="seikatsu-kiban.html" class="pillar-card">
           <div class="pillar-top">
             <span class="pillar-num">00-03</span>
-            <span class="badge badge-neutral">・ 確認中（P2）</span>
+            <span class="badge badge-neutral">確認中（P2）</span>
           </div>
           <h3 class="pillar-name">生活基盤プロジェクト</h3>
           <p class="pillar-desc">
@@ -534,7 +523,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
             <span class="rm-label">P1</span>
             <h3 class="rm-title">移住前</h3>
             <span class="rm-period">完了</span>
-            <span class="rm-done-badge">✓ 完了</span>
+            <span class="rm-done-badge">完了</span>
           </div>
           <div class="rm-divider"></div>
           <div class="rm-groups">
@@ -677,7 +666,6 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
       </div>
 
       <div class="info-note">
-        <span class="info-note-icon">📎</span>
         <p class="info-note-text">
           <strong>数値の基準について。</strong>
           内部資料の間で月商目標の端数に食い違いが見られたため、次回の資料統一で解消予定です。
@@ -701,88 +689,80 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
       <div class="tool-list">
 
         <div class="tool-row">
-          <span class="tool-icon">🩺</span>
           <div class="tool-body">
             <div class="tool-head">
               <span class="tool-name">13番｜AI活用準備度診断ツール</span>
-              <span class="badge badge-ok">✓ 稼働中</span>
+              <span class="badge badge-ok">稼働中</span>
             </div>
             <p class="tool-desc">GitHub Pagesで仮公開しつつ、Netlifyを本番として稼働中。</p>
           </div>
         </div>
 
         <div class="tool-row">
-          <span class="tool-icon">📄</span>
           <div class="tool-body">
             <div class="tool-head">
               <span class="tool-name">14番｜提案書自動生成（Electron）</span>
-              <span class="badge badge-ok">✓ 完成</span>
+              <span class="badge badge-ok">完成</span>
             </div>
             <p class="tool-desc">受け入れ確認済み。営業フローの中で提案書を自動生成する。</p>
           </div>
         </div>
 
         <div class="tool-row">
-          <span class="tool-icon">💬</span>
           <div class="tool-body">
             <div class="tool-head">
               <span class="tool-name">15番｜プロンプトライブラリ</span>
-              <span class="badge badge-ok">✓ 公開済み</span>
+              <span class="badge badge-ok">公開済み</span>
             </div>
             <p class="tool-desc">プロンプト22本を公開済み。</p>
           </div>
         </div>
 
         <div class="tool-row">
-          <span class="tool-icon">🏢</span>
           <div class="tool-body">
             <div class="tool-head">
               <span class="tool-name">ざつね屋事業HP</span>
-              <span class="badge badge-warn">！ 構築中</span>
+              <span class="badge badge-warn">構築中</span>
             </div>
             <p class="tool-desc">V2サイトを構築中。現行本番と並存しており、統合するかどうかの判断は未決定。</p>
           </div>
         </div>
 
         <div class="tool-row">
-          <span class="tool-icon">💰</span>
           <div class="tool-body">
             <div class="tool-head">
               <span class="tool-name">OMP｜お金の流れ管理ツール</span>
-              <span class="badge badge-ok">✓ 稼働中</span>
+              <span class="badge badge-ok">稼働中</span>
             </div>
             <p class="tool-desc">v0.1.14。クライアント伴走の実績事例として運用中。</p>
           </div>
         </div>
 
         <div class="tool-row">
-          <span class="tool-icon">🧠</span>
           <div class="tool-body">
             <div class="tool-head">
               <span class="tool-name">AIツール理解度テスト</span>
-              <span class="badge badge-ok">✓ 稼働中</span>
+              <span class="badge badge-ok">稼働中</span>
             </div>
             <p class="tool-desc">20問・約3分で5軸スコアをレーダーチャートで可視化。研修のフックとしてHP上で自己診断できる。</p>
           </div>
         </div>
 
         <div class="tool-row">
-          <span class="tool-icon">📚</span>
           <div class="tool-body">
             <div class="tool-head">
               <span class="tool-name">研修コース①〜⑤ 教材一式</span>
-              <span class="badge badge-ok">✓ 完成</span>
+              <span class="badge badge-ok">完成</span>
             </div>
             <p class="tool-desc">各コースのスライド（PDF／PowerPoint）・台本・アンケート・案内文までを一式で作成済み。</p>
           </div>
         </div>
 
         <div class="tool-row">
-          <span class="tool-icon">📊</span>
           <div class="tool-body">
             <div class="tool-head">
               <span class="tool-name">この「暮らしの土台プロジェクト」公開サイト自体</span>
-              <span class="badge badge-ok">✓ 公開中</span>
+              <span class="badge badge-ok">公開中</span>
             </div>
             <p class="tool-desc">index.html／han-ai.html／hannou.html／seikatsu-kiban.htmlの4ページ構成。2026年8月25日に全面刷新。</p>
           </div>
@@ -801,63 +781,54 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
       <div class="achieve-grid">
 
         <a class="achieve-card" href="https://zatune-gif.github.io/kanji-stroke-order/" target="_blank" rel="noopener noreferrer">
-          <span class="achieve-icon">✏️</span>
           <span class="achieve-name">漢字書き順なぞりゲーム</span>
           <span class="achieve-desc">小学1〜6年生の漢字1,006字を指でなぞって覚えるWebアプリ。インストール不要でURLから即利用可。</span>
           <span class="achieve-link">サイトを見る ↗</span>
         </a>
 
         <a class="achieve-card" href="https://zatune-gif.github.io/ikuji-support/" target="_blank" rel="noopener noreferrer">
-          <span class="achieve-icon">🍼</span>
           <span class="achieve-name">離乳食レシピ提案アプリ</span>
           <span class="achieve-desc">月齢・食材を選ぶだけでGemini APIがレシピを提案。予防接種スケジュールの自動計算機能も搭載。</span>
           <span class="achieve-link">サイトを見る ↗</span>
         </a>
 
         <a class="achieve-card" href="https://zatune-gif.github.io/menu-suggester/" target="_blank" rel="noopener noreferrer">
-          <span class="achieve-icon">🥘</span>
           <span class="achieve-name">材料逆引き献立提案</span>
           <span class="achieve-desc">冷蔵庫にある食材を入力するとAIが献立を提案。ジャンル・調理時間での絞り込みにも対応。</span>
           <span class="achieve-link">サイトを見る ↗</span>
         </a>
 
         <a class="achieve-card" href="https://github.com/zatune-gif/shorts-video-generator" target="_blank" rel="noopener noreferrer">
-          <span class="achieve-icon">🎬</span>
           <span class="achieve-name">YouTube Shortsジェネレーター</span>
           <span class="achieve-desc">VOICEVOX合成音声とAI生成画像を組み合わせてショート動画を自動生成するデスクトップツール（Python製）。</span>
           <span class="achieve-link">GitHubを見る ↗</span>
         </a>
 
         <a class="achieve-card" href="https://github.com/zatune-gif/personnel-reminder" target="_blank" rel="noopener noreferrer">
-          <span class="achieve-icon">🔔</span>
           <span class="achieve-name">Slack人員管理リマインダーBot</span>
           <span class="achieve-desc">月2回の状態チェックインをSlack DMで自動送信し、AIがスコアを分析して管理者に声かけのタイミングと方針を通知するBot（Python製）。</span>
           <span class="achieve-link">GitHubを見る ↗</span>
         </a>
 
         <a class="achieve-card" href="https://zatune-gif.github.io/yasuzake-hp/" target="_blank" rel="noopener noreferrer">
-          <span class="achieve-icon">🍶</span>
           <span class="achieve-name">安酒愛好外飲み会 公式サイト</span>
           <span class="achieve-desc">25年以上続く地域コミュニティのイベント告知・情報発信用サイト。</span>
           <span class="achieve-link">サイトを見る ↗</span>
         </a>
 
         <a class="achieve-card" href="https://zatuneya.itch.io/furafura-headbutt-battle" target="_blank" rel="noopener noreferrer">
-          <span class="achieve-icon">🎮</span>
           <span class="achieve-name">ふらふら頭突き対戦ゲーム</span>
           <span class="achieve-desc">Unityで制作したブラウザプレイ可能な2人対戦アクションゲーム。itch.ioにて公開。</span>
           <span class="achieve-link">itch.ioで見る ↗</span>
         </a>
 
         <a class="achieve-card" href="https://www.facebook.com/profile.php?id=61590408237008" target="_blank" rel="noopener noreferrer">
-          <span class="achieve-icon">🖼️</span>
           <span class="achieve-name">美術館展示情報 Facebook自動投稿Bot</span>
           <span class="achieve-desc">福岡県内の美術館展示情報を自動収集しFacebookページへ定期投稿するBot。</span>
           <span class="achieve-link">Facebookページを見る ↗</span>
         </a>
 
         <a class="achieve-card" href="https://docs.google.com/spreadsheets/d/11vG5_3e9SGzu20oVnyUq7F84BuwIlSH59wj-EnhDE0A/template/preview" target="_blank" rel="noopener noreferrer">
-          <span class="achieve-icon">📅</span>
           <span class="achieve-name">プロジェクト管理スケジュールツール（Googleスプレッドシート）</span>
           <span class="achieve-desc">工程・予算・スケジュールを一元管理するツール。工数と単価入力で予算自動計算・営業日ベースのスケジュール自動生成・遅延シミュレーター機能を搭載。5種類のサンプルプロジェクト収録。</span>
           <span class="achieve-tag">Googleスプレッドシート</span>
@@ -880,7 +851,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
 
         <div class="prep-step is-done">
           <div class="prep-marker">
-            <span class="prep-dot">✓</span>
+            <span class="prep-dot"></span>
             <span class="prep-line"></span>
           </div>
           <div class="prep-content">
@@ -892,7 +863,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
 
         <div class="prep-step is-done">
           <div class="prep-marker">
-            <span class="prep-dot">✓</span>
+            <span class="prep-dot"></span>
             <span class="prep-line"></span>
           </div>
           <div class="prep-content">
@@ -904,7 +875,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
 
         <div class="prep-step is-done">
           <div class="prep-marker">
-            <span class="prep-dot">✓</span>
+            <span class="prep-dot"></span>
             <span class="prep-line"></span>
           </div>
           <div class="prep-content">
@@ -916,7 +887,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
 
         <div class="prep-step is-scheduled">
           <div class="prep-marker">
-            <span class="prep-dot">📅</span>
+            <span class="prep-dot"></span>
           </div>
           <div class="prep-content">
             <p class="prep-date">2026年8月25日時点</p>
@@ -945,7 +916,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
         <div class="task-card">
           <div class="task-card-head">
             <span class="task-card-num">00-01 半AI</span>
-            <span class="badge badge-neutral">○ 未着手（4件）</span>
+            <span class="badge badge-neutral">未着手（4件）</span>
           </div>
           <ul class="task-items">
             <li class="task-item">
@@ -970,7 +941,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
         <div class="task-card">
           <div class="task-card-head">
             <span class="task-card-num">00-02 半農</span>
-            <span class="badge badge-neutral">○ 未着手（①〜⑩）</span>
+            <span class="badge badge-neutral">未着手（①〜⑩）</span>
           </div>
           <ul class="task-items">
             <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">①福山市への新規就農事前相談</span></li>
@@ -985,7 +956,6 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
             <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">⑩必要設備導入</span></li>
           </ul>
           <div class="info-note">
-            <span class="info-note-icon">⏸</span>
             <p class="info-note-text">
               <strong>着手時期未定・保留中。</strong>
               家計キャッシュフロー・農業収支の記録整備（妻の入力参加含む）は、上記①〜⑩とは別に着手時期未定・保留中のタスクです。
@@ -996,7 +966,7 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
         <div class="task-card">
           <div class="task-card-head">
             <span class="task-card-num">00-03 生活基盤</span>
-            <span class="badge badge-neutral">○ 未着手（4件）</span>
+            <span class="badge badge-neutral">未着手（4件）</span>
           </div>
           <ul class="task-items">
             <li class="task-item">
@@ -1036,44 +1006,40 @@ a.achieve-card:hover .achieve-link{color:var(--orange-text)}
       <div class="concern-list">
 
         <div class="concern-row concern-info">
-          <span class="concern-icon">📎</span>
           <div class="concern-body">
             <div class="concern-head">
               <span class="concern-title">開業届の提出は2026年9月18日予定（提出前）</span>
-              <span class="badge badge-neutral">・ 予定確定</span>
+              <span class="badge badge-neutral">予定確定</span>
             </div>
             <p class="concern-desc">府中商工会議所での開業相談は順調に進み、開業届の提出予定日が2026年9月18日に確定しました。提出自体はまだ完了していないため、提出後にあらためて確認・反映します。</p>
           </div>
         </div>
 
         <div class="concern-row">
-          <span class="concern-icon">⚠</span>
           <div class="concern-body">
             <div class="concern-head">
               <span class="concern-title">ざつね屋事業HPのV2サイトと現行本番が並存中</span>
-              <span class="badge badge-warn">！ 要確認</span>
+              <span class="badge badge-warn">要確認</span>
             </div>
             <p class="concern-desc">統合するかどうかの判断がまだ決まっていません。</p>
           </div>
         </div>
 
         <div class="concern-row concern-info">
-          <span class="concern-icon">📎</span>
           <div class="concern-body">
             <div class="concern-head">
               <span class="concern-title">収益シナリオの月商目標に端数の食い違い</span>
-              <span class="badge badge-neutral">・ 対応予定</span>
+              <span class="badge badge-neutral">対応予定</span>
             </div>
             <p class="concern-desc">資料間で数値の端数に差異が見られました。次回の資料統一で解消予定です。本ページの数値は事業計画書（2026年8月13日時点）を正としています。</p>
           </div>
         </div>
 
         <div class="concern-row">
-          <span class="concern-icon">⚠</span>
           <div class="concern-body">
             <div class="concern-head">
               <span class="concern-title">助成金訴求表記の是正、反映の完了が未確認</span>
-              <span class="badge badge-warn">！ 要確認</span>
+              <span class="badge badge-warn">要確認</span>
             </div>
             <p class="concern-desc">「助成金75%」等の表記の是正は2026年8月3日に承認済みですが、実際の反映が完了しているかは未確認です。</p>
           </div>
