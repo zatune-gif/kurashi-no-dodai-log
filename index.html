@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ざつね屋事業 進捗管理｜暮らしのログプロジェクト</title>
-<meta name="description" content="半AI・半農・生活基盤の3本柱で進める、ざつね屋事業の全体構想と進捗を一枚にまとめたダッシュボード。収益状況・ツール開発状況・開業準備の進捗・懸念事項をそのまま記録しています。">
+<title>暮らしの土台プロジェクト 進捗管理</title>
+<meta name="description" content="半AI・半農・生活基盤の3本柱で進める、暮らしの土台プロジェクトの全体構想と進捗を一枚にまとめたダッシュボード。収益状況・ツール開発状況・開業準備の進捗・残タスク・懸念事項をそのまま記録しています。">
 <link rel="canonical" href="https://zatune-gif.github.io/kurashi-no-dodai-log/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ざつね屋">
-<meta property="og:title" content="ざつね屋事業 進捗管理｜暮らしのログプロジェクト">
-<meta property="og:description" content="半AI・半農・生活基盤の3本柱で進める、ざつね屋事業の全体構想と進捗を一枚にまとめたダッシュボード。">
+<meta property="og:title" content="暮らしの土台プロジェクト 進捗管理">
+<meta property="og:description" content="半AI・半農・生活基盤の3本柱で進める、暮らしの土台プロジェクトの全体構想と進捗を一枚にまとめたダッシュボード。">
 <meta property="og:url" content="https://zatune-gif.github.io/kurashi-no-dodai-log/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
 /* ============================================================
-   ざつね屋事業 進捗管理ダッシュボード — design tokens
+   暮らしの土台プロジェクト 進捗管理ダッシュボード — design tokens
    ※ --teal / --teal-deep / --teal-deep-2 / --orange / --bg / --surface /
      --surface-2 / --ink / --ink-muted / --border / --ok / --warn / --danger /
      --radius / --shadow の12値は下層ページ(han-ai/hannou/seikatsu-kiban)と
@@ -131,7 +131,7 @@ img,svg{display:block;max-width:100%}
 .hero-eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--orange); flex-shrink:0}
 .hero h1{
   font-size:clamp(28px,4.2vw,42px); letter-spacing:0.01em; color:#fff;
-  margin-bottom:var(--sp-6); max-width:16ch;
+  margin-bottom:var(--sp-6); max-width:24ch;
 }
 .hero-lead{
   font-size:15.5px; line-height:1.95; color:#fff; max-width:640px;
@@ -333,6 +333,24 @@ img,svg{display:block;max-width:100%}
 .prep-title{font-size:15.5px; font-weight:700; color:var(--ink); margin-bottom:var(--sp-2)}
 .prep-desc{font-size:13.5px; line-height:1.8; color:var(--ink-muted)}
 
+/* ============ 3本柱 残タスク ============ */
+.task-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-6)}
+@media (max-width:860px){ .task-grid{ grid-template-columns:1fr } }
+.task-card{
+  display:flex; flex-direction:column; gap:var(--sp-5);
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:var(--sp-6); box-shadow:var(--shadow);
+}
+.task-card-head{display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3); flex-wrap:wrap}
+.task-card-num{font-size:14.5px; font-weight:700; color:var(--ink); font-family:'Shippori Mincho',serif}
+.task-items{display:flex; flex-direction:column; gap:var(--sp-3)}
+.task-item{display:flex; align-items:flex-start; gap:var(--sp-3)}
+.task-item-mark{
+  width:16px; height:16px; border-radius:50%; border:2px solid var(--ink-muted);
+  flex-shrink:0; margin-top:3px;
+}
+.task-item-text{font-size:13.5px; line-height:1.75; color:var(--ink)}
+
 /* ============ 懸念事項・要対応 ============ */
 .concern-list{display:flex; flex-direction:column; gap:var(--sp-4)}
 .concern-row{
@@ -366,13 +384,14 @@ img,svg{display:block;max-width:100%}
 
 <nav class="quicknav">
   <div class="quicknav-inner">
-    <span class="quicknav-brand">ざつね屋事業 進捗管理</span>
+    <span class="quicknav-brand">暮らしの土台プロジェクト 進捗管理</span>
     <div class="quicknav-links">
       <a href="#pillars">3本柱</a>
       <a href="#roadmap">全体ロードマップ</a>
       <a href="#kpi">収益状況</a>
       <a href="#tools">ツール開発状況</a>
       <a href="#prep">開業準備</a>
+      <a href="#tasks">残タスク</a>
       <a href="#concerns">懸念事項</a>
     </div>
   </div>
@@ -380,8 +399,8 @@ img,svg{display:block;max-width:100%}
 
 <header class="hero">
   <div class="wrap hero-inner">
-    <p class="hero-eyebrow"><span class="dot"></span>Project 00 ／ ざつね屋事業 全体構想</p>
-    <h1>ざつね屋事業<br>進捗管理</h1>
+    <p class="hero-eyebrow"><span class="dot"></span>Project 00 ／ 暮らしの土台プロジェクト 全体構想</p>
+    <h1>暮らしの土台プロジェクト<br>進捗管理</h1>
     <p class="hero-lead">
       半AI・半農・生活基盤の3本柱で進めている、ざつね屋の事業構想と現時点までの進捗を一枚にまとめています。
       伴走先候補・関係者など、事業の全体像を共有したい相手に向けたページです。
@@ -644,6 +663,9 @@ img,svg{display:block;max-width:100%}
       <div class="section-head">
         <p class="section-num">00-01 ツール開発状況</p>
         <h2 class="section-title">自社ツール群の稼働状況</h2>
+        <p class="section-desc">
+          いずれもClaude Codeを使って開発した実績物です。稼働状況を含めてそのまま一覧化しています。
+        </p>
       </div>
 
       <div class="tool-list">
@@ -700,6 +722,39 @@ img,svg{display:block;max-width:100%}
               <span class="badge badge-ok">✓ 稼働中</span>
             </div>
             <p class="tool-desc">v0.1.14。クライアント伴走の実績事例として運用中。</p>
+          </div>
+        </div>
+
+        <div class="tool-row">
+          <span class="tool-icon">🧠</span>
+          <div class="tool-body">
+            <div class="tool-head">
+              <span class="tool-name">AIツール理解度テスト</span>
+              <span class="badge badge-ok">✓ 稼働中</span>
+            </div>
+            <p class="tool-desc">20問・約3分で5軸スコアをレーダーチャートで可視化。研修のフックとしてHP上で自己診断できる。</p>
+          </div>
+        </div>
+
+        <div class="tool-row">
+          <span class="tool-icon">📚</span>
+          <div class="tool-body">
+            <div class="tool-head">
+              <span class="tool-name">研修コース①〜⑤ 教材一式</span>
+              <span class="badge badge-ok">✓ 完成</span>
+            </div>
+            <p class="tool-desc">各コースのスライド（PDF／PowerPoint）・台本・アンケート・案内文までを一式で作成済み。</p>
+          </div>
+        </div>
+
+        <div class="tool-row">
+          <span class="tool-icon">📊</span>
+          <div class="tool-body">
+            <div class="tool-head">
+              <span class="tool-name">この「暮らしの土台プロジェクト」公開サイト自体</span>
+              <span class="badge badge-ok">✓ 公開中</span>
+            </div>
+            <p class="tool-desc">index.html／han-ai.html／hannou.html／seikatsu-kiban.htmlの4ページ構成。2026年8月25日に全面刷新。</p>
           </div>
         </div>
 
@@ -762,6 +817,99 @@ img,svg{display:block;max-width:100%}
             <p class="prep-title">開業相談は順調、開業予定日は2026年9月18日</p>
             <p class="prep-desc">府中商工会議所での開業相談は順調に進んでいます。開業届の提出は2026年9月18日を予定しており、現時点ではまだ提出していません。提出後にあらためて確認・反映します。</p>
           </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 3本柱 残タスク ══ -->
+  <section id="tasks" class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-num">3本柱 残タスク</p>
+        <h2 class="section-title">各プロジェクトの残タスク一覧</h2>
+        <p class="section-desc">
+          下の「懸念事項・要対応」が判断待ち・確認待ちの事項をまとめているのに対し、こちらは00-01〜00-03それぞれが次に取り組む具体的な作業の一覧です。すべて未着手のタスクです。
+        </p>
+      </div>
+
+      <div class="task-grid">
+
+        <div class="task-card">
+          <div class="task-card-head">
+            <span class="task-card-num">00-01 半AI</span>
+            <span class="badge badge-neutral">○ 未着手（4件）</span>
+          </div>
+          <ul class="task-items">
+            <li class="task-item">
+              <span class="task-item-mark" aria-hidden="true"></span>
+              <span class="task-item-text">告知・営業活動の開始（サービスロードマップP4、現在未着手）</span>
+            </li>
+            <li class="task-item">
+              <span class="task-item-mark" aria-hidden="true"></span>
+              <span class="task-item-text">ざつね屋事業HPのV2サイトと現行本番の統合判断</span>
+            </li>
+            <li class="task-item">
+              <span class="task-item-mark" aria-hidden="true"></span>
+              <span class="task-item-text">助成金訴求表記（「助成金75%」等）の是正が実際に反映されているかの確認</span>
+            </li>
+            <li class="task-item">
+              <span class="task-item-mark" aria-hidden="true"></span>
+              <span class="task-item-text">収益シナリオの月商目標数値の資料間統一</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="task-card">
+          <div class="task-card-head">
+            <span class="task-card-num">00-02 半農</span>
+            <span class="badge badge-neutral">○ 未着手（①〜⑩）</span>
+          </div>
+          <ul class="task-items">
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">①福山市への新規就農事前相談</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">②農地の地番・所有者・面積・状態の確認（売却検討区画も不明）</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">③広島県・福山市の新規就農支援制度の確認（全制度の要件が未確認・要一次情報確認）</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">④妻が利用できる制度と申請時期の確認</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">⑤家族の月間最低生活費・キャッシュフロー確認</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">⑥農地確定後の作物候補比較</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">⑦5か年農業事業計画</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">⑧青年等就農計画・認定申請</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">⑨補助金・融資申請</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">⑩必要設備導入</span></li>
+          </ul>
+          <div class="info-note">
+            <span class="info-note-icon">⏸</span>
+            <p class="info-note-text">
+              <strong>着手時期未定・保留中。</strong>
+              家計キャッシュフロー・農業収支の記録整備（妻の入力参加含む）は、上記①〜⑩とは別に着手時期未定・保留中のタスクです。
+            </p>
+          </div>
+        </div>
+
+        <div class="task-card">
+          <div class="task-card-head">
+            <span class="task-card-num">00-03 生活基盤</span>
+            <span class="badge badge-neutral">○ 未着手（4件）</span>
+          </div>
+          <ul class="task-items">
+            <li class="task-item">
+              <span class="task-item-mark" aria-hidden="true"></span>
+              <span class="task-item-text">井戸が使用不可の原因調査</span>
+            </li>
+            <li class="task-item">
+              <span class="task-item-mark" aria-hidden="true"></span>
+              <span class="task-item-text">電気配線（2階部分）の是正対応</span>
+            </li>
+            <li class="task-item">
+              <span class="task-item-mark" aria-hidden="true"></span>
+              <span class="task-item-text">住宅状態の確認</span>
+            </li>
+            <li class="task-item">
+              <span class="task-item-mark" aria-hidden="true"></span>
+              <span class="task-item-text">電力消費の計測開始</span>
+            </li>
+          </ul>
         </div>
 
       </div>
@@ -842,7 +990,7 @@ img,svg{display:block;max-width:100%}
       <a href="hannou.html">00-02 半農プロジェクト</a>
       <a href="seikatsu-kiban.html">00-03 生活基盤プロジェクト</a>
     </div>
-    <p class="footer-copy">© 2026 ざつね屋 — 暮らしのログプロジェクト</p>
+    <p class="footer-copy">© 2026 ざつね屋 — 暮らしの土台プロジェクト</p>
   </div>
 </footer>
 
