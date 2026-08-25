@@ -314,6 +314,38 @@ img,svg{display:block;max-width:100%}
 .tool-name{font-size:15.5px; font-weight:700; color:var(--ink)}
 .tool-desc{font-size:13.5px; line-height:1.8; color:var(--ink-muted)}
 
+/* ---- 個人開発実績（カードグリッド） ---- */
+.tool-subhead{margin:var(--sp-10) 0 var(--sp-6); padding-top:var(--sp-8); border-top:1px solid var(--border)}
+.tool-subhead-label{font-size:12px; font-weight:700; color:var(--teal-text); letter-spacing:0.1em; margin-bottom:var(--sp-2)}
+.tool-subhead-title{font-size:17px; margin-bottom:var(--sp-2)}
+.tool-subhead-desc{font-size:13.5px; line-height:1.8; color:var(--ink-muted)}
+
+.achieve-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:var(--sp-5);
+}
+.achieve-card{
+  display:flex; flex-direction:column; gap:var(--sp-3);
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:var(--sp-6); transition:transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+a.achieve-card:hover{transform:translateY(-3px); box-shadow:0 14px 32px rgba(23,63,70,0.12); border-color:var(--teal)}
+.achieve-card-static{background:var(--surface-2)}
+.achieve-icon{
+  width:40px; height:40px; border-radius:10px; flex-shrink:0;
+  background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:18px;
+}
+.achieve-card-static .achieve-icon{background:var(--surface)}
+.achieve-name{font-size:14.5px; font-weight:700; color:var(--ink); line-height:1.5}
+.achieve-desc{font-size:13px; line-height:1.75; color:var(--ink-muted); flex:1}
+.achieve-link{font-size:12.5px; font-weight:700; color:var(--teal-text)}
+a.achieve-card:hover .achieve-link{color:var(--orange-text)}
+.achieve-tag{
+  align-self:flex-start; font-size:11.5px; font-weight:700; color:var(--ink-muted);
+  background:var(--surface); border:1px solid var(--border); border-radius:999px;
+  padding:var(--sp-1) var(--sp-3);
+}
+
 /* ============ 開業準備の進捗（ステップ） ============ */
 .prep-steps{display:flex; flex-direction:column}
 .prep-step{display:flex; gap:var(--sp-5)}
@@ -756,6 +788,81 @@ img,svg{display:block;max-width:100%}
             </div>
             <p class="tool-desc">index.html／han-ai.html／hannou.html／seikatsu-kiban.htmlの4ページ構成。2026年8月25日に全面刷新。</p>
           </div>
+        </div>
+
+      </div>
+
+      <div class="tool-subhead">
+        <p class="tool-subhead-label">個人開発実績</p>
+        <h3 class="tool-subhead-title">業務外で開発した個人開発物</h3>
+        <p class="tool-subhead-desc">
+          教育・育児・レシピ・動画生成・Slack bot・コミュニティサイト・ゲーム・SNS自動化・業務ツールなど、ジャンルを問わず個人で開発してきた実績物です。
+        </p>
+      </div>
+
+      <div class="achieve-grid">
+
+        <a class="achieve-card" href="https://zatune-gif.github.io/kanji-stroke-order/" target="_blank" rel="noopener noreferrer">
+          <span class="achieve-icon">✏️</span>
+          <span class="achieve-name">漢字書き順なぞりゲーム</span>
+          <span class="achieve-desc">小学1〜6年生の漢字1,006字を指でなぞって覚えるWebアプリ。インストール不要でURLから即利用可。</span>
+          <span class="achieve-link">サイトを見る ↗</span>
+        </a>
+
+        <a class="achieve-card" href="https://zatune-gif.github.io/ikuji-support/" target="_blank" rel="noopener noreferrer">
+          <span class="achieve-icon">🍼</span>
+          <span class="achieve-name">離乳食レシピ提案アプリ</span>
+          <span class="achieve-desc">月齢・食材を選ぶだけでGemini APIがレシピを提案。予防接種スケジュールの自動計算機能も搭載。</span>
+          <span class="achieve-link">サイトを見る ↗</span>
+        </a>
+
+        <a class="achieve-card" href="https://zatune-gif.github.io/menu-suggester/" target="_blank" rel="noopener noreferrer">
+          <span class="achieve-icon">🥘</span>
+          <span class="achieve-name">材料逆引き献立提案</span>
+          <span class="achieve-desc">冷蔵庫にある食材を入力するとAIが献立を提案。ジャンル・調理時間での絞り込みにも対応。</span>
+          <span class="achieve-link">サイトを見る ↗</span>
+        </a>
+
+        <a class="achieve-card" href="https://github.com/zatune-gif/shorts-video-generator" target="_blank" rel="noopener noreferrer">
+          <span class="achieve-icon">🎬</span>
+          <span class="achieve-name">YouTube Shortsジェネレーター</span>
+          <span class="achieve-desc">VOICEVOX合成音声とAI生成画像を組み合わせてショート動画を自動生成するデスクトップツール（Python製）。</span>
+          <span class="achieve-link">GitHubを見る ↗</span>
+        </a>
+
+        <a class="achieve-card" href="https://github.com/zatune-gif/personnel-reminder" target="_blank" rel="noopener noreferrer">
+          <span class="achieve-icon">🔔</span>
+          <span class="achieve-name">Slack人員管理リマインダーBot</span>
+          <span class="achieve-desc">月2回の状態チェックインをSlack DMで自動送信し、AIがスコアを分析して管理者に声かけのタイミングと方針を通知するBot（Python製）。</span>
+          <span class="achieve-link">GitHubを見る ↗</span>
+        </a>
+
+        <a class="achieve-card" href="https://zatune-gif.github.io/yasuzake-hp/" target="_blank" rel="noopener noreferrer">
+          <span class="achieve-icon">🍶</span>
+          <span class="achieve-name">安酒愛好外飲み会 公式サイト</span>
+          <span class="achieve-desc">25年以上続く地域コミュニティのイベント告知・情報発信用サイト。</span>
+          <span class="achieve-link">サイトを見る ↗</span>
+        </a>
+
+        <a class="achieve-card" href="https://zatuneya.itch.io/furafura-headbutt-battle" target="_blank" rel="noopener noreferrer">
+          <span class="achieve-icon">🎮</span>
+          <span class="achieve-name">ふらふら頭突き対戦ゲーム</span>
+          <span class="achieve-desc">Unityで制作したブラウザプレイ可能な2人対戦アクションゲーム。itch.ioにて公開。</span>
+          <span class="achieve-link">itch.ioで見る ↗</span>
+        </a>
+
+        <a class="achieve-card" href="https://www.facebook.com/profile.php?id=61590408237008" target="_blank" rel="noopener noreferrer">
+          <span class="achieve-icon">🖼️</span>
+          <span class="achieve-name">美術館展示情報 Facebook自動投稿Bot</span>
+          <span class="achieve-desc">福岡県内の美術館展示情報を自動収集しFacebookページへ定期投稿するBot。</span>
+          <span class="achieve-link">Facebookページを見る ↗</span>
+        </a>
+
+        <div class="achieve-card achieve-card-static">
+          <span class="achieve-icon">📅</span>
+          <span class="achieve-name">プロジェクト管理スケジュールツール（Googleスプレッドシート）</span>
+          <span class="achieve-desc">工程・予算・スケジュールを一元管理するツール。工数と単価入力で予算自動計算・営業日ベースのスケジュール自動生成・遅延シミュレーター機能を搭載。5種類のサンプルプロジェクト収録。</span>
+          <span class="achieve-tag">Googleスプレッドシート・リンク非掲載</span>
         </div>
 
       </div>
