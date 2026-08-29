@@ -341,6 +341,7 @@ img,svg{display:block;max-width:100%}
   flex-shrink:0; margin-top:3px;
 }
 .task-item-text{font-size:13.5px; line-height:1.75; color:var(--ink)}
+.tasklist-sub{font-size:13px; font-weight:700; color:var(--ink); margin:var(--sp-2) 0 var(--sp-1); padding-top:var(--sp-3); border-top:1px dashed var(--border)}
 
 /* ============ 懸念事項・要対応 ============ */
 .concern-list{display:flex; flex-direction:column; gap:var(--sp-4)}
@@ -399,7 +400,7 @@ img,svg{display:block;max-width:100%}
     <div class="hero-meta">
       <div class="hero-meta-item">
         <span class="hero-meta-label">最終更新</span>
-        <span class="hero-meta-value">2026年8月25日</span>
+        <span class="hero-meta-value">2026年8月29日</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">主軸事業</span>
@@ -452,8 +453,8 @@ img,svg{display:block;max-width:100%}
           </div>
           <h3 class="pillar-name">半農プロジェクト</h3>
           <p class="pillar-desc">
-            食料自給・地域理解・発信素材の3つの役割を担う。畑3か所・田んぼ2か所。
-            移住が完了し、農地の状態を確認する段階に入りました。収益化は急がず、確認フェーズから段階的に進めます。
+            食料自給・地域理解・発信素材の3つの役割を担う。課税明細ベースで農地6筆を台帳化。
+            うち休耕田1筆（No.9・324㎡）を自給農の実証圃場として「実行準備フェーズ」に移行し、雨後の排水調査から着手します。収益化は急がず段階的に進めます。
           </p>
           <span class="pillar-arrow">詳細を見る →</span>
         </a>
@@ -763,7 +764,7 @@ img,svg{display:block;max-width:100%}
         <div class="task-card">
           <div class="task-card-head">
             <span class="task-card-num">00-02 半農</span>
-            <span class="badge badge-neutral">未着手（①〜⑩）</span>
+            <span class="badge badge-neutral">未着手（①〜⑩／No.9はSTEP1着手中）</span>
           </div>
           <ul class="task-items">
             <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">①福山市への新規就農事前相談</span></li>
@@ -777,10 +778,21 @@ img,svg{display:block;max-width:100%}
             <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">⑨補助金・融資申請</span></li>
             <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">⑩必要設備導入</span></li>
           </ul>
+
+          <p class="tasklist-sub">No.9 自給農（実行準備フェーズ／2026年8月29日〜）の直近作業</p>
+          <ul class="task-items">
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">STEP1：No.9 の雨後の排水調査（最優先・着手中）</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">STEP2：行政・関係機関の確認（福山市農業委員会ほか）</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">STEP3：土壌診断（複数地点採土 → pH・土質）</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">STEP4：排水設計 →（必要に応じて）排水施工</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">STEP5：玉ねぎ区画の耕起・最低限の土壌改良・高畝・マルチ</span></li>
+            <li class="task-item"><span class="task-item-mark" aria-hidden="true"></span><span class="task-item-text">STEP6：2026年11月頃を目標に玉ねぎ定植</span></li>
+          </ul>
+
           <div class="info-note">
             <p class="info-note-text">
               <strong>着手時期未定・保留中。</strong>
-              家計キャッシュフロー・農業収支の記録整備（妻の入力参加含む）は、上記①〜⑩とは別に着手時期未定・保留中のタスクです。
+              家計キャッシュフロー・農業収支の記録整備（妻の入力参加含む）は、上記①〜⑩・STEP1〜6とは別に着手時期未定・保留中のタスクです。
             </p>
           </div>
         </div>
@@ -864,6 +876,26 @@ img,svg{display:block;max-width:100%}
               <span class="badge badge-warn">要確認</span>
             </div>
             <p class="concern-desc">「助成金75%」等の表記の是正は2026年8月3日に承認済みですが、実際の反映が完了しているかは未確認です。</p>
+          </div>
+        </div>
+
+        <div class="concern-row concern-info">
+          <div class="concern-body">
+            <div class="concern-head">
+              <span class="concern-title">No.9（自給農・実証圃場）の圃場条件が未確認</span>
+              <span class="badge badge-neutral">調査予定</span>
+            </div>
+            <p class="concern-desc">面積324㎡は課税明細書ベースで確認済みですが、排水能力・土地の高低差・土壌pH・土壌成分・必要な堆肥／石灰量・明渠の位置と深さ・機械進入経路は未確認です。雨後の排水調査と土壌診断のあとに更新します。過去の検討値（苦土石灰30〜40kg・堆肥600〜900kg）は未決定として扱います。</p>
+          </div>
+        </div>
+
+        <div class="concern-row">
+          <div class="concern-body">
+            <div class="concern-head">
+              <span class="concern-title">農地の権利関係が課税資料ベースにとどまる</span>
+              <span class="badge badge-warn">要確認</span>
+            </div>
+            <p class="concern-desc">農地台帳（6筆）は課税明細書を出典としています。これは所有権・登記名義・利用権を確定する資料ではありません。権利者（豊高英治氏）から妻への農地利用関係の正式な設定方法を含め、登記簿・農地台帳等での確認が必要です。</p>
           </div>
         </div>
 

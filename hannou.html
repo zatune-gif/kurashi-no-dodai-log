@@ -192,6 +192,51 @@
     .bottom-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--teal-deep); text-decoration: none; border: 1.5px solid var(--teal-deep); padding: 12px 24px; border-radius: 99px; background: var(--surface); transition: background .15s; }
     .bottom-link:hover { background: var(--surface-2); }
     .footer { text-align: center; font-size: 12px; color: var(--ink-muted); padding: 32px 24px; border-top: 1px solid var(--border); background: var(--surface-2); margin-top: 40px; }
+
+    /* ── 農地台帳ステータスチップ ── */
+    .st { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; border: 1px solid transparent; }
+    .st-crop { background: rgba(46,139,87,0.12); color: var(--ok); border-color: rgba(46,139,87,0.35); }
+    .st-idle { background: var(--surface-2); color: var(--ink-muted); border-color: var(--border); }
+    .st-prep { background: rgba(91,189,200,0.18); color: var(--teal-deep); border-color: rgba(91,189,200,0.55); }
+    .st-sell { background: rgba(181,114,10,0.12); color: var(--warn); border-color: rgba(181,114,10,0.35); }
+
+    /* ── データ状態タグ（確認済／概算／計画／未確認を混同しないための表示） ── */
+    .dtag { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface-2); color: var(--ink-muted); letter-spacing: 0.04em; white-space: nowrap; }
+    .dtag-ok { color: var(--ok); border-color: rgba(46,139,87,0.4); background: rgba(46,139,87,0.10); }
+    .dtag-est { color: var(--teal-deep); border-color: rgba(91,189,200,0.55); background: rgba(91,189,200,0.16); }
+    .dtag-plan { color: var(--warn); border-color: rgba(181,114,10,0.4); background: rgba(181,114,10,0.10); }
+    .dtag-unknown { color: var(--danger); border-color: rgba(184,67,58,0.4); background: rgba(184,67,58,0.10); }
+
+    /* ── No.9 作物カード ── */
+    .crop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .crop-card { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--teal-deep); border-radius: var(--radius); padding: 20px; }
+    .crop-name { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .crop-row { font-size: 12.5px; color: var(--ink-muted); line-height: 1.7; margin-bottom: 6px; }
+    .crop-row:last-child { margin-bottom: 0; }
+    .crop-row strong { color: var(--ink); font-weight: 700; }
+    @media (max-width: 620px) { .crop-grid { grid-template-columns: 1fr; } }
+
+    /* ── No.9 マイルストーン ── */
+    .ms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    .ms-item { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--teal-deep); border-radius: 8px; padding: 10px 14px; font-size: 12.5px; color: var(--ink); line-height: 1.6; display: flex; gap: 10px; align-items: baseline; }
+    .ms-item b { color: var(--teal-deep); font-weight: 900; font-size: 11.5px; flex-shrink: 0; }
+    @media (max-width: 620px) { .ms-grid { grid-template-columns: 1fr; } }
+
+    /* ── 定義リスト（写真から分かること／まだ分からないこと） ── */
+    .split-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .split-col { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; }
+    .split-col.split-col-warn { background: #FBF4E8; border-color: rgba(181,114,10,0.28); }
+    .split-col__label { font-size: 11px; font-weight: 700; color: var(--teal-deep); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .split-col.split-col-warn .split-col__label { color: var(--warn); }
+    @media (max-width: 620px) { .split-cols { grid-template-columns: 1fr; } }
+
+    /* ── サブ見出し ── */
+    .sub-label { font-size: 13px; font-weight: 700; color: var(--ink); margin: 20px 0 10px; }
+    .sub-label:first-child { margin-top: 0; }
+
+    /* ── セクション導入文 ── */
+    .section-lead { font-size: 14px; color: var(--ink-muted); line-height: 1.85; margin-bottom: 16px; }
+    .section-lead strong { color: var(--ink); font-weight: 700; }
   </style>
 </head>
 <body>
@@ -217,11 +262,15 @@
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">農地規模</span>
-        <span class="cover-meta-value">畑3か所・田んぼ2か所・山あり（妻の実家所有・面積未確認）</span>
+        <span class="cover-meta-value">課税明細ベースで6筆を把握（田・畑・山林ほか／権利関係は未確定）</span>
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">収益化方針</span>
         <span class="cover-meta-value">A：急がない ／ B：2026年8月〜検討開始</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">No.9 自給農</span>
+        <span class="cover-meta-value">実行準備フェーズ（2026年8月29日〜）</span>
       </div>
     </div>
   </div>
@@ -244,6 +293,14 @@
         <strong>A：暮らしとしての農</strong> — 食料自給・食費削減・地域理解・発信素材を目的とする、これまでどおりの取り組み。<strong>収益化は急がない方針を維持</strong>する。<br>
         <strong>B：妻の農業経営</strong> — 妻が農業経営者として認定新規就農者を目指す新しい取り組み。こちらは<strong>事業性・所得・公的支援を具体的に検討する</strong>対象とする。<br><br>
         「収益化は急がない」という従来方針を全面的に撤回するものではなく、Aの自給レイヤーではそのまま維持し、Bの経営レイヤーでは新たに事業性を追求する、という書き分けである。
+      </p>
+    </div>
+
+    <div class="policy-note">
+      <p class="policy-note__label">追記（2026年8月29日）— No.9 の位置づけ</p>
+      <p class="policy-note__text">
+        休耕田 1 筆（<strong>No.9・新市町大字常 1285-2・課税資料上 324㎡</strong>）を、<strong>Aレイヤー「暮らしとしての農」の自給農・実証圃場</strong>として動かすことを決めた。ステータスは「計画」から「実行準備フェーズ」へ移行し、最初の作業は雨後の排水調査とする。<br><br>
+        これは「自給農をやめて事業農業へ切り替えた」という意味ではない。<strong>No.9 で自給農を実践してデータを取りながら、別トラックで妻の認定新規就農者手続き（Bレイヤー）を並行して進める</strong>、という整理である。No.9 の実測データ（作業時間・収量・土地特性・必要資材・失敗）は、将来の農業経営計画の参考資料としても使う。
       </p>
     </div>
   </div>
@@ -294,47 +351,378 @@
         <div class="section-divider"></div>
       </div>
 
-      <div class="farm-grid">
-        <div class="farm-card">
-          <div class="farm-icon"></div>
-          <div class="farm-count">3</div>
-          <div class="farm-name">畑</div>
-          <div class="farm-note">野菜・根菜類</div>
-        </div>
-        <div class="farm-card">
-          <div class="farm-icon"></div>
-          <div class="farm-count">2</div>
-          <div class="farm-name">田んぼ</div>
-          <div class="farm-note">米作り</div>
-        </div>
-        <div class="farm-card">
-          <div class="farm-icon"></div>
-          <div class="farm-count">あり</div>
-          <div class="farm-name">山</div>
-          <div class="farm-note">管理状況未確認</div>
-        </div>
+      <p class="sub-label">農地台帳（課税明細書ベース）</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>管理番号</th><th>所在地（新市町）</th><th>地目（課税資料）</th><th>面積</th><th>現況</th><th>利用区分</th><th>備考</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>No.2</td><td>大字上安井 118-1</td><td>宅地介在田</td><td>753㎡</td><td><span class="st st-sell">売却検討</span></td><td>当面の半農利用から外す</td><td>売却を検討する対象</td></tr>
+            <tr><td>No.3</td><td>大字常 926-1</td><td>山林</td><td>150㎡</td><td><span class="st st-idle">休眠</span></td><td>未定</td><td>—</td></tr>
+            <tr><td>No.4</td><td>大字常 958-2</td><td>畑</td><td>152㎡</td><td><span class="st st-idle">休眠</span></td><td>将来の畑利用候補</td><td>—</td></tr>
+            <tr><td>No.6</td><td>大字常 992-1</td><td>田</td><td>639㎡</td><td><span class="st st-crop">営農中</span></td><td>水稲（作業委託中）</td><td>No.6+No.7 で工程ごとの委託費が年 約10万円との情報あり（家族談・未精査）</td></tr>
+            <tr><td>No.7</td><td>大字常 994-1</td><td>田</td><td>285㎡</td><td><span class="st st-crop">営農中</span></td><td>水稲（作業委託中）</td><td>No.6+No.7 合計 924㎡ ＝ 9.24a</td></tr>
+            <tr><td>No.9</td><td>大字常 1285-2</td><td>田</td><td>324㎡</td><td><span class="st st-prep">畑化準備中</span></td><td>自給農・実証圃場（Aレイヤー）</td><td>約3.24a・約98坪。2026年8月現況写真あり（畑化前の基準写真）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-bar">
+        <div class="info-bar__icon info-bar__icon--warn">出</div>
+        <div class="info-bar__text"><strong>出典は課税明細書</strong>。これは課税のための資料であり、<strong>所有権・登記名義・利用権を確定する資料ではない</strong>。所在地・地目・面積は「課税資料上の情報」として扱い、必要に応じて登記簿・農地台帳等で別途確認する。</div>
       </div>
 
       <div class="info-bar">
         <div class="info-bar__icon">関</div>
-        <div class="info-bar__text">この畑3か所・田んぼ2か所・山は、<strong>妻の実家が所有する農地と同一</strong>。Bレイヤー「妻の農業経営」の就農予定地でもある（詳細は後述）。</div>
+        <div class="info-bar__text">これらの農地は、<strong>妻の実家（豊高家）に関係する農地</strong>。田畑の権利を持つのは<strong>豊高英治氏（妻・豊高英一郎氏の父／夫の義父）</strong>。Bレイヤー「妻の農業経営」の就農予定地でもある。権利者から妻への農地利用関係の正式な設定方法は未確認。</div>
+      </div>
+
+      <div class="info-bar">
+        <div class="info-bar__icon info-bar__icon--warn">更</div>
+        <div class="info-bar__text"><strong>変更履歴：</strong>以前は「畑3か所・田んぼ2か所・山」として把握していたが、2026年8月に課税明細書を確認し、<strong>6筆（田・畑・山林・宅地介在田）として台帳化し直した</strong>。上記は権利関係の確定情報ではない。</div>
       </div>
 
       <div class="unknown-card">
-        <p class="unknown-label">移住直後に確認が必要な事項</p>
+        <p class="unknown-label">書類・現地で確認が必要な事項</p>
         <ul class="unknown-items">
-          <li>各農地の面積</li>
-          <li>土壌の状態</li>
+          <li>登記簿上の地目・面積・名義</li>
+          <li>各筆の土壌の状態</li>
           <li>水利用状況</li>
           <li>農地法上の扱い</li>
-          <li>利用可能な範囲</li>
-          <li>売却検討区画の有無（未確認）</li>
+          <li>権利者から妻への利用権の設定方法</li>
+          <li>No.2 売却検討の可否・時期</li>
         </ul>
       </div>
 
       <div class="info-bar">
         <div class="info-bar__icon">地</div>
         <div class="info-bar__text"><strong>所在地：福山市新市町</strong>。住居（府中市）とは別の市。移動時間・農作業の頻度設計が必要。</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════ -->
+    <!-- ══ No.9 休耕田畑化・自給農プロジェクト ══ -->
+    <!-- ══════════════════════════════ -->
+
+    <!-- ── No.9-1. プロジェクト概要 ── -->
+    <div class="section">
+      <div class="section-header">
+        <div class="chapter-num">9</div>
+        <h2 class="section-title">No.9 休耕田畑化・自給農プロジェクト</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="mission-block">
+        <p class="mission-label">No.9 の位置づけ</p>
+        <p class="mission-text">当面は「家庭で消費する農作物を作る自給農の<br>実証圃場」として利用する。</p>
+        <p class="mission-note">
+          初年度から販売収益の最大化は目的にしない。目的は、食料自給率の向上・食費削減・「元水田を畑利用できるか」の実証・排水条件と土壌条件の把握・家族の農作業能力と作業時間の測定・栽培技術の習得・将来の農業経営へのデータ蓄積・暮らしのログ作成。<br>
+          <strong>現在フェーズ：実行準備フェーズ（2026年8月29日〜）</strong> ／ <strong>初年度の実証期間：2026年秋〜2027年秋</strong> ／ <strong>最初の栽培目標：2026年秋の玉ねぎ定植</strong>
+        </p>
+      </div>
+
+      <p class="sub-label">基本情報</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>項目</th><th>内容</th><th>状態</th></tr></thead>
+          <tbody>
+            <tr><td>管理番号</td><td>No.9</td><td><span class="dtag dtag-ok">確認済</span></td></tr>
+            <tr><td>所在地</td><td>広島県福山市新市町大字常 1285-2</td><td><span class="dtag dtag-ok">確認済（課税明細書）</span></td></tr>
+            <tr><td>地目</td><td>田（課税資料上）</td><td><span class="dtag dtag-ok">確認済（課税明細書）</span></td></tr>
+            <tr><td>面積</td><td>324㎡（約3.24a・約98坪）</td><td><span class="dtag dtag-ok">確認済（課税資料上の面積）</span></td></tr>
+            <tr><td>現況</td><td>営農していない。2026年8月時点の現況写真あり（「畑化前」の基準写真として扱う）</td><td><span class="dtag dtag-ok">確認済</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="split-cols">
+        <div class="split-col">
+          <p class="split-col__label">現況写真から確認できること</p>
+          <ul class="bullet-list">
+            <li>全面が激しく荒廃した状態ではない</li>
+            <li>草木による完全な耕作放棄状態ではない</li>
+            <li>周囲に水田が存在する</li>
+            <li>擁壁・水路・畦等が確認できる</li>
+          </ul>
+        </div>
+        <div class="split-col split-col-warn">
+          <p class="split-col__label">写真だけでは確定しないこと</p>
+          <ul class="bullet-list">
+            <li>排水能力</li>
+            <li>土質・地下水位</li>
+            <li>機械の進入性</li>
+            <li>正確な高低差</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="view-block view-block-b">
+        <p class="view-label">認定新規就農者手続き（Bレイヤー）との関係</p>
+        <p class="view-text">
+          No.9 の自給農と、妻の認定新規就農者への手続きは<strong>並行して進める別トラック</strong>。No.9 の畑化完了を待って就農相談を始めるわけではない。No.9 で得られる実測データ（作業時間・収量・土地特性・必要資材・失敗）は、将来の 5 か年農業経営計画の参考資料にする。
+        </p>
+      </div>
+
+      <p class="sub-label">直近の作業順序</p>
+      <ol class="priority-list">
+        <li><strong>雨後の排水調査</strong>（最優先）— 滞水位置・水の入口／出口・既存排水設備・高低差・機械進入口を確認</li>
+        <li>行政・関係機関の確認（福山市農業委員会・新市地域の窓口・必要に応じて JA 等）</li>
+        <li>土壌診断（複数地点から採土 → pH・土質確認）</li>
+        <li>排水設計（明渠の場所・方向・深さ・幅を決定）</li>
+        <li>必要に応じて排水施工</li>
+        <li>玉ねぎ区画の耕起（全面ではなく区画優先）</li>
+        <li>必要最低限の土壌改良</li>
+        <li>高畝・マルチ</li>
+        <li>2026年11月頃を目標に玉ねぎ定植</li>
+      </ol>
+      <div class="info-bar">
+        <div class="info-bar__icon info-bar__icon--warn">注</div>
+        <div class="info-bar__text">行政確認の前に、<strong>不可逆な大規模工事（恒久的な造成・排水工事）は行わない</strong>。</div>
+      </div>
+    </div>
+
+    <!-- ── No.9-2. 圃場の基本方針 ── -->
+    <div class="section">
+      <div class="section-header">
+        <div class="chapter-num">方</div>
+        <h2 class="section-title">No.9 圃場の基本方針</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="policy-note">
+        <p class="policy-note__label">初年度は全面畑化しない</p>
+        <p class="policy-note__text">
+          初年度から 324㎡ 全面を本格的な野菜畑にはしない。<strong>実作付区／緑肥区／管理区</strong>の 3 区分で段階的に畑利用する。作物の結果・排水状態・作業時間を確認しながら、2 年目以降に作付面積を拡張する。<strong>324㎡ 全部を野菜で埋めない。</strong>
+        </p>
+      </div>
+
+      <div class="view-block">
+        <p class="view-label">最重要課題：排水（元水田のため）</p>
+        <p class="view-text">
+          土壌改良材を大量投入する前に、まず<strong>水の動き</strong>を確認する。確認事項：雨後の滞水位置／水が入ってくる方向／水が流れる方向／排水先／既存排水口・水路／土地の高低差／水が抜けるまでの日数。<br>
+          可能であれば「雨前 → 雨直後 → 翌日 → 2日後」を同一地点から撮影し、暮らしのログとして保存する。
+        </p>
+      </div>
+
+      <div class="view-block">
+        <p class="view-label">排水対策（現時点の基本案）</p>
+        <p class="view-text">
+          明渠・高畝・既存排水設備の活用。<strong>明渠は「必ず深さ30〜40cm」と固定しない</strong>。実際の高低差・排水先を確認してから、場所・方向・深さ・幅を決める。<br>
+          水の流れの基本思想：<strong>作物 → 高畝 → 明渠 → 排水先</strong>。
+        </p>
+      </div>
+
+      <div class="unknown-card">
+        <p class="unknown-label">土壌改良は「診断してから」— 以下は過去の検討値であり未決定</p>
+        <ul class="unknown-items">
+          <li>苦土石灰 約30〜40kg（過去検討値／未決定）</li>
+          <li>牛ふん・バーク堆肥 約600〜900kg（過去検討値／未決定）</li>
+        </ul>
+      </div>
+      <div class="info-bar">
+        <div class="info-bar__icon">土</div>
+        <div class="info-bar__text">正式方針は<strong>「土壌診断 → 必要量算定 → 必要な場所だけ投入」</strong>。pH・排水・土質を確認してから判断する。初年度に作付けしない場所まで大量の堆肥・石灰を入れない（資材費と運搬労力を抑える）。</div>
+      </div>
+    </div>
+
+    <!-- ── No.9-3. 初年度の作物 ── -->
+    <div class="section">
+      <div class="section-header">
+        <div class="chapter-num">作</div>
+        <h2 class="section-title">No.9 初年度の作物</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <p class="section-lead">家庭で実際によく使うことを重視した基本3作物。すべて現時点では<span class="dtag dtag-plan">計画</span>段階。面積・株数は概算で、最終値は畝幅・条数・株間・購入苗単位・家庭消費量から決める。</p>
+
+      <div class="crop-grid">
+        <div class="crop-card">
+          <div class="crop-name">玉ねぎ <span class="dtag dtag-plan">計画</span></div>
+          <p class="crop-row"><strong>開始予定：</strong>2026年秋（9〜10月 土づくり → 11月頃 定植 → 越冬 → 2027年春〜初夏 収穫）</p>
+          <p class="crop-row"><strong>初年度面積（概算）：</strong>10〜15㎡</p>
+          <p class="crop-row"><strong>苗（概算）：</strong>250〜350本を基準に検討</p>
+          <p class="crop-row"><strong>品種：</strong>極早生／早生／中生／中晩生を検討。「早く食べる品種」＋「保存する品種」を分けることも検討</p>
+        </div>
+        <div class="crop-card">
+          <div class="crop-name">じゃがいも <span class="dtag dtag-plan">計画</span></div>
+          <p class="crop-row"><strong>開始予定：</strong>2027年春</p>
+          <p class="crop-row"><strong>初年度面積（概算）：</strong>20〜30㎡</p>
+          <p class="crop-row"><strong>区画：</strong>玉ねぎとは別区画（玉ねぎが前年秋〜翌初夏まで畑を占有するため）。排水の良い場所＋高畝を基本</p>
+          <p class="crop-row"><strong>優先度：</strong>家庭での使用頻度が高く、サツマイモより優先</p>
+        </div>
+        <div class="crop-card">
+          <div class="crop-name">里芋 <span class="dtag dtag-plan">計画</span></div>
+          <p class="crop-row"><strong>開始予定：</strong>2027年春</p>
+          <p class="crop-row"><strong>初年度面積（概算）：</strong>10〜20㎡</p>
+          <p class="crop-row"><strong>区画：</strong>比較的湿り気のある場所を利用できる可能性。乾きやすい場所＝玉ねぎ・じゃがいも／湿る場所＝里芋、で使い分けを検討</p>
+        </div>
+      </div>
+
+      <div class="info-bar">
+        <div class="info-bar__icon">見</div>
+        <div class="info-bar__text">サツマイモも候補として検討したが、<strong>家庭での利用頻度を優先し、現時点ではじゃがいもを優先</strong>する。</div>
+      </div>
+
+      <div class="view-block">
+        <p class="view-label">緑肥・管理区について</p>
+        <p class="view-text">
+          初年度に野菜を作らない部分は緑肥（ソルゴー等）を検討する。目的は土づくり・有機物供給・未利用部分の管理・翌年度以降の畑化準備。ただし緑肥にも管理作業が必要なため、<strong>全面播種を自動的に決めない</strong>。草管理のみの区画を残すことも選択肢とする。
+        </p>
+      </div>
+
+      <div class="info-bar">
+        <div class="info-bar__icon info-bar__icon--warn">配</div>
+        <div class="info-bar__text"><strong>初年度の仮レイアウトは概念設計のみ</strong>。正確な配置は雨後の排水調査後に決定する。比較的乾く側＝玉ねぎ・じゃがいも／比較的湿る側＝里芋、その先に明渠・排水先。残りは緑肥または草管理。</div>
+      </div>
+    </div>
+
+    <!-- ── No.9-4. 初年度ロードマップとマイルストーン ── -->
+    <div class="section">
+      <div class="section-header">
+        <div class="chapter-num">道</div>
+        <h2 class="section-title">No.9 初年度ロードマップ（2026年8月〜2027年秋）</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="jikyu-stack">
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 1｜26年8月末〜9月</span><div class="jikyu-body"><strong>現況調査</strong>：雨後の滞水確認・写真撮影・水の入口／出口・既存排水設備・高低差・機械進入口の確認</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 2｜26年9月</span><div class="jikyu-body"><strong>行政・関係機関確認</strong>：田で畑作物を作る場合の扱い、明渠・高畝等の施工、恒久的な造成・排水工事の扱い、農地の利用関係、妻の新規就農計画との関係</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 3｜26年9〜10月</span><div class="jikyu-body"><strong>排水整備</strong>：明渠施工・既存排水口整備・必要最低限の草刈り。DIY で時間がかかりすぎる工程は機械委託も比較</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 4｜26年9〜10月</span><div class="jikyu-body"><strong>土壌調査</strong>：複数地点から採土・土壌診断・pH・土質確認 → 石灰・堆肥・肥料の量を決定</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 5｜26年10月</span><div class="jikyu-body"><strong>耕起・土づくり</strong>：まず玉ねぎ区画を優先。必要に応じて機械による初回耕起を委託／レンタル。全面を耕す必要はない</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 6｜26年10〜11月</span><div class="jikyu-body"><strong>玉ねぎ畝作り</strong>：高畝・マルチ・排水確認</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 7｜26年11月頃</span><div class="jikyu-body"><strong>玉ねぎ定植</strong>（2026年度 No.9 の最初の本格的な作付け）</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 8｜26年冬〜27年春</span><div class="jikyu-body"><strong>越冬・観察</strong>：活着率・枯死・滞水・霜・病害・除草時間・追肥等を記録</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 9｜27年2〜4月頃</span><div class="jikyu-body"><strong>じゃがいも開始</strong>（玉ねぎとは別区画。高畝・排水を優先）</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 10｜27年4〜5月頃</span><div class="jikyu-body"><strong>里芋開始</strong>（比較的湿り気が残る場所を候補）</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 11｜27年春〜初夏</span><div class="jikyu-body"><strong>玉ねぎ収穫</strong>（品種により時期分散）：植付株数・生存株数・収穫個数／重量・家庭消費量・保存量・廃棄量を記録</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 12｜27年初夏</span><div class="jikyu-body"><strong>じゃがいも収穫</strong>：収量・作業時間・家庭消費量を記録</div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 13｜27年秋</span><div class="jikyu-body"><strong>里芋収穫</strong></div></div>
+        <div class="jikyu-item"><span class="jikyu-phase">Phase 14｜27年秋〜冬</span><div class="jikyu-body"><strong>初年度評価</strong>：1年間の結果から 2 年目の作付面積を決定</div></div>
+      </div>
+
+      <p class="sub-label">マイルストーン</p>
+      <div class="ms-grid">
+        <div class="ms-item"><b>M1</b><span>No.9 現況記録 完了</span></div>
+        <div class="ms-item"><b>M2</b><span>行政確認 完了</span></div>
+        <div class="ms-item"><b>M3</b><span>排水ルート 決定</span></div>
+        <div class="ms-item"><b>M4</b><span>土壌診断 完了</span></div>
+        <div class="ms-item"><b>M5</b><span>玉ねぎ区画 完成</span></div>
+        <div class="ms-item"><b>M6</b><span>玉ねぎ定植 完了</span></div>
+        <div class="ms-item"><b>M7</b><span>じゃがいも定植 完了</span></div>
+        <div class="ms-item"><b>M8</b><span>里芋定植 完了</span></div>
+        <div class="ms-item"><b>M9</b><span>玉ねぎ 初収穫</span></div>
+        <div class="ms-item"><b>M10</b><span>じゃがいも 初収穫</span></div>
+        <div class="ms-item"><b>M11</b><span>里芋 初収穫</span></div>
+        <div class="ms-item"><b>M12</b><span>No.9 初年度レビュー 完了</span></div>
+      </div>
+      <div class="info-bar">
+        <div class="info-bar__icon info-bar__icon--warn">状</div>
+        <div class="info-bar__text">2026年8月29日時点で M1〜M12 はすべて<strong>未達</strong>。着手済みは Phase 1（現況調査）のみ。</div>
+      </div>
+    </div>
+
+    <!-- ── No.9-5. 記録項目（KPI・暮らしのログ） ── -->
+    <div class="section">
+      <div class="section-header">
+        <div class="chapter-num">録</div>
+        <h2 class="section-title">No.9 記録項目（KPI・暮らしのログ）</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <p class="section-lead">単純な収穫量だけで評価しない。土地・お金・労働・作物・家計の 5 領域を記録する。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>領域</th><th>記録する項目</th></tr></thead>
+          <tbody>
+            <tr><td>土地</td><td>実作付面積／緑肥面積／管理面積／滞水箇所／排水改善結果</td></tr>
+            <tr><td>お金</td><td>初期費用／種苗費／肥料費／堆肥費／資材費／機械費／委託費</td></tr>
+            <tr><td>労働</td><td>作業人数／作業内容／作業時間／1人あたり作業時間／草刈り時間／除草時間</td></tr>
+            <tr><td>作物</td><td>植付数／収穫数／収穫重量／失敗率／病害虫／廃棄量</td></tr>
+            <tr><td>家計</td><td>家庭消費量／購入した場合の市場価格／食費削減相当額／保存期間／食べ切れた割合</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="sub-label">暮らしのログ 基本フォーマット（作業ごとに記録）</p>
+      <ul class="bullet-list">
+        <li>日付／天候／作業場所／作業者</li>
+        <li>作業内容／開始時間／終了時間／合計作業時間</li>
+        <li>使用機械／使用資材／費用／写真</li>
+        <li>結果／気づいたこと／失敗／想定との差／次回改善／次の作業</li>
+      </ul>
+      <div class="info-bar">
+        <div class="info-bar__icon">写</div>
+        <div class="info-bar__text">写真は記念写真にしない。<strong>撮影地点を固定</strong>し、作業前／作業中／作業後／雨後／植付／生育／収穫を時系列で比較できるようにする。2026年8月時点の現況写真を「畑化前」の基準写真として扱う。</div>
+      </div>
+    </div>
+
+    <!-- ── No.9-6. 予算・判断ルール・決定/未確認 ── -->
+    <div class="section">
+      <div class="section-header">
+        <div class="chapter-num">判</div>
+        <h2 class="section-title">No.9 予算・判断ルール・決定事項</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="view-block">
+        <p class="view-label">初年度予算イメージ（確定支出ではない）</p>
+        <p class="view-text">
+          DIY 中心で <strong>3万円〜7万円程度</strong>。必要に応じた機械作業等を含めて <strong>最大 10 万円程度まで</strong>検討。ただし 10 万円を必ず使うという意味ではない。<br>
+          優先順位：①排水 → ②必要な耕起 → ③土壌診断 → ④必要最低限の土壌改良 → ⑤種苗 → ⑥マルチ等の栽培資材 → ⑦その他。<strong>「見栄えの良い畑を作るための投資」は優先しない。</strong>
+        </p>
+      </div>
+
+      <p class="sub-label">コスト削減原則</p>
+      <ul class="bullet-list">
+        <li>全面耕起・全面土壌改良を前提にしない。必要区画から始める</li>
+        <li>高額農機をすぐ買わない。人力作業と機械作業を時間単価でも比較する</li>
+        <li>中古・レンタル・共同利用を検討する。大量資材は運搬費も含めて判断する</li>
+        <li>家庭で食べ切れる量以上を作らない。失敗をゼロにするための過剰投資をしない</li>
+      </ul>
+
+      <div class="policy-note">
+        <p class="policy-note__label">農機・設備の判断ルール</p>
+        <p class="policy-note__text">
+          初年度の原則は<strong>「結果が分かるまで専用機械（耕運機・管理機・その他高額農機）を買わない」</strong>。No.9 だけを理由に購入しない。<strong>購入 vs 中古 vs レンタル vs 共同利用 vs 作業委託</strong>で比較する。No.6・No.7 の水田作業内製化にも使えるかを併せて考える。費用だけでなく、年間利用時間・保管場所・整備費・燃料費・故障リスク・操作習得・作業時間削減効果まで考える。<br>
+          なお「年間 10 万円（No.6+No.7 の委託費）を節約するために高額農機を買う」という判断はしない。
+        </p>
+      </div>
+
+      <p class="sub-label">現時点で決定したこと（2026年8月29日）</p>
+      <ul class="bullet-list">
+        <li>No.9 を動かす。当面は自給農として利用する</li>
+        <li>初年度から全面畑化しない。残りは緑肥／管理区として扱う</li>
+        <li>排水を最優先する</li>
+        <li>玉ねぎを 2026 年秋から開始する方向。2027 年春にじゃがいもを追加する方向。里芋を 3 作物目の候補とする</li>
+        <li>サツマイモよりじゃがいもを優先する</li>
+        <li>大量の堆肥・石灰を先に購入しない。土壌診断後に投入量を決める</li>
+        <li>高額農機をすぐ購入しない</li>
+        <li>認定新規就農者手続きは並行して進める</li>
+        <li>作業・費用・時間・収量を暮らしのログに残す</li>
+      </ul>
+
+      <div class="unknown-card">
+        <p class="unknown-label">未確認事項（確定情報として扱わない・調査後に更新）</p>
+        <ul class="unknown-items">
+          <li>No.9 の正確な排水能力</li>
+          <li>土地の高低差</li>
+          <li>土壌 pH・土壌成分</li>
+          <li>必要な堆肥量・石灰量</li>
+          <li>明渠の正確な位置・必要深さ</li>
+          <li>機械進入経路</li>
+          <li>農地利用に必要な行政手続き</li>
+          <li>権利者から妻への農地利用関係の正式な設定方法</li>
+          <li>認定新規就農者計画上の No.9 の扱い</li>
+          <li>初年度の正確な作付面積</li>
+          <li>玉ねぎ・じゃがいも・里芋の最終品種</li>
+        </ul>
+      </div>
+
+      <div class="info-bar">
+        <div class="info-bar__icon info-bar__icon--warn">状</div>
+        <div class="info-bar__text"><strong>数値には状態を持たせる。</strong><span class="dtag dtag-ok">確認済</span>＝No.9 面積 324㎡（課税明細書）／<span class="dtag dtag-est">概算</span>＝玉ねぎ 10〜15㎡ 等／<span class="dtag dtag-plan">計画</span>＝作物・作付時期／<span class="dtag dtag-unknown">未確認</span>＝排水能力・土壌成分。過去の検討値（堆肥 600kg 等）を確定値へ自動的に昇格させない。</div>
       </div>
     </div>
 
@@ -370,6 +758,11 @@
           米の自給が実現すると、4人家族で<strong>月1〜2万円の食費削減</strong>が期待できる。
           野菜の自給が加わると月2〜3万円規模。月15万円の生活費目標に直接貢献する。
         </p>
+      </div>
+
+      <div class="info-bar">
+        <div class="info-bar__icon">連</div>
+        <div class="info-bar__text">初年度の試験運用は、主に<strong>No.9（休耕田 1 筆・324㎡）</strong>で実施する。作物は<strong>玉ねぎ・じゃがいも・里芋</strong>の 3 種に整理した（上記「No.9 休耕田畑化・自給農プロジェクト」参照）。</div>
       </div>
     </div>
 
@@ -638,7 +1031,7 @@
     <div class="view-block" style="margin-bottom: 24px;">
       <p class="view-label">応援・助言してくださっている方々へ</p>
       <p class="view-text">
-        農業は完全に未経験です。2026年8月18日に移住が完了し、<strong>現在はP2（確認フェーズ）に入り、農地の詳細を確認している段階</strong>です（面積・土壌状態などの具体的な確認結果はまだ得られていません）。2026年8月25日には、妻が農業経営者として新規就農を目指す方針も新たに固まりました。失敗も記録しながら、焦らずデータを見て進めます。
+        農業は完全に未経験です。2026年8月18日に移住が完了し、<strong>現在はP2（確認フェーズ）に入り、農地の詳細を確認している段階</strong>です（課税明細ベースの台帳は整理しましたが、登記・現地ベースの排水・土壌の確認結果はこれからです）。2026年8月25日には、妻が農業経営者として新規就農を目指す方針も新たに固まりました。さらに2026年8月29日には、休耕田1筆（No.9・324㎡）を自給農の実証圃場として<strong>「実行準備フェーズ」</strong>に移し、最初の作業（雨後の排水調査）に着手する段階になりました。失敗も記録しながら、焦らずデータを見て進めます。
       </p>
     </div>
 
