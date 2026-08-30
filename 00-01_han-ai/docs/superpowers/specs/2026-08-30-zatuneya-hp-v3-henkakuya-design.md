@@ -253,7 +253,11 @@ Codex がレビュー用ブランチで提案した事業再定義（「生成AI
 ### 残タスク（Phase B 以降で扱う）
 
 - サイトマップ最終確定（新設 `growth` / `price` / `tools` の内容設計）
-- `zatuneya-business-plan-draft.*` と `project_revenue_standard.md` の数値更新（別タスク）
+- `zatuneya-business-plan-draft.*` と `project_revenue_standard.md` の数値更新（別タスク）。`project_revenue_standard.md` は研修が旧5コース体系のままのため、6コース体系（⑤＝AI活用ルール運用定着編を新設、旧⑤ Claude Code 特化は⑥へ繰り下げ）への更新、および主力「AI経営改善パッケージ 360,000円／3か月」の項目追加も同タスクに含める
+- トップ本文 §9 実績3件のプレースホルダを、ユーザー提供の匿名事例元ネタで差し替え（§2.9 準拠。差し替えまで公開不可）
+- AGENTS.md に v3 ワークフロー（GPTカンプ→Codexパーツ分解→Claude Code実装）と v3 方針を追記（§3.1）
+- 移住日 8/17／8/18 の食い違いを確定（対外文書・行政資料で移住日に言及する場合のみ。HP・チラシ・名刺は移住に触れない）
+- Codex提案ブランチ `origin/review/codex-business-plan` はマージせず履歴参照用に残置（§9-4 で確定済み・再掲）
 
 ## 10. 決定ログ（本セッションの Q&A）
 
