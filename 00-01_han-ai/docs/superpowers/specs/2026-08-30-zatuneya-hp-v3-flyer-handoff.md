@@ -2,7 +2,8 @@
 
 - 日付: 2026-08-30
 - 状態: チラシは HP 本体とは別セッションで進行。GPT にデザインカンプ作成を依頼済み（ユーザー操作）
-- 親要件: `2026-08-30-zatuneya-hp-v3-henkakuya-design.md` §4（チラシ）・§2（ブランド基盤）・§2.11（デザインシステム）
+- デザインの正本: `2026-08-30-zatuneya-hp-v3-henkakuya-design.md`（Codex版・確定仕様。§2 ブランド確定事項／§5 デザインシステム）。**HP・チラシのデザインは Codex 版を正とする（ユーザー指示 2026-08-30）**
+- チラシ要件・名刺要件は本引き継ぎ文の該当ブロックが正本。意思決定の全体像は Obsidian `01_Projects/zatuneya-hp/HP-v3-要件定義_2026-08-30.md`（決定事項1〜19）
 
 ---
 
@@ -24,7 +25,8 @@
 3. ListAgents で稼働中のピアセッションを確認し、ダッシュボード更新前に状況を照会
 
 ■ 参照すべきソース（全件読む）
-- 00-01_han-ai/docs/superpowers/specs/2026-08-30-zatuneya-hp-v3-henkakuya-design.md  ← v3全体の正本。§2ブランド基盤・§4チラシ・§5名刺・§2.11デザインシステム
+- 00-01_han-ai/docs/superpowers/specs/2026-08-30-zatuneya-hp-v3-henkakuya-design.md  ← Codex版・デザインの正本（HP・チラシのデザインは Codex版を正とする）。§2 ブランド確定事項・§5 デザインシステム
+- Obsidian 01_Projects/zatuneya-hp/HP-v3-要件定義_2026-08-30.md  ← 意思決定の全体像（決定事項1〜19）。チラシ要件・名刺要件は本引き継ぎ文が正本
 - 00-01_han-ai/docs/superpowers/specs/2026-08-30-zatuneya-hp-v3-top-page-copy.md   ← コピーのトーン・言い回しの正本
 - 00-01_han-ai/docs/superpowers/specs/2026-08-30-zatuneya-hp-v3-gpt-comp-brief.md  ← GPTに渡した確定仕様（デザイン制約の書き方の参考）
 - 00-01_han-ai/design-comps/zatuneya-hp/                                          ← 承認済みデザインカンプ（視覚の正本）
