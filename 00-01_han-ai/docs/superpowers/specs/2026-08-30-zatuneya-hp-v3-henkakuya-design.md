@@ -3,9 +3,9 @@
 - 日付: 2026-08-30
 - ステータス: **確定（ユーザー承認済み）**
 - 実装範囲: `zatuneya-hp` サブモジュールのTOPページ、およびTOPが使用する共通デザインシステム
-- 視覚的な参考: `C:\Users\ooto\OneDrive\Desktop\Codex 画像 2026年8月30日 18_36_23.png`
+- 視覚的な参考: 元PNG `C:\Users\ooto\OneDrive\Desktop\Codex 画像 2026年8月30日 18_36_23.png` は2026-09-01に不存在を確認。承認カンプPNGは `00-01_han-ai/design-comps/zatuneya-hp/` への再添付待ち
 - 本文の正本: `2026-08-30-zatuneya-hp-v3-top-page-copy.md`
-- 実装指示の正本: `C:\Users\ooto\.codex\attachments\2246b744-0ae5-4478-8c49-e139b70c30ad\pasted-text.txt`
+- 実装指示の正本: `00-01_han-ai/design-comps/zatuneya-hp/v3-top-page-implementation-brief.txt`（添付元 `C:\Users\ooto\.codex\attachments\2246b744-0ae5-4478-8c49-e139b70c30ad\pasted-text.txt` の無変更コピー）
 
 ## 0. 目的
 
@@ -115,6 +115,7 @@
 
 - Hero写真は、支援者と地域企業担当者の2人が同じ業務資料を囲み、話しながら業務を整理する場面とする。顔やPC、AI画面を主役にしない。
 - Hero以外の写真は**仮素材**であり、後日正式素材へ差し替える。仮素材の生成上の不自然さをデザインの正本にしない。
+- 承認カンプの元PNGは不存在であり、`design-comps/zatuneya-hp/` への再添付待ちである。再添付までは確定済みの情報設計・トークン・本文だけを正本にし、写真の細部を一致判定に使わない。
 - 写真表示領域、アスペクト比、`object-fit`、`object-position`、レスポンシブ時のトリミング、カード内サイズをコンポーネント側で定義し、画像ファイルだけの交換でレイアウトが保たれるようにする。
 - 推奨写真: 業務資料、打ち合わせ、手元、ホワイトボード、書類整理、PCを使った実務、業務フローを一緒に確認する場面。
 - 避ける写真: ロボット、AIチップ、回路、未来的UI、ホログラム、握手だけのストック写真、意味のない会議写真。
@@ -145,6 +146,10 @@
 - WCAG 2.1 AA、キーボード操作、44px以上の操作領域、4pxグリッドを満たす。
 - Hero以外の画像と匿名実績を、レイアウト変更なしに差し替えられる。
 - 既存の静的検証・スクリーンショット検証を実行し、`git diff --check` を通す。
+- 静的契約テストが本文正本の `requiredCopy` 全文、逐語の開示文、トークン化したモノラインSVGアイコン、`IntersectionObserver` による `.fade-in` の発火を検査する。
+- Chromium、Firefox、WebKitでモバイル・デスクトップの横スクロールとナビゲーション操作を確認する。
+- axe検査と、モバイル・デスクトップそれぞれのLighthouse 4指標（Performance、Accessibility、Best Practices、SEO）が、すべて90以上である。
+- OGP、meta description、canonicalが新しいポジショニングと一致する。
 
 ## 10. 今回の実装対象外・差し替え対象
 
@@ -152,3 +157,5 @@
 - チラシ、名刺、事業計画、移住日に関する文書の更新は今回の実装対象外である。
 - Hero以外の写真は正式素材が提供され次第、差し替える。
 - 匿名実績は事実確認済みの元ネタが提供され次第、仮データを正式な匿名事例へ差し替える。
+- 匿名実績が `placeholder` のまま、またはHero以外の写真が正式素材ではない間は、`/v2/` の実装をルート `index.html` へ昇格しない。
+- 本番昇格は別タスクとし、承認後にルート `index.html` 置換、canonical／OGP／`sitemap.xml` 更新、`index-v2.html` 削除、旧 `codex/zatuneya-hp-v2` ブランチ削除を行う。順序はサブモジュールコミット→親gitlinkコミット→両方のpush→公開確認→Obsidian記録とする。

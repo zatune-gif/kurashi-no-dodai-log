@@ -10,9 +10,37 @@
 
 ---
 
+## 実行ワークツリーとレビュー手順（2026-09-01更新）
+
+実装対象は、次の既存サブモジュールワークツリーに限定する。親リポジトリ直下の `zatuneya-hp` は `main` 用の別ワークツリーなので、v3実装・検証・コミットには使わない。
+
+```powershell
+$v3Worktree = 'C:\Users\ooto\work\ClaudeCode\kurashi-no-dodai-log\00-01_han-ai\zatuneya-hp\.worktrees\v3-top-page'
+git -C $v3Worktree status --short --branch
+git -C $v3Worktree branch --show-current
+git -C $v3Worktree rev-parse --abbrev-ref --symbolic-full-name '@{upstream}'
+```
+
+2026-09-01に、上記ワークツリーがクリーンで `codex/v3-top-page` と `origin/codex/v3-top-page` を確認したうえで、ローカルブランチを `codex/v3-henkakuya` に改名した。レビュー用の初回公開は次のコマンドで上流追跡を設定する。旧リモートブランチ `origin/codex/v3-top-page` は、この段階では削除しない。
+
+```powershell
+git -C $v3Worktree push -u origin codex/v3-henkakuya
+```
+
+実装コミット後は、(1) `git -C $v3Worktree push` でレビュー用ブランチを更新、(2) Claude が `origin/main...codex/v3-henkakuya` の差分を確認、(3) 指摘を同ブランチで修正して再push、(4) Claude の承認後にのみ、後続の本番昇格タスクへ進む。親リポジトリのgitlink・親main・公開サイトは、このレビュー段階では更新しない。
+
+## レビュー受け入れゲートと本番昇格の条件
+
+- v3 TOP実装は、匿名実績3件が `placeholder` のまま、またはHero以外の写真が正式素材ではない間は、本番のルート `index.html` へ昇格しない。
+- 静的契約テストは、本文正本の `requiredCopy` 全文、逐語の開示文、トークン化したモノラインSVGアイコン、`IntersectionObserver` による `.fade-in` の発火を検査する。
+- ブラウザ検証は Chromium、Firefox、WebKit の各エンジンで、モバイルとデスクトップの横スクロールおよびナビゲーション操作を確認する。
+- axeのアクセシビリティ検査と、モバイル・デスクトップそれぞれのLighthouse 4指標（Performance、Accessibility、Best Practices、SEO）を実行し、各スコアが90以上であることを確認する。
+- OGP、meta description、canonicalを新ポジショニングに合わせ、公開前に検査する。
+- 承認後の別タスクでのみ、ルート `index.html` 置換、canonical／OGP／`sitemap.xml` 更新、`index-v2.html` 削除、旧 `codex/zatuneya-hp-v2` ブランチ削除を行う。順序はサブモジュールコミット→親gitlinkコミット→両方のpush→公開確認→Obsidian記録とする。
+
 ## 事前確認と変更境界
 
-実装対象は親リポジトリではなく、ネストしたGitリポジトリ `zatuneya-hp`（親の `.gitmodules` で管理されるサブモジュール）である。以後、サブモジュール内のコマンドは必ず `git -C zatuneya-hp ...` または `Set-Location zatuneya-hp` で実行する。親リポジトリのサブモジュールgitlink更新は、サブモジュールのコミットを親へ取り込む工程でのみ行う。
+実装対象は親リポジトリではなく、ネストしたGitリポジトリ `zatuneya-hp` の既存v3ワークツリーである。以後、サブモジュール内のコマンドは必ず `git -C $v3Worktree ...` または `Set-Location $v3Worktree` で実行する。親リポジトリのサブモジュールgitlink更新は、Claudeの差分承認と本番昇格条件の充足後にのみ行う。
 
 今回変更するのはTOPとそれを検証する資産だけであり、V1、`v2/` の下層HTML、共有 `style.css`、共有 `nav.js` を変更しない。現在の `nav.js` が参照する `#nav-hamburger`、`#site-nav`、`.site-nav__dropdown-trigger`、`.fade-in`、`#sticky-cta`、`#sticky-cta-close` は新しいTOPにも存在させる。
 
@@ -30,14 +58,14 @@
 | `zatuneya-hp/v2/qa-screenshots/index/1280.png` | 更新 | 必須デスクトップ幅の全ページPNG |
 | `zatuneya-hp/v2/qa-screenshots/index/diff-notes.md` | 更新 | 参考画像との目視確認項目と、カンプに含まれない正式素材・仮データを明示したQA記録 |
 
-既存アセット `v2/assets/hero-meeting-photo.jpg`、`hero-photo.jpg`、`band-training.jpg`、`band-onsite.jpg`、`band-together.jpg`、`profile-portrait-2.jpg` を使用し、新規の外部画像は取得しない。`hero-meeting-photo.jpg` をHero専用に用い、それ以外は暫定画像として役割名を付ける。匿名実績は本文正本の3件のみを表示し、実データのような数値・会社名・固有名を追加しない。
+既存アセット `v2/assets/hero-meeting-photo.jpg`、`hero-photo.jpg`、`band-training.jpg`、`band-onsite.jpg`、`band-together.jpg`、`profile-portrait-2.jpg` を使用し、新規の外部画像は取得しない。`hero-meeting-photo.jpg` をHero専用に用い、それ以外は暫定画像として役割名を付ける。匿名実績は本文正本の3件のみを表示し、実データのような数値・会社名・固有名を追加しない。匿名実績とHero以外の正式写真が揃うまでは、`/v2/` の実装を本番へ昇格させない。
 
 ## 正本と実装上の固定値
 
 - 本文を一字ずつ参照する正本: `docs/superpowers/specs/2026-08-30-zatuneya-hp-v3-top-page-copy.md`。
 - 範囲・アクセシビリティ・デザインの正本: `docs/superpowers/specs/2026-08-30-zatuneya-hp-v3-henkakuya-design.md`。
-- 視覚上の優先順位の正本: `C:\Users\ooto\OneDrive\Desktop\Codex 画像 2026年8月30日 18_36_23.png`。Hero→お悩み→主力パッケージ→3サービス→支援の流れ→強み→実績→無料ツール→FAQ→最終CTAの強弱を採用し、生成写真の不自然さは再現しない。
-- 実装指示の正本: `C:\Users\ooto\.codex\attachments\2246b744-0ae5-4478-8c49-e139b70c30ad\pasted-text.txt`。
+- 視覚上の優先順位の元PNG `C:\Users\ooto\OneDrive\Desktop\Codex 画像 2026年8月30日 18_36_23.png` は2026-09-01に不存在を確認した。承認カンプPNGは `design-comps/zatuneya-hp/` へ再添付待ちであり、再添付までは写真の細部を視覚正本にせず、確定済みの情報優先順位（Hero→お悩み→主力パッケージ→3サービス→支援の流れ→強み→実績→無料ツール→FAQ→最終CTA）だけを採用する。
+- 実装指示の正本: `design-comps/zatuneya-hp/v3-top-page-implementation-brief.txt`。これは `C:\Users\ooto\.codex\attachments\2246b744-0ae5-4478-8c49-e139b70c30ad\pasted-text.txt` から内容を変更せずコピーした追跡用成果物である。
 - 全診断CTAのURL: `https://han-ai-diagnosis.netlify.app/`。相談・お問い合わせは `./contact.html`、パッケージは `./service-management.html`、成長段階は `./growth.html`、無料ツール一覧は `./tools.html`、プロンプトライブラリは `https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/` とする。
 
 ## Task 1: v3の失敗する契約テストを先に定義する
@@ -90,13 +118,13 @@
 
 - [ ] **Step 2: REDを確認する**
 
-  Run: `node zatuneya-hp/v2/tests/top-comp-contract.mjs`
+  Run: `node "$v3Worktree/v2/tests/top-comp-contract.mjs"`
 
   Expected: `AssertionError` で失敗する。現行HTMLに `AIを入れることより、仕事がよくなることから。` と `section exists: #hero` が存在しないため、`PASS TOP v3 contract` は出力されない。
 
 - [ ] **Step 3: 変更対象がテストだけであることを確認してコミットする**
 
-  Run: `git -C zatuneya-hp status --short`
+  Run: `git -C $v3Worktree status --short`
 
   Expected: `v2/tests/top-comp-contract.mjs` だけが変更として表示される。実装をまだ含めないため、このREDコミットは作らず、Task 3のGREENコミットに含める。
 
@@ -158,7 +186,7 @@
 
 - [ ] **Step 2: REDを確認する**
 
-  Run: `node zatuneya-hp/v2/tests/v3-top-page-browser.mjs`
+  Run: `node "$v3Worktree/v2/tests/v3-top-page-browser.mjs"`
 
   Expected: 現行TOPには`#sticky-cta-close`と`#faq`がないためlocatorの待機で失敗し、PNGは完了扱いにしない。
 
@@ -239,13 +267,13 @@
 
 - [ ] **Step 3: 静的テストをGREENにする**
 
-  Run: `node zatuneya-hp/v2/tests/top-comp-contract.mjs`
+  Run: `node "$v3Worktree/v2/tests/top-comp-contract.mjs"`
 
   Expected: 終端に `PASS TOP v3 contract` と、全`check`件数を表示する。旧v2コピー（`教えて、作って、`、`AI活用のステップに合わせた 4 つのサービス`、根拠を示せない実績数値）を要求するassertは残さない。
 
 - [ ] **Step 4: ブラウザテストが要求するDOMに合わせ、失敗したselectorを修正してGREENにする**
 
-  Run: `node zatuneya-hp/v2/tests/v3-top-page-browser.mjs`
+  Run: `node "$v3Worktree/v2/tests/v3-top-page-browser.mjs"`
 
   Expected: `PASS v3 TOP browser checks: 4 viewports, keyboard, sticky CTA, reduced motion`。`qa-screenshots/index/320.png`、`375.png`、`768.png`、`1280.png`がいずれも更新される。
 
@@ -328,7 +356,7 @@
 
 - [ ] **Step 4: GREENと視覚回帰を確認する**
 
-  Run: `node zatuneya-hp/v2/tests/top-comp-contract.mjs; node zatuneya-hp/v2/tests/v3-top-page-browser.mjs; node zatuneya-hp/v2/tests/verify-v2.mjs`
+  Run: `node "$v3Worktree/v2/tests/top-comp-contract.mjs"; node "$v3Worktree/v2/tests/v3-top-page-browser.mjs"; node "$v3Worktree/v2/tests/verify-v2.mjs"`
 
   Expected: v3契約、4 viewportのブラウザ検証、既存V2静的検証が全てPASSする。`verify-v2.mjs`が旧TOPコピーを直接検証しないため、下層ページのcanonical・参照・インラインstyle規約も回帰しない。
 
@@ -344,13 +372,13 @@
 
 - [ ] **Step 1: 必須3幅を含むPNGを生成する**
 
-  Run: `node zatuneya-hp/v2/tests/v3-top-page-browser.mjs`
+  Run: `node "$v3Worktree/v2/tests/v3-top-page-browser.mjs"`
 
   Expected: `qa-screenshots/index/375.png`、`768.png`、`1280.png`が当回生成時刻で更新され、回帰確認用の`320.png`も更新される。各PNGは`fullPage: true`で、全12セクション・フッター・スティッキーCTAを含む。
 
 - [ ] **Step 2: 参考画像と4枚のPNGを並べて目視確認する**
 
-  1280pxでは、写真とコピーの2列Hero、4つのお悩み、主力パッケージの明確な強調、3サービス、5段階の支援の流れ、代表・実績・ツール・FAQ・濃ティール最終CTAの順序と強弱を確認する。768pxでは3サービスが2列以下、375px/320pxではカード・CTA・成長段階・支援の流れが1列となり、横方向の切れ・重なり・固定CTAによる隠れがないことを確認する。仮写真の人物や手指の形をカンプへの一致項目に含めない。
+  1280pxでは、写真とコピーの2列Hero、4つのお悩み、主力パッケージの明確な強調、3サービス、5段階の支援の流れ、代表・実績・ツール・FAQ・濃ティール最終CTAの順序と強弱を確認する。768pxでは3サービスが2列以下、375px/320pxではカード・CTA・成長段階・支援の流れが1列となり、横方向の切れ・重なり・固定CTAによる隠れがないことを確認する。仮写真の人物や手指の形をカンプへの一致項目に含めない。元PNGは不存在のため、再添付されるまでPNGとの見た目比較を合格条件にせず、不存在と再添付待ちを `diff-notes.md` に記録する。
 
 - [ ] **Step 3: `diff-notes.md`を次の固定書式で更新する**
 
@@ -378,44 +406,58 @@
 
 - [ ] **Step 1: 最適化チェックを機械的に行う**
 
-  Run: `rg -n 'console\.log|alert\(|confirm\(|prompt\(|style\s*=' zatuneya-hp/v2/index.html zatuneya-hp/v2/top-comp.css zatuneya-hp/v2/nav.js zatuneya-hp/v2/tests`
+  Run: `rg -n 'console\.log|alert\(|confirm\(|prompt\(|style\s*=' "$v3Worktree/v2/index.html" "$v3Worktree/v2/top-comp.css" "$v3Worktree/v2/nav.js" "$v3Worktree/v2/tests"`
 
   Expected: `style=`、`alert(`、`confirm(`、`prompt(`は0件。テストの禁止assertに現れる文字列と、既存テストの成功ログ以外に`console.log`はない。使い捨てデバッグログ・コメントアウトされた死にコード・秘密情報は0件。静的サイトのためAPI返り値・認証処理は存在せず、APIキーも追加しない。
 
 - [ ] **Step 2: ドキュメントへの影響を判定する**
 
-  Run: `rg --files zatuneya-hp | rg '(^|/|\\)(README|readme)(\.|$)'`
+  Run: `rg --files $v3Worktree | rg '(^|/|\\)(README|readme)(\.|$)'`
 
   Expected: 出力0件。サブモジュールにはREADMEがないため、更新対象のREADME・運用手順書は存在しない。親の3つのv3仕様書はすでに今回の確定事項を記載しており、実装で新URL・新操作・新配布物を増やさないため変更しない。`qa-screenshots/index/diff-notes.md`を今回の検証記録として更新する。
 
 - [ ] **Step 3: 最終検証を順に実行する**
 
-  Run: `node zatuneya-hp/v2/tests/top-comp-contract.mjs; node zatuneya-hp/v2/tests/v3-top-page-browser.mjs; node zatuneya-hp/v2/tests/verify-v2.mjs; git -C zatuneya-hp diff --check; git -C zatuneya-hp status --short`
+  Run: `node "$v3Worktree/v2/tests/top-comp-contract.mjs"; node "$v3Worktree/v2/tests/v3-top-page-browser.mjs"; node "$v3Worktree/v2/tests/verify-v2.mjs"; git -C $v3Worktree diff --check; git -C $v3Worktree status --short`
 
   Expected: 3つのNodeコマンドはすべてPASS、`git diff --check`は出力0件。`status --short`にはTask 6のファイル一覧だけが表示され、下層HTML・共有`style.css`・共有`nav.js`・V1ファイルは表示されない。外部の診断URLへの実通信は行わないため、診断アプリ自体の稼働は未検証と記録する。
 
-- [ ] **Step 4: サブモジュールをコミットし、親リポジトリのgitlinkをコミットする**
+- [ ] **Step 4: サブモジュールのレビュー用コミットを作成する**
 
-  Run: `git -C zatuneya-hp add -- v2/index.html v2/top-comp.css v2/tests/top-comp-contract.mjs v2/tests/v3-top-page-browser.mjs v2/qa-screenshots/index/320.png v2/qa-screenshots/index/375.png v2/qa-screenshots/index/768.png v2/qa-screenshots/index/1280.png v2/qa-screenshots/index/diff-notes.md; if ($?) { git -C zatuneya-hp diff --cached --check }; if ($?) { git -C zatuneya-hp commit -m "feat: v3トップページを業務変革屋として再設計" }`
+  Run: `git -C $v3Worktree add -- v2/index.html v2/top-comp.css v2/tests/top-comp-contract.mjs v2/tests/v3-top-page-browser.mjs v2/qa-screenshots/index/320.png v2/qa-screenshots/index/375.png v2/qa-screenshots/index/768.png v2/qa-screenshots/index/1280.png v2/qa-screenshots/index/diff-notes.md; if ($?) { git -C $v3Worktree diff --cached --check }; if ($?) { git -C $v3Worktree commit -m "feat: v3トップページを業務変革屋として再設計" }`
 
   Expected: サブモジュール内で1コミットが作成され、ステージ済みのファイルは上記9ファイルだけである。
 
-  Run: `git add -- zatuneya-hp; if ($?) { git diff --cached --check }; if ($?) { git diff --cached --name-only }; if ($?) { git commit -m "chore: ざつね屋HP v3トップページを更新" }`
+  親リポジトリのgitlinkをステージ・コミット・pushしない。Claudeの差分承認と、本番昇格条件の充足まではサブモジュールのレビュー用ブランチだけを更新する。
 
-  Expected: 親リポジトリのステージ済みパスは`00-01_han-ai/zatuneya-hp`だけであり、サブモジュールgitlinkの更新を1コミットで記録する。
+- [ ] **Step 5: レビュー用ブランチをpushし、Claudeの差分確認へ渡す**
 
-- [ ] **Step 5: 両方のリポジトリをpushし、Obsidianへ実装記録を残す**
+  Run: `git -C $v3Worktree push`
 
-  Run: `git -C zatuneya-hp push; if ($?) { git push }`
+  Expected: サブモジュールの実装コミットが `codex/v3-henkakuya` にpushされ、Claude が差分レビューできる。親のgitlinkを含む親mainへのcommit・push・公開は、このレビュー承認後の本番昇格タスクまで行わない。
 
-  Expected: サブモジュールの実装コミットが先にpushされ、親のgitlinkコミットが後にpushされる。どちらも最新ブランチへ反映される。
+## 後続Task: 本番昇格・公開・記録
 
-  Obsidianには、担当ワーカーが既存のObsidian接続を用いて、`01_Projects/zatuneya-hp/2026-08-30_v3-top-page-implementation.md`を作成する。以下を記録する: 実装対象が`zatuneya-hp/v2/`だけであること、12セクションと主力商品、診断URL統一、`nav.js` DOM契約、Hero以外の仮写真の差し替え方法、匿名実績が仮データであること、スクリーンショット4幅とテスト結果、両コミットhash、未検証の外部診断実通信。Obsidian接続が利用できない場合は、push後の完了報告に「Obsidian記録は接続不可のため未実施」と明記し、記録済みとは報告しない。
+このTaskは、Claudeの差分承認後、匿名実績3件が事実確認済みの匿名事例へ置換され、Hero以外の写真が正式素材へ置換された場合にのみ実施する。レビュー段階では開始しない。
 
-## 実装完了時の報告に含める証拠
+- [ ] **Step 1: 本番対象の差分を再検証する**
 
-- 変更ファイル9件と、サブモジュールコミットhash・親gitlinkコミットhash・両方のpush結果。
+  Run: `node "$v3Worktree/v2/tests/top-comp-contract.mjs"; node "$v3Worktree/v2/tests/v3-top-page-browser.mjs"; git -C $v3Worktree diff origin/main...HEAD --check`
+
+  Expected: 本文正本の `requiredCopy` 全文、逐語の開示文、`IntersectionObserver` の `.fade-in` 発火、トークン化されたモノラインSVGアイコン、OGP・meta description・canonical、Chromium／Firefox／WebKitの横スクロールとナビゲーション、axe、モバイル・デスクトップのLighthouse 4指標がすべて受け入れ基準を満たす。
+
+- [ ] **Step 2: 本番用ファイルと整理対象を限定して更新する**
+
+  ルート `index.html` を承認済みv3 TOPで置換し、canonical／OGP／`sitemap.xml` を更新する。`index-v2.html` を削除し、旧 `codex/zatuneya-hp-v2` ブランチを削除する。対象を確認してから実行し、下層ページは変更しない。
+
+- [ ] **Step 3: サブモジュール→親gitlink→公開→Obsidianの順で反映する**
+
+  サブモジュールの本番コミットをpushしたあと、親リポジトリでgitlinkだけを含むコミットを作成してpushし、GitHub Pagesの公開状態を確認する。最後にObsidianの `01_Projects/zatuneya-hp/2026-08-30_v3-top-page-implementation.md` へ、実装範囲、テスト結果、両コミットhash、公開確認、外部診断実通信の未検証範囲、正式素材と匿名事例の確認根拠を記録する。
+
+## レビュー実装時の報告に含める証拠
+
+- 変更ファイル9件と、サブモジュールコミットhash・レビュー用push結果。親gitlinkコミット・親mainへのpush・公開確認は未実施であること。
 - `top-comp-contract.mjs`、`v3-top-page-browser.mjs`、`verify-v2.mjs`のPASS出力。
 - 375px / 768px / 1280px（および320px回帰幅）のスクリーンショット保存パスと、目視確認した項目。
 - 最適化確認: インラインstyle、使い捨て`console.log`、`alert`/`confirm`/`prompt`、死にコード、秘密情報の全項目が問題なしだったこと。
-- 外部診断アプリへの実通信は未検証であることと、仮写真・匿名実績の差し替えが残ること。
+- 外部診断アプリへの実通信は未検証であること、仮写真・匿名実績の差し替えが残ること、本番昇格条件が未充足であること。
