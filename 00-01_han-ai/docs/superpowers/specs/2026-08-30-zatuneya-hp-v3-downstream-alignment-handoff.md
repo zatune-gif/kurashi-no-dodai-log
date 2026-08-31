@@ -44,7 +44,8 @@
     ②〜⑤は「お問い合わせ」
 (7) モニター割引: 対外物では廃止（低額入口＝無料診断→小さなお試し改善 に置換。入口商品価格は未確定・非表示）
 (8) 助成金: 対外物では一切触れない（料金注記・FAQ含む）
-(9) 経歴: 業種を出さず「現場でのデジタル化推進経験」。「製造業のDX」は誤りで削除
+(9) 経歴: 業種を出さず「現場でのデジタル化推進経験」。経歴文としての「製造業のDX」は誤りで削除。
+    ※ ただしフォームの「クライアントの業種」選択肢としての『製造業』（例: 13番 detail.js）は経歴表記ではないので残す
 (10) 実績: 匿名（業種・規模・成果のみ）。固有名・克明にできない数値は不可。
      ※匿名事例の元ネタはユーザー保留中 → 具体差し替えは保留、データ構造だけ整える
 (11) 内部数値: 月商 保守27/目標50/楽観86万に一本化。年間354〜528万は初年度ランプアップ計画として別掲。
@@ -61,10 +62,12 @@ A. 公開サイト（kurashi-no-dodai-log ルート）
    - index.html: サービス名・現在地の表現（必要な範囲）
    - ※ zatuneya-hp サブモジュール（v3本体・下層ページ）は別セッション担当。触らない
 B. 13番 AI活用診断ツール（00-01_han-ai/13_ai-diagnosis-tool/）
-   - prices.html / services.html / curriculum.html / estimate.html / request.html / detail.html
+   - 現存HTML7ファイル: index.html / diagnosis-simple.html / curriculum.html / detail.html /
+     prices.html / estimate.html / request.html（※services.html は存在しない）
    - サービス名・6コース体系・②〜⑤「お問い合わせ」・モニター割引除去・助成金記述除去・
-     旧内部数値の参照箇所・リンク/CTA の Netlify 統一
-   - ※ 6e が変更点洗い出し＋提案ドラフトを先行中。6e の成果を入力にする
+     旧内部数値の参照箇所・診断URL参照（save-inquiry.js L6 と README がGitHub Pages han-ai.htmlを指す）
+   - ※ 6e の提案書が正本の入力: 00-01_han-ai/docs/superpowers/specs/2026-08-30-zatuneya-hp-v3-downstream-13-14-training-proposal.md
+     （canonical/sitemap/robots は既に ai-shindan-zatuneya に一致＝修正不要。footer © も既に「© 2026 ざつね屋」）
 C. 14番 提案書生成 Electron（00-01_han-ai/14_proposal-generator/）
    - 成果物マスタ・提案書スケジュール・見積書テンプレの用語/価格を確定事項に整合（一部対応済み。突合する）
    - ※ 6e が洗い出し中
