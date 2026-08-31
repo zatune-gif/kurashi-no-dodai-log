@@ -4,6 +4,7 @@
 - レビュー対象: `2026-08-30-zatuneya-hp-v3-top-page.md`（Codex 生成・未完成ドラフト）
 - レビュー者: Claude Code (Sonnet)
 - 基準: `2026-08-30-zatuneya-hp-v3-henkakuya-design.md`（要件定義書）／ `zatuneya-hp/AGENTS.md`
+- ※本レビュー中の『要件定義書 §3.2 / §3.1 / §10 …』は 2fb59a5 以前の版の章番号。現行の Codex版（同ファイル名）では章立てが変わったため、該当内容は Obsidian『HP-v3-要件定義_2026-08-30.md』の決定事項および AGENTS.md を参照。
 
 ## 総評
 
@@ -19,6 +20,7 @@
 2. **axe と Lighthouse が無い。** AGENTS.md の検証必須：axe（アクセシビリティ）と Lighthouse 4指標（Performance / Accessibility / Best Practices / SEO）各90以上を測定（対象 `v2/index.html`）。Task 4 か Task 6 に追加。
 3. **クロスブラウザが Chromium のみ。** AGENTS.md「レイアウト・ナビ変更時は Chromium / Firefox / WebKit」。全面レイアウト変更なので3ブラウザで横スクロール・ナビ開閉を確認。
 4. **OGP／meta description の更新が計画に無い。** ポジショニングが根本から変わるのに head は「既存 favicon・fonts・CSS を残す」だけ。`<meta name="description">`・`og:title`・`og:description`・`og:url`（v2 canonical）・`og:image` を新ポジショニングに更新する手順を明記。AGENTS.md 検証にも「メタタグ・OGP」あり。
+5. **診断URLの定数 `han-ai-diagnosis.netlify.app` が未確認（2026-08-30 追記）。** Task 1 の契約テストは `diagnosisUrl = 'https://han-ai-diagnosis.netlify.app/'` を固定し、全診断CTAがこれと一致することを assert する。しかし 13番ツールの実ページ（canonical／sitemap／robots）は `ai-shindan-zatuneya.netlify.app` を使用しており、`han-ai-diagnosis.netlify.app` は AGENTS.md の「統一先候補（未決）」にすぎない。**ユーザー方針：最終URLは独自ドメイン取得時に確定。それまでの当面のCTA遷移先は稼働中の `https://ai-shindan-zatuneya.netlify.app/`。** 計画の `diagnosisUrl` 定数と Codex確定仕様 §4 を当面URLへ差し替え、1定数・1箇所で後日一括置換できる作りにする。
 
 ### MEDIUM
 
