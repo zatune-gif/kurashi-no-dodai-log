@@ -17,7 +17,7 @@ exports.handler = async (event) => {
       max_tokens: 400,
       messages: [{
         role: 'user',
-        content: `あなたは中小企業向けAI活用コンサルタントです。
+        content: `あなたは地域企業の業務変革を支援するコンサルタントです。
 
 診断スコア: ${score}点（${stage}）
 

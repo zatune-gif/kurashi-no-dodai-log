@@ -3,7 +3,9 @@ const nodemailer = require('nodemailer');
 
 const OWNER_EMAIL  = 'zatuneya@gmail.com';
 const SHEET_NAME   = '問い合わせ一覧';
-const SITE_URL     = 'https://zatune-gif.github.io/kurashi-no-dodai-log/han-ai.html';
+// 診断ツールの公開URL。当面は Netlify（ai-shindan-zatuneya）。独自ドメイン取得時に最終URLへ再置換する
+// （置換対象一覧は README「ドメイン確定時の再置換対象」を参照）。本番 Netlify では process.env.URL に本番URLが自動注入される。
+const SITE_URL     = process.env.SITE_URL || process.env.URL || 'https://ai-shindan-zatuneya.netlify.app';
 
 // =====================
 // Google Sheets 書き込み
