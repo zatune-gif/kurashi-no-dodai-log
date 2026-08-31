@@ -380,20 +380,6 @@ html, body {
   margin-top: 4px;
 }
 
-.subsidy-preview {
-  background: rgba(76, 175, 80, 0.08);
-  border: 1px solid rgba(76, 175, 80, 0.3);
-  border-radius: var(--radius);
-  padding: 10px 12px;
-}
-
-.subsidy-note {
-  font-size: 12px;
-  line-height: 1.7;
-  color: var(--text);
-  margin: 0;
-}
-
 /* ─── 推奨プランリスト ─── */
 .rec-list { display: flex; flex-direction: column; gap: 8px; }
 

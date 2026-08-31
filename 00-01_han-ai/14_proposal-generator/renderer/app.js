@@ -1,5 +1,9 @@
 'use strict';
 
+// 特別価格（旧「モニター価格」）適用時の内部値引き率。
+// 対外表記には出さず、1:1 交渉用の内部レバーとしてのみ使用する（提案書仕様 D-2）。
+const SPECIAL_PRICE_RATE = 0.7;
+
 // ─────────────────────────────────────
 // DOM参照
 // ─────────────────────────────────────
@@ -35,12 +39,10 @@ const DOM = {
 
   eNumber:        $('e-number'),
   eMonitor:       $('e-monitor'),
-  eSubsidy:       $('e-subsidy'),
   eLineItems:     $('e-line-items'),
   eSubtotal:      $('e-subtotal'),
   eTax:           $('e-tax'),
   eTotal:         $('e-total'),
-  eSubsidyPreview:$('e-subsidy-preview'),
   eRecs:          $('e-recommendations'),
 
   pSection1:      $('p-section1'),
@@ -201,19 +203,16 @@ function calcTotals() {
   }, 0);
 
   const applyMonitor = DOM.eMonitor.checked;
-  const adjustedSubtotal = applyMonitor ? Math.round(subtotal * 0.7) : subtotal;
+  const adjustedSubtotal = applyMonitor ? Math.round(subtotal * SPECIAL_PRICE_RATE) : subtotal;
   const tax   = Math.round(adjustedSubtotal * 0.1);
   const total = adjustedSubtotal + tax;
 
   DOM.eSubtotal.textContent = fmtNum(adjustedSubtotal) + '円';
   DOM.eTax.textContent      = fmtNum(tax)              + '円';
   DOM.eTotal.textContent    = fmtNum(total)            + '円';
-
-  DOM.eSubsidyPreview.style.display = DOM.eSubsidy.checked ? 'block' : 'none';
 }
 
 DOM.eMonitor.addEventListener('change', calcTotals);
-DOM.eSubsidy.addEventListener('change', calcTotals);
 
 // ─────────────────────────────────────
 // 提案書生成（Claude API）
@@ -347,14 +346,13 @@ function buildEstimateData() {
 
   const applyMonitor = DOM.eMonitor.checked;
   if (applyMonitor) {
-    lineItems.forEach(item => { item.price = Math.round(item.price * 0.7); });
+    lineItems.forEach(item => { item.price = Math.round(item.price * SPECIAL_PRICE_RATE); });
   }
 
   return {
     estimateNumber: DOM.eNumber.value.trim(),
     lineItems,
-    applyMonitor,
-    applySubsidy: DOM.eSubsidy.checked
+    applyMonitor
   };
 }
 

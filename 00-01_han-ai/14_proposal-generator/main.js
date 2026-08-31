@@ -70,10 +70,11 @@ ipcMain.handle('open-json', async () => {
 function getServiceDeliverables(serviceName) {
   const n = serviceName || '';
 
-  // ── AI業務改善オーダーメイドサービス（contract_om.md 第1条）──
+  // ── 個別業務設計（旧「AI業務改善オーダーメイドサービス」。contract_om.md 第1条）──
   // 成果物は制作のみ・制作＋運用サポートどちらも同一の3点
   // 運用サポート（MTG×2回・軽微改修・メール対応）はサービス活動であり成果物ではない
-  if (n.includes('AI業務改善オーダーメイド') || n.includes('オーダーメイドサービス')) {
+  // マッチキーは 13番 generate-library.js の servicesCatalog／推薦 service 文字列と一致必須
+  if (n.includes('個別業務設計') || n.includes('AI業務改善オーダーメイド') || n.includes('オーダーメイドサービス')) {
     return [
       '業務専用AI指示書テンプレート（コピペで使える形式）',
       'スタッフ向け操作手順書（誰でも使える図解付き）',
@@ -81,9 +82,9 @@ function getServiceDeliverables(serviceName) {
     ];
   }
 
-  // ── AI開発伴走サービス（contract_banso.md 第1条）──
+  // ── AI活用伴走（旧「AI開発伴走サービス」。contract_banso.md 第1条）──
   // 物理的な納品物ではなくサービス内容を記載
-  if (n.includes('AI開発伴走') || n.includes('MTGプラン') || n.includes('伴走サービス')) {
+  if (n.includes('AI活用伴走') || n.includes('AI開発伴走') || n.includes('MTGプラン') || n.includes('伴走サービス')) {
     return [
       '月次オンラインMTG（60〜90分）の実施',
       'AI活用状況の共有・業務課題のヒアリング',
@@ -109,7 +110,7 @@ function getServiceDeliverables(serviceName) {
     return ['自社AI活用マップ', '業務別プロンプトライブラリ10本'];
   }
 
-  // ── 研修：各コース（service_brochure.md / project_revenue_standard.md）──
+  // ── AI実務研修：各コース（service_brochure.md / project_revenue_standard.md）──
   if (n.includes('AI活用知識編') || (n.includes('①') && !n.includes('セット'))) {
     return ['自社AI活用マップ'];
   }
@@ -122,21 +123,33 @@ function getServiceDeliverables(serviceName) {
   if ((n.includes('実践編') && n.includes('動画系')) || (n.includes('④') && !n.includes('セット'))) {
     return ['当日作成したショート動画1本', '動画制作の再現手順書'];
   }
+  // 新⑤「AI活用ルール・運用定着編」（13番 curriculum.html コース⑤）
+  if (n.includes('AI活用ルール') || n.includes('運用定着') || (n.includes('⑤') && !n.includes('セット'))) {
+    return [
+      '社内AI活用ガイドライン（禁止事項・承認フロー含む）',
+      '運用チェックリスト',
+      '定着度セルフ点検シート'
+    ];
+  }
+  // ⑥「Claude Code 特化編」（旧⑤。13番 curriculum.html コース⑥）
   if (n.includes('Claude Code') && n.includes('個別')) {
     return ['当日作成した実行スクリプト・プロンプト（自分の業務に使えるもの）'];
   }
-  if (n.includes('Claude Code') || (n.includes('⑤') && !n.includes('セット'))) {
+  if (n.includes('Claude Code') || (n.includes('⑥') && !n.includes('セット'))) {
     return ['チームで共有できる自動化テンプレート集', '各自の演習成果ファイル'];
   }
 
-  // ── AI経営改善パッケージ ──
-  // 圧縮版（2か月・270,000円）・標準版（3か月・16h・360,000円）・拡張版（4か月・540,000円）
+  // ── AI経営改善パッケージ（主力）──
+  // 対外PDF・見積の表示は標準版（3か月・16時間・360,000円）のみ（D-6）。
+  // 圧縮版（2か月・270,000円）・拡張版（4か月・540,000円）は 1:1 交渉用の
+  // 内部見積オプションとして温存する（対外文書には出さない）。
+  // 成果物名は 13番 prices.html SERVICE 02「AI経営改善パッケージ」の表記と統一。
   if (n.includes('AI経営改善パッケージ') || n.includes('経営改善パッケージ')) {
     return [
       '現状診断レポート',
-      'KPI設計書',
-      '体制設計書（組織改善計画）',
-      '実装マニュアル'
+      '組織改善計画書',
+      '実装マニュアル',
+      'KPI設計書'
     ];
   }
 
@@ -161,7 +174,8 @@ ipcMain.handle('generate-proposal', async (_, diagData) => {
     ? deliverables.map(d => `- ${d}`).join('\n')
     : '- 別途ご相談の上、確定いたします';
 
-  const prompt = `あなたはざつね屋（広島県福山市近郊の中小企業向けAI活用支援専門家）のコンサルタントです。
+  const prompt = `あなたはざつね屋（広島県府中市を拠点に、地域企業のAI活用・業務変革に伴走する実務家）です。
+AIの導入そのものが目的ではなく、現場の業務を整理し、社内の人が自分で回せる形にすることを重視します。自分でも手を動かす「教えられる実装者」として、実装・手順書化まで一貫して支援します。
 クライアントの診断データをもとに提案書のドラフトを作成してください。
 
 【クライアント情報】
@@ -441,9 +455,6 @@ body{font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-
 .total-blk{background:#f8f8f8;border:1px solid #e0e0e0;border-radius:6px;padding:14px;margin-bottom:18px}
 .tr{display:flex;justify-content:space-between;padding:3px 0;font-size:13px}
 .tr.grand{font-size:16px;font-weight:900;color:#DA7756;border-top:2px solid #DA7756;padding-top:7px;margin-top:4px}
-.sub-box{background:#f0f7f0;border:1px solid #4caf50;border-radius:6px;padding:12px;margin-bottom:18px}
-.sub-ttl{font-weight:700;color:#2e7d32;margin-bottom:7px}
-.sub-r{display:flex;justify-content:space-between;font-size:12px;padding:2px 0}
 .note{font-size:11px;color:#666;line-height:1.65}
 .pay-box{border:1px solid #e0e0e0;border-radius:6px;padding:12px;margin-bottom:18px}
 .footer{margin-top:28px;padding-top:10px;border-top:1px solid #e0e0e0;text-align:center;font-size:10px;color:#aaa}
@@ -466,19 +477,14 @@ body{font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-
   <div class="tr"><span>小計（税別）</span><span>${fmtNum(subtotal)}円</span></div>
   <div class="tr"><span>消費税（10%）</span><span>${fmtNum(tax)}円</span></div>
   <div class="tr grand"><span>合計（税込）</span><span>${fmtNum(total)}円</span></div>
-  ${estimateData.applyMonitor ? '<div class="tr" style="color:#DA7756;font-size:11px;padding-top:6px"><span>※ モニター価格適用（30%引き）</span></div>' : ''}
+  ${estimateData.applyMonitor ? '<div class="tr" style="color:#DA7756;font-size:11px;padding-top:6px"><span>※ 特別価格適用</span></div>' : ''}
 </div>
-${estimateData.applySubsidy ? `
-<div class="sub-box">
-  <div class="sub-ttl">🎁 公的支援（助成金・補助金）について</div>
-  <div class="note">ご利用いただくサービスは、要件を満たす場合に人材開発支援助成金・IT導入補助金など公的支援の対象となり得ます。適用には雇用保険の適用状況・支援内容などの要件確認が必要です。詳細はお問い合わせください。</div>
-</div>` : ''}
 <div class="sec-ttl">お支払い条件</div>
 <div class="pay-box">
   <div class="note">
-    ・研修サービス：研修実施日の2週間前までに全額お振込みください<br>
-    ・AI業務改善オーダーメイドサービス：契約締結後・制作開始前に全額お振込みください<br>
-    ・AI開発伴走サービス：毎月末日までに翌月分をお振込みください<br>
+    ・AI実務研修：研修実施日の2週間前までに全額お振込みください<br>
+    ・個別業務設計：契約締結後・制作開始前に全額お振込みください<br>
+    ・AI活用伴走：毎月末日までに翌月分をお振込みください<br>
     ・AI経営改善パッケージ：ご契約後に月次または一括でお振込みください（詳細はご相談に応じます）<br>
     ・振込手数料：お客様のご負担となります
   </div>
@@ -557,7 +563,6 @@ h3{font-size:13px;font-weight:700;margin:14px 0 7px}
 <div class="tr"><span>小計（税別）</span><span>${fmtNum(subtotal)}円</span></div>
 <div class="tr"><span>消費税（10%）</span><span>${fmtNum(tax)}円</span></div>
 <div class="tr grand"><span>合計（税込）</span><span>${fmtNum(total)}円</span></div>
-<p class="note" style="margin-top:10px">※ご利用いただくサービスは、要件を満たす場合に人材開発支援助成金・IT導入補助金など公的支援の対象となり得ます。適用には雇用保険の適用状況・支援内容などの要件確認が必要です。詳細はお問い合わせください。</p>
 
 <h3>標準スケジュール</h3>
 <table class="pt">
@@ -565,12 +570,14 @@ h3{font-size:13px;font-weight:700;margin:14px 0 7px}
   <tbody>
     ${(() => {
       const svc = (diagData.recommendations?.[0]?.service || '');
+      // 対外提案書PDFは標準版（3か月・16時間・360,000円）のみ表示する（D-6）。
+      // 圧縮版（2か月）・拡張版（4か月）は 1:1 交渉用の内部見積オプションとして
+      // 扱い、対外スケジュール表には出さない。
       if (svc.includes('AI経営改善パッケージ') || svc.includes('経営改善パッケージ')) {
         return `
     <tr><td>1か月目</td><td>現状診断・課題整理・KPI設計</td></tr>
     <tr><td>2か月目</td><td>体制設計・実装支援・マニュアル整備</td></tr>
-    <tr><td>3か月目（標準版）</td><td>実装定着・成果確認・成果物最終納品</td></tr>
-    <tr><td>4か月目（拡張版）</td><td>追加課題対応・定着フォロー（拡張版のみ）</td></tr>`;
+    <tr><td>3か月目</td><td>実装定着・成果確認・成果物最終納品</td></tr>`;
       }
       return `
     <tr><td>1週目</td><td>ヒアリング追加確認・スコープ確定・ご契約</td></tr>
@@ -584,8 +591,9 @@ h3{font-size:13px;font-weight:700;margin:14px 0 7px}
 <h2>4. ざつね屋について</h2>
 <div class="about-box">
   <ul>
-    <li>広島県福山市近郊の中小企業・小規模事業者に特化したAI活用支援の専門家です</li>
-    <li>「教えること（研修）」「作ること（制作）」「一緒に開発すること（伴走）」をワンストップで対応します</li>
+    <li>広島県府中市を拠点に、近隣の地域企業のAI活用・業務変革に伴走します</li>
+    <li>建設業・ウェブ制作業での現場のデジタル化推進経験をもとに、現場目線で支援します</li>
+    <li>「教えること（AI実務研修）」「作ること（個別業務設計）」「一緒に取り組むこと（AI活用伴走）」をワンストップで対応します</li>
     <li>AI活用の提案だけでなく、実装・手順書化まで一貫して対応できます</li>
     <li>担当者が変わっても困らない「仕組み」として残ることを重視した支援をします</li>
   </ul>

@@ -85,9 +85,8 @@ function testHtmlTemplates(data) {
   // 見積書HTML
   const estimateData = {
     estimateNumber: '2026-06-001',
-    lineItems: [{ service: 'AI業務改善オーダーメイドサービス Mプラン', plan: '制作＋運用サポート', price: 110000 }],
-    applyMonitor: false,
-    applySubsidy: true
+    lineItems: [{ service: '個別業務設計 Mプラン', plan: '制作＋運用サポート', price: 110000 }],
+    applyMonitor: false
   };
   const estHtml = buildEstimateHtml(clientData, estimateData, '2026年6月23日');
   if (!estHtml.includes('110,000')) {
@@ -130,7 +129,8 @@ async function testClaudeApi(data) {
     const issues    = (d.issues    || []).map(i => `・${i}`).join('\n');
     const tasks     = (d.targetTasks || []).join('、');
 
-    const prompt = `あなたはざつね屋（広島県福山市近郊の中小企業向けAI活用支援専門家）のコンサルタントです。
+    const prompt = `あなたはざつね屋（広島県府中市を拠点に、地域企業のAI活用・業務変革に伴走する実務家）です。
+AIの導入そのものが目的ではなく、現場の業務を整理し、社内の人が自分で回せる形にすることを重視します。自分でも手を動かす「教えられる実装者」として、実装・手順書化まで一貫して支援します。
 クライアントの診断データをもとに提案書のドラフトを作成してください。
 
 【クライアント情報】
@@ -231,9 +231,8 @@ async function testPdfGeneration(data, proposalResult) {
   const dateJp = '2026年6月23日';
   const estimateData = {
     estimateNumber: '2026-06-001',
-    lineItems: [{ service: 'AI業務改善オーダーメイドサービス Mプラン', plan: '制作＋運用サポート', price: 110000 }],
-    applyMonitor: false,
-    applySubsidy: true
+    lineItems: [{ service: '個別業務設計 Mプラン', plan: '制作＋運用サポート', price: 110000 }],
+    applyMonitor: false
   };
   const proposalData = proposalResult || {
     section1: '貴社の現状と課題のテストテキストです。',
@@ -394,9 +393,6 @@ body{font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-
 .total-blk{background:#f8f8f8;border:1px solid #e0e0e0;border-radius:6px;padding:14px;margin-bottom:18px}
 .tr{display:flex;justify-content:space-between;padding:3px 0;font-size:13px}
 .tr.grand{font-size:16px;font-weight:900;color:#DA7756;border-top:2px solid #DA7756;padding-top:7px;margin-top:4px}
-.sub-box{background:#f0f7f0;border:1px solid #4caf50;border-radius:6px;padding:12px;margin-bottom:18px}
-.sub-ttl{font-weight:700;color:#2e7d32;margin-bottom:7px}
-.sub-r{display:flex;justify-content:space-between;font-size:12px;padding:2px 0}
 .note{font-size:11px;color:#666;line-height:1.65}
 .pay-box{border:1px solid #e0e0e0;border-radius:6px;padding:12px;margin-bottom:18px}
 .footer{margin-top:28px;padding-top:10px;border-top:1px solid #e0e0e0;text-align:center;font-size:10px;color:#aaa}
@@ -420,17 +416,12 @@ body{font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-
   <div class="tr"><span>消費税（10%）</span><span>${fmtNum(tax)}円</span></div>
   <div class="tr grand"><span>合計（税込）</span><span>${fmtNum(total)}円</span></div>
 </div>
-${estimateData.applySubsidy ? `
-<div class="sub-box">
-  <div class="sub-ttl">人材開発支援助成金など公的支援について</div>
-  <div class="note">研修サービスは人材開発支援助成金など公的支援の対象となり得ます。適用には雇用保険の適用状況・訓練内容などの要件確認が必要です。詳細はお問い合わせください。</div>
-</div>` : ''}
 <div class="sec-ttl">お支払い条件</div>
 <div class="pay-box">
   <div class="note">
-    ・研修サービス：研修実施日の2週間前までに全額お振込みください<br>
-    ・AI業務改善オーダーメイドサービス：契約締結後・制作開始前に全額お振込みください<br>
-    ・AI開発伴走サービス：毎月末日までに翌月分をお振込みください<br>
+    ・AI実務研修：研修実施日の2週間前までに全額お振込みください<br>
+    ・個別業務設計：契約締結後・制作開始前に全額お振込みください<br>
+    ・AI活用伴走：毎月末日までに翌月分をお振込みください<br>
     ・振込手数料：お客様のご負担となります
   </div>
 </div>
@@ -501,8 +492,8 @@ h3{font-size:13px;font-weight:700;margin:14px 0 7px}
 <div class="tr grand"><span>合計（税込）</span><span>${fmtNum(total)}円</span></div>
 <h2>4. ざつね屋について</h2>
 <div class="about-box"><ul>
-  <li>広島県福山市近郊の中小企業・小規模事業者に特化したAI活用支援の専門家です</li>
-  <li>「教えること」「作ること」「一緒に開発すること」をワンストップで対応します</li>
+  <li>広島県府中市を拠点に、近隣の地域企業のAI活用・業務変革に伴走します</li>
+  <li>「教えること（AI実務研修）」「作ること（個別業務設計）」「一緒に取り組むこと（AI活用伴走）」をワンストップで対応します</li>
   <li>実装・手順書化まで一貫して対応できます</li>
 </ul></div>
 <h2>5. 次のステップ</h2>
