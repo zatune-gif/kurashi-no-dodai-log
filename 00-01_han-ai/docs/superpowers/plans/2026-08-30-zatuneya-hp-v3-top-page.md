@@ -66,7 +66,7 @@ git -C $v3Worktree push -u origin codex/v3-henkakuya
 - 範囲・アクセシビリティ・デザインの正本: `docs/superpowers/specs/2026-08-30-zatuneya-hp-v3-henkakuya-design.md`。
 - 視覚上の優先順位の元PNG `C:\Users\ooto\OneDrive\Desktop\Codex 画像 2026年8月30日 18_36_23.png` は2026-09-01に不存在を確認した。承認カンプPNGは `design-comps/zatuneya-hp/` へ再添付待ちであり、再添付までは写真の細部を視覚正本にせず、確定済みの情報優先順位（Hero→お悩み→主力パッケージ→3サービス→支援の流れ→強み→実績→無料ツール→FAQ→最終CTA）だけを採用する。
 - 実装指示の正本: `design-comps/zatuneya-hp/v3-top-page-implementation-brief.txt`。これは `C:\Users\ooto\.codex\attachments\2246b744-0ae5-4478-8c49-e139b70c30ad\pasted-text.txt` から内容を変更せずコピーした追跡用成果物である。
-- 全診断CTAのURL: `https://han-ai-diagnosis.netlify.app/`。相談・お問い合わせは `./contact.html`、パッケージは `./service-management.html`、プロンプトライブラリは `https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/` とする。`growth.html` と `tools.html` は未作成のため、対応するTOP CTAはリンク切れにせず一時的に非表示とする。
+- 全診断CTAの当面値は `https://ai-shindan-zatuneya.netlify.app/` とする。`v2/index.html` の `<meta name="zatuneya:diagnosis-url" content="…">` を唯一の保持場所とし、共有ナビ、Hero、ツールカード、最終CTA、スティッキーCTAの5本は `data-diagnosis-link` として `nav.js` がHTTPS URLを検証後に有効化する。独自ドメイン取得後は、このmetaの`content`だけを最終URLへ差し替える。相談・お問い合わせは `./contact.html`、パッケージは `./service-management.html`、プロンプトライブラリは `https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/` とする。`growth.html` と `tools.html` は未作成のため、対応するTOP CTAはリンク切れにせず一時的に非表示とする。
 - 後続タスク: `growth.html` と `tools.html` を作成後、承認済みの「成長段階の考え方をくわしく見る」→ `./growth.html` と「ツールの一覧を見る」→ `./tools.html` をTOPへ復活する。同時に、両リンク先の存在を確認する静的契約と、リンク表示・遷移を確認するブラウザ契約を追加する。
 
 ## Task 1: v3の失敗する契約テストを先に定義する
@@ -80,7 +80,8 @@ git -C $v3Worktree push -u origin codex/v3-henkakuya
   `index.html` をUTF-8で読み、順序付きID、主要コピー、診断リンク、既存DOM契約、画像枠、禁止事項を機械判定する。以下の値をそのまま使う。テスト内の`sectionIds`は本文正本の順序と一致するため、HTMLは同じIDを持つ`section`を同順で並べる。
 
   ```js
-  const diagnosisUrl = 'https://han-ai-diagnosis.netlify.app/';
+  const diagnosisUrl = 'https://ai-shindan-zatuneya.netlify.app/';
+  const diagnosisMetaName = 'zatuneya:diagnosis-url';
   const sectionIds = [
     'hero', 'problems', 'value', 'growth', 'package', 'services',
     'journey', 'why-us', 'cases', 'tools', 'faq', 'final-cta'
@@ -99,10 +100,12 @@ git -C $v3Worktree push -u origin codex/v3-henkakuya
   for (const id of sectionIds) check(html.includes(`<section id="${id}"`), `section exists: #${id}`);
   check(sectionIds.every((id, index) => index === 0 || html.indexOf(`id="${sectionIds[index - 1]}"`) < html.indexOf(`id="${id}"`)), 'section order is fixed');
   for (const copy of requiredCopy) check(html.includes(copy), `required copy: ${copy}`);
-  const diagnosisHrefs = [...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/g)]
-    .filter(([tag]) => /診断/.test(tag)).map(([, href]) => href);
-  check(diagnosisHrefs.length >= 4, 'at least four diagnosis CTAs exist');
-  diagnosisHrefs.forEach((href) => check(href === diagnosisUrl, `diagnosis CTA URL: ${href}`));
+  const diagnosisMeta = [...html.matchAll(/<meta\b(?=[^>]*\bname="zatuneya:diagnosis-url")(?=[^>]*\bcontent="([^"]+)")[^>]*>/g)];
+  check(diagnosisMeta.length === 1 && diagnosisMeta[0][1] === diagnosisUrl, 'diagnosis URL meta is the exact single source');
+  const diagnosisLinks = [...html.matchAll(/<a\b([^>]*)>[\s\S]*?<\/a>/g)]
+    .filter(([, attributes]) => /\bdata-diagnosis-link\b/.test(attributes));
+  check(diagnosisLinks.length === 5, 'five diagnosis links are hydrated from the meta marker');
+  diagnosisLinks.forEach(([, attributes]) => check(!/\bhref=/.test(attributes), 'static diagnosis links do not duplicate the URL'));
   ```
 
   加えて、次のassertを同じ`check`関数で置く。`<main id="main">`、`<h1>`、`#nav-hamburger`、`#site-nav`、`.site-nav__dropdown-trigger`、`.fade-in`、`#sticky-cta`、`#sticky-cta-close`、`aria-expanded`と`aria-controls`を持つFAQボタン3個、`data-case-status="placeholder"`を持つ事例3件、`data-asset-role`を持つ画像6個、`alt=""`ではないHero/代表画像、`© 2026 ざつね屋`、`top-comp.css`、`nav.js`、`prefers-reduced-motion`、`min-height:44px`、`:focus-visible`、`scroll-padding-bottom`、4pxトークン `--space-4:4px` と `--space-96:96px` を検査する。
@@ -215,7 +218,7 @@ git -C $v3Worktree push -u origin codex/v3-henkakuya
           <h1 id="hero-title">AIを入れることより、仕事がよくなることから。</h1>
           <p class="v3-hero__lead">数十名規模の会社で、「人が足りない」「引き継ぎが回らない」「同じ説明を何度もしている」。その一つひとつを、現場に入って一緒にほどいていきます。ツールの導入は、そのあとの話です。</p>
           <div class="v3-action-row">
-            <a class="v3-button v3-button--primary" href="https://han-ai-diagnosis.netlify.app/">無料でAI活用準備度を診断する</a>
+            <a class="v3-button v3-button--primary" data-diagnosis-link aria-disabled="true">無料でAI活用準備度を診断する</a>
             <a class="v3-button v3-button--secondary" href="./contact.html">まず30分、話を聞かせてください</a>
           </div>
           <p class="v3-microcopy">広島県府中市を拠点に、近隣の地域企業を訪問して支援しています。</p>
@@ -260,7 +263,7 @@ git -C $v3Worktree push -u origin codex/v3-henkakuya
   ```html
   <aside id="sticky-cta" class="sticky-cta" aria-label="無料診断へのご案内">
     <p class="sticky-cta__text">まずは無料診断から</p>
-    <a class="sticky-cta__btn" href="https://han-ai-diagnosis.netlify.app/">診断する</a>
+    <a class="sticky-cta__btn" data-diagnosis-link aria-disabled="true">診断する</a>
     <button id="sticky-cta-close" class="sticky-cta__close" type="button" aria-label="無料診断の案内を閉じる">×</button>
   </aside>
   <script src="./nav.js" defer></script>

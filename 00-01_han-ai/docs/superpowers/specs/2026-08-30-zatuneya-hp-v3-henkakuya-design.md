@@ -58,7 +58,7 @@
 
 ## 4. 導線とリンク
 
-- **AI活用準備度診断へ向かうすべてのCTA**は、`https://han-ai-diagnosis.netlify.app/` に統一する。
+- **AI活用準備度診断へ向かうすべてのCTA**は、当面値 `https://ai-shindan-zatuneya.netlify.app/` に統一する。実装では `v2/index.html` の `<meta name="zatuneya:diagnosis-url">` を唯一の値の保持場所とし、5本の `data-diagnosis-link` は `nav.js` が安全なHTTPS URLとして検証してから有効化する。独自ドメイン取得後は、このmetaの`content`だけを最終URLへ差し替える。
 - プロンプトライブラリ: `https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/`
 - 成長段階の考え方: `growth.html`（未作成のため、TOPのCTAは下層ページ作成まで一時的に非表示）
 - ツール一覧: `tools.html`（未作成のため、TOPのCTAは下層ページ作成まで一時的に非表示）

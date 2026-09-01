@@ -21,7 +21,7 @@
 - 絵文字アイコン禁止 → モノライン SVG。写真は顔判別不可の構図（代表者写真は例外）
 - WCAG 2.1 AA（オレンジ地×白文字は不可）／ 4px スペーシンググリッド
 - 視覚の正本: `00-01_han-ai/design-comps/zatuneya-hp/` の承認カンプ、`zatuneya-hp/v2/` の実装
-- 主CTA 遷移先: `https://han-ai-diagnosis.netlify.app/`（AI活用準備度診断）
+- 主CTA 遷移先（当面値）: `https://ai-shindan-zatuneya.netlify.app/`（AI活用準備度診断。独自ドメイン取得後に最終URLを確定）
 - 著作権表記: `© 2026 ざつね屋`
 
 ## セクション構成（上から順）
@@ -55,7 +55,7 @@ AIを入れることより、仕事がよくなることから。
 その一つひとつを、現場に入って一緒にほどいていきます。ツールの導入は、そのあとの話です。
 
 **CTA（第1）**
-無料でAI活用準備度を診断する → `https://han-ai-diagnosis.netlify.app/`
+無料でAI活用準備度を診断する → `https://ai-shindan-zatuneya.netlify.app/`
 
 **CTA（第2・従）**
 まず30分、話を聞かせてください → `contact.html`
@@ -258,7 +258,7 @@ AI経営改善パッケージ ／ 360,000円（3か月）
 まず、無料のツールから
 
 **カード2枚**
-- **AI活用準備度診断**｜10問ほどで、自社が今どの段階にいるかが分かります → `https://han-ai-diagnosis.netlify.app/`
+- **AI活用準備度診断**｜10問ほどで、自社が今どの段階にいるかが分かります → `https://ai-shindan-zatuneya.netlify.app/`
 - **プロンプトライブラリ**｜そのまま使える指示文を、業務別にまとめています → `https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/`
 
 **CTA**
@@ -296,7 +296,7 @@ AI経営改善パッケージ ／ 360,000円（3か月）
 「何から手をつけるか」から一緒に考えます。売り込みはしません。
 
 **CTA（第1）**
-無料でAI活用準備度を診断する → `https://han-ai-diagnosis.netlify.app/`
+無料でAI活用準備度を診断する → `https://ai-shindan-zatuneya.netlify.app/`
 
 **CTA（第2）**
 お問い合わせ → `contact.html`
@@ -309,7 +309,7 @@ AI経営改善パッケージ ／ 360,000円（3か月）
 まずは無料診断から
 
 **ボタン**
-診断する → `https://han-ai-diagnosis.netlify.app/`
+診断する → `https://ai-shindan-zatuneya.netlify.app/`
 
 （`sessionStorage` の `sticky-cta-closed=1` で再表示抑止。既存 `nav.js` の契約を維持）
 
