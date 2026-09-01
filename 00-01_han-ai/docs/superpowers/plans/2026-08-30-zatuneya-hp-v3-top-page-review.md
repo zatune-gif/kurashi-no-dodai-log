@@ -6,6 +6,21 @@
 - 基準: `2026-08-30-zatuneya-hp-v3-henkakuya-design.md`（要件定義書）／ `zatuneya-hp/AGENTS.md`
 - ※本レビュー中の『要件定義書 §3.2 / §3.1 / §10 …』は 2fb59a5 以前の版の章番号。現行の Codex版（同ファイル名）では章立てが変わったため、該当内容は Obsidian『HP-v3-要件定義_2026-08-30.md』の決定事項および AGENTS.md を参照。
 
+## 結果（2026-09-01 クローズ）
+
+Codex が指摘を反映し PR #1（`codex/v3-henkakuya` → `main`）を作成。Claude Code の再レビュー（`plans/…-review` は上記のまま、詳細所見は 2026-09-01 セッションの差分レビュー）で **HIGH-1〜5 すべて解消**を確認。QA スイートを実環境（Windows / Playwright 1.62.1）で実行し **全10テスト PASS**（verify-v2 350件／works-profile 147件＋下層13ページ×3vp／qa-cross-browser 9件＝Chromium・Firefox・WebKit／qa-axe 違反0／qa-lighthouse 4指標 mobile 94〜99・desktop 100・各2回）。
+
+- D-1（Web フォント廃止＝システム明朝フォールバック）: ユーザー決裁「Codex案のまま（システム明朝を許容）」。仕様書のフォント記述はこの方針に合わせる（別途）。
+- PR #1 は 2026-09-01 に **merge**（merge commit `ff8d9e7`）。親リポジトリの gitlink を `ff8d9e7` へ更新（`c6d3cc9`）。
+- **本番未昇格**：ルート `index.html` は未変更。`/v2/` を本番へ昇格しない条件（Hero 以外の写真差し替え・§9匿名事例の実データ化）は維持。
+
+### 後続タスク（PR #1 本文＋差分レビュー D-3/D-4 より）
+- 下層13ページを v3 ヘッダー/フッター/ナビへ移行＋診断URLを `ai-shindan-zatuneya.netlify.app` に統一（現状 404 URL 保持）
+- `growth.html`／`tools.html` 作成 → TOP §4・§10 の CTA を文言・遷移先そのままで復活し契約テストで検証
+- Hero 以外の写真6枚（`data-asset-role`）を正式素材へ、§9匿名事例3枚（`data-case-status="placeholder"`）を事実確認済みデータへ
+- 本番昇格（ルート `index.html` 置換、`index-v2.html` 廃止、`codex/v3-henkakuya`・`codex/zatuneya-hp-v2` ブランチ削除）
+- 承認カンプ PNG を `00-01_han-ai/design-comps/zatuneya-hp/` へ取り込み、次セッションで厳密比較（D-5）
+
 ## 総評
 
 骨格は良好。TDD（契約テスト RED → 実装 GREEN → CSS → スクショ → 最適化）、`nav.js` の DOM 契約維持、プレースホルダ実績の `data-case-status="placeholder"` ＋開示文、インラインstyle/絵文字/alert 禁止アサート、オレンジ地×白文字禁止のCSS＋アサート、HTTPサーバー経由のブラウザ検証、二段階Git同期、証拠付き完了報告 — 要件定義書と AGENTS.md の主要点を押さえている。`data-asset-role` で画像を `src` 差し替えだけで回せる設計も良い。
