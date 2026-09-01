@@ -66,7 +66,8 @@ git -C $v3Worktree push -u origin codex/v3-henkakuya
 - 範囲・アクセシビリティ・デザインの正本: `docs/superpowers/specs/2026-08-30-zatuneya-hp-v3-henkakuya-design.md`。
 - 視覚上の優先順位の元PNG `C:\Users\ooto\OneDrive\Desktop\Codex 画像 2026年8月30日 18_36_23.png` は2026-09-01に不存在を確認した。承認カンプPNGは `design-comps/zatuneya-hp/` へ再添付待ちであり、再添付までは写真の細部を視覚正本にせず、確定済みの情報優先順位（Hero→お悩み→主力パッケージ→3サービス→支援の流れ→強み→実績→無料ツール→FAQ→最終CTA）だけを採用する。
 - 実装指示の正本: `design-comps/zatuneya-hp/v3-top-page-implementation-brief.txt`。これは `C:\Users\ooto\.codex\attachments\2246b744-0ae5-4478-8c49-e139b70c30ad\pasted-text.txt` から内容を変更せずコピーした追跡用成果物である。
-- 全診断CTAのURL: `https://han-ai-diagnosis.netlify.app/`。相談・お問い合わせは `./contact.html`、パッケージは `./service-management.html`、成長段階は `./growth.html`、無料ツール一覧は `./tools.html`、プロンプトライブラリは `https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/` とする。
+- 全診断CTAのURL: `https://han-ai-diagnosis.netlify.app/`。相談・お問い合わせは `./contact.html`、パッケージは `./service-management.html`、プロンプトライブラリは `https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/` とする。`growth.html` と `tools.html` は未作成のため、対応するTOP CTAはリンク切れにせず一時的に非表示とする。
+- 後続タスク: `growth.html` と `tools.html` を作成後、承認済みの「成長段階の考え方をくわしく見る」→ `./growth.html` と「ツールの一覧を見る」→ `./tools.html` をTOPへ復活する。同時に、両リンク先の存在を確認する静的契約と、リンク表示・遷移を確認するブラウザ契約を追加する。
 
 ## Task 1: v3の失敗する契約テストを先に定義する
 

@@ -60,12 +60,15 @@
 
 - **AI活用準備度診断へ向かうすべてのCTA**は、`https://han-ai-diagnosis.netlify.app/` に統一する。
 - プロンプトライブラリ: `https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/`
-- ツール一覧: `tools.html`
+- 成長段階の考え方: `growth.html`（未作成のため、TOPのCTAは下層ページ作成まで一時的に非表示）
+- ツール一覧: `tools.html`（未作成のため、TOPのCTAは下層ページ作成まで一時的に非表示）
 - 相談・お問い合わせ: `contact.html`
 - 主力パッケージ詳細: `service-management.html`
 - その他の下層ページ導線は、本文正本にある既存パスを使用する。
 
 「まず30分、話を聞かせてください」などの相談・お問い合わせ導線は診断CTAではないため、`contact.html` に向ける。診断CTAと混同しない。
+
+`growth.html` と `tools.html` を作成する後続タスクでは、本文正本の承認済みCTA「成長段階の考え方をくわしく見る」「ツールの一覧を見る」を、それぞれのパスへそのまま復活し、リンク先存在・遷移の静的契約とブラウザ契約を追加する。
 
 ## 5. デザインシステム
 
