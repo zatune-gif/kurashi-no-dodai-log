@@ -1,5 +1,5 @@
 """
-コース②〜⑤ スライド一括生成スクリプト
+コース②〜⑥ スライド一括生成スクリプト
 Google Slides にインポートして使用する .pptx を生成します。
 """
 from pptx import Presentation
@@ -181,7 +181,7 @@ def slide_common_outro(prs, tool_hint=""):
     r.text = "📚 他の実践編コース（文書・画像・動画・Claude Code）で幅をさらに広げる"
     r.font.size = Pt(12)
     r.font.color.rgb = C_TEXT
-    add_line(tf, "🛠 AI業務改善オーダーメイド・🤝 AI開発伴走 — 自社の課題を一緒に解決する",
+    add_line(tf, "🛠 個別業務設計・🤝 AI活用伴走 — 自社の課題を一緒に解決する",
              size=12, color=C_TEXT)
     if tool_hint:
         add_line(tf, tool_hint, size=11, italic=True, color=C_MUTED)
@@ -387,7 +387,7 @@ def make_course02(output_path):
     r.text = "📚 実践編（画像・動画・Claude Code）— 発信力・自動化をさらに強化する"
     r.font.size = Pt(12)
     r.font.color.rgb = C_TEXT
-    add_line(tf, "🛠 AI業務改善オーダーメイド・🤝 AI開発伴走 — 自社の課題を一緒に解決する", size=12, color=C_TEXT)
+    add_line(tf, "🛠 個別業務設計・🤝 AI活用伴走 — 自社の課題を一緒に解決する", size=12, color=C_TEXT)
     tb(sl, "「わからないことはAIに聞いてみてください」",
        Inches(0.5), Inches(3.0), Inches(9), Inches(0.6),
        size=16, bold=True, color=C_GREEN, align=PP_ALIGN.CENTER)
@@ -739,16 +739,17 @@ def make_course04(output_path):
     r.text = "📚 実践編（画像系）でCanvaのデザイン力をさらに高める"
     r.font.size = Pt(12)
     r.font.color.rgb = C_TEXT
-    add_line(tf, "🛠 AI業務改善オーダーメイド・🤝 AI開発伴走 — 自社の課題を一緒に解決する", size=12, color=C_TEXT)
+    add_line(tf, "🛠 個別業務設計・🤝 AI活用伴走 — 自社の課題を一緒に解決する", size=12, color=C_TEXT)
 
     prs.save(output_path)
     print(f"[OK] course04: {output_path} ({len(prs.slides)} slides)")
 
 
 # ═══════════════════════════════════════════════════════════
-#  コース⑤：実践編（Claude Code特化）
+#  コース⑥：実践編（Claude Code特化）
 # ═══════════════════════════════════════════════════════════
 
+# TODO(v3): 6コース体系では本コースは⑥。関数名・出力ファイル名の⑥への改番とスライド再生成は別タスク
 def make_course05(output_path):
     prs = new_prs()
 
@@ -758,7 +759,7 @@ def make_course05(output_path):
     rect(sl, Inches(0), Inches(3.7), SLIDE_W, Inches(0.06), C_ACCENT)
     tb(sl, "ざつね屋", Inches(0.6), Inches(0.4), Inches(4), Inches(0.45),
        size=13, color=C_PALE_BLUE)
-    tb(sl, "コース ⑤", Inches(0.6), Inches(0.95), Inches(9), Inches(0.55),
+    tb(sl, "コース ⑥", Inches(0.6), Inches(0.95), Inches(9), Inches(0.55),
        size=18, color=C_LIGHT_BLUE)
     tb(sl, "実践編（Claude Code特化）", Inches(0.6), Inches(1.5), Inches(9), Inches(1.0),
        size=38, bold=True, color=C_WHITE)
@@ -778,7 +779,7 @@ def make_course05(output_path):
          ["3","ユースケース","フォルダ整理・CSV整形・定型文書生成（各3分）","10分"],
          ["—","休憩","","10分"],
          ["4","応用ワーク","CLAUDE.md作成・テンプレート化・自社業務試行","40分"],
-         ["5","まとめ・Q&A","伴走サービス紹介・質疑応答","10分"]],
+         ["5","まとめ・Q&A","AI活用伴走の紹介・質疑応答","10分"]],
         Inches(0.5), Inches(0.85), Inches(9), Inches(4.55),
         col_widths=[0.06, 0.22, 0.52, 0.20])
 
@@ -830,7 +831,7 @@ def make_course05(output_path):
         col_widths=[0.35, 0.65])
 
     sl = blank_slide(prs)
-    slide_header(sl, "APIとは — 「そこまでやりたい方は伴走サービスへ」の導線", "10分")
+    slide_header(sl, "APIとは — 「そこまでやりたい方はAI活用伴走へ」の導線", "10分")
     add_table(sl, ["用途", "必要なもの", "例"],
         [["対話的利用（本日の研修）","Anthropicアカウント + Proプラン","ファイル整理・CSV整形・文書生成"],
          ["開発・システム連携","APIキー（別途従量課金）","Excelボタンで動く仕組み・LINE Bot・自社アプリ組み込み"]],
@@ -949,7 +950,7 @@ def make_course05(output_path):
              bg=C_GREEN_BG, text_color=C_GREEN, size=13)
 
     # ── Section 5：まとめ・Q&A ──
-    slide_section(prs, "5", "まとめ・Q&A", "10分", "伴走サービス紹介 ＆ 質疑応答")
+    slide_section(prs, "5", "まとめ・Q&A", "10分", "AI活用伴走の紹介 ＆ 質疑応答")
     sl = blank_slide(prs)
     slide_header(sl, "まとめ — 本日の学び＆次のステップ", "10分")
     learns = sl.shapes.add_textbox(Inches(0.5), Inches(0.85), Inches(5.0), Inches(2.2))
@@ -968,7 +969,7 @@ def make_course05(output_path):
         r.font.color.rgb = C_TEXT
 
     rect(sl, Inches(5.3), Inches(0.85), Inches(4.5), Inches(2.2), C_BG_LIGHT)
-    tb(sl, "AI開発伴走サービス",
+    tb(sl, "AI活用伴走",
        Inches(5.5), Inches(0.95), Inches(4.1), Inches(0.45),
        size=13, bold=True, color=C_PRIMARY)
     banso = sl.shapes.add_textbox(Inches(5.5), Inches(1.45), Inches(4.1), Inches(1.5))

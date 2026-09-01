@@ -652,10 +652,10 @@ def slide_summary(prs):
     tf3.word_wrap = True
     p3 = tf3.paragraphs[0]
     r3 = p3.add_run()
-    r3.text = "📚 実践編（文書・画像・動画・Claude Code）— 今日の知識を体験に変える"
+    r3.text = "📚 実践編（文書系・画像系・動画系・Claude Code特化）と AI活用ルール・運用定着編 — 今日の知識を体験に変える"
     r3.font.size = Pt(12)
     r3.font.color.rgb = C_TEXT
-    add_para(tf3, "🛠 AI業務改善オーダーメイド・🤝 AI開発伴走 — 自社の課題を一緒に解決する",
+    add_para(tf3, "🛠 個別業務設計・🤝 AI活用伴走 — 自社の課題を一緒に解決する",
              size=12, color=C_TEXT)
 
 

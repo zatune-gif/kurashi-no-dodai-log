@@ -10,6 +10,7 @@ COURSES = [
     ("course02_jissen_bunsho.pptx",       "course02_jissen_bunsho.pdf"),
     ("course03_jissen_gazo.pptx",         "course03_jissen_gazo.pdf"),
     ("course04_jissen_doga.pptx",         "course04_jissen_doga.pdf"),
+    # TODO(v3): 6コース体系では本コース（Claude Code特化）は⑥。ファイル名の⑥への改番は別タスク
     ("course05_jissen_claude_code.pptx",  "course05_jissen_claude_code.pdf"),
 ]
 
