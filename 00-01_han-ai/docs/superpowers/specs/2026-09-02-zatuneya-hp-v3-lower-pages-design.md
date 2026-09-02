@@ -23,6 +23,7 @@
 - `v2/growth.html`と`v2/tools.html`の新設。
 - V3 TOPと同じ共通ヘッダー、共通フッター、ナビゲーション、追従スティッキーCTAの移行。
 - 既存V3 TOPの承認済みCTAを、リンク先作成後に復活させること。
+- `v2/index.html`を含む15ページが、共通CSSとして`v2/top-comp.css`を読む構成へ統一すること。
 
 ### 非目標
 
@@ -41,7 +42,10 @@
 - `nav.js`は、モバイルメニュー、ドロップダウン、追従CTAの閉じる操作、再表示抑止を既存V3 TOPと同じ契約で扱う。
 - 追従スティッキーCTAは、本文を覆わず、閉じるボタンを持ち、モバイル・タブレット・デスクトップで操作可能にする。
 - 共有トークンは`top-comp.css`の濃ティール`#173F46`、ティール`#5BBDC8`、オレンジ`#F8981D`、地色`#EFF4F5`を使用する。オレンジ背景に白文字を常用しない。
-- 新規の共通部スタイルは既存固有CSSを編集せず、共通スタイルまたは新しい用途限定CSSへ追加する。本文の余白、カード、表、フォーム、法務表示、サービス詳細の意匠は現状を保つ。
+- 共通CSSは`v2/top-comp.css`だけに一本化する。15ページ共通のトークン、リセット、コンテナ、skip link、header、footer、nav、ドロップダウン、V3共通ボタン、追従スティッキーCTA、レスポンシブ共通規則はここに置く。
+- `v2/index.html`は`./top-comp.css`を先に読み、続けて`./v3-top-page.css`を読む。これはTOPを下層と同じ共通UI契約へ再ポイントする変更であり、TOP本文を下層用意匠へ戻す変更ではない。
+- `v2/v3-top-page.css`はTOP本文専用に限定する。`:root`、`.comp-wrap`、`.skip-link`、`.comp-header`、`.header-inner`、`.brand`、`.comp-nav`、`.site-nav__*`、`.v3-button*`、`.sticky-cta*`、`.comp-footer`、`.footer-row`、それらのレスポンシブ定義を重複して持たない。
+- ページ固有CSSと`v3-top-page.css`は、本文の余白、カード、表、フォーム、法務表示、サービス詳細、TOP本文の意匠だけを持つ。共通セレクタを再定義しない。
 
 ## 4. 診断URLとCTAの契約
 
@@ -58,6 +62,8 @@ AI活用準備度診断へ向かうすべてのアンカーは、URLを直書き
 ```
 
 `nav.js`はmeta値をHTTPS URLとして検証した後だけ`href`を設定する。相談・お問い合わせ導線は診断CTAではないため、`contact.html`を維持する。既存13ページの旧URL `https://han-ai-diagnosis.netlify.app/` は、この移行対象の診断導線から除去する。
+
+診断アンカーをページ本文、ヘッダー、フッター、追従CTAのどこに置くかは問わない。診断アンカーだけを`data-diagnosis-link`へ置換することは、本文DOM維持の許容例外である。本文の文言、順序、カード・表・フォーム・法務表示の構造を変えることは許容しない。
 
 この当面URLは各HTMLで同じ一値を持つ。サイト全体でmetaを一つのファイルへ集約する変更は本作業に含めないため、URL変更時は全15ページを同一レビュー単位で更新し、値の不一致を契約テストで失敗させる。
 
@@ -125,14 +131,17 @@ AI活用準備度診断へ向かうすべてのアンカーは、URLを直書き
 - `v2/tokusho.html`
 - `v2/works.html`
 - `v2/top-comp.css`
-- `v2/nav.js`
+- `v2/v3-top-page.css`
 - `v2/tests/verify-v2.mjs`
 - `v2/tests/top-comp-contract.mjs`
+- `v2/tests/works-profile-comp-contract.mjs`
 - `v2/tests/qa-cross-browser.mjs`
 - `v2/tests/qa-axe.mjs`
 - `v2/tests/qa-lighthouse.mjs`
 
 上記13ページのHTML変更は、`<head>`、共通ヘッダー、共通フッター、ナビゲーション、追従スティッキーCTA、診断CTA属性に限る。ページ固有CSSは、本文・固有デザインを保持するため、差分レビューで変更理由を明示できる場合以外は変更しない。
+
+`v2/nav.js`は、既存のHTTPS検証、`data-diagnosis-link`有効化、メニュー、ドロップダウン、スティッキーCTA、FAQの契約を満たすため、実装時の検証対象である。挙動を満たす現行実装は変更しない。
 
 ## 9. 自己レビュー結果
 
