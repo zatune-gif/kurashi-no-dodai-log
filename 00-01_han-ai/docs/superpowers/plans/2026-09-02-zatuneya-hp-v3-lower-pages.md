@@ -22,6 +22,10 @@
 | 6 | TOPの2 CTAを正しいhrefで復活する | 7 |
 | 7 | 静的契約、3ブラウザ×3幅、axe、Lighthouse、既存回帰が通る | 2, 5, 8 |
 | 8 | 本番切替・素材推測・実績差替え・branch削除を行わない | 1, 9 |
+| 9 | baseline前にNode依存関係とChromium・Firefox・WebKitを導入する | 1 |
+| 10 | 4つの既存comp-contractがV3ナビのhrefとDOMフックを検証する | 5 |
+| 11 | Lighthouseは代表7ページをmobile/desktop各2回、計28監査で実行する | 8 |
+| 12 | growth/toolsはcanonical、description、OGPの全項目を持つ | 6 |
 
 ## ファイル責務
 
@@ -84,13 +88,15 @@ Run:
 
 ```powershell
 Set-Location 'C:\Users\ooto\work\ClaudeCode\kurashi-no-dodai-log\00-01_han-ai\zatuneya-hp\.worktrees\v3-lower-pages'
+npm install
+npx playwright install chromium firefox webkit
 node .\v2\tests\top-comp-contract.mjs
 node .\v2\tests\verify-v2.mjs
 node .\v2\tests\works-profile-comp-contract.mjs
 npm run qa
 ```
 
-Expected: 全コマンドが終了コード0で完了する。
+Expected: `npm install`と3ブラウザ導入が終了コード0で完了してから、全回帰コマンドが終了コード0で完了する。
 
 ### Task 2: 失敗する15ページ共通契約を追加する
 
@@ -259,20 +265,24 @@ Expected: 13ページの本文・固有CSSを残したまま共通UI契約が通
 - Modify: `v2/tests/legal-status-comp-contract.mjs`
 - Create: `v2/tests/lower-pages-v3-browser.mjs`
 
-- [ ] **Step 1: works/profile契約を診断委譲へ更新する**
+- [ ] **Step 1: works/profile契約を診断委譲とV3ナビへ更新する**
 
-既存の本文、画像asset、固有CSS、`aria-current`、header/footer同一性検証は残し、旧診断URL期待だけを以下へ置換する。
+既存の本文、画像asset、固有CSS、`aria-current`、header/footer同一性検証は残し、旧診断URL期待だけを以下へ置換する。works/profileはV3ナビの`./index.html`、`./services.html`、`./works.html`、`./profile.html`、`./contact.html`のhrefと、`id="site-nav"`、`site-nav__link`、`site-nav__dropdown-trigger`、`id="nav-hamburger"`を検証する。
 
 ```js
 check((works.match(/<meta name="zatuneya:diagnosis-url"/g) ?? []).length === 1, 'works has one diagnosis meta');
 check((profile.match(/<meta name="zatuneya:diagnosis-url"/g) ?? []).length === 1, 'profile has one diagnosis meta');
 check(!works.includes('https://han-ai-diagnosis.netlify.app/'), 'works removes legacy diagnosis URL');
 check(/<a\b[^>]*\bdata-diagnosis-link\b/.test(works), 'works delegates diagnosis links');
+check(works.includes('href="./index.html"'), 'works V3 nav links TOP');
+check(works.includes('href="./contact.html"'), 'works V3 nav links contact');
+check(works.includes('id="site-nav"'), 'works retains site-nav hook');
+check(works.includes('site-nav__dropdown-trigger'), 'works retains dropdown hook');
 ```
 
 - [ ] **Step 2: 他の既存3契約を同じ規則へ更新する**
 
-`services-comp-contract.mjs`、`faq-contact-comp-contract.mjs`、`legal-status-comp-contract.mjs`から旧URL直書き期待を除き、meta一意性、`data-diagnosis-link`、共通header/footer、`nav.js`、固有CSS保持を確認する。既存の本文文字列、asset、ローカルリンク存在検証は削除しない。
+`services-comp-contract.mjs`、`faq-contact-comp-contract.mjs`、`legal-status-comp-contract.mjs`から旧ナビhrefと旧診断URL直書き期待を除く。全4 comp-contractで、V3ナビの`./index.html`、`./services.html`、`./works.html`、`./profile.html`、`./contact.html`、meta一意性、`data-diagnosis-link`、`id="site-nav"`、`site-nav__link`、`site-nav__dropdown-trigger`、`id="nav-hamburger"`、共通header/footer、`nav.js`、固有CSS保持を確認する。既存の本文文字列、asset、ローカルリンク存在検証は削除しない。
 
 - [ ] **Step 3: 15ページ×3幅のブラウザRED契約を追加する**
 
@@ -318,6 +328,19 @@ Expected: 既存4契約と15ページ×3幅のブラウザ契約が通る。
 
 - [ ] **Step 1: growth.htmlへ5段階を逐語で置く**
 
+`<head>`には次の全項目を置く。値はgrowthページ用に固定し、`og:image`は既存`v2/assets/og-image.jpg`を使う。
+
+```html
+<title>AI活用の成長段階｜ざつね屋</title>
+<meta name="description" content="AI活用を知る段階から、社内で自走する内製化まで。ざつね屋が地域企業の成長段階に合わせた進め方を紹介します。">
+<link rel="canonical" href="https://zatune-gif.github.io/zatuneya-hp/v2/growth.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zatune-gif.github.io/zatuneya-hp/v2/growth.html">
+<meta property="og:title" content="AI活用の成長段階｜ざつね屋">
+<meta property="og:description" content="AI活用を知る段階から、社内で自走する内製化まで。ざつね屋が地域企業の成長段階に合わせた進め方を紹介します。">
+<meta property="og:image" content="https://zatune-gif.github.io/zatuneya-hp/v2/assets/og-image.jpg">
+```
+
 ```html
 <ol class="growth-map">
   <li><strong>知る</strong><span>どんなことができるのか、事例で分かる</span></li>
@@ -331,6 +354,19 @@ Expected: 既存4契約と15ページ×3幅のブラウザ契約が通る。
 見出しは「知っている」から「自分たちで回せる」まで、リードは「AI活用は、一度の研修で終わるものではありません。会社の状態に合わせて、5つの段階を順に上がっていきます。」とする。
 
 - [ ] **Step 2: tools.htmlへ2カードを逐語で置く**
+
+`<head>`には次の全項目を置く。値はtoolsページ用に固定し、`og:image`は既存`v2/assets/og-image.jpg`を使う。
+
+```html
+<title>無料で使えるAI活用ツール｜ざつね屋</title>
+<meta name="description" content="AI活用準備度診断と、業務別に使えるプロンプトライブラリを無料で紹介します。">
+<link rel="canonical" href="https://zatune-gif.github.io/zatuneya-hp/v2/tools.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zatune-gif.github.io/zatuneya-hp/v2/tools.html">
+<meta property="og:title" content="無料で使えるAI活用ツール｜ざつね屋">
+<meta property="og:description" content="AI活用準備度診断と、業務別に使えるプロンプトライブラリを無料で紹介します。">
+<meta property="og:image" content="https://zatune-gif.github.io/zatuneya-hp/v2/assets/og-image.jpg">
+```
 
 見出しは「まず、無料のツールから」とする。診断カードは`data-diagnosis-link`を使い、プロンプトライブラリカードは次の固定hrefを使う。
 
@@ -401,9 +437,9 @@ Expected: 2 CTAはリンク切れなく存在し、静的契約が通る。
 - Test: `v2/tests/v3-top-page-browser.mjs`
 - Test: `v2/tests/lower-pages-v3-browser.mjs`
 
-- [ ] **Step 1: 3つのQAを15ページループへ変更する**
+- [ ] **Step 1: QA対象ページと監査回数を固定する**
 
-`qa-cross-browser.mjs`はChromium、Firefox、WebKitの各ブラウザで375/768/1280pxを実行する。`qa-axe.mjs`は各ページのmobile/desktopとimmediate/settledを実行する。`qa-lighthouse.mjs`は各ページのmobile/defaultとdesktop/presetを各2回実行する。
+`qa-cross-browser.mjs`は全15ページをChromium、Firefox、WebKitの各ブラウザで375/768/1280pxにする。`qa-axe.mjs`は全15ページをmobile/desktopとimmediate/settledで検査し、合計60スキャンを実行する。`qa-lighthouse.mjs`は`index.html`、`growth.html`、`tools.html`、`services.html`、`service-management.html`、`faq.html`、`works.html`の7ページだけを対象にする。各ページをmobile/defaultとdesktop/presetで各2回走らせるため、Lighthouseは計28監査である。標準的な開発PCでの所要見積りは6〜12分、ブラウザ導入直後は15分までとする。
 
 - [ ] **Step 2: REDを確認する**
 
@@ -477,9 +513,13 @@ Expected: submodule `main`宛てに1本だけPull Requestが作成される。Pu
 
 ## 実行後の受入確認
 
-- [ ] 受入基準1〜8が対応タスクで全て確認済みである。
+- [ ] 受入基準1〜12が対応タスクで全て確認済みである。
 - [ ] `v3-top-page.css`に共通CSSセレクタの重複がない。
 - [ ] 15ページのmeta値と診断アンカー委譲が静的契約で確認済みである。
 - [ ] 全既存回帰、3ブラウザ・3幅、axe、Lighthouseが終了コード0である。
+- [ ] baseline前に`npm install`とChromium、Firefox、WebKitの導入が終了コード0である。
+- [ ] 全4 comp-contractでV3ナビhrefとDOMフックが確認済みである。
+- [ ] Lighthouse代表7ページの28監査が、全4指標0.90以上である。
+- [ ] growth/toolsのcanonical、description、OGPが静的契約で確認済みである。
 - [ ] 承認PNGが未提供なら元ファイルの提供依頼だけを行い、画像生成・本番昇格をしていない。
 - [ ] 親リポジトリのgitlink更新を含めていない。
