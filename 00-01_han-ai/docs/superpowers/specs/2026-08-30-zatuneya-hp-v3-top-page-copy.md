@@ -17,7 +17,7 @@
 ## GPT への前提共有（カンプ制約）
 
 - カラー3色: 地 `#EFF4F5` ／ ティール `#5BBDC8` ／ オレンジ `#F8981D`（既存 `style.css` の派生・文字専用トークンを踏襲）
-- フォント: 本文 Noto Sans JP ＋ Roboto（数字・英字）、見出しの明朝は Noto Serif JP / Shippori Mincho（`/v2/` の使い方を踏襲）
+- フォント: 本文・数字・英字はOS標準のsans-serif、意味を強く持たせる見出しはOS標準のシステム明朝を許容する。Google Fontsなど外部Webフォントは読み込まない
 - 絵文字アイコン禁止 → モノライン SVG。写真は顔判別不可の構図（代表者写真は例外）
 - WCAG 2.1 AA（オレンジ地×白文字は不可）／ 4px スペーシンググリッド
 - 視覚の正本: `00-01_han-ai/design-comps/zatuneya-hp/` の承認カンプ、`zatuneya-hp/v2/` の実装
