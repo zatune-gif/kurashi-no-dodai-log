@@ -3,15 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AIツール理解度テスト - ざつね屋</title>
+  <title>AIツール理解度テスト｜ざつね屋</title>
+  <meta name="description" content="20問・約3分で、AI活用スキルを5軸（AI基礎知識・ツール操作・プロンプト力・セキュリティ倫理・業務応用）で診断。結果をレーダーチャートで表示する、ざつね屋の無料テストです。">
+  <link rel="canonical" href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/ai-literacy-test/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ざつね屋">
+  <meta property="og:title" content="AIツール理解度テスト｜ざつね屋">
+  <meta property="og:description" content="20問・約3分で、AI活用スキルを5軸で診断。結果をレーダーチャートで表示する、ざつね屋の無料テストです。">
+  <meta property="og:url" content="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/ai-literacy-test/">
+  <meta property="og:image" content="https://zatune-gif.github.io/zatuneya-hp/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="./favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./nav-header-footer.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-logo" aria-label="ざつね屋 トップページ"><span class="site-logo__pre">地域企業の小さな業務変革屋</span><span class="site-logo__name">ざつね屋</span></a>
+    <nav class="site-nav" id="site-nav" aria-label="グローバルナビゲーション">
+      <ul class="site-nav__list">
+        <li class="site-nav__item site-nav__item--dropdown">
+          <button class="site-nav__dropdown-trigger site-nav__link" aria-expanded="false" aria-haspopup="true">
+            サービス<span class="site-nav__caret" aria-hidden="true">▾</span>
+          </button>
+          <ul class="site-nav__dropdown">
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/services.html" class="site-nav__dropdown-link">サービス一覧</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-training.html" class="site-nav__dropdown-link">AI実務研修</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-order.html" class="site-nav__dropdown-link">個別業務設計</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-management.html" class="site-nav__dropdown-link">AI経営改善パッケージ</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-banso.html" class="site-nav__dropdown-link">AI活用伴走</a></li>
+          </ul>
+        </li>
+        <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/works.html" class="site-nav__link">実績</a></li>
+        <li class="site-nav__item"><a href="https://ai-shindan-zatuneya.netlify.app/prices.html" class="site-nav__link">料金</a></li>
+        <li class="site-nav__item site-nav__item--dropdown">
+          <button class="site-nav__dropdown-trigger site-nav__link" aria-expanded="false" aria-haspopup="true">無料ツール<span class="site-nav__caret" aria-hidden="true">▾</span></button>
+          <ul class="site-nav__dropdown">
+            <li><a href="https://ai-shindan-zatuneya.netlify.app/" class="site-nav__dropdown-link">AI活用準備度診断</a></li>
+            <li><a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/ai-literacy-test/" class="site-nav__dropdown-link is-active" aria-current="page">AIツール理解度テスト</a></li>
+            <li><a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/" class="site-nav__dropdown-link">プロンプトライブラリ</a></li>
+          </ul>
+        </li>
+        <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/profile.html" class="site-nav__link">代表について</a></li>
+      </ul>
+      <a href="https://zatune-gif.github.io/zatuneya-hp/contact.html" class="site-nav__cta">お問い合わせ</a>
+    </nav>
+    <button class="site-nav__hamburger" id="nav-hamburger" aria-label="メニューを開閉する" aria-controls="site-nav" aria-expanded="false">
+      <span class="site-nav__hamburger-line"></span>
+      <span class="site-nav__hamburger-line"></span>
+      <span class="site-nav__hamburger-line"></span>
+    </button>
+  </div>
+</header>
+
   <div class="container">
-    <div class="brand">生成AI活用支援のざつね<span>屋</span></div>
 
     <!-- ウェルカム -->
     <div id="screen-welcome" class="screen active">
@@ -74,17 +124,102 @@
       </div>
     </div>
 
-    <div class="footer">
-      <div class="footer-links">
-        <a href="https://zatune-gif.github.io/zatuneya-hp/">トップページ</a>
-        <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/prices.html">料金案内</a>
-        <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/diagnosis-simple.html">無料診断</a>
-        <a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/request.html">資料請求</a>
-      </div>
-      © 2026 ざつね屋
-    </div>
   </div>
 
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-footer__logo">ざつね屋</a>
+      <p class="site-footer__tagline">広島県府中市の地域企業に<br>AI活用支援を届ける</p>
+    </div>
+    <nav class="site-footer__sitemap" aria-label="サイトマップ">
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">サービス</span>
+        <ul>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/services.html">サービス一覧</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-training.html">AI実務研修</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-order.html">個別業務設計</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-management.html">AI経営改善パッケージ</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-banso.html">AI活用伴走</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">会社情報</span>
+        <ul>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/works.html">支援実績</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/profile.html">代表について</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/faq.html">よくある質問</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <span class="site-footer__col-title">ツール・料金</span>
+        <ul>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/contact.html">相談・お見積もり</a></li>
+          <li><a href="https://ai-shindan-zatuneya.netlify.app/">AI活用準備度診断</a></li>
+          <li><a href="https://ai-shindan-zatuneya.netlify.app/prices.html">料金・プラン</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <ul class="site-footer__legal">
+      <li><a href="https://zatune-gif.github.io/zatuneya-hp/faq.html">よくある質問</a></li>
+      <li><a href="https://zatune-gif.github.io/zatuneya-hp/privacy.html">プライバシーポリシー</a></li>
+      <li><a href="https://zatune-gif.github.io/zatuneya-hp/tokusho.html">特定商取引法に基づく表記</a></li>
+    </ul>
+    <p class="site-footer__copy">© 2026 ざつね屋</p>
+  </div>
+</footer>
+
+<script>
+/* ざつね屋 グローバルナビ制御 */
+(function(){
+  'use strict';
+  var hamburger=document.getElementById('nav-hamburger');
+  var siteNav=document.getElementById('site-nav');
+  if(hamburger&&siteNav){
+    hamburger.addEventListener('click',function(){
+      var isOpen=hamburger.getAttribute('aria-expanded')==='true';
+      hamburger.setAttribute('aria-expanded',String(!isOpen));
+      siteNav.classList.toggle('is-open',!isOpen);
+    });
+  }
+  document.querySelectorAll('.site-nav__dropdown-trigger').forEach(function(trigger){
+    trigger.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isOpen=trigger.getAttribute('aria-expanded')==='true';
+      document.querySelectorAll('.site-nav__item--dropdown.is-open').forEach(function(el){
+        el.classList.remove('is-open');
+        el.querySelector('.site-nav__dropdown-trigger').setAttribute('aria-expanded','false');
+      });
+      if(!isOpen){
+        trigger.setAttribute('aria-expanded','true');
+        var parent=trigger.closest('.site-nav__item--dropdown');
+        if(parent)parent.classList.add('is-open');
+      }
+    });
+  });
+  document.addEventListener('click',function(e){
+    if(hamburger&&siteNav&&siteNav.classList.contains('is-open')&&!siteNav.contains(e.target)&&!hamburger.contains(e.target)){
+      siteNav.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded','false');
+    }
+    if(!e.target.closest('.site-nav__item--dropdown')){
+      document.querySelectorAll('.site-nav__item--dropdown.is-open').forEach(function(el){
+        el.classList.remove('is-open');
+        el.querySelector('.site-nav__dropdown-trigger').setAttribute('aria-expanded','false');
+      });
+    }
+  });
+  var here=location.pathname.split('/').pop()||'index.html';
+  document.querySelectorAll('.site-nav__link[href]').forEach(function(a){
+    var href=a.getAttribute('href')||'';
+    if(href.startsWith('http'))return;
+    var file=href.split('#')[0].split('/').pop();
+    if(file&&file===here)a.classList.add('is-active');
+  });
+})();
+</script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -115,7 +115,7 @@
     "prompt": "和風テイストで旬の野菜と木のテーブルの画像、SNS投稿向け、手作り感のある温かみのある印象で",
     "placeholders": [],
     "task": "画像生成",
-    "industries": ["農業", "食品"],
+    "industries": ["食品", "小売"],
     "tools": ["Canva"],
     "source": "研修コース③",
     "level": "そのまま使える"
@@ -205,7 +205,7 @@
     "task": "Claude Code",
     "industries": ["共通"],
     "tools": ["Claude Code"],
-    "source": "研修コース⑤",
+    "source": "研修コース⑥",
     "level": "そのまま使える"
   },
   {
@@ -216,7 +216,7 @@
     "task": "Claude Code",
     "industries": ["共通"],
     "tools": ["Claude Code"],
-    "source": "研修コース⑤",
+    "source": "研修コース⑥",
     "level": "そのまま使える"
   },
   {
@@ -227,7 +227,7 @@
     "task": "メール",
     "industries": ["共通"],
     "tools": ["Claude Code"],
-    "source": "研修コース⑤",
+    "source": "研修コース⑥",
     "level": "そのまま使える"
   },
   {
@@ -238,7 +238,7 @@
     "task": "Claude Code",
     "industries": ["共通"],
     "tools": ["Claude Code"],
-    "source": "研修コース⑤",
+    "source": "研修コース⑥",
     "level": "要カスタマイズ"
   }
 ]
