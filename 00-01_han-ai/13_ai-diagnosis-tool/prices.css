@@ -30,7 +30,7 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Noto Sans JP', 'Roboto', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
-  background: #fff; color: var(--text); line-height: 1.9; font-size: 16px;
+  background: #fff; color: var(--text); line-height: 1.75; font-size: 16px;
   overflow-x: hidden;
 }
 
@@ -62,7 +62,7 @@ body {
 .hero-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
 .hero h1 { font-weight: 900; color: var(--heading); font-size: 36px; line-height: 1.45; margin: var(--s6) 0 0; }
 @media (max-width: 640px) { .hero h1 { font-size: 26px; } }
-.hero-lead { font-size: 15px; color: var(--text); max-width: 620px; margin: var(--s4) auto 0; line-height: 2.0; }
+.hero-lead { font-size: 15px; color: var(--text); max-width: 620px; margin: var(--s4) auto 0; line-height: 1.8; }
 
 .hero-wave { display: block; width: 100%; height: 64px; }
 .hero-wave svg { display: block; width: 100%; height: 100%; }
@@ -83,10 +83,10 @@ body {
 /* セクション見出し */
 .section-head {
   display: flex; flex-direction: column; align-items: center; gap: var(--s2);
-  margin: var(--s16) 0 var(--s6); text-align: center; scroll-margin-top: 76px;
+  margin: var(--s10) 0 var(--s4); text-align: center; scroll-margin-top: 76px;
 }
 .section-ic {
-  width: 56px; height: 56px; border-radius: 18px; margin-bottom: var(--s2);
+  width: 44px; height: 44px; border-radius: 18px; margin-bottom: var(--s2);
   background: linear-gradient(135deg, var(--teal-soft), var(--teal-soft2));
   display: flex; align-items: center; justify-content: center; box-shadow: var(--sh-1);
 }
@@ -101,8 +101,8 @@ body {
 /* 低額入口導線 */
 .entry-note {
   background: var(--teal-soft); border: 1px solid var(--card-line); border-radius: 18px;
-  padding: var(--s4) var(--s6); font-size: 13.5px; color: var(--text); margin-bottom: var(--s3);
-  text-align: center; line-height: 1.9;
+  padding: var(--s4) var(--s6); font-size: 14.5px; color: var(--text); margin-bottom: var(--s3);
+  text-align: center; line-height: 1.8;
 }
 .entry-note-link {
   display: inline-block; margin-top: 4px; font-weight: 700;
@@ -118,6 +118,15 @@ body {
 }
 .hook-box strong { font-size: 19px; font-weight: 900; color: var(--teal-dk); }
 
+/* 研修 前置き（診断導線＋1人あたりフック＋カリキュラム 統合ブロック） */
+.training-intro {
+  background: var(--teal-soft); border: 1px solid var(--card-line); border-radius: 18px;
+  padding: var(--s4) var(--s6); margin-bottom: var(--s6); text-align: center;
+}
+.training-intro-lead { font-size: 14.5px; color: var(--text); line-height: 1.8; }
+.training-intro-hook { font-size: 14.5px; font-weight: 700; color: var(--heading); margin-top: var(--s2); }
+.training-intro .curriculum-link { margin: var(--s3) 0 0; }
+
 /* カリキュラムリンク */
 .curriculum-link {
   display: flex; align-items: center; justify-content: center; gap: var(--s2);
@@ -132,9 +141,9 @@ body {
 .section-card {
   background: var(--card-tint); border: 1px solid var(--card-line); border-radius: 26px;
   box-shadow: var(--sh-1);
-  padding: var(--s8); margin-bottom: var(--s6);
+  padding: var(--s6); margin-bottom: var(--s4);
 }
-@media (max-width: 640px) { .section-card { padding: var(--s4); } }
+@media (max-width: 640px) { .section-card { padding: var(--s3); } }
 .section-header {
   display: flex; align-items: center; gap: var(--s2);
   font-size: 17px; font-weight: 900; color: var(--heading);
@@ -165,11 +174,11 @@ body {
 .course-ac-name { font-size: 17px; font-weight: 900; color: var(--heading); }
 .course-ac-meta { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; }
 .course-badge-sm {
-  font-size: 12px; font-weight: 700; color: var(--muted);
+  font-size: 12.5px; font-weight: 700; color: var(--muted);
   background: var(--card-tint); border: 1px solid var(--card-line);
   border-radius: 999px; padding: 4px var(--s3);
 }
-.course-range { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 13.5px; font-weight: 900; color: var(--orange-dk); }
+.course-range { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 15px; font-weight: 900; color: var(--orange-dk); }
 .ac-chevron {
   flex-shrink: 0; width: 10px; height: 10px;
   border-right: 2.5px solid var(--muted); border-bottom: 2.5px solid var(--muted);
@@ -179,9 +188,31 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .course-ac-body { padding: 4px var(--s4) var(--s4); }
 .course-desc { font-size: 15px; color: var(--text); line-height: 1.85; margin-bottom: var(--s4); }
 .course-cond {
-  margin-top: var(--s3); font-size: 13.5px; color: var(--muted);
+  margin-top: var(--s3); font-size: 14px; color: var(--muted);
   background: var(--card-tint); border-radius: 12px; padding: 10px var(--s3);
 }
+
+/* 個別コース 一覧表（研修） */
+.course-table th[scope="row"] { white-space: normal; font-weight: 700; color: var(--heading); min-width: 150px; }
+.course-table td { white-space: nowrap; text-align: left; }
+.course-table td.cell-wrap { white-space: normal; }
+.course-table-note {
+  font-size: 13px; color: var(--muted); margin-top: var(--s2);
+  padding-left: var(--s4); position: relative; line-height: 1.7;
+}
+.course-table-note::before { content: '※'; position: absolute; left: 0; }
+.course-table-note + .course-table-note { margin-top: 4px; }
+.course-blurbs { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: var(--s4); }
+.course-blurbs li {
+  font-size: 14px; color: var(--text); line-height: 1.7;
+  padding-left: var(--s6); position: relative;
+}
+.course-blurbs li strong { position: absolute; left: 0; color: var(--teal-dk); font-weight: 900; }
+.course-table-link {
+  display: inline-block; margin-top: var(--s3);
+  font-size: 14px; font-weight: 700; color: var(--teal-dk); text-decoration: none;
+}
+.course-table-link:hover { text-decoration: underline; }
 
 /* 価格2カラム */
 .price-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
@@ -195,14 +226,13 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .price-col-rec { background: var(--warm-bg); border-color: var(--warm-line); }
 .price-rec-badge {
   position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-  background: var(--orange); color: #fff; font-size: 10.5px; font-weight: 900;
+  background: var(--orange); color: #fff; font-size: 12px; font-weight: 900;
   letter-spacing: 0.08em; padding: 3px var(--s4); border-radius: 999px;
   box-shadow: 0 3px 8px rgba(248,152,29,0.32);
 }
-.price-col-head { font-size: 12.5px; font-weight: 700; color: var(--muted); }
-.price-col-amount { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 21px; font-weight: 900; color: var(--heading); margin-top: 4px; }
-.price-col-sub { font-size: 12px; color: var(--text); margin-top: 4px; }
-.price-per { font-size: 13px; font-weight: 700; color: var(--teal-dk); margin-top: var(--s2); }
+.price-col-head { font-size: 14px; font-weight: 700; color: var(--muted); }
+.price-col-amount { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 22px; font-weight: 900; color: var(--heading); margin-top: 4px; }
+.price-per { font-size: 14px; font-weight: 700; color: var(--teal-dk); margin-top: var(--s2); }
 .price-per-rec { color: var(--orange-dk); }
 
 /* テーブル */
@@ -212,15 +242,22 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 }
 .detail-table thead th {
   background: linear-gradient(135deg, var(--teal), var(--teal-dk)); color: #fff; font-weight: 700;
-  padding: var(--s3) var(--s3); text-align: left; font-size: 13px; letter-spacing: 0.04em;
+  padding: var(--s3) var(--s3); text-align: left; font-size: 13.5px; letter-spacing: 0.04em;
 }
-.detail-table td { padding: var(--s4) var(--s4); border-bottom: 1px solid #EDF3F4; color: var(--text); transition: background .15s; }
-.detail-table tbody tr:last-child td { border-bottom: none; }
+.detail-table td,
+.detail-table tbody th { padding: var(--s4) var(--s4); border-bottom: 1px solid #EDF3F4; color: var(--text); transition: background .15s; }
+.detail-table tbody th { text-align: left; }
+.detail-table tbody tr:last-child td,
+.detail-table tbody tr:last-child th { border-bottom: none; }
 .detail-table tbody tr:nth-child(even) { background: var(--card-tint); }
-.detail-table tbody tr:hover td { background: var(--teal-soft); }
-.detail-table td:first-child { font-weight: 700; color: var(--heading); }
+.detail-table tbody tr:hover td,
+.detail-table tbody tr:hover th { background: var(--teal-soft); }
+.detail-table td:first-child,
+.detail-table tbody th:first-child { font-weight: 700; color: var(--heading); }
 .detail-table { font-size: 14.5px; }
-.detail-table td { white-space: nowrap; }
+/* nowrap は列数の多い表（標準スケジュール等）だけに限定。2列表・折返し前提の表は解除 */
+.detail-table--nowrap td,
+.detail-table--nowrap tbody th { white-space: nowrap; }
 .table-scroll { overflow-x: auto; }
 
 /* セット価格（独立カード化） */
@@ -233,28 +270,13 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .set-card:hover { box-shadow: var(--sh-2); transform: translateY(-2px); }
 .set-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s4); }
 .set-name { font-size: 19px; font-weight: 900; color: var(--heading); }
-.set-courses { font-size: 14.5px; color: var(--muted); margin-top: 4px; }
+.set-courses { font-size: 14.5px; color: var(--text); margin-top: 4px; }
 .set-badge {
   flex-shrink: 0; background: var(--teal-soft); color: var(--teal-dk);
-  font-size: 12.5px; font-weight: 900; padding: 6px var(--s4); border-radius: 999px;
+  font-size: 13px; font-weight: 900; padding: 6px var(--s4); border-radius: 999px;
 }
 .set-badge-accent { background: var(--orange-soft); color: var(--orange-dk); }
 .set-card-premium { background: var(--warm-bg); border-color: var(--warm-line); }
-
-/* 選び方ガイド */
-.choice-guide { display: flex; flex-direction: column; gap: var(--s3); }
-.choice-guide-row {
-  display: grid; grid-template-columns: 1fr 28px 1.4fr; gap: var(--s3); align-items: center;
-  background: #fff; border: 1px solid var(--card-line); border-radius: 16px; padding: var(--s4);
-  transition: box-shadow .2s var(--ease), transform .2s var(--ease);
-}
-.choice-guide-row:hover { box-shadow: var(--sh-1); transform: translateY(-2px); }
-@media (max-width: 560px) { .choice-guide-row { grid-template-columns: 1fr; gap: 4px; } .choice-guide-arrow { display: none; } }
-.choice-guide-if { font-size: 15px; font-weight: 700; color: var(--heading); }
-.choice-guide-arrow { color: var(--muted); font-weight: 900; text-align: center; }
-.choice-guide-rec { font-size: 15px; font-weight: 900; color: var(--teal-dk); }
-.choice-guide-price { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.choice-guide-footer { font-size: 12px; color: var(--muted); margin-top: var(--s2); }
 
 /* プランカード */
 .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); margin-bottom: var(--s4); }
@@ -267,7 +289,7 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .plan-card-rec { background: var(--warm-bg); border-color: var(--warm-line); }
 .plan-rec-badge {
   position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-  background: var(--orange); color: #fff; font-size: 10.5px; font-weight: 900;
+  background: var(--orange); color: #fff; font-size: 12px; font-weight: 900;
   letter-spacing: 0.08em; padding: 3px var(--s4); border-radius: 999px;
   box-shadow: 0 3px 8px rgba(248,152,29,0.32); white-space: nowrap;
 }
@@ -289,12 +311,33 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .plan-card-price { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 20px; font-weight: 900; color: var(--orange-dk); }
 .plan-card-monthly { display: flex; align-items: baseline; gap: 4px; padding-top: var(--s2); border-top: 1px solid #EDF3F4; }
 .plan-card-monthly .plan-card-price { font-size: 28px; }
-.plan-card-unit { font-size: 13px; color: var(--muted); }
+.plan-card-unit { font-size: 14px; color: var(--muted); }
 .plan-note {
   font-size: 14px; color: var(--text); line-height: 1.8;
   background: #fff; border: 1px solid var(--card-line); border-radius: 12px;
   padding: var(--s3) var(--s4); margin: var(--s3) 0;
 }
+
+/* 規約・対象外の折りたたみ（DOM には残す＝契約注記のサイト掲載方針を満たす） */
+.fine-print {
+  margin-top: var(--s6); border-top: 1px solid var(--card-line); padding-top: var(--s4);
+}
+.fine-print > summary {
+  cursor: pointer; list-style: none;
+  display: flex; align-items: center; gap: var(--s2);
+  font-size: 14px; font-weight: 700; color: var(--text);
+}
+.fine-print > summary::-webkit-details-marker { display: none; }
+.fine-print > summary::before {
+  content: ''; width: 8px; height: 8px; flex-shrink: 0;
+  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+  transform: rotate(-45deg); transition: transform .2s;
+}
+.fine-print[open] > summary::before { transform: rotate(45deg); }
+.fine-print-body { margin-top: var(--s3); }
+.fine-print-body .detail-heading:first-child,
+.fine-print-body .plan-note:first-child { margin-top: 0; }
+.fine-print-body .service-detail-list li { font-size: 14px; }
 
 /* 詳細見出し・リスト */
 .detail-heading { font-size: 16px; font-weight: 900; color: var(--heading); margin: var(--s6) 0 var(--s3); padding-left: var(--s3); border-left: 4px solid var(--teal); }
@@ -335,26 +378,62 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .btn-cta-outline { background: var(--teal); color: #fff; box-shadow: 0 8px 20px rgba(91,189,200,0.36); }
 .btn-cta-outline:hover { background: var(--teal-dk); }
 
-/* 注記・フッター */
+/* 注記 */
 .price-notes { margin: var(--s6) 0 0; display: flex; flex-direction: column; gap: 4px; }
-.price-notes p { font-size: 12.5px; color: var(--muted); }
-.footer {
-  text-align: center; font-size: 12px; color: var(--muted);
-  padding: var(--s8) var(--s6); background: var(--bg); margin-top: var(--s16);
-}
-.footer-links { margin-bottom: var(--s3); display: flex; gap: var(--s4); justify-content: center; flex-wrap: wrap; }
-.footer a { color: #7b8f9b; text-decoration: none; font-weight: 700; }
-.footer a:hover { color: var(--teal-dk); }
+.price-notes p { font-size: 13px; color: var(--muted); }
 
-/* 状況別 サービスの選び方 早見表 */
-.choice-guide-rec-link {
-  text-decoration: none;
-  display: inline-block;
-  transition: color .15s var(--ease);
+/* ── 料金早見表（zatuneya-hp TOP §7 の .price-table を移植・トークン読み替え） ── */
+.price-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.price-table {
+  width: 100%; min-width: 600px; border-collapse: collapse; text-align: left;
+  font-family: 'Noto Sans JP', sans-serif; background: transparent;
 }
-.choice-guide-rec-link:hover { color: var(--teal); }
-.choice-guide-row-free {
-  background: var(--teal-soft);
-  border-color: var(--teal-soft2);
+.price-table thead th {
+  background: var(--teal-soft); color: var(--teal-dk);
+  font: 700 13px/1.5 'Roboto', 'Noto Sans JP', sans-serif; letter-spacing: .06em;
+  padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--card-line); white-space: nowrap;
 }
-.choice-guide-rec-free { color: var(--teal-dk); }
+.price-table tbody tr:nth-child(even) { background: transparent; }
+.price-table tbody th {
+  font: 700 15px/1.6 'Noto Sans JP', sans-serif; color: var(--heading);
+  padding: 16px; border-bottom: 1px solid var(--card-line);
+  vertical-align: top; text-align: left; white-space: nowrap;
+}
+.price-table tbody td {
+  font: 400 14px/1.75 'Noto Sans JP', sans-serif; color: var(--text);
+  padding: 16px; border-bottom: 1px solid var(--card-line); vertical-align: top;
+}
+.price-table tbody tr:last-child th,
+.price-table tbody tr:last-child td { border-bottom: 0; }
+.price-table .pt-amt {
+  font: 900 16px/1.4 'Roboto', 'Noto Sans JP', sans-serif; color: var(--heading); white-space: nowrap;
+}
+.price-table tbody th a {
+  color: var(--teal-dk); text-decoration: none;
+  border-bottom: 1px solid transparent; transition: border-color .15s var(--ease);
+}
+.price-table tbody th a:hover { border-bottom-color: var(--teal-dk); }
+/* 狭幅（zatuneya-hp と同じ 680px）: 表を1行=1カードへ積み上げ、横スクロールを不要にする */
+@media (max-width: 680px) {
+  .price-table { min-width: 0; }
+  .price-table thead {
+    position: absolute; width: 1px; height: 1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  .price-table, .price-table tbody, .price-table tbody tr,
+  .price-table tbody th, .price-table tbody td { display: block; width: auto; }
+  .price-table tbody tr {
+    border: 1px solid var(--card-line); border-radius: 16px; background: #fff;
+    padding: 16px 18px; margin-top: 16px;
+  }
+  .price-table tbody tr:first-child { margin-top: 0; }
+  .price-table tbody th { padding: 0 0 10px; border: 0; font-size: 16px; white-space: normal; }
+  .price-table tbody td {
+    padding: 8px 0 0; border: 0; position: relative; padding-left: 104px; min-height: 22px;
+  }
+  .price-table tbody td::before {
+    content: attr(data-label); position: absolute; left: 0; top: 8px; width: 92px;
+    font: 700 12px/1.7 'Noto Sans JP', sans-serif; color: var(--muted);
+  }
+  .price-table tbody tr:last-child td { border: 0; }
+}
