@@ -70,34 +70,6 @@ body {
 /* ── 本文 ── */
 .main-wrap { max-width: 880px; margin: 0 auto; padding: var(--s2) var(--s6) var(--s16); }
 
-/* クイックナビ */
-.quick-nav { display: flex; gap: var(--s3); justify-content: center; flex-wrap: wrap; margin: var(--s4) 0 var(--s2); }
-.quick-nav-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--card-tint); border: 1px solid var(--card-line); border-radius: 999px;
-  font-size: 15px; font-weight: 700; color: var(--teal-dk); text-decoration: none;
-  padding: var(--s3) var(--s6); transition: background .18s var(--ease), transform .18s var(--ease), box-shadow .18s var(--ease);
-}
-.quick-nav-btn:hover { background: var(--teal-soft); transform: translateY(-2px); box-shadow: var(--sh-1); }
-
-/* セクション見出し */
-.section-head {
-  display: flex; flex-direction: column; align-items: center; gap: var(--s2);
-  margin: var(--s10) 0 var(--s4); text-align: center; scroll-margin-top: 76px;
-}
-.section-ic {
-  width: 44px; height: 44px; border-radius: 18px; margin-bottom: var(--s2);
-  background: linear-gradient(135deg, var(--teal-soft), var(--teal-soft2));
-  display: flex; align-items: center; justify-content: center; box-shadow: var(--sh-1);
-}
-.section-ic svg { width: 28px; height: 28px; stroke: var(--teal-dk); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-.section-head .eyebrow {
-  font-family: 'Roboto', sans-serif; font-size: 12px; font-weight: 700;
-  letter-spacing: 0.18em; color: var(--teal);
-}
-.section-head .title { font-size: 28px; font-weight: 900; color: var(--heading); line-height: 1.5; }
-@media (max-width: 640px) { .section-head .title { font-size: 20px; } }
-
 /* 低額入口導線 */
 .entry-note {
   background: var(--teal-soft); border: 1px solid var(--card-line); border-radius: 18px;
@@ -137,19 +109,6 @@ body {
 }
 .curriculum-link:hover { background: var(--card-tint); transform: translateY(-2px); box-shadow: var(--sh-2); }
 
-/* セクションカード */
-.section-card {
-  background: var(--card-tint); border: 1px solid var(--card-line); border-radius: 26px;
-  box-shadow: var(--sh-1);
-  padding: var(--s6); margin-bottom: var(--s4);
-}
-@media (max-width: 640px) { .section-card { padding: var(--s3); } }
-.section-header {
-  display: flex; align-items: center; gap: var(--s2);
-  font-size: 17px; font-weight: 900; color: var(--heading);
-  padding-bottom: var(--s4); margin-bottom: var(--s4); border-bottom: 1px solid var(--card-line);
-}
-.section-header.header-primary { color: var(--teal-dk); }
 .card-body { font-size: 15px; color: var(--text); margin-bottom: var(--s4); }
 
 /* コースアコーディオン */
@@ -192,10 +151,7 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
   background: var(--card-tint); border-radius: 12px; padding: 10px var(--s3);
 }
 
-/* 個別コース 一覧表（研修） */
-.course-table th[scope="row"] { white-space: normal; font-weight: 700; color: var(--heading); min-width: 150px; }
-.course-table td { white-space: nowrap; text-align: left; }
-.course-table td.cell-wrap { white-space: normal; }
+/* 料金一覧の注記 */
 .course-table-note {
   font-size: 13px; color: var(--muted); margin-top: var(--s2);
   padding-left: var(--s4); position: relative; line-height: 1.7;
@@ -238,6 +194,18 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .detail-table--nowrap td,
 .detail-table--nowrap tbody th { white-space: nowrap; }
 .table-scroll { overflow-x: auto; }
+
+/* テーブル内グループ見出し行（サービスの区切り。thead より弱く、通常行より強い中間の強さ） */
+.detail-table tbody tr.table-group-head th {
+  background: var(--teal-soft); color: var(--teal-dk); font-weight: 900;
+  font-size: 15.5px; padding: var(--s4) var(--s4); text-align: left;
+  scroll-margin-top: 76px;
+}
+.detail-table tbody tr.table-group-head:hover th { background: var(--teal-soft); }
+
+/* 料金一覧テーブル直後の条件注記（研修・個別業務設計・AI活用伴走の注記をまとめて配置） */
+.table-notes { margin: var(--s6) 0; display: flex; flex-direction: column; gap: var(--s2); }
+.table-notes .course-table-link { margin: var(--s1) 0; }
 
 /* プラン注記 */
 .plan-note {
