@@ -214,27 +214,6 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 }
 .course-table-link:hover { text-decoration: underline; }
 
-/* 価格2カラム */
-.price-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
-@media (max-width: 520px) { .price-cols { grid-template-columns: 1fr; } }
-.price-col {
-  position: relative; background: var(--card-tint); border: 1px solid var(--card-line);
-  border-radius: 16px; padding: var(--s4) var(--s3); text-align: center;
-  transition: box-shadow .2s var(--ease), transform .2s var(--ease);
-}
-.price-col:hover { box-shadow: var(--sh-1); transform: translateY(-2px); }
-.price-col-rec { background: var(--warm-bg); border-color: var(--warm-line); }
-.price-rec-badge {
-  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-  background: var(--orange); color: #fff; font-size: 12px; font-weight: 900;
-  letter-spacing: 0.08em; padding: 3px var(--s4); border-radius: 999px;
-  box-shadow: 0 3px 8px rgba(248,152,29,0.32);
-}
-.price-col-head { font-size: 14px; font-weight: 700; color: var(--muted); }
-.price-col-amount { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 22px; font-weight: 900; color: var(--heading); margin-top: 4px; }
-.price-per { font-size: 14px; font-weight: 700; color: var(--teal-dk); margin-top: var(--s2); }
-.price-per-rec { color: var(--orange-dk); }
-
 /* テーブル */
 .detail-table {
   width: 100%; border-collapse: collapse; font-size: 14.5px; background: #fff;
@@ -260,58 +239,7 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .detail-table--nowrap tbody th { white-space: nowrap; }
 .table-scroll { overflow-x: auto; }
 
-/* セット価格（独立カード化） */
-.set-grid { display: flex; flex-direction: column; gap: var(--s4); }
-.set-card {
-  background: #fff; border: 1px solid var(--card-line); border-radius: 20px;
-  padding: var(--s4); box-shadow: var(--sh-1);
-  transition: box-shadow .2s var(--ease), transform .2s var(--ease);
-}
-.set-card:hover { box-shadow: var(--sh-2); transform: translateY(-2px); }
-.set-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s4); }
-.set-name { font-size: 19px; font-weight: 900; color: var(--heading); }
-.set-courses { font-size: 14.5px; color: var(--text); margin-top: 4px; }
-.set-badge {
-  flex-shrink: 0; background: var(--teal-soft); color: var(--teal-dk);
-  font-size: 13px; font-weight: 900; padding: 6px var(--s4); border-radius: 999px;
-}
-.set-badge-accent { background: var(--orange-soft); color: var(--orange-dk); }
-.set-card-premium { background: var(--warm-bg); border-color: var(--warm-line); }
-
-/* プランカード */
-.plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); margin-bottom: var(--s4); }
-@media (max-width: 560px) { .plan-grid { grid-template-columns: 1fr; } }
-.plan-card {
-  position: relative; background: #fff; border: 1px solid var(--card-line); border-radius: 18px; padding: var(--s4);
-  transition: box-shadow .2s var(--ease), transform .2s var(--ease);
-}
-.plan-card:hover { box-shadow: var(--sh-2); transform: translateY(-2px); }
-.plan-card-rec { background: var(--warm-bg); border-color: var(--warm-line); }
-.plan-rec-badge {
-  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-  background: var(--orange); color: #fff; font-size: 12px; font-weight: 900;
-  letter-spacing: 0.08em; padding: 3px var(--s4); border-radius: 999px;
-  box-shadow: 0 3px 8px rgba(248,152,29,0.32); white-space: nowrap;
-}
-.plan-card-ic {
-  width: 40px; height: 40px; border-radius: 13px; margin-bottom: var(--s3);
-  background: var(--teal-soft); display: flex; align-items: center; justify-content: center;
-}
-.plan-card-rec .plan-card-ic { background: var(--orange-soft); }
-.plan-card-ic svg { width: 21px; height: 21px; stroke: var(--teal-dk); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-.plan-card-rec .plan-card-ic svg { stroke: var(--orange-dk); }
-.plan-card-name { font-size: 18px; font-weight: 900; color: var(--heading); }
-.plan-card-desc { font-size: 14px; color: var(--muted); margin: 4px 0 var(--s3); }
-.plan-card-row {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--s2);
-  padding: var(--s2) 0; border-top: 1px solid #EDF3F4;
-}
-.plan-card-row-highlight .plan-card-label { font-weight: 700; color: var(--heading); }
-.plan-card-label { font-size: 14px; color: var(--text); }
-.plan-card-price { font-family: 'Roboto', 'Noto Sans JP', sans-serif; font-size: 20px; font-weight: 900; color: var(--orange-dk); }
-.plan-card-monthly { display: flex; align-items: baseline; gap: 4px; padding-top: var(--s2); border-top: 1px solid #EDF3F4; }
-.plan-card-monthly .plan-card-price { font-size: 28px; }
-.plan-card-unit { font-size: 14px; color: var(--muted); }
+/* プラン注記 */
 .plan-note {
   font-size: 14px; color: var(--text); line-height: 1.8;
   background: #fff; border: 1px solid var(--card-line); border-radius: 12px;
@@ -381,59 +309,3 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 /* 注記 */
 .price-notes { margin: var(--s6) 0 0; display: flex; flex-direction: column; gap: 4px; }
 .price-notes p { font-size: 13px; color: var(--muted); }
-
-/* ── 料金早見表（zatuneya-hp TOP §7 の .price-table を移植・トークン読み替え） ── */
-.price-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.price-table {
-  width: 100%; min-width: 600px; border-collapse: collapse; text-align: left;
-  font-family: 'Noto Sans JP', sans-serif; background: transparent;
-}
-.price-table thead th {
-  background: var(--teal-soft); color: var(--teal-dk);
-  font: 700 13px/1.5 'Roboto', 'Noto Sans JP', sans-serif; letter-spacing: .06em;
-  padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--card-line); white-space: nowrap;
-}
-.price-table tbody tr:nth-child(even) { background: transparent; }
-.price-table tbody th {
-  font: 700 15px/1.6 'Noto Sans JP', sans-serif; color: var(--heading);
-  padding: 16px; border-bottom: 1px solid var(--card-line);
-  vertical-align: top; text-align: left; white-space: nowrap;
-}
-.price-table tbody td {
-  font: 400 14px/1.75 'Noto Sans JP', sans-serif; color: var(--text);
-  padding: 16px; border-bottom: 1px solid var(--card-line); vertical-align: top;
-}
-.price-table tbody tr:last-child th,
-.price-table tbody tr:last-child td { border-bottom: 0; }
-.price-table .pt-amt {
-  font: 900 16px/1.4 'Roboto', 'Noto Sans JP', sans-serif; color: var(--heading); white-space: nowrap;
-}
-.price-table tbody th a {
-  color: var(--teal-dk); text-decoration: none;
-  border-bottom: 1px solid transparent; transition: border-color .15s var(--ease);
-}
-.price-table tbody th a:hover { border-bottom-color: var(--teal-dk); }
-/* 狭幅（zatuneya-hp と同じ 680px）: 表を1行=1カードへ積み上げ、横スクロールを不要にする */
-@media (max-width: 680px) {
-  .price-table { min-width: 0; }
-  .price-table thead {
-    position: absolute; width: 1px; height: 1px; padding: 0;
-    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-  }
-  .price-table, .price-table tbody, .price-table tbody tr,
-  .price-table tbody th, .price-table tbody td { display: block; width: auto; }
-  .price-table tbody tr {
-    border: 1px solid var(--card-line); border-radius: 16px; background: #fff;
-    padding: 16px 18px; margin-top: 16px;
-  }
-  .price-table tbody tr:first-child { margin-top: 0; }
-  .price-table tbody th { padding: 0 0 10px; border: 0; font-size: 16px; white-space: normal; }
-  .price-table tbody td {
-    padding: 8px 0 0; border: 0; position: relative; padding-left: 104px; min-height: 22px;
-  }
-  .price-table tbody td::before {
-    content: attr(data-label); position: absolute; left: 0; top: 8px; width: 92px;
-    font: 700 12px/1.7 'Noto Sans JP', sans-serif; color: var(--muted);
-  }
-  .price-table tbody tr:last-child td { border: 0; }
-}
