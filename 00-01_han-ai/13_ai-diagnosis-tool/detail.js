@@ -245,7 +245,7 @@ const FALLBACK_ACTIONS = {
 
 const FALLBACK_RECOMMENDATIONS = {
   準備期: [
-    { rank: 1, type: 'standalone', service: 'AI実務研修 ①AI活用知識編（5名）', price: '60,000円', reason: 'AIの基礎をチーム全員で学べます。全6コースの入口として、最も負担なく始められる研修です。' },
+    { rank: 1, type: 'standalone', service: 'AI実務研修 ①AI活用知識編（5名）', price: '60,000円', reason: 'AIの基礎をチーム全員で学べます。全5コースの入口として、最も負担なく始められる研修です。' },
     { rank: 2, type: 'set', service: '入門セット（①+②・5名）', price: '152,000円', reason: 'AI知識と文書作業の効率化スキルを1日ずつで習得できます。研修当日から業務に活かせます。' }
   ],
   導入期: [
@@ -258,7 +258,7 @@ const FALLBACK_RECOMMENDATIONS = {
   ],
   推進期: [
     { rank: 1, type: 'standalone', service: 'AI経営改善パッケージ（360,000円・3か月）', price: '360,000円', reason: '複数部門にまたがる業務課題を、体制設計とKPIから整理し、自走できる仕組みに落とし込みます。' },
-    { rank: 2, type: 'set', service: '全コースセット（①②③④+⑥グループ・5名）', price: '400,000〜560,000円', reason: '全6コースで組織全体のAI活用を一気に推進できます。' }
+    { rank: 2, type: 'set', service: '全コースセット（①②③④+⑤グループ・5名）', price: '400,000〜560,000円', reason: '全5コースで組織全体のAI活用を一気に推進できます。' }
   ]
 };
 
