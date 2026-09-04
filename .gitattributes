@@ -7,3 +7,13 @@
 *.md text eol=lf
 *.toml text eol=lf
 *.txt text eol=lf
+
+# Binary office / asset files — never normalize line endings
+*.xlsx binary
+*.docx binary
+*.pptx binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
