@@ -90,25 +90,6 @@ body {
 }
 .hook-box strong { font-size: 19px; font-weight: 900; color: var(--teal-dk); }
 
-/* 研修 前置き（診断導線＋1人あたりフック＋カリキュラム 統合ブロック） */
-.training-intro {
-  background: var(--teal-soft); border: 1px solid var(--card-line); border-radius: 18px;
-  padding: var(--s4) var(--s6); margin-bottom: var(--s6); text-align: center;
-}
-.training-intro-lead { font-size: 14.5px; color: var(--text); line-height: 1.8; }
-.training-intro-hook { font-size: 14.5px; font-weight: 700; color: var(--heading); margin-top: var(--s2); }
-.training-intro .curriculum-link { margin: var(--s3) 0 0; }
-
-/* カリキュラムリンク */
-.curriculum-link {
-  display: flex; align-items: center; justify-content: center; gap: var(--s2);
-  background: #fff; border: 1px solid var(--card-line); border-radius: 999px;
-  padding: var(--s4); margin-bottom: var(--s6);
-  font-size: 14px; font-weight: 700; color: var(--teal-dk); text-decoration: none;
-  box-shadow: var(--sh-1); transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
-}
-.curriculum-link:hover { background: var(--card-tint); transform: translateY(-2px); box-shadow: var(--sh-2); }
-
 .card-body { font-size: 15px; color: var(--text); margin-bottom: var(--s4); }
 
 /* コースアコーディオン */
