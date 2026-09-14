@@ -202,6 +202,7 @@ const MAX_SCORE = QUESTIONS.length * 10;
 const DOM = {
   blockLabel:    document.getElementById('block-label'),
   counter:       document.getElementById('question-counter'),
+  progressWrap:  document.querySelector('.progress-bar-wrap'),
   progressBar:   document.getElementById('progress-bar'),
   questionText:  document.getElementById('question-text'),
   optionsWrap:   document.getElementById('options'),
@@ -217,6 +218,7 @@ const DOM = {
   issuesCard:    document.getElementById('issues-card'),
   issuesList:    document.getElementById('issues-list'),
   actionsList:   document.getElementById('actions-list'),
+  resultsHeading: document.getElementById('results-heading'),
 };
 
 // ── 状態 ──
@@ -233,16 +235,18 @@ function renderQuestion() {
 
   DOM.blockLabel.textContent = `ブロック${q.block}：${q.blockName}`;
   DOM.counter.textContent = `${currentIndex + 1} / ${total}`;
-  DOM.progressBar.style.width = `${(currentIndex / total) * 100}%`;
+  DOM.progressWrap.dataset.step = String(currentIndex + 1);
+  DOM.progressWrap.setAttribute('aria-valuenow', String(currentIndex + 1));
   DOM.questionText.textContent = q.text;
 
   DOM.optionsWrap.innerHTML = q.options.map((opt, i) =>
-    `<button class="option-btn${current?.optionIndex === i ? ' selected' : ''}" data-index="${i}">${opt.text}</button>`
+    `<button class="option-btn${current?.optionIndex === i ? ' selected' : ''}" data-index="${i}" aria-pressed="${current?.optionIndex === i}">${opt.text}</button>`
   ).join('');
 
   DOM.btnNext.disabled = !current;
   DOM.btnNext.textContent = currentIndex === total - 1 ? '診断結果を見る →' : '次へ →';
-  DOM.btnBack.style.visibility = currentIndex === 0 ? 'hidden' : 'visible';
+  DOM.btnBack.classList.toggle('is-hidden', currentIndex === 0);
+  DOM.questionText.focus();
 }
 
 // ── 選択肢クリック（イベント委任）──
@@ -252,7 +256,11 @@ DOM.optionsWrap.addEventListener('click', e => {
   const i = Number(btn.dataset.index);
   const opt = QUESTIONS[currentIndex].options[i];
   answers[currentIndex] = { questionId: QUESTIONS[currentIndex].id, score: opt.score, optionText: opt.text, optionIndex: i };
-  DOM.optionsWrap.querySelectorAll('.option-btn').forEach((b, j) => b.classList.toggle('selected', j === i));
+  DOM.optionsWrap.querySelectorAll('.option-btn').forEach((b, j) => {
+    const selected = j === i;
+    b.classList.toggle('selected', selected);
+    b.setAttribute('aria-pressed', String(selected));
+  });
   DOM.btnNext.disabled = false;
 });
 
@@ -329,6 +337,7 @@ async function showResults() {
   if (fallbackNote) fallbackNote.classList.toggle('hidden', !usedFallback);
 
   showScreen('screen-results');
+  DOM.resultsHeading.focus();
 }
 
 // ── ナビゲーション ──
@@ -359,4 +368,5 @@ document.getElementById('btn-retry').addEventListener('click', () => {
   currentIndex = 0;
   answers = [];
   showScreen('screen-welcome');
+  document.getElementById('btn-start').focus();
 });
