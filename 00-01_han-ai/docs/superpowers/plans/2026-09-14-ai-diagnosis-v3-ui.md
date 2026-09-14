@@ -65,6 +65,16 @@
 - API機能と返り値は変更していないため、返り値形式の改修は非該当。Functions実通信は未検証で、ブラウザQAでは503に置換した。
 - npm install時点で既存依存を含む監査警告6件（moderate 5 / high 1）が表示された。UIタスク内で破壊的な `npm audit fix` は実施していない。
 
+### 2026-09-15 最終最適化監査
+
+- productionの使い捨てconsole、dialog API、秘密値、コメントアウト死にコードは0件。QAのconsoleは終了結果とローカルserver URLを示す意図的出力。
+- 簡易診断ではinline style 0件。詳細診断の既存inline style 1件／`.style` 3件は本UI変更前から存在し、詳細診断ロジックを変えない制約によりscope外として維持。
+- 追加UI内の未使用DOM cache `progressBar` と未使用CSS token 4件を削除。重複selectorはSP override／footer mark overrideとして必要なもののみ。
+- `npm audit` は全依存・production限定とも6件で一致し、base `8fa22c0` と6packageのversionも一致。今回追加したdev QA依存に起因しない。
+- `npm audit fix --dry-run` で非major更新と確認できたtransitive `qs` のみ `6.15.3 → 6.16.0` へ更新し、監査警告は6件から5件（moderate 4 / high 1）へ減少。
+- 残るGoogle APIs系4件とNodemailer 1件はdirect dependencyのmajor更新を要するため、本UIタスクでは変更しない。Functions実通信の正常・異常系回帰を用意する別タスクが必要。
+- 最終 `npm test`: 166 checks PASS。API返り値は機能変更がなく非該当、本番Functions実通信は未検証。
+
 ### 既知の内容不整合（今回のUI変更対象外）
 
 `detail.html` の全コースセット表記（5名／10名＋⑤グループ）と、`prices.html` の⑤「グループMAX3名」は条件の読み方が一致していない。また旧HPにあった20,900円というセット単位には、現行ファイル内で根拠を確認できない。料金・業務条件は確認なしに変更せず、別途正本確定が必要。

@@ -1,5 +1,5 @@
 /* ざつね屋 V3 共通ヘッダー・ナビ・フッター */
-:root{--gz-teal:#31747c;--gz-teal-bright:#5bbdc8;--gz-teal-soft:#eaf6f8;--gz-line:#dcebed;--gz-text:#575757;--gz-heading:#303838;--gz-orange:#f8981d}
+:root{--gz-teal:#31747c;--gz-teal-soft:#eaf6f8;--gz-line:#dcebed;--gz-text:#575757;--gz-heading:#303838;--gz-orange:#f8981d}
 .site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);border-bottom:1px solid var(--gz-line);backdrop-filter:blur(12px)}
 .site-header__inner{display:flex;align-items:center;width:min(100% - 48px,1200px);height:80px;margin:0 auto}
 .site-logo{display:inline-flex;align-items:center;gap:10px;color:var(--gz-heading);text-decoration:none;white-space:nowrap}

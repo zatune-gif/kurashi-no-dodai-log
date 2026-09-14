@@ -22,6 +22,8 @@
 
 依存関係を `npm ci` で揃えた後、`npm test` を実行する。質問・点数・ステージ境界・料金表示・Functions送信先の静的契約に加え、375 / 768 / 1280px、Chromium / Firefox / WebKit、主要画面のaxe検査をまとめて確認する。ブラウザ検査中の生成コメントFunctionsはローカルで503応答へ置き換え、個人情報や回答を外部へ送信しない。
 
+依存監査は `npm audit --omit=dev` でproduction依存を分けて確認する。major更新を要する指摘はFunctionsの実通信回帰を伴う別タスクとして扱い、`npm audit fix --force` は実行しない。
+
 ## なぜ `index.html` がリダイレクトなのか
 
 以前は簡易診断本体が `index.html` という名前だったが、`detail.html`（詳細診断）との対比で

@@ -203,7 +203,6 @@ const DOM = {
   blockLabel:    document.getElementById('block-label'),
   counter:       document.getElementById('question-counter'),
   progressWrap:  document.querySelector('.progress-bar-wrap'),
-  progressBar:   document.getElementById('progress-bar'),
   questionText:  document.getElementById('question-text'),
   optionsWrap:   document.getElementById('options'),
   btnBack:       document.getElementById('btn-back'),
