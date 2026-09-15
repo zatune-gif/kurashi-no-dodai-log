@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = path.resolve(new URL('../', import.meta.url).pathname.replace(/^\/(.:)/, '$1'));
+const root = path.resolve(fileURLToPath(new URL('../', import.meta.url)));
 const port = Number(process.env.QA_PORT || 4173);
 const types = { '.css': 'text/css', '.html': 'text/html', '.js': 'text/javascript', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml' };
 

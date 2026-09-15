@@ -236,6 +236,7 @@ function renderQuestion() {
   DOM.counter.textContent = `${currentIndex + 1} / ${total}`;
   DOM.progressWrap.dataset.step = String(currentIndex + 1);
   DOM.progressWrap.setAttribute('aria-valuenow', String(currentIndex + 1));
+  DOM.progressWrap.setAttribute('aria-valuetext', `${currentIndex + 1}問目（全${total}問）`);
   DOM.questionText.textContent = q.text;
 
   DOM.optionsWrap.innerHTML = q.options.map((opt, i) =>

@@ -123,45 +123,76 @@ async function sendEmails(data) {
   });
 }
 
+function isValidEmail(value) {
+  if (typeof value !== 'string' || value.length === 0 || value.length > 254) return false;
+  if (value !== value.trim() || /[\u0000-\u0020\u007f]/.test(value)) return false;
+
+  const at = value.indexOf('@');
+  if (at <= 0 || at !== value.lastIndexOf('@')) return false;
+
+  const local = value.slice(0, at);
+  const domain = value.slice(at + 1);
+  if (local.length > 64 || domain.length > 253) return false;
+  if (!/^[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+$/.test(local)) return false;
+  if (local.startsWith('.') || local.endsWith('.') || local.includes('..')) return false;
+
+  const labels = domain.split('.');
+  if (labels.length < 2) return false;
+  return labels.every((label) => (
+    label.length >= 1
+    && label.length <= 63
+    && /^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$/.test(label)
+  ));
+}
+
 // =====================
 // メインハンドラ
 // =====================
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
-  }
+function createHandler({ appendToSheet: append = appendToSheet, sendEmails: send = sendEmails } = {}) {
+  return async (event) => {
+    if (event.httpMethod !== 'POST') {
+      return { statusCode: 405, body: 'Method Not Allowed' };
+    }
 
-  let data;
-  try {
-    data = JSON.parse(event.body);
-  } catch {
-    return { statusCode: 400, body: JSON.stringify({ ok: false, error: 'Invalid JSON' }) };
-  }
+    let data;
+    try {
+      data = JSON.parse(event.body);
+    } catch {
+      return { statusCode: 400, body: JSON.stringify({ ok: false, error: 'Invalid JSON' }) };
+    }
 
-  // 必須フィールド確認
-  if (!data.type || !data.companyName || !data.contactName || !data.email) {
-    return { statusCode: 400, body: JSON.stringify({ ok: false, error: 'Missing required fields' }) };
-  }
+    // 必須フィールド確認
+    if (!data || typeof data !== 'object' || !data.type || !data.companyName || !data.contactName) {
+      return { statusCode: 400, body: JSON.stringify({ ok: false, error: 'Missing required fields' }) };
+    }
+    if (!isValidEmail(data.email)) {
+      return { statusCode: 400, body: JSON.stringify({ ok: false, error: 'Invalid email' }) };
+    }
 
-  const errors = [];
+    const errors = [];
 
-  try {
-    await appendToSheet(data);
-  } catch (e) {
-    console.error('Sheets error:', e.message);
-    errors.push('sheet');
-  }
+    try {
+      await append(data);
+    } catch (e) {
+      console.error('Sheets error:', e.message);
+      errors.push('sheet');
+    }
 
-  try {
-    await sendEmails(data);
-  } catch (e) {
-    console.error('Email error:', e.message);
-    errors.push('email');
-  }
+    try {
+      await send(data);
+    } catch (e) {
+      console.error('Email error:', e.message);
+      errors.push('email');
+    }
 
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ok: true, errors }),
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ok: true, errors }),
+    };
   };
-};
+}
+
+exports.isValidEmail = isValidEmail;
+exports.createHandler = createHandler;
+exports.handler = createHandler();

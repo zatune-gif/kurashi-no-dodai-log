@@ -5,6 +5,7 @@ import { chromium, firefox, webkit } from 'playwright';
 
 const port = 4174;
 const baseUrl = `http://127.0.0.1:${port}`;
+const focusMeasurements = [];
 const server = spawn(process.execPath, ['tests/qa-server.mjs'], {
   cwd: new URL('../', import.meta.url),
   env: { ...process.env, QA_PORT: String(port) },
@@ -40,6 +41,46 @@ async function assertNoOverflow(page, label) {
   assert.ok(dimensions.scrollWidth <= dimensions.width, `${label}: no horizontal overflow`);
 }
 
+function parseRgb(value) {
+  const channels = value.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+  if (channels?.length !== 3) throw new Error(`Unable to parse RGB color: ${value}`);
+  return channels;
+}
+
+function contrastRatio(foreground, background) {
+  const luminance = (channels) => {
+    const linear = channels.map((channel) => {
+      const normalized = channel / 255;
+      return normalized <= 0.04045 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+  };
+  const first = luminance(parseRgb(foreground));
+  const second = luminance(parseRgb(background));
+  return (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05);
+}
+
+async function assertFocusContrast(locator, background, label) {
+  await locator.page().keyboard.press('Tab');
+  await locator.focus();
+  const focus = await locator.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      matches: element.matches(':focus-visible'),
+      color: style.outlineColor,
+      style: style.outlineStyle,
+      width: Number.parseFloat(style.outlineWidth),
+    };
+  });
+  const ratio = contrastRatio(focus.color, background);
+  const outline = focus.color;
+  focusMeasurements.push({ label, ratio, outline, background });
+  assert.ok(
+    focus.matches && focus.style !== 'none' && focus.width >= 3 && ratio >= 3,
+    `${label}: visible focus indicator is at least 3px and 3:1 (${focus.width}px ${outline} on ${background})`,
+  );
+}
+
 async function finishDiagnosis(page, optionIndex) {
   for (let index = 0; index < 12; index++) {
     const selectedIndex = Array.isArray(optionIndex) ? optionIndex[index] : optionIndex;
@@ -68,17 +109,29 @@ try {
       const hamburger = page.locator('.site-nav__hamburger');
       const hamburgerBox = await hamburger.boundingBox();
       assert.ok(hamburgerBox.width >= 44 && hamburgerBox.height >= 44, `${browserType.name()}: menu target is 44px`);
-      await hamburger.focus();
+      await assertFocusContrast(hamburger, 'rgb(255, 255, 255)', `${browserType.name()}: header menu`);
       const outlineWidth = await hamburger.evaluate((element) => Number.parseFloat(getComputedStyle(element).outlineWidth));
       assert.ok(outlineWidth >= 3, `${browserType.name()}: menu keyboard focus is visible`);
+      const headerLogo = page.locator('.site-logo');
+      const headerLogoBox = await headerLogo.boundingBox();
+      assert.ok(headerLogoBox.height >= 44, `${browserType.name()}: header logo target is at least 44px`);
+      await assertFocusContrast(headerLogo, 'rgb(255, 255, 255)', `${browserType.name()}: header logo`);
+      const footerLogo = page.locator('.site-footer__logo');
+      const footerLogoBox = await footerLogo.boundingBox();
+      assert.ok(footerLogoBox.height >= 44, `${browserType.name()}: footer logo target is at least 44px`);
+      await assertFocusContrast(footerLogo, 'rgb(25, 59, 63)', `${browserType.name()}: footer logo`);
       await hamburger.click();
       assert.ok(await page.locator('#site-nav.is-open').isVisible(), `${browserType.name()}: SP menu opens`);
       await hamburger.click();
-      checks += 3;
+      checks += 8;
+      const startButton = page.locator('#btn-start');
+      await assertFocusContrast(startButton, 'rgb(239, 244, 245)', `${browserType.name()}: main action`);
+      checks++;
       await page.click('#btn-start');
       assert.equal(await page.locator('.progress-bar-wrap').getAttribute('aria-valuenow'), '1');
+      assert.equal(await page.locator('.progress-bar-wrap').getAttribute('aria-valuetext'), '1問目（全12問）');
       assert.equal(await page.evaluate(() => document.activeElement?.id), 'question-text');
-      checks += 2;
+      checks += 3;
 
       const option = page.locator('.option-btn').nth(3);
       assert.ok((await option.boundingBox()).height >= 44, `${browserType.name()}: option target is at least 44px`);
@@ -156,6 +209,10 @@ try {
         await assertNoOverflow(sharedPage, `${pathname} ${viewportWidth}`);
         assert.equal(await sharedPage.locator('.site-header').count(), 1, `${pathname}: shared header`);
         assert.equal(await sharedPage.locator('.site-footer').count(), 1, `${pathname}: shared footer`);
+        const sharedHeaderLogoBox = await sharedPage.locator('.site-logo').boundingBox();
+        const sharedFooterLogoBox = await sharedPage.locator('.site-footer__logo').boundingBox();
+        assert.ok(sharedHeaderLogoBox.height >= 44, `${pathname}: header logo target is at least 44px`);
+        assert.ok(sharedFooterLogoBox.height >= 44, `${pathname}: footer logo target is at least 44px`);
         const sharedHamburger = sharedPage.locator('.site-nav__hamburger');
         assert.equal(await sharedHamburger.isVisible(), viewportWidth === 375, `${pathname}: responsive nav mode`);
         if (viewportWidth === 375) {
@@ -163,7 +220,7 @@ try {
           assert.ok(await sharedPage.locator('#site-nav.is-open').isVisible(), `${pathname}: SP nav opens`);
           checks++;
         }
-        checks += 4;
+        checks += 6;
         await sharedPage.close();
       }
     }
@@ -172,6 +229,7 @@ try {
   }
 
   console.log(`diagnosis browser: ${checks} checks PASS (Chromium, Firefox, WebKit)`);
+  console.log(`focus indicator contrast: minimum ${Math.min(...focusMeasurements.map(({ ratio }) => ratio)).toFixed(2)}:1 (${focusMeasurements.length} computed-style measurements)`);
 } finally {
   server.kill('SIGTERM');
 }
