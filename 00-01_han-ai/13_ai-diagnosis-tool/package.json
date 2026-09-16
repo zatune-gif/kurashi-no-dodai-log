@@ -2,9 +2,25 @@
   "name": "ai-diagnosis-tool",
   "version": "1.0.0",
   "description": "AI活用準備度診断ツール by ざつね屋",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "qa:logic": "node tests/diagnosis-logic-contract.mjs",
+    "qa:ui": "node tests/diagnosis-ui-contract.mjs",
+    "qa:inquiry": "node tests/save-inquiry-contract.mjs",
+    "qa:smtp": "node tests/nodemailer-smtp-contract.mjs",
+    "qa:browser": "node tests/diagnosis-browser.mjs",
+    "test": "npm run qa:logic && npm run qa:ui && npm run qa:inquiry && npm run qa:smtp && npm run qa:browser"
+  },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "googleapis": "^144.0.0",
-    "nodemailer": "^6.9.15"
+    "nodemailer": "10.0.10"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "playwright": "^1.62.1"
   }
 }
