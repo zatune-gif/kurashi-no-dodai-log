@@ -45,8 +45,8 @@ async function appendToSheet(data) {
 // =====================
 // メール送信
 // =====================
-async function sendEmails(data) {
-  const transporter = nodemailer.createTransport({
+async function sendEmails(data, { createTransport = nodemailer.createTransport } = {}) {
+  const transporter = createTransport({
     service: 'gmail',
     auth: {
       user: process.env.GMAIL_USER,
@@ -194,5 +194,6 @@ function createHandler({ appendToSheet: append = appendToSheet, sendEmails: send
 }
 
 exports.isValidEmail = isValidEmail;
+exports.sendEmails = sendEmails;
 exports.createHandler = createHandler;
 exports.handler = createHandler();
