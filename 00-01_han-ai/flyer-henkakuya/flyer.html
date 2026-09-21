@@ -1,0 +1,1781 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ざつね屋 A4両面チラシ v2</title>
+
+<style>
+/* =========================================================
+   ざつね屋 A4両面チラシ
+   ベース：GPT作成のデザインカンプ（HTML/CSS）
+   ここでは プレースホルダー → 実素材（写真・QR・アイコン）へ差し替え
+   仕上がり: A4 210×297mm ／ 塗り足し3mm ／ 制作サイズ 216×303mm
+========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap');
+
+@page {
+  size: 216mm 303mm;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #dfe3e4;
+  color: #1F292C;
+  font-family:
+    "Noto Sans JP",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    sans-serif;
+}
+
+body {
+  padding: 16mm 0;
+}
+
+.page {
+  position: relative;
+  width: 216mm;
+  height: 303mm;
+  margin: 0 auto 16mm;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.page:last-child {
+  margin-bottom: 0;
+}
+
+.trim-guide {
+  position: absolute;
+  inset: 3mm;
+  border: 0.2mm solid rgba(91,189,200,.6);
+  pointer-events: none;
+  z-index: 99;
+}
+
+.back .trim-guide {
+  border-color: rgba(136,136,136,.55);
+}
+
+/* ---------- type ---------- */
+
+.serif {
+  font-family:
+    "Noto Serif JP",
+    "Yu Mincho",
+    serif;
+}
+
+.en {
+  font-family:
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+p {
+  line-height: 1.6;
+  letter-spacing: .02em;
+}
+
+.section-title {
+  font-size: 14pt;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.small-title {
+  font-size: 9pt;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.body {
+  font-size: 8.5pt;
+  line-height: 1.6;
+}
+
+.small {
+  font-size: 7.5pt;
+  line-height: 1.55;
+}
+
+.muted {
+  color: #4E5A5D;
+}
+
+/* ---------- layout ---------- */
+
+.inner {
+  width: calc(100% - 22mm);
+  margin-inline: auto;
+}
+
+.band {
+  width: 100%;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 8mm;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 4mm;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 4mm;
+}
+
+.grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0,1fr));
+  gap: 4mm;
+}
+
+/* ---------- placeholders（アイコン枠。実SVGを内包） ---------- */
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+
+  background: #DDDDDD;
+  border: .2mm solid #B5B5B5;
+  border-radius: 6px;
+
+  color: #4E5A5D;
+  text-align: center;
+  font-size: 7.5pt;
+  font-weight: 700;
+  line-height: 1.35;
+  padding: 2mm;
+}
+
+.icon-placeholder {
+  width: 12mm;
+  height: 12mm;
+  flex: 0 0 12mm;
+}
+
+.qr-placeholder {
+  width: 18mm;
+  height: 18mm;
+  flex: 0 0 18mm;
+}
+
+.logo-placeholder {
+  width: 20mm;
+  height: 10mm;
+}
+
+/* ---------- 実素材の差し込み ---------- */
+
+.img-box{
+  overflow:hidden;
+  border-radius:6px;
+  background:#eef2f3;
+}
+.img-box > img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.logo-placeholder,
+.back-logo{
+  background:none;
+  border:0;
+  padding:0;
+  display:flex;
+  align-items:center;
+}
+.logo-img{ height:100%; width:auto; object-fit:contain; display:block; }
+
+.ico{
+  background:none !important;
+  border:0 !important;
+  padding:0 !important;
+}
+.ic{
+  width:100%; height:100%;
+  fill:none; stroke:#173F46;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  display:block;
+}
+
+.qr-cell-img{
+  background:#FFFFFF !important;
+  border:0 !important;
+  padding:1.5mm !important;
+}
+.qr-cell-img > img{
+  width:100%; height:100%;
+  object-fit:contain;
+  image-rendering:pixelated;
+  display:block;
+}
+
+/* =========================================================
+   FRONT
+========================================================= */
+
+.front {
+  background: #FFFFFF;
+}
+
+/* 01 Header */
+
+.front-header {
+  height: 18mm;
+  display: flex;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+}
+
+.brand-name {
+  color: #173F46;
+  font-size: 15pt;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.brand-shoulder {
+  margin-top: 1mm;
+  color: #4E5A5D;
+  font-size: 8pt;
+}
+
+/* 02 Hero */
+
+.hero {
+  min-height: 44mm;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.7fr .85fr;
+  gap: 8mm;
+  height: 100%;
+}
+
+.hero-copy {
+  padding-top: 4mm;
+}
+
+.hero h1 {
+  font-size: 26pt;
+  line-height: 1.28;
+  letter-spacing: .01em;
+}
+
+.hero h1 .main {
+  color: #173F46;
+}
+
+.hero-lead {
+  margin-top: 4mm;
+  max-width: 118mm;
+  font-size: 8.8pt;
+}
+
+.hero-note {
+  display: flex;
+  gap: 4mm;
+  align-items: center;
+  margin-top: 3mm;
+}
+
+.hero-note .placeholder {
+  width: 10mm;
+  height: 10mm;
+  flex: 0 0 10mm;
+  font-size: 6pt;
+  padding: 1mm;
+}
+
+.hero-note p {
+  font-size: 7.8pt;
+  color: #4E5A5D;
+  font-weight: 700;
+}
+
+.hero-photo {
+  height: 34mm;
+  margin-top: 0;
+}
+
+/* 03 Problems */
+
+.problems {
+  min-height: 40mm;
+  padding-top: 4mm;
+}
+
+.problem-grid {
+  margin-top: 3mm;
+}
+
+.problem {
+  min-width: 0;
+}
+
+.problem h3 {
+  margin-top: 3mm;
+  min-height: 8mm;
+  font-size: 8.7pt;
+  line-height: 1.45;
+}
+
+.problem p {
+  margin-top: 2mm;
+  font-size: 7.4pt;
+  color: #4E5A5D;
+}
+
+.problems-close {
+  margin-top: 3mm;
+  color: #173F46;
+  font-size: 7.8pt;
+  font-weight: 700;
+}
+
+/* 04 Package */
+
+.package {
+  position: relative;
+  min-height: 54mm;
+  background: #EFF4F5;
+  padding-top: 4mm;
+}
+
+.package::before {
+  content: "";
+  position: absolute;
+  left: 3mm;
+  top: 0;
+  bottom: 0;
+  width: 1.2mm;
+  background: #F8981D;
+}
+
+.package-head {
+  display: grid;
+  grid-template-columns: 1.65fr .65fr;
+  gap: 8mm;
+}
+
+.package-kicker {
+  color: #4E5A5D;
+  font-size: 8.5pt;
+  font-weight: 700;
+}
+
+.package-name {
+  margin-top: 2mm;
+  color: #173F46;
+  font-size: 18pt;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.package-photo {
+  height: 23mm;
+}
+
+.package-columns {
+  margin-top: 4mm;
+}
+
+.package-col h3 {
+  color: #173F46;
+  font-size: 8.8pt;
+  line-height: 1.3;
+  margin-bottom: 3mm;
+}
+
+.package-col ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.package-col li {
+  position: relative;
+  padding-left: 4mm;
+  margin-bottom: 2.5mm;
+  font-size: 7.4pt;
+  line-height: 1.5;
+}
+
+.package-col li::before {
+  content: "";
+  position: absolute;
+  width: 1.8mm;
+  height: 1.8mm;
+  left: 0;
+  top: 1.4mm;
+  background: #5BBDC8;
+}
+
+/* 05 Services */
+
+.services {
+  min-height: 46mm;
+  padding-top: 3mm;
+}
+
+.services-grid {
+  margin-top: 3mm;
+}
+
+.service-photo {
+  width: 100%;
+  height: 21mm;
+}
+
+.service-heading {
+  display: flex;
+  gap: 3mm;
+  align-items: baseline;
+  margin-top: 3mm;
+}
+
+.service-number {
+  color: #5BBDC8;
+  font-size: 9pt;
+  font-weight: 700;
+}
+
+.service-name {
+  font-size: 11.5pt;
+  font-weight: 700;
+}
+
+.service-price {
+  margin-top: 2mm;
+  color: #173F46;
+  font-size: 7.8pt;
+  font-weight: 700;
+}
+
+.service-desc {
+  margin-top: 2mm;
+  color: #4E5A5D;
+  font-size: 7.2pt;
+}
+
+/* 06 QR band */
+
+.front-cta {
+  min-height: 30mm;
+  padding-top: 3mm;
+  color: #FFFFFF;
+  background: #173F46;
+}
+
+.front-cta h2 {
+  font-size: 14pt;
+  line-height: 1.3;
+}
+
+.cta-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12mm;
+  margin-top: 3mm;
+}
+
+.cta-item {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+  min-width: 0;
+}
+
+.cta-title {
+  font-size: 10pt;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.cta-desc {
+  margin-top: 1.5mm;
+  color: #DCEBED;
+  font-size: 7pt;
+}
+
+/* 07 Footer */
+
+.front-footer {
+  min-height: 11mm;
+  display: flex;
+  align-items: center;
+}
+
+.front-footer p {
+  color: #4E5A5D;
+  font-size: 7pt;
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+.back {
+  color: #111111;
+}
+
+/* back heading */
+
+.back-intro {
+  min-height: 23mm;
+  display: flex;
+  align-items: center;
+}
+
+.line-title {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8mm;
+}
+
+.line-title::before,
+.line-title::after {
+  content: "";
+  display: block;
+  height: .2mm;
+  background: #888888;
+}
+
+.line-title h1 {
+  font-size: 18pt;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* process */
+
+.process {
+  min-height: 38mm;
+}
+
+.process-grid {
+  margin-top: 5mm;
+}
+
+.process-item {
+  text-align: center;
+  position: relative;
+}
+
+.process-item:not(:last-child)::after {
+  content: ">";
+  position: absolute;
+  right: -3.2mm;
+  top: 4mm;
+  color: #888888;
+  font-size: 10pt;
+  font-weight: 700;
+}
+
+.process-icon {
+  width: 12mm;
+  height: 12mm;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: .3mm solid #111111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.7mm;
+}
+.process-icon .ic{ stroke:#111111; }
+
+.process-label {
+  margin-top: 2mm;
+  font-size: 7.8pt;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.process-note {
+  margin-top: 1mm;
+  color: #888888;
+  font-size: 6.8pt;
+  line-height: 1.35;
+}
+
+/* Strength / profile */
+
+.strength-profile {
+  min-height: 59mm;
+}
+
+.strength-profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  gap: 8mm;
+}
+
+.strengths {
+  min-height: 55mm;
+  padding: 5mm;
+  background: #F2F2F2;
+}
+
+.strength-list {
+  margin-top: 4mm;
+  display: grid;
+  gap: 3mm;
+}
+
+.strength-row {
+  display: grid;
+  grid-template-columns: 10mm 1fr;
+  gap: 4mm;
+  align-items: start;
+}
+
+.strength-row .placeholder {
+  width: 10mm;
+  height: 10mm;
+  font-size: 5.8pt;
+  padding: .5mm;
+}
+.strength-row .ic{ stroke:#111111; }
+
+.strength-row h3 {
+  font-size: 7.8pt;
+  line-height: 1.4;
+}
+
+.strength-row p {
+  margin-top: .8mm;
+  color: #555555;
+  font-size: 6.7pt;
+}
+
+.profile {
+  padding-top: 5mm;
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 34mm 1fr;
+  gap: 6mm;
+  margin-top: 4mm;
+}
+
+.profile-photo {
+  height: 33mm;
+}
+.profile-photo > img{ filter:grayscale(1) contrast(1.05); object-position:center top; }
+
+.profile-name {
+  font-size: 11pt;
+  line-height: 1.3;
+}
+
+.profile p {
+  margin-top: 3mm;
+  color: #555555;
+  font-size: 7.1pt;
+}
+
+/* Cases */
+
+.cases {
+  min-height: 47mm;
+  padding-top: 3mm;
+}
+
+.case-grid {
+  margin-top: 4mm;
+}
+
+.case-item h3 {
+  margin-top: 2mm;
+  font-size: 8.5pt;
+}
+.case-item .ic{ stroke:#111111; }
+
+.case-item p {
+  margin-top: 2mm;
+  color: #555555;
+  font-size: 7pt;
+}
+
+.case-note {
+  margin-top: 3mm;
+  color: #888888;
+  font-size: 6.8pt;
+}
+
+/* Tools FAQ */
+
+.tools-faq {
+  min-height: 72mm;
+}
+
+.tools-faq-grid {
+  display: grid;
+  grid-template-columns: .95fr 1.15fr;
+  gap: 10mm;
+}
+
+.tools {
+  min-height: 68mm;
+  padding: 5mm;
+  background: #F2F2F2;
+}
+
+.tool {
+  padding-block: 4mm;
+  border-bottom: .2mm solid #D9D9D9;
+}
+
+.tool:last-child {
+  border-bottom: 0;
+}
+
+.tool h3 {
+  font-size: 8.5pt;
+}
+
+.tool p {
+  margin-top: 2mm;
+  color: #555555;
+  font-size: 7pt;
+}
+
+.faq {
+  padding-top: 5mm;
+}
+
+.faq-list {
+  margin-top: 4mm;
+}
+
+.faq-item {
+  margin-bottom: 4mm;
+}
+
+.faq-q {
+  font-size: 7.5pt;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.faq-a {
+  margin-top: 1.5mm;
+  color: #555555;
+  font-size: 6.8pt;
+  line-height: 1.55;
+}
+
+/* back CTA */
+
+.back-cta {
+  min-height: 32mm;
+  padding-top: 3mm;
+  background: #333333;
+  color: #FFFFFF;
+}
+
+.back-cta h2 {
+  font-size: 14pt;
+}
+
+.back-cta .cta-desc {
+  color: #D9D9D9;
+}
+
+/* back footer */
+
+.back-footer {
+  min-height: 22mm;
+  padding-top: 3mm;
+}
+
+.back-footer-grid {
+  display: grid;
+  grid-template-columns: 22mm 1fr;
+  gap: 5mm;
+}
+
+.back-logo {
+  width: 22mm;
+  height: 10mm;
+}
+
+.back-footer-copy {
+  color: #555555;
+  font-size: 6.7pt;
+}
+
+.back-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3mm;
+  color: #888888;
+  font-size: 6.7pt;
+}
+
+/* screen only */
+
+@media screen {
+  .page {
+    box-shadow: 0 4px 18px rgba(0,0,0,.15);
+  }
+}
+
+/* print */
+
+@media print {
+  html,
+  body {
+    background: transparent;
+  }
+
+  body {
+    padding: 0;
+  }
+
+  .page {
+    margin: 0;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .page:last-child {
+    page-break-after: auto;
+  }
+
+  .trim-guide { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.8 19c0-2.9 2.3-4.8 5.2-4.8s5.2 1.9 5.2 4.8"/><path d="M16.3 6.4a2.8 2.8 0 0 1 0 5.6"/><path d="M17.4 14c2.3.4 3.8 2.1 3.8 4.6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="1.8"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.2"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 0 1 12.7-5.4L20 8"/><path d="M20 3.5V8h-4.5"/><path d="M19.5 12a7.5 7.5 0 0 1-12.7 5.4L4 16"/><path d="M4 20.5V16h4.5"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3.5v4.5M15 3.5v4.5"/><path d="M6.5 8h11v2.5a5.5 5.5 0 0 1-11 0z"/><path d="M12 16v4.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.8"/><path d="M19.5 19.5l-4.3-4.3"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4.5 5.5h15v10H9l-4 4v-14z"/><path d="M8 9.5h8M8 12h5"/></symbol>
+  <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 20.5v-7"/><path d="M12 13.5c0-3-2-4.8-5.8-4.8 0 2.9 2 4.8 5.8 4.8z"/><path d="M12 11.8c0-3 1.9-4.8 5.8-4.8 0 2.9-2 4.8-5.8 4.8z"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8.5h13l-3.2-3.2M20 15.5H7l3.2 3.2"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.3"/><circle cx="18" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><path d="M8 10.9l7.9-3.7M8 13.1l7.9 3.7"/></symbol>
+  <symbol id="i-teacher" viewBox="0 0 24 24"><path d="M12 4.2l8.5 3.8-8.5 3.8-8.5-3.8 8.5-3.8z"/><path d="M7 10v4.2c0 1.5 2.4 2.8 5 2.8s5-1.3 5-2.8V10"/><path d="M20.5 8v4.6"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19.5V4.5M4 19.5h16"/><path d="M8 19.5v-5.5M13 19.5v-8.5M18 19.5v-3.5"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="7" height="5" rx="1"/><rect x="13.5" y="14.5" width="7" height="5" rx="1"/><path d="M7 9.5v3.5a2 2 0 0 0 2 2h4.5"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6.5 3.5h7.5l4 4v13h-11.5z"/><path d="M14 3.5v4h4"/><path d="M9.5 12h6M9.5 15h6M9.5 18h4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4.5h10.5a2 2 0 0 1 2 2v13h-10.5a2 2 0 0 1-2-2z"/><path d="M9 4.5v13"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 20.5V6l7-2.5V20.5"/><path d="M11 20.5V9l7 2.5v9"/><path d="M4 20.5h16"/><path d="M7 9h1M7 12h1M7 15h1M14 14h1M14 17h1"/></symbol>
+</defs></svg>
+
+
+<!-- ======================================================
+     FRONT
+====================================================== -->
+
+<main class="page front" id="front">
+
+  <div class="trim-guide"></div>
+
+  <!-- 01 Header -->
+  <header class="front-header">
+    <div class="inner brand">
+
+      <div class="logo-placeholder"><img class="logo-img" src="assets/logo-mark.png" alt=""></div>
+
+      <div>
+        <div class="brand-name serif">ざつね屋</div>
+        <div class="brand-shoulder">
+          地域企業の小さな業務変革屋
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- 02 Hero -->
+  <section class="hero band">
+
+    <div class="inner hero-grid">
+
+      <div class="hero-copy">
+
+        <h1 class="serif">
+          AIを入れることより、<br>
+          <span class="main">
+            仕事がよくなることから。
+          </span>
+        </h1>
+
+        <p class="hero-lead">
+          数十名規模の会社で、「人が足りない」「引き継ぎが回らない」「同じ説明を何度もしている」。
+          その一つひとつを、現場に入って一緒にほどいていきます。
+          ツールの導入は、そのあとの話です。
+        </p>
+
+        <div class="hero-note">
+
+          <div class="placeholder ico" style="width:10mm;height:10mm;flex:0 0 10mm">
+            <svg class="ic"><use href="#i-building"/></svg>
+          </div>
+
+          <p>
+            広島県府中市を拠点に、地域企業の現場に入り、
+            小さく変化をつくります。
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="hero-photo img-box"><img src="assets/hero.jpg" alt="現場で業務資料を一緒に整理する様子"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- 03 Problems -->
+  <section class="problems">
+
+    <div class="inner">
+
+      <h2 class="section-title">
+        こんな詰まり方を、していませんか
+      </h2>
+
+      <div class="grid-4 problem-grid">
+
+        <article class="problem">
+
+          <div class="icon-placeholder ico"><svg class="ic"><use href="#i-people"/></svg></div>
+
+          <h3>
+            人が足りず、改善に手が回らない
+          </h3>
+
+          <p>
+            日々の業務で手一杯。
+            改善の時間も人も取れない。
+          </p>
+
+        </article>
+
+
+        <article class="problem">
+
+          <div class="icon-placeholder ico"><svg class="ic"><use href="#i-lock"/></svg></div>
+
+          <h3>
+            特定の人しか分からない仕事がある
+          </h3>
+
+          <p>
+            属人化していて、
+            休むと仕事が止まってしまう。
+          </p>
+
+        </article>
+
+
+        <article class="problem">
+
+          <div class="icon-placeholder ico"><svg class="ic"><use href="#i-repeat"/></svg></div>
+
+          <h3>
+            同じ説明・同じ入力を繰り返している
+          </h3>
+
+          <p>
+            何度も同じ対応をしており、
+            時間も気力も削られている。
+          </p>
+
+        </article>
+
+
+        <article class="problem">
+
+          <div class="icon-placeholder ico"><svg class="ic"><use href="#i-plug"/></svg></div>
+
+          <h3>
+            AIを試してはみたが、続かなかった
+          </h3>
+
+          <p>
+            使いこなせず、
+            現場に定着しなかった。
+          </p>
+
+        </article>
+
+      </div>
+
+      <p class="problems-close">
+        どれも、ツールを増やせば解決する話ではありません。
+        まず、仕事の中身を見せてください。
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- 04 Package -->
+  <section class="package">
+
+    <div class="inner">
+
+      <div class="package-head">
+
+        <div>
+
+          <p class="package-kicker">
+            まず3か月、一つの業務を確実に変える
+          </p>
+
+          <h2 class="package-name serif">
+            AI経営改善パッケージ（3か月）
+          </h2>
+
+        </div>
+
+        <div class="package-photo img-box"><img src="assets/pkg.jpg" alt=""></div>
+
+      </div>
+
+
+      <div class="grid-3 package-columns">
+
+        <div class="package-col">
+
+          <h3>3か月のSTEP</h3>
+
+          <ul>
+            <li>01 現状を整理する</li>
+            <li>02 小さく仕組みを作る</li>
+            <li>03 効果を確認して定着させる</li>
+          </ul>
+
+        </div>
+
+
+        <div class="package-col">
+
+          <h3>受け取れるもの</h3>
+
+          <ul>
+            <li>業務の整理シートと改善計画</li>
+            <li>小さな仕組み（テンプレート・手順）</li>
+            <li>効果の可視化レポート</li>
+          </ul>
+
+        </div>
+
+
+        <div class="package-col">
+
+          <h3>向いている会社</h3>
+
+          <ul>
+            <li>
+              どこから手をつければよいか分からない
+            </li>
+
+            <li>
+              現場の負担を増やさず、
+              確実に成果を出したい
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- 05 Services -->
+  <section class="services">
+
+    <div class="inner">
+
+      <h2 class="section-title">
+        必要なところから始められます｜ざつね屋の3つのサービス
+      </h2>
+
+
+      <div class="grid-3 services-grid">
+
+        <article class="service">
+
+          <div class="service-photo img-box"><img src="assets/svc-training.jpg" alt="研修の様子"></div>
+
+          <div class="service-heading">
+            <span class="service-number en">01</span>
+            <h3 class="service-name serif">
+              AI実務研修
+            </h3>
+          </div>
+
+          <p class="service-price">
+            5名 60,000円〜
+          </p>
+
+          <p class="service-desc">
+            実務で使えるAIスキルを、
+            6つのコースで体系的に学べます。
+          </p>
+
+        </article>
+
+
+        <article class="service">
+
+          <div class="service-photo img-box"><img src="assets/svc-order.jpg" alt="業務を確認する様子"></div>
+
+          <div class="service-heading">
+            <span class="service-number en">02</span>
+            <h3 class="service-name serif">
+              個別業務設計
+            </h3>
+          </div>
+
+          <p class="service-price">
+            内容に応じてお見積もり
+          </p>
+
+          <p class="service-desc">
+            業務の棚卸し・設計・仕組み化を
+            個別に支援します。
+          </p>
+
+        </article>
+
+
+        <article class="service">
+
+          <div class="service-photo img-box"><img src="assets/svc-banso.jpg" alt="打ち合わせの様子"></div>
+
+          <div class="service-heading">
+            <span class="service-number en">03</span>
+            <h3 class="service-name serif">
+              AI活用伴走
+            </h3>
+          </div>
+
+          <p class="service-price">
+            内容に応じてお見積もり
+          </p>
+
+          <p class="service-desc">
+            現場に寄り添い、
+            活用の定着と成果創出まで伴走します。
+          </p>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- 06 CTA -->
+  <section class="front-cta">
+
+    <div class="inner">
+
+      <h2 class="serif">
+        まずは無料で、自社の現在地を確認！
+      </h2>
+
+
+      <div class="cta-grid">
+
+        <div class="cta-item">
+
+          <div class="qr-placeholder qr-cell-img"><img src="assets/qr-shindan.png" alt="AI活用準備度診断のQRコード"></div>
+
+          <div>
+
+            <div class="cta-title">
+              AI活用準備度診断（無料）
+            </div>
+
+            <p class="cta-desc">
+              10問ほどで、自社のAI活用の現在地が分かります
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="cta-item">
+
+          <div class="qr-placeholder qr-cell-img"><img src="assets/qr-hp.png" alt="ざつね屋WebサイトのQRコード"></div>
+
+          <div>
+
+            <div class="cta-title">
+              ざつね屋 Webサイト
+            </div>
+
+            <p class="cta-desc">
+              サービス詳細・事例・料金・お問い合わせはこちら
+              （公開準備中）
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- 07 Footer -->
+  <footer class="front-footer">
+
+    <div class="inner">
+
+      <p>
+        ざつね屋　地域企業の小さな業務変革屋
+      </p>
+
+    </div>
+
+  </footer>
+
+</main>
+
+
+
+<!-- ======================================================
+     BACK
+====================================================== -->
+
+<main class="page back" id="back">
+
+  <div class="trim-guide"></div>
+
+
+  <!-- 01 Heading -->
+  <section class="back-intro">
+
+    <div class="inner line-title">
+
+      <h1 class="serif">
+        一緒に、仕事の中身から変えていきます。
+      </h1>
+
+    </div>
+
+  </section>
+
+
+  <!-- 02 Process -->
+  <section class="process">
+
+    <div class="inner">
+
+      <h2 class="section-title">
+        支援の進め方
+      </h2>
+
+
+      <div class="grid-5 process-grid">
+
+        <article class="process-item">
+
+          <div class="process-icon"><svg class="ic"><use href="#i-search"/></svg></div>
+
+          <div class="process-label">
+            無料診断
+          </div>
+
+          <div class="process-note">
+            自社の現在地を確認
+          </div>
+
+        </article>
+
+
+        <article class="process-item">
+
+          <div class="process-icon"><svg class="ic"><use href="#i-chat"/></svg></div>
+
+          <div class="process-label">
+            ご相談<br>
+            （30分・無料）
+          </div>
+
+          <div class="process-note">
+            課題や状況を整理
+          </div>
+
+        </article>
+
+
+        <article class="process-item">
+
+          <div class="process-icon"><svg class="ic"><use href="#i-sprout"/></svg></div>
+
+          <div class="process-label">
+            小さく試す
+          </div>
+
+          <div class="process-note">
+            一つの業務から検証
+          </div>
+
+        </article>
+
+
+        <article class="process-item">
+
+          <div class="process-icon"><svg class="ic"><use href="#i-swap"/></svg></div>
+
+          <div class="process-label">
+            パッケージで変える
+          </div>
+
+          <div class="process-note">
+            3か月で仕組み化
+          </div>
+
+        </article>
+
+
+        <article class="process-item">
+
+          <div class="process-icon"><svg class="ic"><use href="#i-share"/></svg></div>
+
+          <div class="process-label">
+            伴走で広げる
+          </div>
+
+          <div class="process-note">
+            定着と展開を支援
+          </div>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- 03 Strength / Profile -->
+  <section class="strength-profile">
+
+    <div class="inner strength-profile-grid">
+
+      <div class="strengths">
+
+        <h2 class="section-title">
+          ざつね屋の強み
+        </h2>
+
+
+        <div class="strength-list">
+
+          <div class="strength-row">
+
+            <div class="placeholder ico"><svg class="ic"><use href="#i-teacher"/></svg></div>
+
+            <div>
+              <h3>教えられる実装者</h3>
+
+              <p>
+                AIの説明だけでなく、
+                現場で使う仕組みまで作れます。
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="strength-row">
+
+            <div class="placeholder ico"><svg class="ic"><use href="#i-chart"/></svg></div>
+
+            <div>
+              <h3>
+                現場でのデジタル化推進経験
+              </h3>
+
+              <p>
+                補助金の申請書作成支援の経験もあります。
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="strength-row">
+
+            <div class="placeholder ico"><svg class="ic"><use href="#i-flow"/></svg></div>
+
+            <div>
+              <h3>
+                業務整理から入れる
+              </h3>
+
+              <p>
+                ツールありきではなく、
+                仕事の流れから整理します。
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="profile">
+
+        <h2 class="section-title">
+          代表プロフィール
+        </h2>
+
+        <div class="profile-content">
+
+          <div class="profile-photo img-box"><img src="assets/portrait.jpg" alt="代表 大音 晃司"></div>
+
+          <div>
+
+            <h3 class="profile-name serif">
+              大音 晃司（おおと こうじ）
+            </h3>
+
+            <p>
+              広島県府中市を拠点に、
+              地域企業のAI活用・業務改善を支援。
+              「現場に入る」ことを大切に、
+              小さな改善を積み重ねて成果につなげます。
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- 04 Cases -->
+  <section class="cases">
+
+    <div class="inner">
+
+      <h2 class="section-title">
+        これまでにお手伝いしたこと（一部抜粋）
+      </h2>
+
+      <div class="grid-3 case-grid">
+
+        <article class="case-item">
+
+          <div class="icon-placeholder ico"><svg class="ic"><use href="#i-lock"/></svg></div>
+
+          <h3>製造業</h3>
+
+          <p>
+            属人化していた業務の手順を整理し、
+            引き継ぎできる状態にした。
+          </p>
+
+        </article>
+
+
+        <article class="case-item">
+
+          <div class="icon-placeholder ico"><svg class="ic"><use href="#i-doc"/></svg></div>
+
+          <h3>建設業</h3>
+
+          <p>
+            見積作成をテンプレート化し、
+            担当者以外でも作れるようにした。
+          </p>
+
+        </article>
+
+
+        <article class="case-item">
+
+          <div class="icon-placeholder ico"><svg class="ic"><use href="#i-chat"/></svg></div>
+
+          <h3>小売業</h3>
+
+          <p>
+            問い合わせ対応を、
+            よくある質問への自動応答で下支えする
+            仕組みを設計・導入した。
+          </p>
+
+        </article>
+
+      </div>
+
+      <p class="case-note">
+        ※ 企業が特定できない形にした事例です。
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- 05 Tools / FAQ -->
+  <section class="tools-faq">
+
+    <div class="inner tools-faq-grid">
+
+      <div class="tools">
+
+        <h2 class="section-title">
+          無料で使えるツール
+        </h2>
+
+
+        <article class="tool">
+
+          <h3>
+            AI活用準備度診断
+          </h3>
+
+          <p>
+            10問ほどの質問に答えるだけで、
+            自社が今どの段階にいるかが分かります。
+          </p>
+
+        </article>
+
+
+        <article class="tool">
+
+          <h3>
+            プロンプトライブラリ
+          </h3>
+
+          <p>
+            そのまま使える指示文（プロンプト）を、
+            業務別にまとめています。
+          </p>
+
+        </article>
+
+      </div>
+
+
+      <div class="faq">
+
+        <h2 class="section-title">
+          よくある質問
+        </h2>
+
+        <div class="faq-list">
+
+          <article class="faq-item">
+
+            <div class="faq-q">
+              Q. AIが分からなくても大丈夫ですか？
+            </div>
+
+            <p class="faq-a">
+              A. はい。ツールの説明より先に、
+              現在の業務を一緒に整理するところから始めます。
+            </p>
+
+          </article>
+
+
+          <article class="faq-item">
+
+            <div class="faq-q">
+              Q. どのくらいの期間からお願いできますか？
+            </div>
+
+            <p class="faq-a">
+              A. 小さなご相談から対応できます。
+              本格的な業務改善は3か月を一つの目安としています。
+            </p>
+
+          </article>
+
+
+          <article class="faq-item">
+
+            <div class="faq-q">
+              Q. 料金はいくらですか？
+            </div>
+
+            <p class="faq-a">
+              A. 内容や規模によって異なります。
+              詳しい料金はWebサイトをご確認ください。
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- 06 CTA -->
+  <section class="back-cta">
+
+    <div class="inner">
+
+      <h2 class="serif">
+        まず無料診断から、はじめてみませんか？
+      </h2>
+
+
+      <div class="cta-grid">
+
+        <div class="cta-item">
+
+          <div class="qr-placeholder qr-cell-img"><img src="assets/qr-shindan.png" alt="AI活用準備度診断のQRコード"></div>
+
+          <div>
+
+            <div class="cta-title">
+              AI活用準備度診断
+            </div>
+
+            <p class="cta-desc">
+              10問ほどで、自社の現在地が分かります
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="cta-item">
+
+          <div class="qr-placeholder qr-cell-img"><img src="assets/qr-hp.png" alt="ざつね屋WebサイトのQRコード"></div>
+
+          <div>
+
+            <div class="cta-title">
+              ざつね屋 Webサイト
+            </div>
+
+            <p class="cta-desc">
+              サービス詳細・事例・お問い合わせ
+              （公開準備中）
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- 07 Footer -->
+  <footer class="back-footer">
+
+    <div class="inner">
+
+      <div class="back-footer-grid">
+
+        <div class="back-logo"><img class="logo-img" src="assets/logo-mark.png" alt=""></div>
+
+        <p class="back-footer-copy">
+          ざつね屋　地域企業の小さな業務変革屋 ／
+          広島県府中市を拠点に、
+          地域企業の現場に入り伴走します。
+        </p>
+
+      </div>
+
+      <div class="back-footer-bottom">
+
+        <span>
+          zatuneya@gmail.com
+        </span>
+
+        <span>
+          © 2026 ざつね屋
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "zatuneya-flyer-henkakuya",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ざつね屋 A4両面チラシ（地域企業の小さな業務変革屋 / v3）— HTML+印刷CSS → Chromium PDF",
+  "type": "module",
+  "scripts": {
+    "qr": "node build-qr.mjs",
+    "pdf": "node build-pdf.mjs",
+    "verify": "node verify.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.33.5"
+  }
+}
