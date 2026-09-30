@@ -22,9 +22,9 @@
   --accent-dark:  #E28511;
 
   /* stages（準備→導入→活用→推進 のグラデーション） */
-  --stage-prep:  #839CAA;    /* ブルーグレー */
-  --stage-intro: #F8981D;    /* オレンジ */
-  --stage-use:   #5BBDC8;    /* ティール */
+  --stage-prep:  #526F7C;    /* ブルーグレー（白背景でAA） */
+  --stage-intro: #A85E00;    /* オレンジ（白背景でAA） */
+  --stage-use:   #267882;    /* ティール（白背景でAA） */
 
   --bg:         #EFF4F5;
   --card:       #FFFFFF;
@@ -41,9 +41,6 @@
   /* SHADOW SYSTEM — 3 tiers (+ colored CTA) */
   --shadow:    0 1px 3px rgba(40,60,70,.05), 0 4px 12px rgba(40,60,70,.05);
   --shadow-2:  0 2px 6px rgba(40,60,70,.06), 0 14px 30px rgba(40,60,70,.10);
-  --shadow-3:  0 6px 14px rgba(40,60,70,.10), 0 30px 60px rgba(40,60,70,.16);
-  --sh-orange: 0 10px 24px rgba(248,152,29,.32);
-  --sh-teal:   0 8px 20px rgba(91,189,200,.30);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,7 +50,7 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  line-height: 1.9;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -63,7 +60,29 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 .container {
   max-width: 640px;
   margin: 0 auto;
-  padding: 24px 16px 64px;
+  padding: 32px 16px 64px;
+}
+
+#screen-results .container { max-width: 720px; }
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--teal-dk);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-150%);
+}
+.skip-link:focus { transform: translateY(0); }
+
+:where(button, a, [tabindex]):focus-visible {
+  outline: 3px solid var(--teal-dk);
+  outline-offset: 3px;
 }
 
 /* ── 画面切り替え ── */
@@ -90,8 +109,8 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   text-align: center;
   padding: 48px 24px 40px;
   background: var(--card);
-  border-radius: 26px;
-  box-shadow: var(--shadow-2);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
   margin-bottom: 24px;
 }
 
@@ -150,7 +169,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   width: 100%;
   padding: 17px;
   background: var(--orange);
-  color: #fff;
+  color: #332211;
   border: 1.5px solid transparent;
   border-radius: 999px;
   font-family: 'Noto Sans JP', sans-serif;
@@ -160,10 +179,11 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
   text-align: center;
   text-decoration: none;
-  box-shadow: var(--sh-orange);
+  box-shadow: none;
+  min-height: 52px;
 }
-.btn-primary:hover { background: var(--orange-dk); transform: translateY(-2px); box-shadow: 0 16px 32px rgba(248,152,29,.42); }
-.btn-primary:active { transform: translateY(0); box-shadow: 0 4px 12px rgba(248,152,29,.4); }
+.btn-primary:hover { background: var(--orange-dk); transform: translateY(-1px); box-shadow: none; }
+.btn-primary:active { transform: translateY(0); box-shadow: none; }
 .btn-primary:disabled {
   background: #D7E3E6;
   color: #9FB2BA;
@@ -187,6 +207,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   transition: background 0.2s, transform 0.15s;
   text-decoration: none;
   text-align: center;
+  min-height: 48px;
 }
 .btn-secondary:hover { background: var(--teal-soft); transform: translateY(-2px); }
 .btn-secondary:active { transform: translateY(0); }
@@ -228,11 +249,24 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   border-radius: 99px;
   transition: width 0.35s cubic-bezier(.22,.61,.36,1);
 }
+.progress-bar-wrap[data-step="0"] .progress-bar { width: 0; }
+.progress-bar-wrap[data-step="1"] .progress-bar { width: 8.333%; }
+.progress-bar-wrap[data-step="2"] .progress-bar { width: 16.667%; }
+.progress-bar-wrap[data-step="3"] .progress-bar { width: 25%; }
+.progress-bar-wrap[data-step="4"] .progress-bar { width: 33.333%; }
+.progress-bar-wrap[data-step="5"] .progress-bar { width: 41.667%; }
+.progress-bar-wrap[data-step="6"] .progress-bar { width: 50%; }
+.progress-bar-wrap[data-step="7"] .progress-bar { width: 58.333%; }
+.progress-bar-wrap[data-step="8"] .progress-bar { width: 66.667%; }
+.progress-bar-wrap[data-step="9"] .progress-bar { width: 75%; }
+.progress-bar-wrap[data-step="10"] .progress-bar { width: 83.333%; }
+.progress-bar-wrap[data-step="11"] .progress-bar { width: 91.667%; }
+.progress-bar-wrap[data-step="12"] .progress-bar { width: 100%; }
 
 .question-card {
   background: var(--card);
-  border-radius: 24px;
-  box-shadow: var(--shadow-2);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
   padding: 32px 24px;
   margin-bottom: 20px;
 }
@@ -272,6 +306,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 .quiz-nav { display: flex; gap: 12px; }
 .quiz-nav .btn-secondary { flex: 0 0 auto; }
 .quiz-nav .btn-primary { flex: 1; }
+.quiz-nav .btn-secondary.is-hidden { visibility: hidden; }
 
 /* ── ローディング ── */
 .loading-wrap {
@@ -306,14 +341,14 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 
 /* ── 結果画面 ── */
 .final-goal-box {
-  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dk) 100%);
+  background: linear-gradient(135deg, #31747C 0%, #205E66 100%);
   color: #fff;
-  border-radius: 26px;
+  border-radius: 20px;
   padding: 32px 24px;
   margin-top: 24px;
   margin-bottom: 20px;
   text-align: center;
-  box-shadow: 0 16px 36px rgba(70,166,177,.28);
+  box-shadow: 0 8px 22px rgba(70,166,177,.2);
 }
 
 .final-goal-label {
@@ -346,7 +381,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   justify-content: center;
   gap: 4px;
   background: var(--card);
-  border-radius: 24px;
+  border-radius: 16px;
   padding: 24px 16px;
   margin-bottom: 20px;
   box-shadow: var(--shadow);
@@ -412,8 +447,8 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 
 .score-card {
   background: var(--card);
-  border-radius: 24px;
-  box-shadow: var(--shadow-2);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
   padding: 32px 24px;
   text-align: center;
   margin-bottom: 20px;
@@ -452,7 +487,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 /* ── セクションカード共通 ── */
 .section-card {
   background: var(--card);
-  border-radius: 22px;
+  border-radius: 16px;
   box-shadow: var(--shadow);
   padding: 24px;
   margin-bottom: 16px;
@@ -563,11 +598,11 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 .cta-section {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 28px;
+  border-radius: 20px;
   padding: 32px 24px;
   text-align: center;
   margin-bottom: 16px;
-  box-shadow: var(--shadow-3);
+  box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
 }
@@ -681,6 +716,7 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
 /* ── レスポンシブ ── */
 @media (max-width: 400px) {
   .welcome-hero h1 { font-size: 23px; }
+  .welcome-sub br { display: none; }
   .score-number { font-size: 54px; }
   .stage-timeline { gap: 4px; padding: 16px 8px; }
   .stage-name { font-size: 12px; }

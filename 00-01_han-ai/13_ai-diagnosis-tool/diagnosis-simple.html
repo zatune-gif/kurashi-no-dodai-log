@@ -18,15 +18,17 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="nav-header-footer.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">本文へ移動</a>
+
 <header class="site-header">
   <div class="site-header__inner">
-    <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-logo" aria-label="ざつね屋 トップページ"><span class="site-logo__pre">地域企業の小さな業務変革屋</span><span class="site-logo__name">ざつね屋</span></a>
+    <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-logo" aria-label="ざつね屋 トップページ"><svg class="site-logo__mark" aria-hidden="true" viewBox="0 0 48 48"><path d="M29 4C20 10 12 20 12 29c0 8 6 14 14 14 9 0 15-7 15-16 0-8-5-16-12-23Z"/><path d="M18 31c7-1 13-6 17-14-1 8-5 15-12 19"/><path d="M13 16c3-1 6-3 8-6"/></svg><span class="site-logo__copy"><strong class="site-logo__name">ざつね屋</strong><small class="site-logo__pre">地域企業の小さな業務変革屋</small></span></a>
     <nav class="site-nav" id="site-nav" aria-label="グローバルナビゲーション">
       <ul class="site-nav__list">
         <li class="site-nav__item site-nav__item--dropdown">
@@ -63,6 +65,7 @@
 </header>
 
   <!-- ウェルカム画面 -->
+  <main id="main-content">
   <div id="screen-welcome" class="screen active">
     <div class="container">
       <div class="welcome-hero">
@@ -87,11 +90,11 @@
         <div class="block-label" id="block-label"></div>
         <div class="question-counter" id="question-counter"></div>
       </div>
-      <div class="progress-bar-wrap">
+      <div class="progress-bar-wrap" role="progressbar" aria-label="診断の進捗" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0" aria-valuetext="開始前（全12問）">
         <div class="progress-bar" id="progress-bar"></div>
       </div>
       <div class="question-card">
-        <p class="question-text" id="question-text"></p>
+        <h1 class="question-text" id="question-text" tabindex="-1"></h1>
         <div class="options" id="options"></div>
       </div>
       <div class="quiz-nav">
@@ -119,7 +122,7 @@
       <!-- 最終ゴール -->
       <div class="final-goal-box">
         <div class="final-goal-label"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1"/></svg>目指すゴール</div>
-        <p class="final-goal-text">AIと仕組みが回り、社員が本来の仕事に集中できる会社</p>
+        <h1 class="final-goal-text" id="results-heading" tabindex="-1">AIと仕組みが回り、社員が本来の仕事に集中できる会社</h1>
         <p class="final-goal-sub">定型作業はAIが担い、人は判断・関係・創造に時間を使える状態</p>
       </div>
 
@@ -211,10 +214,12 @@
     </div>
   </div>
 
+</main>
+
 <footer class="site-footer">
   <div class="site-footer__inner">
     <div class="site-footer__brand">
-      <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-footer__logo" aria-label="ざつね屋 トップページ">ざつね屋</a>
+      <a href="https://zatune-gif.github.io/zatuneya-hp/" class="site-footer__logo" aria-label="ざつね屋 トップページ"><svg class="site-logo__mark" aria-hidden="true" viewBox="0 0 48 48"><path d="M29 4C20 10 12 20 12 29c0 8 6 14 14 14 9 0 15-7 15-16 0-8-5-16-12-23Z"/><path d="M18 31c7-1 13-6 17-14-1 8-5 15-12 19"/><path d="M13 16c3-1 6-3 8-6"/></svg><span>ざつね屋</span></a>
       <p class="site-footer__tagline">地域企業の小さな業務変革を、広島県府中市から。</p>
     </div>
     <nav class="site-footer__sitemap" aria-label="フッターサイトマップ">
