@@ -3,54 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>研修カリキュラム タイムスケジュール｜ざつね屋</title>
-  <meta name="description" content="ざつね屋のAI実務研修カリキュラムのタイムスケジュール。各コースの構成・所要時間・当日の流れを一覧で確認できます。">
-  <link rel="canonical" href="https://ai-shindan-zatuneya.netlify.app/curriculum.html">
+  <title>研修カリキュラムについて｜ざつね屋</title>
+  <meta name="description" content="研修カリキュラムは個別にご相談を承っています。よくある質問のページへご案内します。">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="refresh" content="5; url=https://zatune-gif.github.io/zatuneya-hp/faq.html">
+  <link rel="canonical" href="https://zatune-gif.github.io/zatuneya-hp/faq.html">
   <link rel="icon" href="https://zatune-gif.github.io/zatuneya-hp/favicon.ico" sizes="any">
   <link rel="icon" href="https://zatune-gif.github.io/zatuneya-hp/assets/favicon-32.png" type="image/png">
   <link rel="apple-touch-icon" href="https://zatune-gif.github.io/zatuneya-hp/assets/apple-touch-icon.png">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="ざつね屋">
-  <meta property="og:title" content="研修カリキュラム タイムスケジュール｜ざつね屋">
-  <meta property="og:description" content="ざつね屋のAI実務研修カリキュラムのタイムスケジュール。各コースの構成・所要時間・当日の流れ。">
-  <meta property="og:url" content="https://ai-shindan-zatuneya.netlify.app/curriculum.html">
-  <meta property="og:image" content="https://zatune-gif.github.io/zatuneya-hp/assets/og-image.jpg">
-  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="nav-header-footer.css">
   <style>
-    /* 研修カリキュラム — ざつね屋 本公開ブランドデザイン（prices.html と同一ライトテーマ）
-       ※ 構造・クラス名は維持。ダークテーマ → ライトテーマへ配色のみ刷新。 */
     :root {
-      --teal:       #5BBDC8;
-      --teal-dk:    #267882;  /* #46A6B1→#267882 (コントラスト比 5.1:1 確保) */
-      --teal-soft:  #EAF6F8;
-      --teal-soft2: #DCF0F2;
-      --orange:     #F8981D;
-      --orange-dk:  #E28511;
-      --warm-bg:    #FFF9F0;
-      --warm-line:  #F6E4C8;
-
-      --primary-dk: #3B929C;
-      --primary-bg: #EAF6F8;
-      --bg:         #EFF4F5;
-      --bg-panel:   #FFFFFF;
-      --card:       #FFFFFF;
-      --card-2:     #F6FBFC;
-      --text:       #575757;
-      --heading:    #3C3C3C;
-      --text-muted: #5F707A;  /* #839CAA→#5F707A (コントラスト比 5.2:1 確保) */
-      --border:     #E1EEF0;
-      --success:    #46A6B1;
-      --success-bg: #EAF6F8;
+      --teal: #5BBDC8;
+      --teal-dk: #267882;
+      --teal-soft: #EAF6F8;
+      --bg: #EFF4F5;
+      --text: #575757;
+      --heading: #3C3C3C;
+      --border: #E1EEF0;
       --radius: 18px;
       --shadow: 0 10px 30px rgba(40,60,70,0.06);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Noto Sans JP', 'Roboto', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
       background: var(--bg);
@@ -59,556 +36,44 @@
       font-size: 15px;
       -webkit-font-smoothing: antialiased;
     }
-    h1, .section-title { font-family: 'Noto Sans JP', sans-serif; }
-
-    /* ── カバー ── */
-    .cover {
-      background: linear-gradient(150deg, #F1F7F8 0%, #EAF6F8 55%, #FFF9F0 100%);
-      color: var(--text);
-      padding: 64px 0 48px;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .cover-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      position: relative;
-      padding: 0 48px;
-    }
-
-    .cover::before {
-      content: '';
-      position: absolute;
-      top: -120px; right: -80px;
-      width: 420px; height: 380px;
-      border-radius: 60% 40% 55% 45% / 55% 50% 50% 45%;
-      background: rgba(91,189,200,0.16);
-    }
-
-    .cover::after {
-      content: '';
-      position: absolute;
-      bottom: -140px; left: -80px;
-      width: 340px; height: 340px;
-      border-radius: 50%;
-      background: rgba(248,152,29,0.08);
-    }
-
-    .cover h1 {
-      font-size: 40px;
-      font-weight: 900;
-      letter-spacing: -0.01em;
-      margin-bottom: 16px;
-      line-height: 1.2;
-      color: var(--heading);
-      position: relative;
-    }
-
-    .cover h1 span {
-      display: inline-block;
-      width: 5px;
-      height: 38px;
-      background: var(--orange);
-      border-radius: 3px;
-      margin-right: 16px;
-      vertical-align: middle;
-      margin-bottom: 4px;
-    }
-
-    .cover-title-row {
-      display: flex;
-      align-items: baseline;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-
-    .cover-title-row h1 { margin-bottom: 0; }
-
-    .cover-title-label {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-muted);
-      padding-left: 20px;
-      border-left: 1px solid var(--border);
-      white-space: nowrap;
-      position: relative;
-      top: -2px;
-    }
-
-    .cover-sub {
-      font-size: 15.5px;
-      color: var(--text);
-      max-width: 520px;
-      line-height: 1.9;
-      position: relative;
-      margin-bottom: 32px;
-    }
-
-    .cover-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      font-size: 14px;
-      position: relative;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-    }
-
-    .cover-meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .cover-meta-label {
-      font-family: 'Roboto', 'Noto Sans JP', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--teal-dk);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    .cover-meta-value {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--heading);
-    }
-
-    /* ── ナビゲーション ── */
-    .nav-sticky {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.94);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      box-shadow: 0 4px 18px rgba(40,60,70,0.05);
-    }
-
-    .nav-inner {
-      max-width: 960px;
-      margin: 0 auto;
+    .redirect-main {
+      max-width: 560px;
+      margin: 96px auto;
       padding: 0 24px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
+      text-align: center;
     }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex: none;
+    .redirect-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 48px 32px;
     }
-
-    .nav-brand {
-      font-size: 15px;
+    .redirect-card h1 {
+      font-size: 22px;
       font-weight: 900;
       color: var(--heading);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
+      margin-bottom: 16px;
     }
-    .nav-brand span { color: var(--orange); }
-
-    .nav-back {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--teal-dk);
-      text-decoration: none;
-      white-space: nowrap;
-      padding-right: 16px;
-      border-right: 1px solid var(--border);
-    }
-    .nav-back:hover { text-decoration: underline; }
-
-    .nav-home-icon {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      width: 34px; height: 34px;
-      border-radius: 10px;
-      background: var(--card-2);
-      color: var(--heading);
-      flex-shrink: 0;
-    }
-    .nav-home-icon svg {
-      width: 18px; height: 18px;
-      stroke: currentColor; stroke-width: 1.8;
-      stroke-linecap: round; stroke-linejoin: round; fill: none;
-    }
-    .nav-home-icon:hover { background: var(--teal-soft); color: var(--teal-dk); }
-
-    .nav-scroll {
-      display: flex;
-      overflow-x: auto;
-      scrollbar-width: none;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .nav-scroll::-webkit-scrollbar { display: none; }
-
-    .nav-link {
-      white-space: nowrap;
-      padding: 12px 16px;
-      font-size: 13.5px;
-      font-weight: 700;
-      color: #606060;
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      letter-spacing: 0.03em;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .nav-link:hover {
-      color: var(--teal-dk);
-      border-bottom-color: var(--teal);
-    }
-
-    /* ── メインコンテンツ ── */
-    .main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 48px 24px 96px;
-    }
-
-    /* ── セクション ── */
-    .section { margin-bottom: 64px; }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .redirect-card p {
+      font-size: 15px;
+      color: var(--text);
       margin-bottom: 24px;
     }
-
-    .chapter-num {
-      display: flex;
+    .redirect-link {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 40px; height: 40px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
       background: var(--teal-dk);
-      color: #fff;
-      font-size: 16px;
-      font-weight: 900;
-      border-radius: 12px;
-      flex-shrink: 0;
-      box-shadow: 0 6px 16px rgba(38,120,130,0.30);
-    }
-
-    .section-title {
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--heading);
-      letter-spacing: -0.01em;
-    }
-
-    .section-divider {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, var(--border), transparent);
-    }
-
-    /* ── コース詳細カード ── */
-    .course-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-
-    .course-head {
-      padding: 16px 24px;
-      background: var(--card-2);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .course-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      display: inline-block;
-      white-space: nowrap;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 999px;
-    }
-
-    .tag-time {
-      background: var(--card-2);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
-    .tag-time svg {
-      width: 12px; height: 12px; margin-right: 4px; vertical-align: -2px;
-      stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none;
-    }
-
-    .tag-tool {
-      background: var(--teal-soft);
-      color: var(--teal-dk);
-      border: 1px solid var(--teal-soft2);
-    }
-
-    /* ── タイムテーブル ── */
-    .timetable {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      background: var(--card);
-    }
-
-    .timetable thead th {
-      background: var(--teal-dk);
-      color: #fff;
-      font-weight: 700;
-      padding: 12px 16px;
-      text-align: left;
-      font-size: 13px;
-      letter-spacing: 0.05em;
-    }
-
-    .timetable tbody tr:nth-child(even) { background: var(--card-2); }
-    .timetable tbody tr:hover { background: var(--teal-soft); transition: background 0.15s; }
-
-    .timetable td {
-      padding: 12px 16px;
-      border-bottom: 1px solid #EDF3F4;
-      vertical-align: middle;
-      color: var(--text);
-    }
-
-    .timetable tbody tr:last-child td { border-bottom: none; }
-
-    .timetable tr.row-title td {
-      background: #F2F8F9;
-      color: var(--text-muted);
-      font-size: 13px;
-    }
-
-    .timetable tr.row-break td {
-      background: var(--success-bg);
-      color: var(--success);
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .timetable tr.row-special td {
-      background: var(--warm-bg);
-      color: var(--text-muted);
-      font-size: 13px;
-      font-style: italic;
-    }
-
-    .td-num {
-      font-family: 'Roboto', 'Noto Sans JP', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--teal-dk);
-      width: 48px;
-    }
-
-    .td-section { font-weight: 700; color: var(--heading); }
-
-    .td-desc {
-      display: block;
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--text-muted);
-      margin-top: 4px;
-      line-height: 1.6;
-    }
-
-    .td-min {
-      text-align: right;
-      font-weight: 700;
-      white-space: nowrap;
-      width: 64px;
-      color: var(--heading);
-    }
-
-    .td-total {
-      text-align: right;
-      color: var(--text-muted);
-      white-space: nowrap;
-      width: 64px;
-      font-size: 14px;
-    }
-
-    /* row-title / row-break / row-special の td-section は各行色を継承 */
-    .row-title .td-section, .row-break .td-section, .row-special .td-section { color: inherit; }
-
-    /* ── タイムバー ── */
-    .time-bar-wrap {
-      padding: 12px 24px;
-      border-top: 1px solid var(--border);
-      background: var(--card-2);
-    }
-
-    .time-bar-label {
-      font-family: 'Roboto', 'Noto Sans JP', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .time-bar {
-      display: flex;
-      height: 18px;
-      border-radius: 6px;
-      overflow: hidden;
-      gap: 1px;
-    }
-
-    .time-seg {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      min-width: 2px;
-    }
-
-    .seg-open   { background: #8ACED6; }
-    .seg-learn  { background: #6FC1CB; }
-    .seg-learn2 { background: #5BBDC8; }
-    .seg-learn3 { background: #4FB0BB; }
-    .seg-pract  { background: var(--teal-dk); }
-    .seg-pract2 { background: var(--primary-dk); }
-    .seg-break  { background: var(--orange); }
-    .seg-wrap   { background: #B0C2C8; }
-
-    /* タイムバー flex ユーティリティ（インライン style 排除） */
-    .seg-f-2  { flex: 2; }
-    .seg-f-3  { flex: 3; }
-    .seg-f-4  { flex: 4; }
-    .seg-f-5  { flex: 5; }
-    .seg-f-6  { flex: 6; }
-    .seg-f-7  { flex: 7; }
-    .seg-f-8  { flex: 8; }
-    .seg-f-10 { flex: 10; }
-    .seg-f-13 { flex: 13; }
-    .seg-f-15 { flex: 15; }
-    .seg-f-20 { flex: 20; }
-    .seg-f-30 { flex: 30; }
-    .seg-f-35 { flex: 35; }
-    .seg-f-40 { flex: 40; }
-    .seg-f-50 { flex: 50; }
-    .seg-f-52 { flex: 52; }
-
-    /* ── 区切り ── */
-    .section-end { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
-
-
-    /* ── CTA ── */
-    .cta-section {
-      position: relative;
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 40px 32px;
-      margin-top: 48px;
-      text-align: center;
-      overflow: hidden;
-    }
-    .cta-section::before {
-      content: '';
-      position: absolute; top: -90px; right: -60px;
-      width: 260px; height: 260px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(248,152,29,0.12), rgba(248,152,29,0) 70%);
-      pointer-events: none;
-    }
-    .cta-headline { position: relative; font-size: 21px; font-weight: 900; color: var(--heading); }
-    .cta-sub { position: relative; font-size: 15px; color: var(--text); margin: 8px 0 24px; }
-    .cta-actions { position: relative; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn-cta {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      font-size: 15px; font-weight: 700; text-decoration: none; color: #fff;
-      padding: 16px 32px; border-radius: 999px;
-      transition: transform .18s, box-shadow .18s, background .18s;
-    }
-    .btn-cta:hover { transform: translateY(-2px); }
-    .btn-cta-primary { background: var(--orange); box-shadow: 0 12px 28px rgba(248,152,29,0.36); }
-    .btn-cta-primary:hover { background: var(--orange-dk); }
-    .btn-cta-outline { background: var(--teal-dk); box-shadow: 0 8px 20px rgba(91,189,200,0.30); }
-    .btn-cta-outline:hover { background: var(--teal); }
-    .cta-secondary-link {
-      position: relative;
-      display: block;
-      margin-top: 16px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--teal-dk);
       text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 999px;
+      transition: background .18s;
     }
-    .cta-secondary-link:hover { text-decoration: underline; }
-
-    /* ── 注記 ── */
-    .notes {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 24px;
-      margin-top: 40px;
-      box-shadow: var(--shadow);
-    }
-
-    .notes p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.8;
-      padding-left: 16px;
-      position: relative;
-      margin-bottom: 4px;
-    }
-
-    .notes p:last-child { margin-bottom: 0; }
-
-    .notes p::before {
-      content: '※';
-      position: absolute;
-      left: 0;
-      color: var(--teal-dk);
-    }
-
-    /* ── レスポンシブ ── */
-    @media (max-width: 700px) {
-      .cover { padding: 40px 0; }
-      .cover-inner { padding: 0 24px; }
-      .cover h1 { font-size: 28px; }
-      .cover-title-row { flex-direction: column; gap: 8px; }
-      .cover-title-label { border-left: none; padding-left: 0; }
-      .nav-brand { display: none; }
-      .nav-home-icon { display: flex; }
-      .cta-section { padding: 32px 20px; }
-      .cta-actions { flex-direction: column; }
-      .btn-cta { width: 100%; }
-      .footer-links { gap: 12px 16px; }
-    }
-  </style>
-  <style>
-  /* curriculum.html 固有スタイル — nav-sticky は site-header の下に sticky するよう top をオフセット */
-  .nav-sticky{top:72px !important}
+    .redirect-link:hover { background: var(--teal); }
   </style>
 </head>
 <body>
@@ -623,22 +88,12 @@
             サービス<span class="site-nav__caret" aria-hidden="true">▾</span>
           </button>
           <ul class="site-nav__dropdown">
-            <li><a href="https://zatune-gif.github.io/zatuneya-hp/services.html" class="site-nav__dropdown-link">サービス一覧</a></li>
-            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-training.html" class="site-nav__dropdown-link">AI実務研修</a></li>
-            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-management.html" class="site-nav__dropdown-link">AI経営改善パッケージ</a></li>
-            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-banso.html" class="site-nav__dropdown-link">AI活用伴走</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-management.html" class="site-nav__dropdown-link">業務の見直し支援</a></li>
+            <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-order.html" class="site-nav__dropdown-link">個別実装</a></li>
           </ul>
         </li>
         <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/works.html" class="site-nav__link">実績</a></li>
         <li class="site-nav__item"><a href="prices.html" class="site-nav__link">料金</a></li>
-        <li class="site-nav__item site-nav__item--dropdown">
-          <button class="site-nav__dropdown-trigger site-nav__link" aria-expanded="false" aria-haspopup="true">無料ツール<span class="site-nav__caret" aria-hidden="true">▾</span></button>
-          <ul class="site-nav__dropdown">
-            <li><a href="diagnosis-simple.html" class="site-nav__dropdown-link">AI活用準備度診断</a></li>
-            <li><a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/ai-literacy-test/" class="site-nav__dropdown-link">AIツール理解度テスト</a></li>
-            <li><a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/" class="site-nav__dropdown-link">プロンプトライブラリ</a></li>
-          </ul>
-        </li>
         <li class="site-nav__item"><a href="https://zatune-gif.github.io/zatuneya-hp/profile.html" class="site-nav__link">代表について</a></li>
       </ul>
       <a href="https://zatune-gif.github.io/zatuneya-hp/contact.html" class="site-nav__cta">お問い合わせ</a>
@@ -651,555 +106,12 @@
   </div>
 </header>
 
-<!-- カバー -->
-<div class="cover">
-  <div class="cover-inner">
-  <div class="cover-title-row">
-    <h1><span></span>研修カリキュラム</h1>
-    <div class="cover-title-label">タイムスケジュール</div>
+<main class="redirect-main">
+  <div class="redirect-card">
+    <h1>研修カリキュラムについて</h1>
+    <p>研修カリキュラムは個別にご相談を承っています。5秒後に、よくある質問のページへ自動的に移動します。</p>
+    <a href="https://zatune-gif.github.io/zatuneya-hp/faq.html" class="redirect-link">よくある質問のページへ移動する →</a>
   </div>
-  <p class="cover-sub">地域企業向けAI活用研修 全5コース。各コースのセクション構成・時間配分をまとめています。</p>
-  <div class="cover-meta">
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">事業者名</div>
-      <div class="cover-meta-value">ざつね屋</div>
-    </div>
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">コース数</div>
-      <div class="cover-meta-value">全5コース</div>
-    </div>
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">対象</div>
-      <div class="cover-meta-value">中小企業・小規模事業者</div>
-    </div>
-  </div>
-  </div>
-</div>
-
-<!-- ナビゲーション -->
-<nav class="nav-sticky">
-  <div class="nav-inner">
-    <div class="nav-left">
-      <a class="nav-home-icon" href="https://zatune-gif.github.io/zatuneya-hp/" aria-label="トップページへ">
-        <svg viewBox="0 0 24 24"><path d="M4 11.5L12 4l8 7.5"/><path d="M6 10v9.5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V10"/></svg>
-      </a>
-      <a class="nav-back" href="./prices.html">← 料金案内へ戻る</a>
-    </div>
-    <div class="nav-scroll">
-      <a class="nav-link" href="#c1">① AI活用知識編</a>
-      <a class="nav-link" href="#c2">② 実践編（文書系）</a>
-      <a class="nav-link" href="#c3">③ 実践編（画像系）</a>
-      <a class="nav-link" href="#c4">④ 実践編（動画系）</a>
-      <a class="nav-link" href="#c5">⑤ Claude Code特化</a>
-    </div>
-  </div>
-</nav>
-
-<main class="main">
-
-  <!-- ── コース① ── -->
-  <section class="section" id="c1">
-    <div class="section-header">
-      <div class="chapter-num">①</div>
-      <div class="section-title">AI活用知識編</div>
-      <div class="section-divider"></div>
-    </div>
-    <div class="course-card">
-      <div class="course-head">
-        <div class="course-tags">
-          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>90分</span>
-          <span class="tag tag-tool">ChatGPT・Gemini・Claude（自由）</span>
-        </div>
-      </div>
-      <table class="timetable">
-        <thead>
-          <tr>
-            <th class="td-num">#</th>
-            <th>セクション</th>
-            <th class="td-min">時間</th>
-            <th class="td-total">累計</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">挨拶・自己紹介<span class="td-desc">一言自己紹介 / 「今日90分、一緒にAIを体験しましょう」</span></td>
-            <td class="td-min">1分</td>
-            <td class="td-total">1分</td>
-          </tr>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">アジェンダ説明<span class="td-desc">「前半は知識・後半は実践。最後に自分で使えた状態を目指します」</span></td>
-            <td class="td-min">1分</td>
-            <td class="td-total">2分</td>
-          </tr>
-          <tr>
-            <td class="td-num">1</td>
-            <td class="td-section">AIの種類<span class="td-desc">会話型・画像生成型・動画生成型・エージェント型の4種類を整理。今日扱うのは会話型AI</span></td>
-            <td class="td-min">5分</td>
-            <td class="td-total">7分</td>
-          </tr>
-          <tr>
-            <td class="td-num">2</td>
-            <td class="td-section">できること / できないこと<span class="td-desc">期待値を正しく調整する。ハルシネーションの説明と「下書き・補助として使う」の徹底</span></td>
-            <td class="td-min">5分</td>
-            <td class="td-total">12分</td>
-          </tr>
-          <tr>
-            <td class="td-num">3</td>
-            <td class="td-section">業務別活用シーン<span class="td-desc">業種別にどの業務にAIが使えるかを一覧で確認。参加者に「使えそうな業務」を考えてもらう</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">22分</td>
-          </tr>
-          <tr>
-            <td class="td-num">4</td>
-            <td class="td-section">4軸マップ＋ツール別表<span class="td-desc">AI全体の地図を持ち帰ってもらう。今日は文書・テキスト領域を中心に体験することを共有</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">32分</td>
-          </tr>
-          <tr>
-            <td class="td-num">5</td>
-            <td class="td-section">セキュリティと社内ルール<span class="td-desc">「入れていい情報」と「入れてはいけない情報」を明確にする。社内ルール最低限3点を確認</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">42分</td>
-          </tr>
-          <tr class="row-break">
-            <td class="td-num">—</td>
-            <td class="td-section">休憩<span class="td-desc">後半はプロンプトの書き方と実践。スマホでAIをすぐ使える状態に</span></td>
-            <td class="td-min">5分</td>
-            <td class="td-total">47分</td>
-          </tr>
-          <tr>
-            <td class="td-num">6</td>
-            <td class="td-section">プロンプトの基本<span class="td-desc">役割・背景・指示・形式の4要素を入れるだけで出力が劇的に変わることをBefore/Afterで体感</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">57分</td>
-          </tr>
-          <tr>
-            <td class="td-num">7</td>
-            <td class="td-section">実践ワーク<span class="td-desc">社内お知らせ・SNS投稿文・求人票のたたき台から選び、4要素プロンプトで実際に生成→修正→発表</span></td>
-            <td class="td-min">30分</td>
-            <td class="td-total">87分</td>
-          </tr>
-          <tr>
-            <td class="td-num">8</td>
-            <td class="td-section">まとめ<span class="td-desc">チェックリストで学びを確認。持ち帰り資料（ツール別表・4要素メモ・社内ルールシート）の案内</span></td>
-            <td class="td-min">3分</td>
-            <td class="td-total">90分</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="time-bar-wrap">
-        <div class="time-bar-label">時間配分</div>
-        <div class="time-bar">
-          <div class="time-seg seg-open seg-f-2">導入</div>
-          <div class="time-seg seg-learn seg-f-10">知識</div>
-          <div class="time-seg seg-learn2 seg-f-10">知識</div>
-          <div class="time-seg seg-learn3 seg-f-10">知識</div>
-          <div class="time-seg seg-break seg-f-5">休憩</div>
-          <div class="time-seg seg-pract seg-f-10">基礎</div>
-          <div class="time-seg seg-pract2 seg-f-30">実践</div>
-          <div class="time-seg seg-wrap seg-f-3">まとめ</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="section-end">
-
-  <!-- ── コース② ── -->
-  <section class="section" id="c2">
-    <div class="section-header">
-      <div class="chapter-num">②</div>
-      <div class="section-title">実践編（文書系）</div>
-      <div class="section-divider"></div>
-    </div>
-    <div class="course-card">
-      <div class="course-head">
-        <div class="course-tags">
-          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
-          <span class="tag tag-tool">Gemini 無料版</span>
-        </div>
-      </div>
-      <table class="timetable">
-        <thead>
-          <tr>
-            <th class="td-num">#</th>
-            <th>セクション</th>
-            <th class="td-min">時間</th>
-            <th class="td-total">累計</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">挨拶・自己紹介<span class="td-desc">「今日は120分、文書作業をAIで大幅に効率化する実践をします」</span></td>
-            <td class="td-min">1分</td>
-            <td class="td-total">1分</td>
-          </tr>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">アジェンダ説明<span class="td-desc">「今日は120分、文書作業をAIで大幅に効率化する実践をします」</span></td>
-            <td class="td-min">1分</td>
-            <td class="td-total">2分</td>
-          </tr>
-          <tr>
-            <td class="td-num">1</td>
-            <td class="td-section">イントロ<span class="td-desc">Geminiログイン確認・プロンプト4要素の確認。ゴール：「実践でプロンプトの感覚をつかみ、スライドの例を持ち帰る」</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">12分</td>
-          </tr>
-          <tr>
-            <td class="td-num">2</td>
-            <td class="td-section">社内文書<span class="td-desc">議事録（全員共通・サンプル発言メモ使用）→クレーム対応メール（固定テーマ）</span></td>
-            <td class="td-min">30分</td>
-            <td class="td-total">42分</td>
-          </tr>
-          <tr>
-            <td class="td-num">3</td>
-            <td class="td-section">文書→表データ変換<span class="td-desc">議事録→タスク表CSV（全員共通）→アンケート回答→集計分類表。スプレッドシートに貼り付けて完成</span></td>
-            <td class="td-min">30分</td>
-            <td class="td-total">72分</td>
-          </tr>
-          <tr class="row-break">
-            <td class="td-num">—</td>
-            <td class="td-section">休憩<span class="td-desc">後半は表データ→文書の一括生成。Geminiの会話は閉じないよう案内</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">82分</td>
-          </tr>
-          <tr>
-            <td class="td-num">4</td>
-            <td class="td-section">表データ→文書一括生成<span class="td-desc">商品リスト→SNS投稿（全員共通）→顧客リスト→フォローメール一括生成。スプレッドシートのデータをGeminiに貼り付けて量産体験</span></td>
-            <td class="td-min">30分</td>
-            <td class="td-total">112分</td>
-          </tr>
-          <tr>
-            <td class="td-num">5</td>
-            <td class="td-section">まとめ<span class="td-desc">3方向の振り返り（文書生成・文書→表・表→文書）。スライドのプロンプト例は [ ] を書き換えるだけで使えることを案内</span></td>
-            <td class="td-min">8分</td>
-            <td class="td-total">120分</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="time-bar-wrap">
-        <div class="time-bar-label">時間配分</div>
-        <div class="time-bar">
-          <div class="time-seg seg-open seg-f-2">導入</div>
-          <div class="time-seg seg-learn seg-f-10">イントロ</div>
-          <div class="time-seg seg-pract seg-f-30">社内文書</div>
-          <div class="time-seg seg-pract2 seg-f-30">文書→表</div>
-          <div class="time-seg seg-break seg-f-10">休憩</div>
-          <div class="time-seg seg-pract seg-f-30">表→文書</div>
-          <div class="time-seg seg-wrap seg-f-8">まとめ</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="section-end">
-
-  <!-- ── コース③ ── -->
-  <section class="section" id="c3">
-    <div class="section-header">
-      <div class="chapter-num">③</div>
-      <div class="section-title">実践編（画像系）</div>
-      <div class="section-divider"></div>
-    </div>
-    <div class="course-card">
-      <div class="course-head">
-        <div class="course-tags">
-          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
-          <span class="tag tag-tool">Canva 無料版</span>
-        </div>
-      </div>
-      <table class="timetable">
-        <thead>
-          <tr>
-            <th class="td-num">#</th>
-            <th>セクション</th>
-            <th class="td-min">時間</th>
-            <th class="td-total">累計</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">挨拶・自己紹介<span class="td-desc">「今日はCanvaだけで完結。デザイン経験は一切不要です」</span></td>
-            <td class="td-min">1分</td>
-            <td class="td-total">1分</td>
-          </tr>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">アジェンダ説明<span class="td-desc">Canva操作を覚える→AI素材を作る→組み合わせてチラシ完成の流れを共有</span></td>
-            <td class="td-min">2分</td>
-            <td class="td-total">3分</td>
-          </tr>
-          <tr>
-            <td class="td-num">1</td>
-            <td class="td-section">イントロ<span class="td-desc">Canvaログイン確認・基本画面（デザイン作成ボタン・テンプレート一覧・編集画面）を把握</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">13分</td>
-          </tr>
-          <tr class="row-special">
-            <td class="td-num">—</td>
-            <td class="td-section">テンプレートの意味の違い（補足）<span class="td-desc">混乱防止：「Canvaのデザイン雛形」と「AIへの指示文のひな型（プロンプト）」の2種類があることを最初に明確化</span></td>
-            <td class="td-min">3分</td>
-            <td class="td-total">16分</td>
-          </tr>
-          <tr>
-            <td class="td-num">2</td>
-            <td class="td-section">SNS投稿画像<span class="td-desc">Instagram投稿（全員共通）→自由テーマ実践。テンプレートを選んで自社内容に書き換えるだけ</span></td>
-            <td class="td-min">30分</td>
-            <td class="td-total">46分</td>
-          </tr>
-          <tr>
-            <td class="td-num">3</td>
-            <td class="td-section">AI画像生成<span class="td-desc">Canva内のMagic Mediaでテキストから画像生成。ひな型「[スタイル]で[主題]の画像、[用途]向け」を使って実践</span></td>
-            <td class="td-min">30分</td>
-            <td class="td-total">76分</td>
-          </tr>
-          <tr class="row-break">
-            <td class="td-num">—</td>
-            <td class="td-section">休憩<span class="td-desc">後半はセクション2・3の技術を組み合わせてチラシを完成させる</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">86分</td>
-          </tr>
-          <tr>
-            <td class="td-num">4</td>
-            <td class="td-section">チラシ作成<span class="td-desc">Magic Designでレイアウト自動生成（業種・雰囲気を入力）→AI画像を差し込み→チェックリストで仕上げ。完成品を1枚作る</span></td>
-            <td class="td-min">30分</td>
-            <td class="td-total">116分</td>
-          </tr>
-          <tr>
-            <td class="td-num">5</td>
-            <td class="td-section">まとめ<span class="td-desc">PNG/PDF書き出し・後から編集・社内共有の方法。ブランドカラー登録で統一感を出すコツ</span></td>
-            <td class="td-min">4分</td>
-            <td class="td-total">120分</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="time-bar-wrap">
-        <div class="time-bar-label">時間配分</div>
-        <div class="time-bar">
-          <div class="time-seg seg-open seg-f-3">導入</div>
-          <div class="time-seg seg-learn seg-f-13">イントロ</div>
-          <div class="time-seg seg-pract seg-f-30">SNS画像</div>
-          <div class="time-seg seg-pract2 seg-f-30">AI画像</div>
-          <div class="time-seg seg-break seg-f-10">休憩</div>
-          <div class="time-seg seg-pract seg-f-30">チラシ</div>
-          <div class="time-seg seg-wrap seg-f-4">まとめ</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="section-end">
-
-  <!-- ── コース④ ── -->
-  <section class="section" id="c4">
-    <div class="section-header">
-      <div class="chapter-num">④</div>
-      <div class="section-title">実践編（動画系）</div>
-      <div class="section-divider"></div>
-    </div>
-    <div class="course-card">
-      <div class="course-head">
-        <div class="course-tags">
-          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
-          <span class="tag tag-tool">CapCut 無料版</span>
-        </div>
-      </div>
-      <table class="timetable">
-        <thead>
-          <tr>
-            <th class="td-num">#</th>
-            <th>セクション</th>
-            <th class="td-min">時間</th>
-            <th class="td-total">累計</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">挨拶・自己紹介<span class="td-desc">「今日は120分で実際にショート動画を1本作って帰ります」</span></td>
-            <td class="td-min">1分</td>
-            <td class="td-total">1分</td>
-          </tr>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">アジェンダ説明<span class="td-desc">映像AI（Seedance）→文書AI（Gemini）→読み上げAI（TTS）→字幕AI→人間仕上げの全工程をバトンタッチ形式で体験</span></td>
-            <td class="td-min">2分</td>
-            <td class="td-total">3分</td>
-          </tr>
-          <tr>
-            <td class="td-num">1</td>
-            <td class="td-section">イントロ<span class="td-desc">CapCutログイン確認・基本画面（新規プロジェクト・タイムライン・パネル構成）を把握</span></td>
-            <td class="td-min">7分</td>
-            <td class="td-total">10分</td>
-          </tr>
-          <tr>
-            <td class="td-num">2</td>
-            <td class="td-section">AI動画生成（Seedance）<span class="td-desc">テキスト入力だけで映像が生成される体験。会社雰囲気・商品イメージ・季節告知等を自由テーマで実践（1人あたり2〜3回目安）</span></td>
-            <td class="td-min">15分</td>
-            <td class="td-total">25分</td>
-          </tr>
-          <tr>
-            <td class="td-num">3</td>
-            <td class="td-section">ナレーション追加<span class="td-desc">Geminiで30秒（130字程度）の台本を生成→CapCut TTSで音声化→タイムラインに配置</span></td>
-            <td class="td-min">15分</td>
-            <td class="td-total">40分</td>
-          </tr>
-          <tr>
-            <td class="td-num">4</td>
-            <td class="td-section">AI自動字幕<span class="td-desc">音声から字幕を自動生成（日本語）。無料版は月2回制限あり。修正は後半の編集時間で行う</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">50分</td>
-          </tr>
-          <tr class="row-break">
-            <td class="td-num">—</td>
-            <td class="td-section">休憩<span class="td-desc">後半は編集・書き出し。「自分が作りたい動画のイメージを整理しておいてください」</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">60分</td>
-          </tr>
-          <tr>
-            <td class="td-num">5</td>
-            <td class="td-section">基本編集・書き出し<span class="td-desc">字幕修正→クリップ編集・BGM追加→1080p MP4で書き出し。AIが作った素材を人間が磨いて完成品にする</span></td>
-            <td class="td-min">50分</td>
-            <td class="td-total">110分</td>
-          </tr>
-          <tr>
-            <td class="td-num">6</td>
-            <td class="td-section">まとめ<span class="td-desc">ダウンロード・SNS直接投稿・後から編集の方法。「テーマを変えるだけで同じ流れで量産できます」</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">120分</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="time-bar-wrap">
-        <div class="time-bar-label">時間配分</div>
-        <div class="time-bar">
-          <div class="time-seg seg-open seg-f-3">導入</div>
-          <div class="time-seg seg-learn seg-f-7">イントロ</div>
-          <div class="time-seg seg-pract seg-f-15">AI動画</div>
-          <div class="time-seg seg-pract seg-f-15">ナレ</div>
-          <div class="time-seg seg-pract seg-f-10">字幕</div>
-          <div class="time-seg seg-break seg-f-10">休憩</div>
-          <div class="time-seg seg-pract2 seg-f-50">編集・書出し</div>
-          <div class="time-seg seg-wrap seg-f-10">まとめ</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="section-end">
-
-  <!-- ── コース⑤ ── -->
-  <section class="section" id="c5">
-    <div class="section-header">
-      <div class="chapter-num">⑤</div>
-      <div class="section-title">実践編（Claude Code 特化）</div>
-      <div class="section-divider"></div>
-    </div>
-    <div class="course-card">
-      <div class="course-head">
-        <div class="course-tags">
-          <span class="tag tag-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>120分</span>
-          <span class="tag tag-tool">Claude Code（Proプラン必須）</span>
-        </div>
-      </div>
-      <table class="timetable">
-        <thead>
-          <tr>
-            <th class="td-num">#</th>
-            <th>セクション</th>
-            <th class="td-min">時間</th>
-            <th class="td-total">累計</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">挨拶・自己紹介<span class="td-desc">「今日は120分、Claude Codeという少し特別なAIを使ってみます。プログラミング知識は不要」</span></td>
-            <td class="td-min">1分</td>
-            <td class="td-total">1分</td>
-          </tr>
-          <tr class="row-title">
-            <td class="td-num">—</td>
-            <td class="td-section">アジェンダ説明<span class="td-desc">「前半で概念を理解、後半は実際の業務への応用まで進みます」（少人数3名以下）</span></td>
-            <td class="td-min">1分</td>
-            <td class="td-total">2分</td>
-          </tr>
-          <tr>
-            <td class="td-num">1</td>
-            <td class="td-section">Claude Code とは<span class="td-desc">4軸マップでの位置確認・他AIとの違い・できること/できないこと・利用条件（Proプラン $20/月）・APIの説明</span></td>
-            <td class="td-min">20分</td>
-            <td class="td-total">22分</td>
-          </tr>
-          <tr>
-            <td class="td-num">2</td>
-            <td class="td-section">ユースケース紹介<span class="td-desc">①フォルダ整理・②PDF情報抽出（請求書→CSV）・③定型文書の一括生成を実演。「使えるイメージ」を先に持ってもらう</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">32分</td>
-          </tr>
-          <tr>
-            <td class="td-num">3</td>
-            <td class="td-section">セットアップ確認<span class="td-desc">デスクトップ版起動・Anthropicアカウントでサインイン・Proプラン確認・動作テスト。全員が動く状態になるまで個別サポート</span></td>
-            <td class="td-min">20分</td>
-            <td class="td-total">52分</td>
-          </tr>
-          <tr class="row-break">
-            <td class="td-num">—</td>
-            <td class="td-section">休憩<span class="td-desc">「後半は実際に自社の業務をClaude Codeに試してもらいます。効率化したい作業を考えておいてください」</span></td>
-            <td class="td-min">10分</td>
-            <td class="td-total">62分</td>
-          </tr>
-          <tr>
-            <td class="td-num">4</td>
-            <td class="td-section">実践ワーク<span class="td-desc">CLAUDE.mdをPDFひな型からコピペで作成（10分）→AIトラブル対処7パターン確認（2分）→自社業務への試行（40分）</span></td>
-            <td class="td-min">52分</td>
-            <td class="td-total">114分</td>
-          </tr>
-          <tr>
-            <td class="td-num">5</td>
-            <td class="td-section">まとめ・Q&amp;A<span class="td-desc">4つの学びの振り返り・伴走サービスの案内・質疑応答（時間内）。「CLAUDE.mdは明日から使えます」</span></td>
-            <td class="td-min">6分</td>
-            <td class="td-total">120分</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="time-bar-wrap">
-        <div class="time-bar-label">時間配分</div>
-        <div class="time-bar">
-          <div class="time-seg seg-open seg-f-2">導入</div>
-          <div class="time-seg seg-learn seg-f-20">概要</div>
-          <div class="time-seg seg-learn2 seg-f-10">UC</div>
-          <div class="time-seg seg-learn3 seg-f-20">セットアップ</div>
-          <div class="time-seg seg-break seg-f-10">休憩</div>
-          <div class="time-seg seg-pract2 seg-f-52">実践ワーク</div>
-          <div class="time-seg seg-wrap seg-f-6">Q&amp;A</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="section-end">
-
-  <div class="notes">
-    <p>全5コースのうち①は90分、②〜⑤は120分です</p>
-    <p>コース⑤のみ受講条件あり（PC持参・Anthropicアカウント・Proプラン 約3,000円/月、グループMAX3名まで）</p>
-    <p>各コースは独立して受講可能です。セット受講も対応しています</p>
-  </div>
-
-  <div class="cta-section">
-    <p class="cta-headline">ご相談・お見積りは無料です</p>
-    <p class="cta-sub">研修だけでなく、AI経営改善パッケージ・AI活用伴走もご案内できます。<br>まずはお気軽にお問い合わせください。</p>
-    <div class="cta-actions">
-      <a href="./request.html" class="btn-cta btn-cta-primary">資料請求する</a>
-      <a href="./estimate.html" class="btn-cta btn-cta-outline">お見積りを依頼する</a>
-    </div>
-    <a href="./diagnosis-simple.html" class="cta-secondary-link">どのコースが合うか迷ったら、無料診断（約7分）から →</a>
-  </div>
-
 </main>
 
 <footer class="site-footer">
@@ -1212,24 +124,21 @@
       <div class="site-footer__col">
         <span class="site-footer__col-title">サービス</span>
         <ul>
-          <li><a href="https://zatune-gif.github.io/zatuneya-hp/services.html">サービス一覧</a></li>
-          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-training.html">AI実務研修</a></li>
-          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-management.html">AI経営改善パッケージ</a></li>
-          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-banso.html">AI活用伴走</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-management.html">業務の見直し支援</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/service-order.html">個別実装</a></li>
+          <li><a href="prices.html">料金</a></li>
         </ul>
       </div>
       <div class="site-footer__col">
         <span class="site-footer__col-title">無料ツール</span>
         <ul>
           <li><a href="https://ai-shindan-zatuneya.netlify.app/">AI活用準備度診断</a></li>
-          <li><a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/ai-literacy-test/">AIツール理解度テスト</a></li>
-          <li><a href="https://zatune-gif.github.io/kurashi-no-dodai-log/00-01_han-ai/15_prompt-library/">プロンプトライブラリ</a></li>
         </ul>
       </div>
       <div class="site-footer__col">
         <span class="site-footer__col-title">ざつね屋について</span>
         <ul>
-          <li><a href="https://zatune-gif.github.io/zatuneya-hp/works.html">支援実績</a></li>
+          <li><a href="https://zatune-gif.github.io/zatuneya-hp/works.html">開発実績</a></li>
           <li><a href="https://zatune-gif.github.io/zatuneya-hp/profile.html">代表について</a></li>
           <li><a href="https://zatune-gif.github.io/zatuneya-hp/faq.html">よくある質問</a></li>
           <li><a href="https://zatune-gif.github.io/zatuneya-hp/contact.html">相談・お見積もり</a></li>
@@ -1296,6 +205,5 @@
   });
 })();
 </script>
-
 </body>
 </html>
