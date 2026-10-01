@@ -166,8 +166,6 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .detail-table tbody tr:last-child td,
 .detail-table tbody tr:last-child th { border-bottom: none; }
 .detail-table tbody tr:nth-child(even) { background: var(--card-tint); }
-.detail-table tbody tr:hover td,
-.detail-table tbody tr:hover th { background: var(--teal-soft); }
 .detail-table td:first-child,
 .detail-table tbody th:first-child { font-weight: 700; color: var(--heading); }
 .detail-table { font-size: 14.5px; }
@@ -176,13 +174,27 @@ details[open] .ac-chevron { transform: rotate(-135deg); }
 .detail-table--nowrap tbody th { white-space: nowrap; }
 .table-scroll { overflow-x: auto; }
 
+/* オプション行（直前の行に付随するオプションであることを示すインデント） */
+.detail-table tbody th.is-option {
+  position: relative;
+  padding-left: calc(var(--s4) + var(--s6));
+  font-weight: 500;
+  color: var(--text);
+}
+.detail-table tbody th.is-option::before {
+  content: '└';
+  position: absolute;
+  left: var(--s4);
+  color: var(--muted);
+  font-weight: 400;
+}
+
 /* テーブル内グループ見出し行（サービスの区切り。thead より弱く、通常行より強い中間の強さ） */
 .detail-table tbody tr.table-group-head th {
   background: var(--teal-soft); color: var(--teal-dk); font-weight: 900;
   font-size: 15.5px; padding: var(--s4) var(--s4); text-align: left;
   scroll-margin-top: 76px;
 }
-.detail-table tbody tr.table-group-head:hover th { background: var(--teal-soft); }
 
 /* 料金一覧テーブル直後の条件注記（研修・個別業務設計・AI活用伴走の注記をまとめて配置） */
 .table-notes { margin: var(--s6) 0; display: flex; flex-direction: column; gap: var(--s2); }
