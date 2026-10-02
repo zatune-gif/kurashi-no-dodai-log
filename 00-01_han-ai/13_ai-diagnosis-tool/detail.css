@@ -1,3 +1,6 @@
+/* ── ユーティリティ ── */
+.is-hidden { display: none; }
+
 /* ── 情報入力フォーム（ざつね屋ブランドトークン準拠・style.css の :root を継承） ── */
 .info-form { margin-bottom: 24px; }
 
