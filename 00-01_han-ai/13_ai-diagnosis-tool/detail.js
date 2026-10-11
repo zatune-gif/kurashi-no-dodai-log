@@ -736,7 +736,7 @@ function showEstimateScreen(recommendations, score, stage) {
   const updateLink = () => {
     const subject = encodeURIComponent(`見積請求（${state.companyName}）`);
     $('btn-estimate-submit').href =
-      `mailto:zatuneya@gmail.com?subject=${subject}&body=${encodeURIComponent(buildBody())}`;
+      `mailto:info@zatuneya.com?subject=${subject}&body=${encodeURIComponent(buildBody())}`;
   };
 
   updateLink();
@@ -777,7 +777,7 @@ function renderRecommendations(recommendations, score, stage) {
     'よろしくお願いいたします。'
   ].join('\n');
 
-  $('btn-cta').href = `mailto:zatuneya@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  $('btn-cta').href = `mailto:info@zatuneya.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 // =====================
