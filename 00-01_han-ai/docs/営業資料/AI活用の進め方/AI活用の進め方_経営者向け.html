@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>AI活用の進め方（経営者向け）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#5BBDC8; --teal-dk:#46A6B1; --teal-soft:#EAF6F8; --teal-soft2:#DCF0F2; --teal-line:#D3E7EA;
+  --card-tint:#F6FBFC; --card-line:#E1EEF0;
+  --orange:#F8981D; --orange-dk:#E28511; --orange-soft:#FDF0DE; --warm-bg:#FFF9F0; --warm-line:#F6E4C8;
+  --bg:#EFF4F5; --heading:#3C3C3C; --text:#575757;
+  --teal-text:#31747C; --sub-text:#556E7C; --orange-text:#9C5C0C; --teal-strong:#337F88; --teal-deep:#24565C;
+  --on-orange:#332211;
+}
+@page{size:210mm 297mm;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{width:210mm;font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;color:var(--text);font-size:13px;line-height:1.7;-webkit-print-color-adjust:exact;print-color-adjust:exact;word-break:auto-phrase}
+
+.page{position:relative;width:210mm;height:297mm;background:#fff;padding:44px 48px 32px;display:flex;flex-direction:column;overflow:hidden;page-break-after:always;break-after:page}
+.page:last-child{page-break-after:auto;break-after:auto}
+.page > *{position:relative;z-index:1}
+
+/* 装飾（既存の営業資料の波形に合わせる） */
+.deco-top{position:absolute;top:0;right:0;width:300px;height:132px;z-index:0;background:linear-gradient(200deg,var(--teal) 0%,var(--teal-dk) 45%,var(--teal-deep) 100%);clip-path:polygon(34% 0,100% 0,100% 100%,78% 62%)}
+.deco-top-soft{position:absolute;top:0;right:0;width:380px;height:156px;z-index:0;background:var(--teal-soft2);clip-path:polygon(30% 0,100% 0,100% 100%,70% 54%)}
+.deco-ring{position:absolute;top:44px;right:156px;width:12px;height:12px;border-radius:50%;background:var(--orange);z-index:1}
+.deco-bottom{position:absolute;left:0;bottom:0;width:360px;height:72px;z-index:0;background:linear-gradient(20deg,var(--teal-deep) 0%,var(--teal) 70%,var(--teal-soft2) 100%);clip-path:polygon(0 38%,60% 100%,0 100%)}
+.deco-bottom-soft{position:absolute;left:0;bottom:0;width:520px;height:96px;z-index:0;background:var(--teal-soft2);clip-path:polygon(0 30%,72% 100%,0 100%)}
+
+.bar{width:64px;height:3px;background:var(--teal);margin-bottom:12px}
+.eyebrow{font-size:12px;font-weight:700;color:var(--teal-text);letter-spacing:.08em;margin-bottom:4px}
+h1{font-size:30px;font-weight:900;color:var(--teal-deep);line-height:1.4;letter-spacing:.01em}
+h1 em{font-style:normal;color:var(--teal-strong)}
+h1 .acc{color:var(--orange-text)}
+.lead{font-size:14px;color:var(--heading);margin-top:12px;line-height:1.8;font-weight:500;max-width:560px}
+
+h2{font-size:22px;font-weight:900;color:var(--teal-deep);line-height:1.4;margin-bottom:12px}
+h2 em{font-style:normal;color:var(--teal-strong)}
+h2 small{font-size:12.5px;font-weight:500;color:var(--sub-text);margin-left:12px}
+.sec{margin-top:20px}
+.sec::before{content:"";display:block;width:64px;height:3px;background:var(--teal);margin-bottom:12px}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:var(--teal-soft);border-radius:16px;padding:12px 20px}
+.card h3{font-size:16px;font-weight:700;color:var(--teal-deep);line-height:1.4;margin-bottom:4px}
+.card .role{display:block;font-size:12px;font-weight:700;color:var(--teal-text);margin-bottom:4px}
+.card p{font-size:13px;line-height:1.7;color:var(--heading)}
+.card--key{background:var(--orange-soft)}
+.card--key .role{color:var(--orange-text)}
+.say{margin-top:12px;background:#fff;border:1.5px solid var(--teal);border-radius:12px;padding:8px 16px;font-size:13px;font-weight:700;color:var(--teal-deep);text-align:center}
+
+.steps{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr 20px 1fr;align-items:stretch}
+.step{background:var(--teal-soft);border-radius:16px;padding:16px 12px;text-align:center}
+.step .n{width:32px;height:32px;border-radius:50%;background:var(--teal-strong);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.step h3{font-size:14px;font-weight:700;color:var(--teal-deep);line-height:1.45;margin-bottom:8px}
+.step p{font-size:12px;line-height:1.7;text-align:left;color:var(--heading)}
+.step--key .n{background:var(--orange-dk);color:var(--on-orange)}
+.chev{position:relative}
+.chev::after{content:"";position:absolute;left:5px;top:50%;margin-top:-8px;border-left:10px solid var(--teal-dk);border-top:8px solid transparent;border-bottom:8px solid transparent}
+.example{margin:12px 0 28px;border:1.5px dashed var(--teal-dk);border-radius:12px;padding:12px 16px;font-size:12.5px;line-height:1.7;color:var(--heading);background:#fff}
+.example b{color:var(--teal-deep)}
+
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.check{background:var(--teal-soft);border-radius:16px;padding:12px 16px;display:flex;gap:12px}
+.check .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--teal-strong);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.check h3{font-size:15px;font-weight:700;color:var(--teal-deep);line-height:1.5;margin-bottom:4px}
+.check p{font-size:12.5px;line-height:1.7;color:var(--heading)}
+.check p b{color:var(--teal-deep)}
+.note{margin-top:12px;background:var(--warm-bg);border:1px solid var(--warm-line);border-left:4px solid var(--orange);border-radius:8px;padding:8px 16px;font-size:12.5px;color:var(--orange-text);font-weight:500;line-height:1.7}
+.note b{font-weight:700}
+
+ul.pts{list-style:none;display:flex;flex-direction:column;gap:4px;background:var(--card-tint);border:1px solid var(--card-line);border-radius:16px;padding:12px 20px}
+ul.pts li{font-size:13px;line-height:1.7;color:var(--heading);padding-left:20px;position:relative}
+ul.pts li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:2px;background:var(--teal)}
+ul.pts li b{color:var(--teal-deep)}
+
+.cta{margin-top:20px;background:var(--teal-deep);border-radius:24px;padding:16px 24px;color:#fff}
+.cta h2{color:#fff;margin-bottom:4px;font-size:22px}
+.cta .sub{font-size:13px;line-height:1.7;color:#fff}
+.cta-body{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-top:12px}
+.svc{background:#fff;border-radius:12px;padding:12px 16px;color:var(--heading)}
+.svc dl{display:grid;grid-template-columns:1fr;gap:8px}
+.svc dt{font-size:13px;font-weight:700;color:var(--teal-deep);line-height:1.5}
+.svc dd{font-size:12.5px;line-height:1.6}
+.svc dd b{font-size:15px;color:var(--orange-text)}
+.contact{background:#fff;border-radius:12px;padding:12px 16px;color:var(--heading);display:flex;flex-direction:column;justify-content:center;gap:4px}
+.contact .k{font-size:12px;font-weight:700;color:var(--teal-text)}
+.contact .v{font-size:16px;font-weight:700;color:var(--teal-deep);line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
+.contact .s{font-size:12px;line-height:1.6;color:var(--sub-text);margin-top:4px}
+.who{margin-top:12px;font-size:12.5px;color:var(--sub-text);line-height:1.7}
+.who b{color:var(--heading)}
+
+.spacer{flex:1}
+.foot{display:flex;justify-content:flex-end;align-items:center;gap:16px;font-size:12px;color:var(--sub-text);position:relative;z-index:1}
+.foot .pg{display:flex;align-items:center;gap:8px}
+.foot .pg::before{content:"";width:32px;height:1px;background:var(--sub-text)}
+.foot .copy{white-space:nowrap}
+</style>
+</head>
+<body>
+
+<!-- ===== ページ1 ===== -->
+<section class="page">
+  <div class="deco-top-soft"></div>
+  <div class="deco-top"></div>
+  <div class="deco-ring"></div>
+
+  <header>
+    <div class="bar"></div>
+    <div class="eyebrow">ざつね屋｜AI活用の進め方</div>
+    <h1>AIをどう使って、<br><em>早く・確かに</em>作っているか</h1>
+    <p class="lead">AIには作る作業と下ごしらえを任せ、人は判断と確認に時間を使います。AIを使うこと自体が目的ではありません。使っているAIと役割、進め方をご紹介します。</p>
+  </header>
+
+  <div class="sec">
+    <h2>使っている<em>AI</em>と役割<small>どのAIにも、得意な仕事を分けています</small></h2>
+    <div class="cards">
+      <div class="card card--key">
+        <h3>Claude Code</h3>
+        <span class="role">作る作業の中心役</span>
+        <p>作る作業を細かく分け、確認しながら進めます。作ったものの点検と、決めたことの記録も受け持ちます。</p>
+      </div>
+      <div class="card">
+        <h3>Codex</h3>
+        <span class="role">もう1人の作り手</span>
+        <p>ホームページの制作など、作る作業を分担します。作ったものは、Claude Codeが見直してから採用します。</p>
+      </div>
+      <div class="card">
+        <h3>ChatGPT</h3>
+        <span class="role">相談役・画像づくり</span>
+        <p>考えの整理や相談に使います。ホームページのデザイン案や、営業資料・チラシの画像づくりにも使っています。</p>
+      </div>
+      <div class="card">
+        <h3>Gemini・NotebookLM</h3>
+        <span class="role">資料を読む役</span>
+        <p>長い資料は、NotebookLMで要点をまとめてから作業に入ります。Geminiは、単発の相談に使います。</p>
+      </div>
+    </div>
+    <div class="say">どのAIが出した結果も、最後に確認して決めるのは人（代表の大音）です。</div>
+  </div>
+
+  <div class="sec">
+    <h2>進め方<small>相談から引き渡しまで、4つのステップです</small></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>聞き取り</h3>
+        <p>いまの業務と、お困りごとを伺います。ご相談は無料です。</p>
+      </div>
+      <div class="chev"></div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>作るものを決める</h3>
+        <p>何を作るか、どのデータを扱うか、人が確認する場所はどこかを、作る前に書面で決めます。</p>
+      </div>
+      <div class="chev"></div>
+      <div class="step step--key">
+        <div class="n">3</div>
+        <h3>小さく試す</h3>
+        <p>まず一部の作業で試し、起きたことを記録します。広げるか止めるかは、その結果を見て決めます。</p>
+      </div>
+      <div class="chev"></div>
+      <div class="step">
+        <div class="n">4</div>
+        <h3>手順書をそろえて引き継ぐ</h3>
+        <p>操作手順、確認の結果、引き継ぎ資料をお渡しします。担当の方が自分で回せる状態を目指します。</p>
+      </div>
+    </div>
+    <div class="example"><b>実際の例：</b>卸売会社向けに、会計ソフトのデータを集めて資金の動きを見せる業務ツールを作りました。取引先の名前や金額は伏せています。</div>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="deco-bottom-soft"></div>
+  <div class="deco-bottom"></div>
+  <div class="foot"><span class="copy">© 2026 ざつね屋</span><span class="pg">1 / 2</span></div>
+</section>
+
+<!-- ===== ページ2 ===== -->
+<section class="page">
+  <div class="deco-top-soft"></div>
+  <div class="deco-top"></div>
+  <div class="deco-ring"></div>
+
+  <header>
+    <div class="bar"></div>
+    <div class="eyebrow">ざつね屋｜AI活用の進め方</div>
+    <h1>確かめ方と、情報の扱い</h1>
+  </header>
+
+  <div class="sec">
+    <h2>確かめ方<small>「動いたはず」で終わらせず、4つの方法で確かめます</small></h2>
+    <div class="checks">
+      <div class="check">
+        <div class="n">1</div>
+        <div>
+          <h3>自動テスト</h3>
+          <p>決めた条件を、プログラムが何度でも自動で確かめます。業務ツールの開発では、<b>1,000件を超える</b>自動テストを整えた実績があります。</p>
+        </div>
+      </div>
+      <div class="check">
+        <div class="n">2</div>
+        <div>
+          <h3>画面の確認</h3>
+          <p>実際に画面を動かして、表示の崩れや文字の欠けがないかを見ます。確認項目を決めて、1つずつ見ます。</p>
+        </div>
+      </div>
+      <div class="check">
+        <div class="n">3</div>
+        <div>
+          <h3>実機での確認</h3>
+          <p>お客様が使うパソコンで確かめます。会計ソフトと連携したツールでは、口座残高が会計ソフトの画面と一致することを確認しました。</p>
+        </div>
+      </div>
+      <div class="check">
+        <div class="n">4</div>
+        <div>
+          <h3>記録を残す</h3>
+          <p>何を決め、何を試し、何が起きたかを記録します。担当の方が替わっても、あとから追えます。</p>
+        </div>
+      </div>
+    </div>
+    <div class="note"><b>確認できていないことは、「未確認」と書いてお伝えします。</b>お客様の本番の環境でしか確かめられない項目は、確認の手順にしてお渡しします。</div>
+  </div>
+
+  <div class="sec">
+    <h2>お預かりする情報の<em>扱い</em><small>安心してお任せいただくために</small></h2>
+    <ul class="pts">
+      <li><b>ログイン情報や接続用の鍵：</b>画面には表示せず、仕組みの内部だけで保管します。</li>
+      <li><b>会計ソフトとの連携：</b>パスワードはお預かりしません。「許可をいただく」標準の方法で、つなぎ込みます。</li>
+      <li><b>取引先の名前や金額：</b>実績の紹介でも伏せます。</li>
+      <li><b>作業に使うAI：</b>ファイルの強制削除など、取り返しのつかない操作は、設定で禁止しています。</li>
+    </ul>
+  </div>
+
+  <div class="cta">
+    <h2>まず30分、話を聞かせてください</h2>
+    <p class="sub">「うちの業務でも使えるか？」の段階で大丈夫です。相談・お見積りはすべて無料。売り込みはしません。</p>
+    <div class="cta-body">
+      <div class="svc">
+        <dl>
+          <dt>業務の見直し支援</dt>
+          <dd>一つの業務・一つの現場を2か月で見直します。<b>320,000円</b>（税別）</dd>
+          <dt>個別実装</dt>
+          <dd>仕様が決まってから、個別にお見積りします。</dd>
+        </dl>
+      </div>
+      <div class="contact">
+        <span class="k">メール</span><span class="v">info@zatuneya.com</span>
+        <span class="k">ホームページ</span><span class="v">https://zatuneya.com</span>
+        <span class="s">返信は2営業日以内です。</span>
+      </div>
+    </div>
+  </div>
+  <p class="who"><b>ざつね屋　代表　大音（おおと）</b>　広島県府中市を拠点に、近隣の地域企業を訪問して支援しています。</p>
+
+  <div class="spacer"></div>
+  <div class="deco-bottom-soft"></div>
+  <div class="deco-bottom"></div>
+  <div class="foot"><span class="copy">© 2026 ざつね屋</span><span class="pg">2 / 2</span></div>
+</section>
+
+</body>
+</html>

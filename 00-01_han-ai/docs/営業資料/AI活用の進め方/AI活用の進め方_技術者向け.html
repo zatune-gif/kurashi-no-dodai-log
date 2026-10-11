@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>AI活用の進め方（技術者向け）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#5BBDC8; --teal-dk:#46A6B1; --teal-soft:#EAF6F8; --teal-strong:#337F88; --teal-text:#31747C;
+  --card-tint:#F6FBFC; --card-line:#E1EEF0;
+  --orange:#F8981D; --orange-dk:#E28511; --orange-soft:#FDF0DE; --warm-line:#F6E4C8; --orange-text:#9C5C0C;
+  --bg:#EFF4F5; --heading:#3C3C3C; --text:#575757; --muted:#839CAA; --sub-text:#556E7C;
+}
+@page{size:297mm 210mm;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{width:297mm;font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;color:var(--text);font-size:11px;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:297mm;height:210mm;background:var(--bg);padding:20px 28px 12px;display:flex;flex-direction:column;overflow:hidden;page-break-after:always;break-after:page}
+.page:last-child{page-break-after:auto;break-after:auto}
+.doc-name{font-size:9.5px;font-weight:700;color:var(--sub-text);letter-spacing:.06em;margin-bottom:3px;display:flex;justify-content:space-between}
+.head{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid var(--teal);padding-bottom:7px;margin-bottom:10px}
+.head h1{font-size:20px;font-weight:900;color:var(--heading);letter-spacing:.02em;line-height:1.25}
+.head h1 span{color:var(--teal-strong)}
+.head p{font-size:10.5px;color:var(--sub-text);font-weight:500;text-align:right}
+.label{font-size:11.5px;font-weight:700;color:var(--teal-strong);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.label::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--teal)}
+.label small{font-weight:500;color:var(--muted);font-size:9.5px}
+
+/* page 1 */
+.p1{flex:1;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:16px;min-height:0}
+.left{display:flex;flex-direction:column;gap:20px;min-height:0}
+.right{display:flex;flex-direction:column;gap:13px;min-height:0}
+.diagram{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr;grid-template-rows:auto 34px auto;align-items:stretch}
+.node{background:#fff;border:1.5px solid var(--teal);border-radius:8px;padding:24px 10px;text-align:center;font-size:12.5px;line-height:1.4;color:var(--heading);position:relative;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.node b{word-break:keep-all;font-size:12.5px;color:var(--teal-strong);font-weight:700}
+.node small{font-size:11.5px;color:var(--sub-text);font-weight:500}
+.node--key{border-color:var(--orange);background:var(--orange-soft)}
+.node--key b{color:var(--orange-text)}
+.no{position:absolute;top:-8px;left:-6px;width:17px;height:17px;border-radius:50%;background:var(--teal-strong);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.node--key .no{background:var(--orange-dk)}
+.arr{position:relative}
+.arr::before{content:"";position:absolute;left:3px;right:9px;top:50%;height:2.5px;margin-top:-1px;background:var(--teal-strong)}
+.arr::after{content:"";position:absolute;right:3px;top:50%;margin-top:-6px;border-left:8px solid var(--teal-strong);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.arr--l::before{left:9px;right:3px}
+.arr--l::after{left:3px;right:auto;border-left:0;border-right:8px solid var(--teal-strong)}
+.arr--d::before{left:50%;right:auto;top:2px;bottom:9px;height:auto;width:2.5px;margin:0 0 0 -1px}
+.arr--d::after{left:50%;right:auto;top:auto;bottom:2px;margin:0 0 0 -6px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--teal-strong);border-bottom:0}
+.c5{grid-column:5}
+.row2-4{grid-row:3;grid-column:5}
+.row2-5{grid-row:3;grid-column:3}
+.row2-6{grid-row:3;grid-column:1}
+.row2-a1{grid-row:3;grid-column:4}
+.row2-a2{grid-row:3;grid-column:2}
+.row-d{grid-row:2;grid-column:5}
+.models{display:flex;gap:4px;justify-content:center;margin-top:2px;flex-wrap:wrap}
+.models span{font-size:11px;font-weight:700;border-radius:999px;padding:0 7px;border:1px solid #bfe2e7;background:var(--teal-soft);color:var(--teal-strong)}
+.models span.opus{background:var(--orange-soft);border-color:var(--warm-line);color:var(--orange-text)}
+.band{background:#fff;border:1px solid var(--card-line);border-radius:8px;padding:10px 11px}
+.band-flow{display:flex;align-items:stretch;gap:0}
+.band-flow .node{flex:1;padding:14px 8px}
+.band-flow .arr{width:22px;flex:none}
+.rules{border:1.5px dashed #b9cdd1;border-radius:8px;padding:11px 12px;font-size:12.5px;background:#fff;color:var(--sub-text);line-height:1.5}
+.rules b{color:var(--heading)}
+.card{background:#fff;border:1px solid var(--card-line);border-radius:8px;padding:10px 12px}
+.card--tint{background:var(--card-tint)}
+ol.flow{list-style:none;display:flex;flex-direction:column;gap:9px}
+ol.flow li{display:flex;gap:8px;font-size:12.5px;line-height:1.5;color:var(--heading)}
+ol.flow li i{flex:none;width:16px;height:16px;border-radius:50%;background:var(--teal-strong);color:#fff;font-style:normal;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+ol.flow li em{font-style:normal;color:var(--sub-text);font-weight:500}
+ul.pts{list-style:none;display:flex;flex-direction:column;gap:7px}
+ul.pts li{font-size:12.5px;line-height:1.5;color:var(--heading);padding-left:12px;position:relative}
+ul.pts li::before{content:"";position:absolute;left:0;top:6px;width:6px;height:6px;border-radius:2px;background:var(--teal)}
+ul.pts li b{color:var(--teal-strong)}
+.note{background:var(--orange-soft);border:1px solid var(--warm-line);border-left:4px solid var(--orange);border-radius:5px;padding:9px 11px;font-size:12px;color:var(--orange-text);font-weight:500;line-height:1.5}
+.note b{display:block;font-size:9px;letter-spacing:.04em}
+
+/* page 2 */
+.p2 ul.pts li{font-size:10.5px;line-height:1.45}
+.p2 ul.pts{gap:3px}
+.p2 .card{padding:8px 11px}
+.p2{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto 1fr auto;gap:9px 12px;min-height:0}
+.p2 .span3{grid-column:1 / span 3}
+.card h3{font-size:11.5px;font-weight:700;color:var(--teal-strong);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.card h3 .tag{font-size:9px;font-weight:700;background:var(--teal-soft);border:1px solid #bfe2e7;color:var(--teal-strong);border-radius:3px;padding:0 5px}
+table.risk{width:100%;border-collapse:collapse;font-size:10.5px;line-height:1.45;table-layout:fixed}
+table.risk th{background:var(--teal-strong);color:#fff;font-weight:700;text-align:left;padding:4px 7px;font-size:10.5px}
+table.risk td{padding:3px 7px;border-bottom:1px solid var(--card-line);vertical-align:top;color:var(--heading)}
+table.risk tr:nth-child(even) td{background:var(--card-tint)}
+table.risk td:first-child{font-weight:700;color:var(--teal-strong)}
+table.risk .w1{width:21%}
+table.risk .w2{width:30%}
+.unverified{background:var(--orange-soft);border-color:var(--warm-line)}
+.unverified h3{color:var(--orange-text)}
+.unverified h3 .tag{background:#fff;border-color:var(--warm-line);color:var(--orange-text)}
+
+.foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:7px;font-size:9px;color:var(--sub-text);gap:16px}
+.foot .gloss{line-height:1.5;flex:1}
+.foot .gloss b{color:var(--heading)}
+.foot .copy{font-size:9.5px;color:var(--sub-text);white-space:nowrap}
+
+/* page 1 (new) */
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tool{background:#fff;border:1.5px solid var(--teal);border-radius:8px;padding:11px 12px}
+.tool--key{border-color:var(--orange);background:var(--orange-soft)}
+.tool h3{font-size:13.5px;font-weight:700;color:var(--teal-strong);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.tool--key h3{color:var(--orange-text)}
+.tool .role{font-size:10px;font-weight:700;background:var(--teal-soft);border:1px solid #bfe2e7;color:var(--teal-strong);border-radius:999px;padding:0 8px;white-space:nowrap}
+.tool--key .role{background:#fff;border-color:var(--warm-line);color:var(--orange-text)}
+.tool ul.pts{gap:5px}
+.tool ul.pts li{font-size:12.5px;word-break:auto-phrase}
+.tool{padding:10px 14px}
+.tools{gap:10px}
+.p1 .left{gap:14px}
+.right ul.pts li,.rules,.note{word-break:auto-phrase}
+.chains .chain-title{font-size:11px;font-weight:700;color:var(--sub-text);margin-bottom:6px}
+.chains .chain-title--2{margin-top:12px}
+.chains .band-flow .node{padding:11px 6px;word-break:auto-phrase}
+.chains .band-flow .node b,.chains .band-flow .node small{font-size:12px}
+</style>
+</head>
+<body>
+
+<!-- ===== ページ1 ===== -->
+<section class="page">
+  <div class="doc-name"><span>ざつね屋｜AI活用の進め方（技術のご担当者様向け）</span><span>1 / 3</span></div>
+  <header class="head">
+    <h1>AIの使用環境と役割分担<span>（用途ごとに使い分け）</span></h1>
+    <p>AIに任せる範囲と、人が判断・検品する範囲を分けています。<br>下記は、実際の開発記録にある使い方だけを載せています</p>
+  </header>
+
+  <div class="p1">
+    <div class="left">
+      <div>
+        <div class="label">使っているAIと役割<small>記録のある用途のみ</small></div>
+        <div class="tools">
+          <div class="tool tool--key">
+            <h3>Claude Code<span class="role">主な開発・運用</span></h3>
+            <ul class="pts">
+              <li>作業の分解、実装、検品、記録（次ページの仕組み）</li>
+              <li>Codexが実装した変更の<b>レビューと整合確認</b></li>
+            </ul>
+          </div>
+          <div class="tool">
+            <h3>Codex<span class="role">サブ開発</span></h3>
+            <ul class="pts">
+              <li>自社サイトの実装・改修（コード確認、実装、検証）</li>
+              <li>ランサーズ出品原稿の下書き、サムネイル画像の生成</li>
+            </ul>
+          </div>
+          <div class="tool">
+            <h3>ChatGPT<span class="role">相談・画像生成</span></h3>
+            <ul class="pts">
+              <li>メモ・情報整理・相談窓口。コピー案やデザイン検討</li>
+              <li><b>画像生成：</b>サイトのデザインカンプ、営業資料・チラシの画像</li>
+            </ul>
+          </div>
+          <div class="tool">
+            <h3>Gemini・NotebookLM<span class="role">単発相談・要約</span></h3>
+            <ul class="pts">
+              <li><b>NotebookLM：</b>長い資料や動画を要約してから持ち込む</li>
+              <li><b>Gemini：</b>継続文脈を使わない単発の相談。自社開発の育児支援Webアプリには、Gemini APIを組み込み済み</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="label">組み合わせ方<small>記録にある分担の例</small></div>
+        <div class="band chains">
+          <div class="chain-title">サイト制作・改修（2026年8月に分担を明文化）</div>
+          <div class="band-flow">
+            <div class="node"><b>ChatGPT</b><small>デザインカンプ・コピー案</small></div>
+            <div class="arr"></div>
+            <div class="node"><b>Codex</b><small>実装・検証</small></div>
+            <div class="arr"></div>
+            <div class="node"><b>Claude Code</b><small>差分と検証結果をレビュー</small></div>
+            <div class="arr"></div>
+            <div class="node node--key"><b>人（私）</b><small>統合・公開の最終判断</small></div>
+          </div>
+          <div class="chain-title chain-title--2">長い資料の読み込み（人がNotebookLMで要約→持ち込み）</div>
+          <div class="band-flow">
+            <div class="node"><b>PDF・長文資料</b><small>司令塔には直接読ませない</small></div>
+            <div class="arr"></div>
+            <div class="node"><b>NotebookLM</b><small>要点・結論を抽出</small></div>
+            <div class="arr"></div>
+            <div class="node"><b>Claude Code</b><small>要点だけを受け取り作業</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rules"><b>使い分けの位置づけ：</b>この分担は、意図して設計した最適解ではなく現場の使い分けの記録です。運用ルール（役割・モデルの選び方・記録の残し方）は設定ファイルに文章化し、変更の履歴はGitとメモに残しています。</div>
+    </div>
+
+    <div class="right">
+      <div class="card card--tint">
+        <div class="label">人が判断・検品する点</div>
+        <ul class="pts">
+          <li><b>目的と完了条件：</b>依頼の目的と「何をもって完了か」は人が決める。テスト・画面確認の証拠が揃うまで完了にしない。</li>
+          <li><b>他のAIの成果物：</b>Codexの実装は、Claude Codeが確認。実際のレビューでは、公開前に直すべき指摘を出して修正を依頼した。</li>
+          <li><b>画像生成の出力：</b>QRコードがダミーで、解像度も印刷に足りなかったため、実物のQRへの差し替えと高解像度化を人が行った。</li>
+          <li><b>取り返しがつかない操作・お客様に関わること：</b>実行前に人が確認する。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="label">情報の取り扱い</div>
+        <ul class="pts">
+          <li><b>認証情報：</b>APIキーなどは画面側に渡さず、内部だけで保持（詳細は3ページ目）。</li>
+          <li><b>守秘情報：</b>取引先名・金額は資料や実績紹介で伏せる。</li>
+          <li><b>危険な操作：</b>強制削除・強制pushなどは設定で禁止（24件）。</li>
+        </ul>
+      </div>
+
+      <div class="note"><b>現時点の限界（正直に）</b>Claude Code以外のAIの使い方は、開発メモ・Git履歴などの記録をもとにまとめています。AIサービス各社のデータの取り扱い条件は、この資料では扱っていません。</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p class="gloss"><b>用語：</b>Claude Code・Codex＝AIが手順を考えて開発作業をするツール／ChatGPT・Gemini＝対話型の生成AI／NotebookLM＝資料を読み込ませて要約・質問できるGoogleのAI／API＝ソフト同士がデータをやり取りする窓口／Git＝変更履歴を残す仕組み</p>
+    <p class="copy">© 2026 ざつね屋</p>
+  </div>
+</section>
+
+<!-- ===== ページ1 ===== -->
+<section class="page">
+  <div class="doc-name"><span>ざつね屋｜AI活用の進め方（技術のご担当者様向け）</span><span>2 / 3</span></div>
+  <header class="head">
+    <h1>Claude Codeを使った業務運用の仕組み<span>（自社で毎日運用中）</span></h1>
+    <p>生成AIに作業を任せつつ、<br>記録・検品・計測で人が追える状態にしています</p>
+  </header>
+
+  <div class="p1">
+    <div class="left">
+      <div>
+        <div class="label">構成図<small>番号は右の「処理の流れ」に対応</small></div>
+        <div class="diagram">
+          <div class="node"><span class="no">1</span><b>依頼</b><small>人（私）が目的を伝える</small></div>
+          <div class="arr"></div>
+          <div class="node node--key"><span class="no">2</span><b>司令塔（Claude Code）</b><small>作業を分解し、指示書を作る</small></div>
+          <div class="arr"></div>
+          <div class="node"><span class="no">3</span><b>作業担当（サブエージェント）</b><small>難しさでAIモデルを使い分け</small>
+            <div class="models"><span>軽作業：Haiku</span><span>標準：Sonnet</span><span class="opus">重い作業：Opus</span></div>
+          </div>
+
+          <div class="arr arr--d row-d"></div>
+
+          <div class="node row2-6"><span class="no">6</span><b>案件ダッシュボード（HTML）</b><small>更新し、同じURLへ再公開</small></div>
+          <div class="arr arr--l row2-a2"></div>
+          <div class="node row2-5"><span class="no">5</span><b>Obsidian（MCP経由）</b><small>結論・決定事項を記録</small></div>
+          <div class="arr arr--l row2-a1"></div>
+          <div class="node node--key row2-4"><span class="no">4</span><b>司令塔が検品</b><small>テスト・画面確認の証拠が揃うまで完了にしない</small></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="label">週次の自動計測<small>運用ルールが守られているかを数える仕組み</small></div>
+        <div class="band">
+          <div class="band-flow">
+            <div class="node"><b>Windowsタスクスケジューラ</b><small>毎週月曜 9:00 に起動</small></div>
+            <div class="arr"></div>
+            <div class="node"><b>集計スクリプト</b><small>前週（月〜日）の会話ログから利用量を集計</small></div>
+            <div class="arr"></div>
+            <div class="node"><b>Obsidianの計測ノート</b><small>末尾に追記し、ベースラインと比較</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rules"><b>ルールの管理：</b>運用ルールは設定ファイル（CLAUDE.md）と、用途別の手順書（スキル）に文章化。設定一式はGitで履歴を管理し、複数のパソコン間で同期しています。「なぜそのルールにしたか」の経緯も別ノートに残しています。</div>
+    </div>
+
+    <div class="right">
+      <div class="card card--tint">
+        <div class="label">処理の流れ</div>
+        <ol class="flow">
+          <li><i>1</i><span>依頼を受け、目的と完了条件を確認する。</span></li>
+          <li><i>2</i><span>司令塔が作業を分解し、作業担当向けの指示書を書く。<em>司令塔の仕事は分解・指示・検品・報告。</em></span></li>
+          <li><i>3</i><span>作業担当が調査・資料作成・実装を行い、<b>結論と要点だけ</b>を返す。モデルは難しさで選び、起動時に必ず指定する。Opusは新規設計・難しい不具合・取り返しのつかない判断に限る。</span></li>
+          <li><i>4</i><span>司令塔が成果物を検品。検証結果（テスト件数・画面確認）を添えて報告する。</span></li>
+          <li><i>5</i><span>結論をObsidian（メモ置き場）に記録。次の作業はまずここを読んで始める。</span></li>
+          <li><i>6</i><span>案件ダッシュボードを更新し、同じURLへ再公開する。</span></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="label">失敗を検知できる・引き継げる工夫</div>
+        <ul class="pts">
+          <li><b>違反を自動で数える：</b>「モデル未指定の起動」は集計スクリプトが自動判定。再構成前30日で29件、再構成当日は0件。</li>
+          <li><b>止まっても取りこぼさない：</b>パソコンの電源が切れていた週は、次の起動時に計測を実行。</li>
+          <li><b>記録が残る：</b>結果はObsidianに追記され、前の週と比べられる。</li>
+          <li><b>危険な操作は設定で禁止：</b>強制削除・強制pushなど24件の禁止ルール。</li>
+          <li><b>引き継ぎ：</b>ルールは文章（CLAUDE.md・スキル）とGit履歴に残るので、担当が替わっても同じ運用を再現できる。</li>
+        </ul>
+      </div>
+
+      <div class="note"><b>現時点の限界（正直に）</b>計測の対象は私のこのパソコンのログのみ。「指摘候補」はキーワード一致のため取りこぼしがあり、金額は概算。週次の自動追記は設定済みですが、運用開始直後のため継続実績はこれからです。</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p class="gloss"><b>用語：</b>Claude Code＝AIが手順を考えて作業するコマンド型のツール／MCP＝AIと外部ツールをつなぐ仕組み／サブエージェント＝司令塔から作業を任される別のAI／Obsidian＝メモを保存するアプリ／Git＝変更履歴を残す仕組み</p>
+    <p class="copy">© 2026 ざつね屋</p>
+  </div>
+</section>
+
+<!-- ===== ページ2 ===== -->
+<section class="page">
+  <div class="doc-name"><span>ざつね屋｜AI活用の進め方（技術のご担当者様向け）</span><span>3 / 3</span></div>
+  <header class="head">
+    <h1>会計サービス連携ツールの要件整理<span>（取引先名・金額は伏せています）</span></h1>
+    <p>卸売会社向けに、会計サービス（freee）のデータを集めて<br>資金の動きを見せる業務ツール。実際の開発記録から整理</p>
+  </header>
+
+  <div class="p2">
+    <div class="card">
+      <h3>1. 必要なデータ</h3>
+      <ul class="pts">
+        <li>口座残高・売上・入金履歴・未入金・予実の実績（会計サービスから取得）</li>
+        <li>30日先までの資金繰り予測（未決済の支払いの期日を計上）</li>
+        <li>請求書の情報：請求書を発行しただけでは取引に登録されないため、請求書側のAPIからも補う</li>
+        <li>アラート基準額などの設定は利用者のパソコン内に保存</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>2. 権限・認証</h3>
+      <ul class="pts">
+        <li>OAuth 2.0（ログイン情報を渡さず許可だけ受ける標準方式）。利用者は「接続する」を1回押し、ブラウザで承認するだけ</li>
+        <li>アクセス権は<b>承認時に選んだ1事業所だけ</b>。事業所IDは承認結果を正とし、利用者に選ばせない</li>
+        <li>期限の5分前にトークン（通行証）を自動更新。90日ごとに再接続が必要で、事前に画面で警告</li>
+        <li>アプリ登録は先方の管理者が最初に1回だけ行う</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>3. 外部連携</h3>
+      <ul class="pts">
+        <li>会計サービスのAPI（認可・トークン・会計・請求書）</li>
+        <li>着手前に公式の仕様と廃止案内を確認。旧請求書APIは廃止済みで、廃止後も401を返すため通信テストでは検出できない</li>
+        <li>Client Secretやトークンなどの<b>認証情報は画面側に渡さない</b>。設定画面の入力欄は空にして「保存済み」と表示</li>
+        <li>見積書・請求書の下書き作成は、重複防止の識別子と履歴で二重作成を防止</li>
+      </ul>
+    </div>
+
+    <div class="card span3">
+      <h3>4. 想定リスクと対処<span class="tag">実際に起きたもの・事前に潰したもの</span></h3>
+      <table class="risk">
+        <thead><tr><th class="w1">想定リスク</th><th class="w2">起きること</th><th>対処</th></tr></thead>
+        <tbody>
+          <tr><td>トークンの期限切れ</td><td>個人用トークンは6時間で失効し、業務で使えない</td><td>OAuth 2.0 へ移行。自動更新と期限前の警告を実装</td></tr>
+          <tr><td>更新の同時実行</td><td>画面が4つのAPIを同時に呼び、更新が競合してトークンが無効になる</td><td>更新処理を1本にまとめる（single-flight）</td></tr>
+          <tr><td>同じ401でも原因が違う</td><td>事業所IDの取り違えで全APIが失敗</td><td>エラーコードを握りつぶさず表示。認可した事業所のIDだけを使う設計へ変更</td></tr>
+          <tr><td>通信断の誤案内</td><td>Wi-Fi切断時に「再接続が必要」と表示し、直らない操作を促す</td><td>ネットワークの問題と認証の問題を区別して表示</td></tr>
+          <tr><td>失敗直後の再試行</td><td>認証に失敗して再度接続を押すと5分間固まる</td><td>実際にlocalhostで通信する模擬サーバーの異常系テストで発見・修正</td></tr>
+          <tr><td>書類の二重作成</td><td>下書き作成の通信が途中で切れ、成否が分からないまま再実行される</td><td>重複防止の識別子と履歴で再作成をブロック。成否不明のものは会計画面で確認してから作り直す</td></tr>
+          <tr><td>権限・制限の違い</td><td>403（権限・プラン）や429（回数制限）が返る</td><td>原因別に日本語で案内。429は待ち時間の指示があれば1回だけ従って再試行</td></tr>
+          <tr><td>取得漏れ・ずれ</td><td>100件で打ち切り／日付が1日ずれる／未入金が実態より少ない</td><td>ページ送りで全件取得、日付の整形を修正、請求書APIで補完</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>検収・確認の方法</h3>
+      <ul class="pts">
+        <li>自動テスト1,192件と画面検証59項目が全て合格（2026年9月時点の記録）</li>
+        <li>開発側の手動確認14項目、先方の実機確認5項目を手順化</li>
+        <li>先方が迷わない確認は3点：「接続済み」「数字が出る」「会計画面と一致」</li>
+        <li>実機で口座残高が会計画面と一致することを確認済み</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>引き継ぎ資料</h3>
+      <ul class="pts">
+        <li>非技術者向けREADME：STEP形式の導入手順とよくある質問</li>
+        <li>テスト手順書、実装記録（設計判断と理由）</li>
+        <li>実装前に作る4つの表：エラー対応表・寿命表・配布経路表・テスト計画</li>
+        <li>配布：Windows・Mac2種のインストーラーを作り、配布物の実在確認までを完了とする</li>
+        <li>テストと脆弱性チェックを自動実行し、通らないとリリースに進まない</li>
+      </ul>
+    </div>
+    <div class="card unverified">
+      <h3>未検証の範囲<span class="tag">正直に記載</span></h3>
+      <ul class="pts">
+        <li>自動テストの通信は模擬サーバー。本番の会計サービスとの全項目の実通信は、自動では未検証</li>
+        <li>見積書・請求書の下書き作成は、本番での動作確認が記録上まだ取れていない</li>
+        <li>Apple製チップのMacでの起動は、開発環境がWindowsのため直接確認できていない</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p class="gloss"><b>用語：</b>API＝ソフト同士がデータをやり取りする窓口／OAuth＝パスワードを渡さずに利用を許可する標準方式／トークン＝許可の証明となる期限付きの鍵／single-flight＝同じ処理を同時に1回だけ実行する工夫／模擬サーバー＝本番の代わりにテスト用に立てる擬似サーバー</p>
+    <p class="copy">© 2026 ざつね屋</p>
+  </div>
+</section>
+
+</body>
+</html>
