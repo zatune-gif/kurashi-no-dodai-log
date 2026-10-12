@@ -704,3 +704,11 @@ h1, h2, h3, h4 { font-family: 'Noto Sans JP', sans-serif; }
   .stage-name { font-size: 12px; }
   .btn-cta { width: 100%; }
 }
+
+/* ── 送信失敗の表示（申込み・診断結果の送信） ── */
+.send-error { margin: 0 0 16px; padding: 14px 16px; background: var(--orange-soft); border-left: 4px solid var(--warning); border-radius: 12px; line-height: 1.8; font-size: 14px; color: var(--text); }
+.send-error__title { margin: 0 0 6px; font-weight: 700; color: var(--warning); }
+.send-error__text { margin: 0 0 8px; }
+.send-error__retry { margin: 4px 0 8px; }
+.send-error__code { margin: 4px 0 0; font-size: 12px; color: var(--text-muted); word-break: break-all; }
+.btn-secondary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }

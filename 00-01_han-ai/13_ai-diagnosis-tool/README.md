@@ -41,16 +41,65 @@ TOPページ・研修時の口頭案内等で使われているため、後方�
 
 ## バックエンド
 
-`netlify/functions/` 配下（`save-inquiry.js` / `generate-comment.js` / `generate-library.js`）は
-Netlify Functions。本番（Netlify）で稼働する。GitHub Pages 等 Functions が動かない環境では
-フォールバック表示（`detail.js` の `FALLBACK_*` / `diagnosis-simple.js` の固定コメント）で吸収する。
+`netlify/functions/` 配下の3ファイル（`save-inquiry.mjs` / `generate-comment.mjs` / `generate-library.mjs`）は
+Netlify Functions（現行形式：Web 標準の Request / Response）。処理本体は `netlify/lib/` にある。
+本番（Netlify）で稼働する。Functions が動かない GitHub Pages では申込みが届かないため、次の2段で守っている。
 
-- `save-inquiry.js`: 問い合わせを Google Sheets へ追記し、申込者・オーナーへメール送信する。
-  自動返信メールに載せる診断ツールURL（`SITE_URL`）は環境変数フォールバック方式
-  （`process.env.SITE_URL || process.env.URL || 'https://ai-shindan-zatuneya.netlify.app'`）。
-  Netlify は本番URLを `process.env.URL` に自動注入するため、通常は追加設定不要。
-- `generate-library.js` / `generate-comment.js`: Anthropic API を呼び、プロンプトライブラリ・
-  推奨アクションを生成する。`ANTHROPIC_API_KEY` が必要。
+- **GitHub Pages から開かれたら Netlify 版へ移動する**：全 HTML の `<head>` 冒頭に小さなスクリプトがあり、`github.io` で開かれた場合は同じファイル名・クエリ・ハッシュのまま `https://ai-shindan-zatuneya.netlify.app/` へ移す。独自ドメイン取得時は、このスクリプトの移動先 URL も「ドメイン確定時の再置換対象」に含める。
+- **送信失敗を握りつぶさない**：資料請求（`request.js`）と詳細診断の結果送信（`detail.js`）は、送信に失敗したら完了画面へ進まず、画面内に「何が起きたか」「次にすること」（時間をおいて再送／`info@zatuneya.com` へメール）とエラーコードを表示する。共通処理は `utils.js` の `postInquiry` / `describeInquiryError` / `showInquiryError`。AI 生成（簡易診断・詳細診断）は失敗しても固定の提案文で代替する。
+
+| 画面から呼ぶ URL | 役割 | 使うサービス |
+|---|---|---|
+| `POST /api/save-inquiry` | 問い合わせを Google Sheets へ追記し、担当者通知と申込者への自動返信メールを送る | Google Sheets API・Gmail（nodemailer） |
+| `POST /api/generate-comment` | 簡易診断の推奨アクション3件を生成 | Anthropic API（既定 `claude-haiku-5-5`・思考は既定のまま effort は low） |
+| `POST /api/generate-library` | 詳細診断のプロンプトライブラリ・推奨アクション・サービス推薦を生成 | Anthropic API（既定 `claude-sonnet-5-5`・思考は既定のまま effort は low） |
+
+以前の `/.netlify/functions/...` の URL は使えなくなった（レート制限の設定に独自パスが必要なため `/api/...` に変更）。
+
+応答は `{ ok: true, data }` または `{ ok: false, error: { code, message, detail } }` の形式。
+`error.code` が原因の識別子（例：`RATE_LIMITED`・`UPSTREAM_OVERLOADED`・`ANTHROPIC_AUTH`・`SHEET_FORBIDDEN`・`MAIL_AUTH`）。
+Netlify の関数ログには、エラー発生時に `{ fn, event, code, detail, at }` の1行 JSON が出る（API キー・入力内容は出さない）。
+
+### 環境変数（Netlify の Site configuration → Environment variables）
+
+| 名前 | 必須 | 内容 |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | 必須 | Anthropic API キー（generate-comment / generate-library） |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | 必須 | サービスアカウントの JSON 全文（save-inquiry） |
+| `GOOGLE_SHEET_ID` | 必須 | 書き込み先スプレッドシートの ID。タブ名は「問い合わせ一覧」固定 |
+| `GMAIL_USER` / `GMAIL_APP_PASSWORD` | 必須 | 送信に使う Gmail アドレスとアプリパスワード |
+| `SITE_URL` | 任意 | 自動返信メールの署名に載せる診断ツール URL。未設定なら Netlify が注入する `URL`、それも無ければ `https://ai-shindan-zatuneya.netlify.app` |
+| `ANTHROPIC_MODEL_COMMENT` / `ANTHROPIC_MODEL_LIBRARY` | 任意 | 使うモデルを差し替える（コード変更なしで戻せる）。未設定なら既定値 |
+| `ANTHROPIC_TIMEOUT_MS` | 任意 | generate-library の AI 応答待ち上限（ミリ秒、既定 55000） |
+
+### 悪用・連続呼び出しへの対策
+
+外部から誰でも叩ける URL なので、次を入れている。
+
+| 対策 | 内容 |
+|---|---|
+| Netlify のレート制限 | `generate-library` と `save-inquiry` の `config.rateLimit`：同一 IP から 60 秒に 10 回まで。超えると Netlify が 429 を返す。`generate-comment` は1回あたりの費用が小さいため Netlify 側の制限は付けず、関数内の制限のみ（Netlify の無料プランは関数のレート制限ルールが 2 件までのため） |
+| 関数内の制限（補助） | 同一 IP：10 分あたり generate-library 20 回・generate-comment 40 回・save-inquiry 20 回。全体：1 時間あたり 300 / 1000 / 200 回。save-inquiry は同じメールアドレス宛てを 1 時間 3 回まで。関数インスタンスごとのメモリで数えるため、Netlify のレート制限の補助として働く。制限に達した場合は Claude API を呼ばない |
+| 入力の検証 | 項目ごとの型・文字数・件数の上限、本文サイズ上限（16〜32KB）、問い合わせ種別の許可リスト。メール宛先は 1 件だけを許可し（カンマ区切り・改行を拒否）、メール送信の踏み台化を防ぐ |
+| ハニーポット | 画面に見えない項目（`website`）が埋まっていれば何も処理しない |
+
+研修会場など同じ回線から多数が同時に使う場合に上限へ達するときは、`netlify/lib/*.mjs` の `createRateLimiter` の値と各 `netlify/functions/*.mjs` の `rateLimit` を調整する。
+
+### 公開しないファイル
+
+`netlify.toml` は `publish = "."`（このフォルダ全体を公開）のため、README・`package.json`・`netlify/` のソース・`test/` もそのままだと URL で読めてしまう。公開ページの URL を変えないまま、これらは `[[redirects]]`（`force = true`・404）で見えなくしている。公開用フォルダを分ける案（`public/` に HTML を移す）は、ページの URL が変わる（GitHub Pages 側のリンクが切れる）ため採用していない。なお GitHub Pages にはこの設定が効かない。
+
+### Claude API の指定（確認済みの公式仕様）
+
+- `claude-haiku-5-5` / `claude-sonnet-5-5` ともに、思考は既定（adaptive）のまま `output_config.effort: "low"` で短く済ませる。`thinking: { type: "disabled" }` は Sonnet 5.5 では 400 になる。
+- 思考の分も `max_tokens` に数えられるため、`generate-comment` は 2000、`generate-library` は 6000 にしている。
+- 応答は先頭が思考ブロックでも読めるよう、本文は `text` ブロックから取り出す（`stop_reason` が `refusal` / `max_tokens` のときは専用コード）。
+- `temperature` / `top_p` / `top_k` は送らない（非既定値は 400）。
+
+### 開発・テスト
+
+- Node.js は 22 以上（`netlify.toml` では 24 を指定）。依存：`@anthropic-ai/sdk` 0.133 / `googleapis` 185 / `nodemailer` 10。
+- `npm install` のあと `npm test`：外部サービスと通信しない最小テスト（手元の模擬サーバー含む）を実行する。
 
 ## 研修コース体系
 
@@ -67,7 +116,8 @@ Netlify Functions。本番（Netlify）で稼働する。GitHub Pages 等 Functi
 | 各HTMLの `<link rel="canonical">` | `diagnosis-simple.html` / `detail.html` / `curriculum.html` / `prices.html` / `estimate.html` / `request.html` / `index.html` の `<head>` |
 | `sitemap.xml` | 全 `<loc>`（6件） |
 | `robots.txt` | `Sitemap:` 行 |
-| `netlify/functions/save-inquiry.js` | `SITE_URL` のフォールバック既定値（`process.env` 未設定時のみ効く） |
+| `netlify/lib/save-inquiry.mjs` | `SITE_URL` のフォールバック既定値（環境変数未設定時のみ効く） |
+| 各HTMLの `<head>` 冒頭のスクリプト | GitHub Pages から Netlify 版へ移す先の URL（全 7 ファイル） |
 | 本 README | 冒頭の公開URL記述・本節 |
 
 ※ 14番（提案書生成アプリ）側の診断URL参照は 14番リポジトリ側の別チェックリストで管理する。

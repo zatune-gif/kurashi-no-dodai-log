@@ -406,19 +406,19 @@ function renderQuestion() {
     const a = state.answers[state.currentIndex];
     const opts = q.type === 'score' ? q.options.map(o => o.text) : q.options;
     DOM.optionsWrap.innerHTML = opts.map((text, i) =>
-      `<button class="option-btn${a?.optionIndex === i ? ' selected' : ''}" data-index="${i}">${text}</button>`
+      `<button class="option-btn${a?.optionIndex === i ? ' selected' : ''}" data-index="${i}">${escapeHtml(text)}</button>`
     ).join('');
   } else if (q.type === 'multi') {
     const vals = state.answers[state.currentIndex]?.values || [];
     DOM.optionsWrap.innerHTML = q.options.map((text, i) =>
       `<button class="option-btn multi-btn${vals.includes(text) ? ' selected' : ''}" data-index="${i}">
-        <span class="multi-icon">${vals.includes(text) ? '✓' : '+'}</span>${text}
+        <span class="multi-icon">${vals.includes(text) ? '✓' : '+'}</span>${escapeHtml(text)}
       </button>`
     ).join('');
   } else if (q.type === 'text') {
     const val = state.answers[state.currentIndex]?.value || '';
     DOM.optionsWrap.innerHTML =
-      `<input type="text" class="text-input" id="text-input" placeholder="${q.placeholder || ''}" value="${escapeHtml(val)}">
+      `<input type="text" class="text-input" id="text-input" placeholder="${escapeHtml(q.placeholder)}" value="${escapeHtml(val)}">
        <p class="text-hint">※ 入力は任意です。空欄のまま次へ進めます。</p>`;
     $('text-input').addEventListener('input', e => {
       state.answers[state.currentIndex] = { value: e.target.value };
@@ -530,14 +530,16 @@ async function showResults() {
   let usedFallback = true;
 
   try {
-    const res = await fetch('/.netlify/functions/generate-library', {
+    const res = await fetch('/api/generate-library', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    if (res.ok) {
-      const result = await res.json();
-      if (result.prompts?.length > 0) prompts = result.prompts;
+    // 応答形式は { ok: true, data: { prompts, actions, recommendations } } / { ok: false, error: { code, message } }
+    const body = await res.json();
+    if (body.ok && body.data?.prompts?.length > 0) {
+      const result = body.data;
+      prompts = result.prompts;
       if (result.actions?.length >= 3) actions = result.actions;
       if (result.recommendations?.length > 0) recommendations = result.recommendations;
       usedFallback = false;
@@ -560,7 +562,7 @@ async function showResults() {
   // 強み・課題
   const renderList = (el, cardEl, items) => {
     cardEl.classList.toggle('hidden', items.length === 0);
-    if (items.length > 0) el.innerHTML = items.map(s => `<li>${s}</li>`).join('');
+    if (items.length > 0) el.innerHTML = items.map(s => `<li>${escapeHtml(s)}</li>`).join('');
   };
   renderList(DOM.strengthsList, DOM.strengthsCard, strengths);
   renderList(DOM.issuesList, DOM.issuesCard, issues);
@@ -569,7 +571,7 @@ async function showResults() {
   DOM.libraryList.innerHTML = prompts.map((p, i) => `
     <div class="prompt-item">
       <div class="prompt-header">
-        <span class="prompt-tag">${p.task}</span>
+        <span class="prompt-tag">${escapeHtml(p.task)}</span>
         <span class="prompt-title">${escapeHtml(p.title)}</span>
       </div>
       <pre class="prompt-body">${escapeHtml(p.prompt)}</pre>
@@ -590,7 +592,7 @@ async function showResults() {
   });
 
   // アクション
-  DOM.actionsList.innerHTML = actions.map(a => `<li>${a}</li>`).join('');
+  DOM.actionsList.innerHTML = actions.map(a => `<li>${escapeHtml(a)}</li>`).join('');
   const fallbackNote = document.getElementById('actions-fallback-note');
   if (fallbackNote) fallbackNote.classList.toggle('hidden', !usedFallback);
 
@@ -658,11 +660,11 @@ async function showResults() {
     btnExport.onclick = () => exportDiagnosisData();
   }
 
-  // 問い合わせデータを保存・メール送信（fire-and-forget）
-  fetch('/.netlify/functions/save-inquiry', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+  // 問い合わせデータを保存・メール送信。結果画面は先に見せ、送信に失敗したら画面内に原因と次の手順を表示する
+  // （連絡先を入力せず診断だけ試した場合は送る相手がいないので送信しない）
+  showScreen('screen-results');
+  if (state.email) {
+    sendInquiry({
       type: _pageMode === 'estimate' ? '詳細診断・見積' : '詳細診断・相談',
       companyName:     state.companyName,
       contactName:     state.contactName,
@@ -674,10 +676,20 @@ async function showResults() {
       strengths,
       issues,
       recommendations,
-    }),
-  }).catch(() => {});
+    });
+  }
+}
 
-  showScreen('screen-results');
+async function sendInquiry(payload) {
+  const box = $('send-error');
+  hideInquiryError(box);
+  const result = await postInquiry(payload);
+  if (!result.ok) {
+    showInquiryError(box, result.error, {
+      note: '診断結果はこのままご覧いただけます。',
+      onRetry: () => sendInquiry(payload)
+    });
+  }
 }
 
 // =====================
@@ -795,16 +807,4 @@ function exportDiagnosisData() {
   a.href = url;
   a.click();
   URL.revokeObjectURL(url);
-}
-
-// =====================
-// ユーティリティ
-// =====================
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }

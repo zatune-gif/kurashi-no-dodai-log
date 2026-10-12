@@ -237,7 +237,7 @@ function renderQuestion() {
   DOM.questionText.textContent = q.text;
 
   DOM.optionsWrap.innerHTML = q.options.map((opt, i) =>
-    `<button class="option-btn${current?.optionIndex === i ? ' selected' : ''}" data-index="${i}">${opt.text}</button>`
+    `<button class="option-btn${current?.optionIndex === i ? ' selected' : ''}" data-index="${i}">${escapeHtml(opt.text)}</button>`
   ).join('');
 
   DOM.btnNext.disabled = !current;
@@ -281,7 +281,7 @@ function getInsights() {
 // ── リスト描画ヘルパー ──
 function renderList(listEl, cardEl, items) {
   cardEl.classList.toggle('hidden', items.length === 0);
-  if (items.length > 0) listEl.innerHTML = items.map(s => `<li>${s}</li>`).join('');
+  if (items.length > 0) listEl.innerHTML = items.map(s => `<li>${escapeHtml(s)}</li>`).join('');
 }
 
 // ── 結果表示 ──
@@ -296,15 +296,14 @@ async function showResults() {
   let actions = FALLBACK_ACTIONS[stage];
   let usedFallback = true;
   try {
-    const res = await fetch('/.netlify/functions/generate-comment', {
+    const res = await fetch('/api/generate-comment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ score, stage, strengths, issues })
     });
-    if (res.ok) {
-      const data = await res.json();
-      if (data.actions?.length >= 3) { actions = data.actions; usedFallback = false; }
-    }
+    // 応答形式は { ok: true, data: { actions } } / { ok: false, error: { code, message } }
+    const body = await res.json();
+    if (body.ok && body.data?.actions?.length >= 3) { actions = body.data.actions; usedFallback = false; }
   } catch (_) {}
 
   // ステージタイムライン
@@ -324,7 +323,7 @@ async function showResults() {
   renderList(DOM.strengthsList, DOM.strengthsCard, strengths);
   renderList(DOM.issuesList,    DOM.issuesCard,    issues);
 
-  DOM.actionsList.innerHTML = actions.map(a => `<li>${a}</li>`).join('');
+  DOM.actionsList.innerHTML = actions.map(a => `<li>${escapeHtml(a)}</li>`).join('');
   const fallbackNote = document.getElementById('actions-fallback-note');
   if (fallbackNote) fallbackNote.classList.toggle('hidden', !usedFallback);
 

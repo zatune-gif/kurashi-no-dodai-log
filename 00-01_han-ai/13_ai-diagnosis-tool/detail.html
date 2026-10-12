@@ -2,6 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <script>
+    // GitHub Pages 上では申込み・AI機能が動かないため、Netlify 版の同じページへ移動する
+    if (/(^|\.)github\.io$/.test(location.hostname)) {
+      location.replace('https://ai-shindan-zatuneya.netlify.app/' + location.pathname.split('/').pop() + location.search + location.hash);
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI活用診断（詳細版）｜ざつね屋</title>
   <meta name="description" content="AI活用準備度を詳しく測る詳細版の診断。設問を増やし、分野ごとの傾向と優先して取り組むべき課題を可視化します。ざつね屋（広島県府中市）が提供します。">
@@ -130,6 +136,9 @@
 
     <!-- 結果 -->
     <div id="screen-results" class="screen">
+
+      <!-- 問い合わせ送信の失敗表示（成功時は非表示のまま） -->
+      <div id="send-error" class="send-error hidden no-print" role="alert"></div>
 
       <!-- スコアカード -->
       <div class="score-card" id="score-card">

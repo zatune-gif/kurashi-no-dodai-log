@@ -2,6 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <script>
+    // GitHub Pages 上では申込み・AI機能が動かないため、Netlify 版の同じページへ移動する
+    if (/(^|\.)github\.io$/.test(location.hostname)) {
+      location.replace('https://ai-shindan-zatuneya.netlify.app/' + location.pathname.split('/').pop() + location.search + location.hash);
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>資料請求｜ざつね屋</title>
   <meta name="description" content="ざつね屋のAI活用支援サービスに関する資料請求ページ。">
@@ -104,6 +110,8 @@
         </p>
         <p class="card-body">詳細診断を受けますか？</p>
       </div>
+
+      <div id="send-error" class="send-error hidden" role="alert"></div>
 
       <div class="result-actions">
         <button class="btn-primary btn-large" id="btn-do-diagnosis">詳細診断を受ける（おすすめ）</button>
