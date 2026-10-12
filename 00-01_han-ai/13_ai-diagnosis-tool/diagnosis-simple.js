@@ -237,7 +237,7 @@ function renderQuestion() {
   DOM.questionText.textContent = q.text;
 
   DOM.optionsWrap.innerHTML = q.options.map((opt, i) =>
-    `<button class="option-btn${current?.optionIndex === i ? ' selected' : ''}" data-index="${i}">${opt.text}</button>`
+    `<button class="option-btn${current?.optionIndex === i ? ' selected' : ''}" data-index="${i}">${escapeHtml(opt.text)}</button>`
   ).join('');
 
   DOM.btnNext.disabled = !current;
@@ -281,7 +281,7 @@ function getInsights() {
 // ── リスト描画ヘルパー ──
 function renderList(listEl, cardEl, items) {
   cardEl.classList.toggle('hidden', items.length === 0);
-  if (items.length > 0) listEl.innerHTML = items.map(s => `<li>${s}</li>`).join('');
+  if (items.length > 0) listEl.innerHTML = items.map(s => `<li>${escapeHtml(s)}</li>`).join('');
 }
 
 // ── 結果表示 ──
@@ -323,7 +323,7 @@ async function showResults() {
   renderList(DOM.strengthsList, DOM.strengthsCard, strengths);
   renderList(DOM.issuesList,    DOM.issuesCard,    issues);
 
-  DOM.actionsList.innerHTML = actions.map(a => `<li>${a}</li>`).join('');
+  DOM.actionsList.innerHTML = actions.map(a => `<li>${escapeHtml(a)}</li>`).join('');
   const fallbackNote = document.getElementById('actions-fallback-note');
   if (fallbackNote) fallbackNote.classList.toggle('hidden', !usedFallback);
 

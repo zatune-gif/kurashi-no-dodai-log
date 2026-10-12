@@ -48,9 +48,9 @@ export function createHandler(deps = {}) {
     try {
       message = await client.messages.create({
         model,
-        max_tokens: 600,
-        // 短い文を3つ作るだけなので、思考を切って低い effort で素早く返す
-        thinking: { type: 'disabled' },
+        // 思考は既定（adaptive）のまま effort を low にして短く済ませる（Claude Haiku 5.5 の公式推奨）。
+        // 思考の分も max_tokens に数えられるため、回答（短い文3つ）より余裕を持たせる。
+        max_tokens: 2000,
         output_config: { effort: 'low' },
         messages: [{
           role: 'user',

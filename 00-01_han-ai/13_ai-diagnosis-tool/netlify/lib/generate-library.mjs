@@ -185,10 +185,10 @@ export function createHandler(deps = {}) {
     try {
       message = await client.messages.create({
         model,
-        max_tokens: 4000,
-        // 決まった形式のテンプレート生成なので、思考を切って effort を中程度にする
-        thinking: { type: 'between_tools' },
-        output_config: { effort: 'medium' },
+        // 思考は既定（adaptive）のまま effort を low にして短く済ませる（Claude Sonnet 5.5 の公式推奨。
+        // disabled は 400 になる）。思考の分も max_tokens に数えられるため、出力（JSON 約3,000トークン）より余裕を持たせる。
+        max_tokens: 6000,
+        output_config: { effort: 'low' },
         messages: [{ role: 'user', content: buildPrompt(input) }],
       });
     } catch (err) {

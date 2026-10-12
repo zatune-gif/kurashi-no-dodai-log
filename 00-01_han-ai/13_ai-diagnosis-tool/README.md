@@ -43,15 +43,16 @@ TOPページ・研修時の口頭案内等で使われているため、後方�
 
 `netlify/functions/` 配下の3ファイル（`save-inquiry.mjs` / `generate-comment.mjs` / `generate-library.mjs`）は
 Netlify Functions（現行形式：Web 標準の Request / Response）。処理本体は `netlify/lib/` にある。
-本番（Netlify）で稼働する。GitHub Pages 等 Functions が動かない環境では
-フォールバック表示（`detail.js` の `FALLBACK_*` / `diagnosis-simple.js` の固定コメント）で吸収する。
-ただし GitHub Pages では問い合わせ（save-inquiry）は保存もメール送信もされない。問い合わせの受付は必ず Netlify の URL で行うこと。
+本番（Netlify）で稼働する。Functions が動かない GitHub Pages では申込みが届かないため、次の2段で守っている。
+
+- **GitHub Pages から開かれたら Netlify 版へ移動する**：全 HTML の `<head>` 冒頭に小さなスクリプトがあり、`github.io` で開かれた場合は同じファイル名・クエリ・ハッシュのまま `https://ai-shindan-zatuneya.netlify.app/` へ移す。独自ドメイン取得時は、このスクリプトの移動先 URL も「ドメイン確定時の再置換対象」に含める。
+- **送信失敗を握りつぶさない**：資料請求（`request.js`）と詳細診断の結果送信（`detail.js`）は、送信に失敗したら完了画面へ進まず、画面内に「何が起きたか」「次にすること」（時間をおいて再送／`info@zatuneya.com` へメール）とエラーコードを表示する。共通処理は `utils.js` の `postInquiry` / `describeInquiryError` / `showInquiryError`。AI 生成（簡易診断・詳細診断）は失敗しても固定の提案文で代替する。
 
 | 画面から呼ぶ URL | 役割 | 使うサービス |
 |---|---|---|
 | `POST /api/save-inquiry` | 問い合わせを Google Sheets へ追記し、担当者通知と申込者への自動返信メールを送る | Google Sheets API・Gmail（nodemailer） |
-| `POST /api/generate-comment` | 簡易診断の推奨アクション3件を生成 | Anthropic API（既定 `claude-haiku-5-5`） |
-| `POST /api/generate-library` | 詳細診断のプロンプトライブラリ・推奨アクション・サービス推薦を生成 | Anthropic API（既定 `claude-sonnet-5-5`） |
+| `POST /api/generate-comment` | 簡易診断の推奨アクション3件を生成 | Anthropic API（既定 `claude-haiku-5-5`・思考は既定のまま effort は low） |
+| `POST /api/generate-library` | 詳細診断のプロンプトライブラリ・推奨アクション・サービス推薦を生成 | Anthropic API（既定 `claude-sonnet-5-5`・思考は既定のまま effort は low） |
 
 以前の `/.netlify/functions/...` の URL は使えなくなった（レート制限の設定に独自パスが必要なため `/api/...` に変更）。
 
@@ -84,6 +85,17 @@ Netlify の関数ログには、エラー発生時に `{ fn, event, code, detail
 
 研修会場など同じ回線から多数が同時に使う場合に上限へ達するときは、`netlify/lib/*.mjs` の `createRateLimiter` の値と各 `netlify/functions/*.mjs` の `rateLimit` を調整する。
 
+### 公開しないファイル
+
+`netlify.toml` は `publish = "."`（このフォルダ全体を公開）のため、README・`package.json`・`netlify/` のソース・`test/` もそのままだと URL で読めてしまう。公開ページの URL を変えないまま、これらは `[[redirects]]`（`force = true`・404）で見えなくしている。公開用フォルダを分ける案（`public/` に HTML を移す）は、ページの URL が変わる（GitHub Pages 側のリンクが切れる）ため採用していない。なお GitHub Pages にはこの設定が効かない。
+
+### Claude API の指定（確認済みの公式仕様）
+
+- `claude-haiku-5-5` / `claude-sonnet-5-5` ともに、思考は既定（adaptive）のまま `output_config.effort: "low"` で短く済ませる。`thinking: { type: "disabled" }` は Sonnet 5.5 では 400 になる。
+- 思考の分も `max_tokens` に数えられるため、`generate-comment` は 2000、`generate-library` は 6000 にしている。
+- 応答は先頭が思考ブロックでも読めるよう、本文は `text` ブロックから取り出す（`stop_reason` が `refusal` / `max_tokens` のときは専用コード）。
+- `temperature` / `top_p` / `top_k` は送らない（非既定値は 400）。
+
 ### 開発・テスト
 
 - Node.js は 22 以上（`netlify.toml` では 24 を指定）。依存：`@anthropic-ai/sdk` 0.133 / `googleapis` 185 / `nodemailer` 10。
@@ -105,6 +117,7 @@ Netlify の関数ログには、エラー発生時に `{ fn, event, code, detail
 | `sitemap.xml` | 全 `<loc>`（6件） |
 | `robots.txt` | `Sitemap:` 行 |
 | `netlify/lib/save-inquiry.mjs` | `SITE_URL` のフォールバック既定値（環境変数未設定時のみ効く） |
+| 各HTMLの `<head>` 冒頭のスクリプト | GitHub Pages から Netlify 版へ移す先の URL（全 7 ファイル） |
 | 本 README | 冒頭の公開URL記述・本節 |
 
 ※ 14番（提案書生成アプリ）側の診断URL参照は 14番リポジトリ側の別チェックリストで管理する。

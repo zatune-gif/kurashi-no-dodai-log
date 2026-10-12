@@ -4,6 +4,8 @@
 // - Anthropic SDK だけは、手元(127.0.0.1)の模擬サーバーに向けて実際にソケット通信させ、
 //   SDK が返す本物のエラークラス・タイムアウト・接続拒否が原因別コードに分類されることも確認する。
 import http from 'node:http';
+import fs from 'node:fs';
+import vm from 'node:vm';
 import Anthropic from '@anthropic-ai/sdk';
 
 import * as comment from '../netlify/lib/generate-comment.mjs';
@@ -167,7 +169,7 @@ await t('generate-comment 正常: ok:true + actions3件・モデルは claude-ha
   const f = fakeClientDeps(async () => textMsg(THREE_ACTIONS));
   const r = await call(comment.createHandler(f.deps), COMMENT_BODY);
   eq(r.status, 200); eq(r.json.ok, true); eq(r.json.data.actions.length, 3);
-  eq(f.calls[0].model, 'claude-haiku-5-5'); eq(f.calls[0].thinking.type, 'disabled');
+  eq(f.calls[0].model, 'claude-haiku-5-5'); eq(f.calls[0].thinking, undefined, 'thinking は指定しない(adaptive)'); eq(f.calls[0].output_config.effort, 'low');
   truthy(f.calls[0].messages[0].content.includes('55点（導入期）'), 'prompt');
 });
 await t('generate-comment: 先頭が思考ブロックでも text ブロックから取り出せる', async () => {
@@ -265,7 +267,7 @@ await t('generate-library 正常: ok:true + prompts/actions/recommendations・�
   const r = await call(library.createHandler(f.deps), LIB_BODY);
   eq(r.status, 200); eq(r.json.ok, true);
   eq(r.json.data.prompts.length, 1); eq(r.json.data.actions.length, 3); eq(r.json.data.recommendations[0].price, '320,000円');
-  eq(f.calls[0].model, 'claude-sonnet-5-5'); eq(f.opts[0].maxRetries, 0); eq(f.calls[0].thinking.type, 'between_tools');
+  eq(f.calls[0].model, 'claude-sonnet-5-5'); eq(f.opts[0].maxRetries, 0); eq(f.calls[0].thinking, undefined, 'disabled は 400 になるため指定しない'); eq(f.calls[0].output_config.effort, 'low');
   truthy(f.calls[0].messages[0].content.includes('「メール返信」「見積書作成」'), 'タスクがプロンプトに入る');
 });
 await t('generate-library: 前後に説明文があっても JSON を取り出せる', async () => {
@@ -510,20 +512,20 @@ async function withMock(handler, fn) {
 const jsonRes = (rs, status, obj, headers = {}) => { rs.writeHead(status, { 'content-type': 'application/json', ...headers }); rs.end(JSON.stringify(obj)); };
 const okMessage = (text) => ({ id: 'msg_1', type: 'message', role: 'assistant', model: 'm', content: [{ type: 'text', text }], stop_reason: 'end_turn', stop_sequence: null, usage: { input_tokens: 1, output_tokens: 1 } });
 
-await t('模擬サーバー: generate-comment が実際に /v1/messages へ送る内容（モデル・キー・思考・effort）', async () => {
+await t('模擬サーバー: generate-comment が実際に /v1/messages へ送る内容（モデル・キー・effort。思考は既定のまま）', async () => {
   await withMock((rq, rs) => jsonRes(rs, 200, okMessage(THREE_ACTIONS)), async (seen) => {
     const h = comment.createHandler({ env: { ANTHROPIC_API_KEY: SECRET_KEY } });
     const r = await call(h, COMMENT_BODY);
     eq(r.json.ok, true); eq(seen[0].headers['x-api-key'], SECRET_KEY);
-    eq(seen[0].body.model, 'claude-haiku-5-5'); eq(seen[0].body.thinking.type, 'disabled'); eq(seen[0].body.output_config.effort, 'low');
-    truthy(seen[0].body.max_tokens >= 400, 'max_tokens');
+    eq(seen[0].body.model, 'claude-haiku-5-5'); eq(seen[0].body.thinking, undefined); eq(seen[0].body.output_config.effort, 'low');
+    truthy(seen[0].body.max_tokens >= 1500, 'max_tokens は思考分の余裕を含む');
   });
 });
 await t('模擬サーバー: generate-library が実際に送る内容と、応答の取り出し', async () => {
   await withMock((rq, rs) => jsonRes(rs, 200, okMessage(LIB_JSON)), async (seen) => {
     const h = library.createHandler({ env: { ANTHROPIC_API_KEY: SECRET_KEY } });
     const r = await call(h, LIB_BODY);
-    eq(r.json.ok, true); eq(seen[0].body.model, 'claude-sonnet-5-5'); eq(seen[0].body.thinking.type, 'between_tools'); eq(seen[0].body.output_config.effort, 'medium');
+    eq(r.json.ok, true); eq(seen[0].body.model, 'claude-sonnet-5-5'); eq(seen[0].body.thinking, undefined); eq(seen[0].body.output_config.effort, 'low'); truthy(seen[0].body.max_tokens >= 5000, 'max_tokens');
     eq(r.json.data.prompts[0].task, 'メール返信');
   });
 });
@@ -555,6 +557,193 @@ await t('模擬サーバー: 接続できない場合は UPSTREAM_CONNECTION', a
     const r = await call(library.createHandler({ env: { ANTHROPIC_API_KEY: SECRET_KEY } }), LIB_BODY);
     eq(r.status, 502); eq(r.json.error.code, 'UPSTREAM_CONNECTION');
   } finally { if (prev === undefined) delete process.env.ANTHROPIC_BASE_URL; else process.env.ANTHROPIC_BASE_URL = prev; }
+});
+
+// ============ 画面側（utils.js / request.js）：送信失敗を握りつぶさない ============
+const APP_DIR = new URL('..', import.meta.url);
+const readApp = (name) => fs.readFileSync(new URL(name, APP_DIR), 'utf8');
+
+class FakeEl {
+  constructor(doc, id = '') {
+    this.doc = doc; this.id = id; this.children = []; this.listeners = {}; this._text = ''; this.value = '';
+    this.disabled = false; this.className = ''; this.type = '';
+    const cls = new Set();
+    this.classList = {
+      add: (c) => { cls.add(c); if (c === 'active' && doc) doc.activated.push(this.id); },
+      remove: (c) => cls.delete(c),
+      toggle: (c, on) => { if (on === undefined ? !cls.has(c) : on) cls.add(c); else cls.delete(c); },
+      contains: (c) => cls.has(c),
+    };
+  }
+  set textContent(v) { this._text = String(v); if (v === '') this.children = []; }
+  get textContent() { return this._text; }
+  set innerHTML(_) { throw new Error('innerHTML は使わない（textContent で組み立てる）'); }
+  appendChild(c) { this.children.push(c); return c; }
+  addEventListener(ev, fn) { (this.listeners[ev] ||= []).push(fn); }
+  click() { return Promise.all((this.listeners.click || []).map((fn) => fn())); }
+  scrollIntoView() {}
+  allText() { return [this._text, ...this.children.map((c) => c.allText())].join('\n'); }
+}
+function makeApp(baseUrl, fetchImpl) {
+  const els = new Map();
+  const doc = {
+    activated: [],
+    getElementById(id) { if (!els.has(id)) els.set(id, new FakeEl(doc, id)); return els.get(id); },
+    createElement() { return new FakeEl(doc); },
+    querySelectorAll() { return []; },
+  };
+  const ctx = vm.createContext({
+    document: doc, window: { scrollTo() {} }, sessionStorage: { setItem() {} }, location: { href: '' },
+    fetch: fetchImpl || ((u, o) => fetch(baseUrl + u, o)),
+    AbortController, setTimeout, clearTimeout, Date, JSON, Error,
+  });
+  vm.runInContext(readApp('utils.js'), ctx);
+  return { ctx, doc, els };
+}
+async function withApiMock(handler, fn) {
+  const server = http.createServer((rq, rs) => { rq.resume(); rq.on('end', () => handler(rq, rs)); });
+  await new Promise((r) => server.listen(0, '127.0.0.1', r));
+  try { await fn(`http://127.0.0.1:${server.address().port}`); } finally {
+    server.closeAllConnections?.();
+    await new Promise((r) => server.close(r));
+  }
+}
+const apiJson = (status, obj) => (rq, rs) => { rs.writeHead(status, { 'content-type': 'application/json' }); rs.end(JSON.stringify(obj)); };
+const apiHtml = (status) => (rq, rs) => { rs.writeHead(status, { 'content-type': 'text/html' }); rs.end('<html>Not Found</html>'); };
+
+await t('画面 postInquiry: 成功（ok:true）は ok を返す', async () => {
+  await withApiMock(apiJson(200, { ok: true, data: { saved: true, failures: [] } }), async (base) => {
+    const { ctx } = makeApp(base);
+    const r = await ctx.postInquiry({ a: 1 });
+    eq(r.ok, true); eq(r.data.saved, true);
+  });
+});
+for (const [label, handler, code, detailPart] of [
+  ['429 RATE_LIMITED', apiJson(429, { ok: false, error: { code: 'RATE_LIMITED', message: 'm', detail: 'retry_after=5s' } }), 'RATE_LIMITED', 'retry_after'],
+  ['400 VALIDATION_FAILED', apiJson(400, { ok: false, error: { code: 'VALIDATION_FAILED', message: 'm', detail: 'field=email reason=invalid_email' } }), 'VALIDATION_FAILED', 'field=email'],
+  ['502 INQUIRY_NOT_RECORDED', apiJson(502, { ok: false, error: { code: 'INQUIRY_NOT_RECORDED', message: 'm', detail: 'sheet:SHEET_AUTH' } }), 'INQUIRY_NOT_RECORDED', 'SHEET_AUTH'],
+  ['GitHub Pages 相当の 404（HTML）', apiHtml(404), 'CLIENT_BAD_RESPONSE', 'http=404'],
+  ['静的ホストの 405（HTML）', apiHtml(405), 'CLIENT_BAD_RESPONSE', 'http=405'],
+]) {
+  await t(`画面 postInquiry: ${label} → ${code}（識別子を残す）`, async () => {
+    await withApiMock(handler, async (base) => {
+      const r = await makeApp(base).ctx.postInquiry({});
+      eq(r.ok, false); eq(r.error.code, code); truthy(r.error.detail.includes(detailPart), r.error.detail);
+    });
+  });
+}
+await t('画面 postInquiry: 接続できない → CLIENT_NETWORK / 中断 → CLIENT_TIMEOUT', async () => {
+  const a = await makeApp('http://127.0.0.1:1').ctx.postInquiry({});
+  eq(a.error.code, 'CLIENT_NETWORK');
+  const b = await makeApp('', async () => { const e = new Error('x'); e.name = 'AbortError'; throw e; }).ctx.postInquiry({});
+  eq(b.error.code, 'CLIENT_TIMEOUT');
+});
+await t('画面 describeInquiryError: 原因ごとに文言が違い、再送で直らないものに再送を促さない', () => {
+  const { ctx } = makeApp('');
+  const codes = ['CLIENT_NETWORK', 'CLIENT_TIMEOUT', 'CLIENT_BAD_RESPONSE', 'RATE_LIMITED', 'VALIDATION_FAILED', 'INQUIRY_NOT_RECORDED', 'PAYLOAD_TOO_LARGE', 'SOMETHING_NEW'];
+  const seen = new Set();
+  for (const c of codes) { const d = ctx.describeInquiryError({ code: c }); seen.add(d.title + d.action); truthy(d.title && d.action, c); }
+  eq(seen.size, codes.length, '文言の種類数');
+  const bad = ctx.describeInquiryError({ code: 'CLIENT_BAD_RESPONSE' });
+  truthy(bad.action.includes('info@zatuneya.com') && !bad.action.includes('もう一度送信'), '再送を促さずメール案内');
+  truthy(ctx.describeInquiryError({ code: 'RATE_LIMITED' }).action.includes('待って'), '時間をおく案内');
+  truthy(ctx.describeInquiryError({ code: 'SOMETHING_NEW' }).action.includes('info@zatuneya.com'), '未知コードでもメール案内');
+});
+await t('画面 showInquiryError: 識別子と時刻を表示・textContent で組み立てる（HTML 注入なし）・再送ボタン動作', () => {
+  const { ctx } = makeApp('');
+  const box = new FakeEl(null, 'box');
+  box.classList.add('hidden');
+  let retried = 0;
+  ctx.showInquiryError(box, { code: 'VALIDATION_FAILED', detail: 'field=<img onerror=x>' }, { note: '診断結果はご覧いただけます。', onRetry: () => { retried += 1; } });
+  const text = box.allText();
+  truthy(text.includes('エラーコード：VALIDATION_FAILED'), '識別子'); truthy(text.includes('field=<img onerror=x>'), 'detail はそのまま文字列として');
+  truthy(text.includes('診断結果はご覧いただけます。'), 'note');
+  eq(box.classList.contains('hidden'), false, '表示される');
+  const retry = box.children.find((c) => c.className.includes('send-error__retry'));
+  truthy(retry, '再送ボタン'); retry.listeners.click[0](); eq(retried, 1);
+  ctx.hideInquiryError(box); eq(box.classList.contains('hidden'), true); eq(box.children.length, 0);
+});
+
+async function runRequestFlow(handler) {
+  let result;
+  await withApiMock(handler, async (base) => {
+    const app = makeApp(base);
+    vm.runInContext(readApp('request.js'), app.ctx);
+    const { doc } = app;
+    doc.getElementById('company-name').value = '株式会社テスト';
+    doc.getElementById('contact-name').value = '大音';
+    doc.getElementById('contact-email').value = 'test@example.com';
+    doc.getElementById('hp-website').value = '';
+    await doc.getElementById('btn-next').click();
+    await doc.getElementById('btn-skip-diagnosis').click();
+    result = { doc, btn: doc.getElementById('btn-skip-diagnosis'), box: doc.getElementById('send-error') };
+  });
+  return result;
+}
+await t('画面 request.js: 送信成功 → 完了画面を出す・エラー表示なし・ボタン復帰', async () => {
+  const r = await runRequestFlow(apiJson(200, { ok: true, data: { saved: true, failures: [] } }));
+  truthy(r.doc.activated.includes('screen-thanks'), '完了画面'); eq(r.box.classList.contains('hidden'), true); eq(r.btn.disabled, false);
+});
+for (const [label, handler, code] of [
+  ['GitHub Pages 相当の 405', apiHtml(405), 'CLIENT_BAD_RESPONSE'],
+  ['429', apiJson(429, { ok: false, error: { code: 'RATE_LIMITED', message: 'm' } }), 'RATE_LIMITED'],
+  ['502 保存失敗', apiJson(502, { ok: false, error: { code: 'INQUIRY_NOT_RECORDED', message: 'm' } }), 'INQUIRY_NOT_RECORDED'],
+]) {
+  await t(`画面 request.js: 送信失敗(${label}) → 完了画面を出さず原因別の表示・再送できる`, async () => {
+    const r = await runRequestFlow(handler);
+    eq(r.doc.activated.includes('screen-thanks'), false, '完了画面は出さない');
+    eq(r.box.classList.contains('hidden'), false, 'エラー表示'); truthy(r.box.allText().includes(`エラーコード：${code}`), '識別子');
+    eq(r.btn.disabled, false, '再送できる');
+  });
+}
+
+await t('GitHub Pages 退避: 全HTML(7)の先頭 script が Netlify 版の同じページへ移動する（ファイル名・クエリ・ハッシュを保持）', () => {
+  const files = fs.readdirSync(APP_DIR).filter((n) => n.endsWith('.html'));
+  eq(files.length, 7, 'HTML 数');
+  for (const f of files) {
+    const html = readApp(f);
+    const m = html.match(/<script>([\s\S]*?)<\/script>/);
+    truthy(m && html.indexOf(m[0]) < html.indexOf('</head>') && m[1].includes('github'), `${f}: head 内の最初の script`);
+    const run = (hostname, pathname, search = '', hash = '') => {
+      let to = null;
+      const code = m[1].replace("location.replace('./diagnosis-simple.html');", '');
+      vm.runInNewContext(code, { location: { hostname, pathname, search, hash, replace: (u) => { to = u; } } });
+      return to;
+    };
+    if (f === 'index.html') {
+      eq(run('zatune-gif.github.io', '/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/'), 'https://ai-shindan-zatuneya.netlify.app/', `${f} ディレクトリ`);
+      continue;
+    }
+    eq(run('zatune-gif.github.io', `/kurashi-no-dodai-log/00-01_han-ai/13_ai-diagnosis-tool/${f}`, '?x=1', '#sec'), `https://ai-shindan-zatuneya.netlify.app/${f}?x=1#sec`, `${f} GitHub Pages`);
+    eq(run('ai-shindan-zatuneya.netlify.app', `/${f}`), null, `${f} Netlify では移動しない`);
+    eq(run('localhost', `/${f}`), null, `${f} localhost では移動しない`);
+    eq(run('evilgithub.io', `/${f}`), null, `${f} 似たドメインでは移動しない`);
+  }
+});
+await t('画面HTML: 送信失敗の表示欄が request.html / detail.html にある（role=alert・初期は非表示）', () => {
+  for (const f of ['request.html', 'detail.html']) truthy(/<div id="send-error" class="send-error hidden[^"]*" role="alert"><\/div>/.test(readApp(f)), f);
+});
+await t('画面 escapeHtml: タグ・引用符・アンパサンドを無害化する', () => {
+  const { ctx } = makeApp('');
+  eq(ctx.escapeHtml('<img src=x onerror=alert(1)>"\'&'), '&lt;img src=x onerror=alert(1)&gt;&quot;&#39;&amp;');
+  eq(ctx.escapeHtml(null), ''); eq(ctx.escapeHtml(0), '0');
+});
+await t('画面ソース: AI 出力・回答を innerHTML に入れる箇所はすべて escapeHtml を通す', () => {
+  for (const f of ['detail.js', 'diagnosis-simple.js']) {
+    const src = readApp(f);
+    truthy(!/<li>\$\{[a-z]\}<\/li>/.test(src), `${f}: <li>\${変数} が残っている`);
+    truthy(!/prompt-tag">\$\{p\.task\}/.test(src), `${f}: p.task`);
+    truthy(!/>\$\{(text|opt\.text)\}</.test(src) && !/<\/span>\$\{text\}/.test(src), `${f}: 選択肢`);
+  }
+  truthy(!/function escapeHtml/.test(readApp('detail.js')) && /function escapeHtml/.test(readApp('utils.js')), '定義は utils.js の1か所');
+});
+await t('netlify.toml: 開発用ファイルを 404 にする redirect(force) と Node 24 が設定されている', () => {
+  const toml = readApp('netlify.toml');
+  eq(/NODE_VERSION = "24"/.test(toml), true, 'Node');
+  for (const p of ['/netlify/*', '/test/*', '/node_modules/*', '/package.json', '/package-lock.json', '/README.md', '/netlify.toml']) {
+    truthy(new RegExp(`from = "${p.replace(/[*.]/g, '\\$&')}"\\s+to = "/404.html"\\s+status = 404\\s+force = true`).test(toml), p);
+  }
+  for (const p of ['/api/', '/diagnosis-simple.html', '/style.css']) truthy(!toml.includes(`from = "${p}`), `${p} は塞いでいない`);
 });
 
 // ============ ログに秘密情報が出ていない ============

@@ -2,6 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <script>
+    // GitHub Pages 上では申込み・AI機能が動かないため、Netlify 版の同じページへ移動する
+    if (/(^|\.)github\.io$/.test(location.hostname)) {
+      location.replace('https://ai-shindan-zatuneya.netlify.app/' + location.pathname.split('/').pop() + location.search + location.hash);
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>料金案内｜ざつね屋</title>
   <meta name="description" content="ざつね屋のAI活用支援サービスの料金案内。業務の見直し支援（業務改善）と個別実装、各サービスの費用の目安。">
