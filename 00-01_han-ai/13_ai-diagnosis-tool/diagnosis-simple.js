@@ -296,15 +296,14 @@ async function showResults() {
   let actions = FALLBACK_ACTIONS[stage];
   let usedFallback = true;
   try {
-    const res = await fetch('/.netlify/functions/generate-comment', {
+    const res = await fetch('/api/generate-comment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ score, stage, strengths, issues })
     });
-    if (res.ok) {
-      const data = await res.json();
-      if (data.actions?.length >= 3) { actions = data.actions; usedFallback = false; }
-    }
+    // 応答形式は { ok: true, data: { actions } } / { ok: false, error: { code, message } }
+    const body = await res.json();
+    if (body.ok && body.data?.actions?.length >= 3) { actions = body.data.actions; usedFallback = false; }
   } catch (_) {}
 
   // ステージタイムライン

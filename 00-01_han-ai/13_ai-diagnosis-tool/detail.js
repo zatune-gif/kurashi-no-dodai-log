@@ -530,14 +530,16 @@ async function showResults() {
   let usedFallback = true;
 
   try {
-    const res = await fetch('/.netlify/functions/generate-library', {
+    const res = await fetch('/api/generate-library', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    if (res.ok) {
-      const result = await res.json();
-      if (result.prompts?.length > 0) prompts = result.prompts;
+    // 応答形式は { ok: true, data: { prompts, actions, recommendations } } / { ok: false, error: { code, message } }
+    const body = await res.json();
+    if (body.ok && body.data?.prompts?.length > 0) {
+      const result = body.data;
+      prompts = result.prompts;
       if (result.actions?.length >= 3) actions = result.actions;
       if (result.recommendations?.length > 0) recommendations = result.recommendations;
       usedFallback = false;
@@ -659,7 +661,7 @@ async function showResults() {
   }
 
   // 問い合わせデータを保存・メール送信（fire-and-forget）
-  fetch('/.netlify/functions/save-inquiry', {
+  fetch('/api/save-inquiry', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

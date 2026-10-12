@@ -18,7 +18,7 @@ $('btn-do-diagnosis').addEventListener('click', () => {
 
 $('btn-skip-diagnosis').addEventListener('click', () => {
   showScreen('screen-thanks');
-  fetch('/.netlify/functions/save-inquiry', {
+  fetch('/api/save-inquiry', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
